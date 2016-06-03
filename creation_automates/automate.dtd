@@ -1,0 +1,9 @@
+<!ELEMENT liste (automate*)>
+<!ELEMENT automate (transition*)>
+<!ELEMENT transition (etat_courant, condition, action, etat_suivant)>
+<!ELEMENT etat_courant (#PCDATA)>
+<!ELEMENT condition (#PCDATA)>
+<!ELEMENT action (#PCDATA)>
+<!ELEMENT etat_suivant (#PCDATA)>
+<!ATTLIST automate CDATA #REQUIRED>
+<!ATTLIST transition CDATA #REQUIRED>
