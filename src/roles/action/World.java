@@ -11,8 +11,11 @@ public abstract class World {
 
 	static Vector<Vector<Case>> _map;
 	static ArrayList<Joueur> _joueurs;
-	
-	public static 
+
+	public static void addPlayer(Joueur j)
+	{
+		_joueurs.add(j);
+	}
 
 	public static Boolean isfree(int x, int y) {
 		return World.Case(x, y).isfree();
