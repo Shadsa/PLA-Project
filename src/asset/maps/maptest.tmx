@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="grass" tilewidth="32" tileheight="32">
+  <image source="../sprites/grass.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="19" name="tree" tilewidth="32" tileheight="32">
+  <image source="../sprites/treetop.png" width="192" height="224"/>
+ </tileset>
+ <layer name="Calque de Tile 1" width="100" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3WyQqDMBRA0ew6j///sXUjhKDGkhiDnANvUdwEbqMvBHp1GuZcMJf2Rz606zC3grm3P/KhxT2+QY+95e7HJ/Nbj7rSHu/gfuwp7pH+99OZaqVHXWu+52mn+DujR11z76u4wdK90aMu+25f1vSY2oPHO6NHXXM9lvas+Jkedf2zX3lfbS/tMU5ux9JjG49hngXzan9kAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAbv0A0CpWLUCcAAA=
+  </data>
+ </layer>
+ <layer name="tree" width="100" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3VMRIBQRCG0b0DAgTIECwBAtz/XP4SbtWEu8POe1Vf0lEnXd11APN0TKd0rr0IX326pGvtRRqzSMu0Gsxv6Z4ek2/UtnXapO1g/kyv9J58o7bt0j4dKu8B/6b0W6ij9FsYV+kO/JY63MFvcQcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADMxQeC2abhQJwAAA==
+  </data>
+ </layer>
+</map>
