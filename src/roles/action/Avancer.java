@@ -7,8 +7,8 @@ public class Avancer extends Action {
 
 	Cardinaux _direction;
 
-	public Avancer(Personnage pers, Cardinaux card) {
-		super(pers);
+	public Avancer(Personnage pers, Cardinaux card, int poids) {
+		super(pers, poids);
 		_direction = card;
 	}
 
