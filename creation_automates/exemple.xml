@@ -1,0 +1,11 @@
+<?xml version = "1.0" encoding="UTF-8" standalone="no" ?>
+
+<!DOCTYPE liste SYSTEM "automate.dtd">
+<automate type="0">
+	<transition type="1">
+		<etat>0</etat>
+		<condition>2</condition>
+		<action>6</action>
+		<etat>2</etat>
+	</transition>
+</automate>
