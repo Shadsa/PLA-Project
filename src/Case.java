@@ -1,5 +1,5 @@
 
-public abstract class Case {
+abstract class Case {
 
 	protected String type;
 	

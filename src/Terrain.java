@@ -1,8 +1,10 @@
 
 public class Terrain extends Case {
 
-	public void Ressource(){
+	public Ressources(){
 		
 	}
-	public Ressource(String type, )
+	public Ressources(String type, ){
+		this.type = type ;
+	}
 }
