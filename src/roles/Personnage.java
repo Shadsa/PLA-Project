@@ -2,14 +2,14 @@ package roles;
 
 public class Personnage {
 
-	public Object X() {
+	public int X() {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
-	public Object Y() {
+	public int Y() {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
 }
