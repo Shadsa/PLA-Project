@@ -15,7 +15,7 @@ public class Automate {
 	ArrayList<ArrayList<Integer>> _next;
 	int _etat;
 
-	Automate(int nb_etat)
+	public Automate(int nb_etat)
 	{
 		_etat = 0;
 		_action = new ArrayList<ArrayList<Action>>();
@@ -36,10 +36,10 @@ public class Automate {
 		_next.get(etat).add(etat_suivant);
 	}
 
-	public void agir() {
+	public void agir(Personnage pers) {
 		ArrayList<Integer> choice = new ArrayList<Integer>();
 		for(int id = _condition.get(_etat).size()-1; id >= 0; id++)
-			if(_condition.get(_etat).get(id).value())
+			if(_condition.get(_etat).get(id).value(pers))
 				choice.add(id);
 
 		// Paralysie si vide
@@ -62,7 +62,7 @@ public class Automate {
 		}
 
 		Collections.shuffle(choice);
-		_action.get(_etat).get(choice.get(0)).Act();
+		_action.get(_etat).get(choice.get(0)).Act(pers);
 		_etat = _next.get(_etat).get(choice.get(0));
 	}
 }
