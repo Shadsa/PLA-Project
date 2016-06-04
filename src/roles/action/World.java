@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Vector;
 
-import roles.Case;
+import cases.Case;
 import roles.Personnage;
 
 public abstract class World {

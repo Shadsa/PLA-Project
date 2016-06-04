@@ -3,9 +3,10 @@ package roles.action;
 import roles.Cardinaux;
 import roles.Personnage;
 
-public class Avancer extends Action {
+public final class Avancer extends Action {
 
 	Cardinaux _direction;
+	private static int _Id = Action.getId(4);
 
 	public Avancer(Cardinaux card, int poids) {
 		super(poids);
@@ -21,6 +22,11 @@ public class Avancer extends Action {
 			World.Case(destX, destY).setPersonnage(pers);
 			World.Case(pers.X(), pers.Y()).setPersonnage(null);
 		}
+	}
+
+	@Override
+	public int toInt() {
+		return _Id;
 	}
 
 }

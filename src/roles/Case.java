@@ -1,5 +1,7 @@
 package roles;
 
+import roles.Personnage;
+
 public abstract class Case {
 
 	public Boolean isfree() {

@@ -22,7 +22,7 @@ public class Personnage {
 	}
 
 	public void agir() {
-		_brain.agir();
+		_brain.agir(this);
 	}
 
 }

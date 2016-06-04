@@ -1,13 +1,20 @@
 package cases;
 
-abstract class Case {
+import roles.Personnage;
 
-	protected String type;
-	int i;
-	
-	/*public Case (int i);
-	*/
-	public boolean isfree () {
-		
+public abstract class Case {
+
+	final public static int firstCaseActionId = 1000;
+
+	Personnage _personnage;
+
+	public Boolean isfree() {
+		return _personnage == null;
 	}
+
+	public void setPersonnage(Personnage personnage) {
+		_personnage = personnage;
+	}
+
+	public abstract int value();
 }
