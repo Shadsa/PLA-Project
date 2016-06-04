@@ -8,6 +8,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 public class Player {
+	private int _destX = 300, _destY = 300;
 	//Position d'origine du personnage (x, y)
 	private float x = 300, y = 300;
 	//direction : 0 -> haut, 1 -> gauche, 2 -> bas, droit -> 3
@@ -57,13 +58,35 @@ public class Player {
 	 * Met à jour le conteneur du jeu
 	 */
 	public void update(int delta) {
-	    if (this.moving) {
-	        switch (this.direction) {
-	            case 0: this.y -= .1f * delta; break;
-	            case 1: this.x -= .1f * delta; break;
-	            case 2: this.y += .1f * delta; break;
-	            case 3: this.x += .1f * delta; break;
-	        }
+	    if (_destX > x)
+	    {
+
+	    	if(_destX-x-.1f * delta<0)
+	    		x = _destX;
+	    	else
+	    		this.x += .1f * delta;
+	    }
+	    else if(_destX < x)
+	    {
+	    	if(x-_destX-.1f * delta<0)
+	    		x = _destX;
+	    	else
+	    		this.x -= .1f * delta;
+	    }
+	    if (_destY > y)
+	    {
+
+	    	if(_destY-y-.1f * delta<0)
+	    		y = _destY;
+	    	else
+	    		this.y += .1f * delta;
+	    }
+	    else if(_destY < y)
+	    {
+	    	if(y-_destY-.1f * delta<0)
+	    		y = _destY;
+	    	else
+	    		this.y -= .1f * delta;
 	    }
 	}
 
@@ -75,4 +98,20 @@ public class Player {
 	  public void setDirection(int direction) { this.direction = direction; }
 	  public boolean isMoving() { return moving; }
 	  public void setMoving(boolean moving) { this.moving = moving; }
+
+		public void setDestX(int f) {
+			_destX = f;
+		}
+
+		public int DestX() {
+			return _destX;
+		}
+
+		public void setDestY(int i) {
+			_destY = i;
+		}
+
+		public int DestY() {
+			return _destY;
+		}
 }

@@ -9,7 +9,7 @@ public class Map {
 	public void init() throws SlickException {
 		this.tileMap = new TiledMap("src/asset/maps/maptest.tmx");
 	}
-	
+
 	public void render() {
 		this.tileMap.render(0, 0);
 	}

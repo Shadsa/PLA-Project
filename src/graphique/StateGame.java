@@ -13,19 +13,21 @@ public class StateGame extends StateBasedGame {
 	public StateGame() {
 		super("StateGame");
 	}
-    
+
     public void initStatesList(GameContainer container) throws SlickException {
     	addState(new MainScreenGameState());
     	addState(new MapGameState());
     }
-    
+
 	public void enterState(int id, String s) throws SlickException {
 		super.enterState(id);
 		Music music = new Music(s);
 	    music.loop();
 	}
-	
+
     public static void main(String[] args) throws SlickException {
-        new AppGameContainer(new StateGame(), 800, 600, false).start();
+    	AppGameContainer app = new AppGameContainer(new StateGame(), 800, 600, false);
+    	app.setTargetFrameRate(60);
+    	app.start();
     }
 }
