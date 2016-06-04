@@ -31,8 +31,16 @@ public class MapGameState extends BasicGameState {
 	 * Initialise le contenu du jeu, charge les animations
 	 */
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-		Automate aut1 = new Automate(1);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD, 0), new Libre(Cardinaux.NORD), 0);
+		Automate aut1 = new Automate(2);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD, 1), new Libre(Cardinaux.NORD), 0);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.EST, 1), new Libre(Cardinaux.EST), 0);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD, 0), new Libre(Cardinaux.SUD), 1);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.OUEST, 0), new Libre(Cardinaux.OUEST), 1);
+
+		aut1.ajoute_transition(1, new Avancer(Cardinaux.NORD, 0), new Libre(Cardinaux.NORD), 0);
+		aut1.ajoute_transition(1, new Avancer(Cardinaux.EST, 0), new Libre(Cardinaux.EST), 0);
+		aut1.ajoute_transition(1, new Avancer(Cardinaux.SUD, 1), new Libre(Cardinaux.SUD), 1);
+		aut1.ajoute_transition(1, new Avancer(Cardinaux.OUEST, 1), new Libre(Cardinaux.OUEST), 1);
 		ArrayList<Automate> autlist = new ArrayList<Automate>();
 		autlist.add(aut1);
 		Joueur j = new Joueur("Moi", autlist);
@@ -46,10 +54,10 @@ public class MapGameState extends BasicGameState {
 		this.container = container;
 		this.map.init();
 		this.player.init();
-		this.player.setX(100);
-		this.player.setDestX(100);
-		this.player.setY(100);
-		this.player.setDestY(100);
+		this.player.setX(100+300);
+		this.player.setDestX(100+300);
+		this.player.setY(100+300);
+		this.player.setDestY(100+300);
 		PlayerController controller = new PlayerController(player);
 		container.getInput().addKeyListener(controller);
 		this.hud.init();
@@ -73,8 +81,8 @@ public class MapGameState extends BasicGameState {
 		{
 			_time -= 1000;
 			World.nextTurn();
-			player.setDestX(personnage.X()*20);
-			player.setDestY(personnage.Y()*20);
+			player.setDestX(personnage.X()*20+300);
+			player.setDestY(personnage.Y()*20+300);
 		}
 	}
 

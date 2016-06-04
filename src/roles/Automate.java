@@ -49,21 +49,22 @@ public class Automate {
 			return;
 		}
 
-		for(int id : choice)
-		{
-			Collections.sort(choice, new Comparator<Integer>() {
-		        @Override
-		        public int compare(Integer i1, Integer i2)
-		        {
-		            return  _action.get(_etat).get(i1).poids() - _action.get(_etat).get(i2).poids();
-		        }
-			});
-		}
+		Collections.sort(choice, new Comparator<Integer>() {
+			@Override
+			public int compare(Integer i1, Integer i2)
+		    {
+				return  _action.get(_etat).get(i1).poids() - _action.get(_etat).get(i2).poids();
+		    }
+		});
 
 		int poids = _action.get(_etat).get(choice.get(choice.size()-1)).poids();
-		for(Integer id : choice)
+		/*for(Integer id : choice)
 		{
 			if(poids != _action.get(_etat).get(id).poids())
+				choice.remove(id);
+		}*/
+		for(int id = choice.size()-1; id>=0; id--){
+			if(poids != _action.get(_etat).get(choice.get(id)).poids())
 				choice.remove(id);
 		}
 
