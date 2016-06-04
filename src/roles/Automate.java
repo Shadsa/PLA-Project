@@ -26,6 +26,7 @@ public class Automate {
 			_action.add(new ArrayList<Action>());
 			_condition.add(new ArrayList<Condition>());
 			_next.add(new ArrayList<Integer>());
+			nb_etat--;
 		}
 	}
 
@@ -38,11 +39,16 @@ public class Automate {
 
 	public void agir(Personnage pers) {
 		ArrayList<Integer> choice = new ArrayList<Integer>();
-		for(int id = _condition.get(_etat).size()-1; id >= 0; id++)
+		for(int id = _condition.get(_etat).size()-1; id >= 0; id--)
 			if(_condition.get(_etat).get(id).value(pers))
 				choice.add(id);
 
-		// Paralysie si vide
+		if(choice.size() == 0)
+		{
+			pers.parralyse();
+			return;
+		}
+
 		for(int id : choice)
 		{
 			Collections.sort(choice, new Comparator<Integer>() {
