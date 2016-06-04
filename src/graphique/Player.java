@@ -16,7 +16,7 @@ public class Player {
 	private boolean moving = false;
 	//Tableau des modèles d'animation
 	private Animation[] animations = new Animation[8];
-	
+
 	public void init() throws SlickException {
 		SpriteSheet spriteSheet = new SpriteSheet("src/asset/sprites/BODY_skeleton.png", 64, 64);
 	    this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
@@ -27,13 +27,13 @@ public class Player {
 	    this.animations[5] = loadAnimation(spriteSheet, 1, 9, 1);
 	    this.animations[6] = loadAnimation(spriteSheet, 1, 9, 2);
 	    this.animations[7] = loadAnimation(spriteSheet, 1, 9, 3);
-	
+
 	}
-	
+
 	/**
 	 * Permet de charger les animations à partir du la feuille de sprite pour créer les modèles d'animations.
 	 * @param spriteSheet : la feuille de sprites
-	 * @param startX : 
+	 * @param startX :
 	 * @param endX
 	 * @param y
 	 * @return
@@ -45,14 +45,14 @@ public class Player {
 	    }
 	    return animation;
 	}
-	
+
 	public void render(Graphics g) throws SlickException {
 		//Affichage du personnage avec l'ombre et modification des coordonnées des pieds du personnage
 				g.setColor(new Color(0, 0, 0, .5f));
 			    g.fillOval(x - 16, y - 8, 32, 16);
 			    g.drawAnimation(animations[direction + (moving ? 4 : 0)], x-32, y-60);
 	}
-	
+
 	/**
 	 * Met à jour le conteneur du jeu
 	 */
@@ -66,7 +66,7 @@ public class Player {
 	        }
 	    }
 	}
-	
+
 	  public float getX() { return x; }
 	  public void setX(float x) { this.x = x; }
 	  public float getY() { return y; }
