@@ -11,6 +11,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -22,12 +23,15 @@ public class MainScreenGameState extends BasicGameState {
 	private Image background;
 	private StateGame game;
 	private TrueTypeFont font;
+	private int size;
+	private String sizeScreen;
 
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game = (StateGame) game;
 		this.background = new Image("src/asset/images/skeleton_army.jpg");
 		Music music = new Music("src/asset/musics/menu_music.ogg");
 	    music.loop();
+	    sizeScreen = "Taille de l'écran : " + container.getScreenWidth() + "x" + container.getScreenHeight();
 	    
 		/*// Chargement d'une nouvelle police de caractères
 		try {
@@ -48,7 +52,10 @@ public class MainScreenGameState extends BasicGameState {
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		background.draw(0, 0, container.getWidth(), container.getHeight());
-		g.drawString("Appuyez sur une touche", 300, 300);
+		g.setColor(Color.white);
+		g.drawString("Appuie sur une touche pour continuer", 240, 300);
+		g.drawString(sizeScreen, 10, 30);
+		g.drawString("Taille de la fenêtre : " + ((StateGame) game).getWidth() + "x" + ((StateGame) game).getHeight(), 10, 50);
 	}
 
 	/**

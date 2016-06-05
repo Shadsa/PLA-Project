@@ -24,11 +24,13 @@ public class PlayerController implements KeyListener {
 	* Gestion d'évènements lors de la pression sur la touche de clavier
 	*/
 	public void keyPressed(int key, char c) {
-		switch (key) {
-			case Input.KEY_UP:    player.setDirection(0); player.setMoving(true); break;
-			case Input.KEY_LEFT:  player.setDirection(1); player.setMoving(true); break;
-			case Input.KEY_DOWN:  player.setDirection(2); player.setMoving(true); break;
-			case Input.KEY_RIGHT: player.setDirection(3); player.setMoving(true); break;
+		if(!player.isMoving()) {
+			switch (key) {
+				case Input.KEY_UP:    player.setDirection(0); player.setMoving(true); player.setAction_finie(96); break;
+				case Input.KEY_LEFT:  player.setDirection(1); player.setMoving(true); player.setAction_finie(96); break;
+				case Input.KEY_DOWN:  player.setDirection(2); player.setMoving(true); player.setAction_finie(96); break;
+				case Input.KEY_RIGHT: player.setDirection(3); player.setMoving(true); player.setAction_finie(96); break;
+			}
 		}
 	}
 		
@@ -36,6 +38,6 @@ public class PlayerController implements KeyListener {
 	 * Gestion d'évènements lors du relâchement d'une touche de clavier
 	 */
 	public void keyReleased(int key, char c) {
-		player.setMoving(false);
+		//player.setMoving(false);
 	}
 }

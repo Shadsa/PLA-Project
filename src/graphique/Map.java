@@ -8,6 +8,7 @@ public class Map {
 
 	public void init() throws SlickException {
 		this.tileMap = new TiledMap("src/asset/maps/maptest.tmx");
+		System.out.println(tileMap.getTileSetCount());
 	}
 	
 	public void render() {
