@@ -18,18 +18,42 @@ public class Player {
 	private Animation[] animations = new Animation[8];
 	
 	//Test walking player
+	private int type;
 	private float action_finie = 0;
+	private boolean selectedPlayer = false;
+	
+	public Player() {
+	}
+	
+	public Player(int type) {
+		this.type = type;
+	}
 	
 	public void init() throws SlickException {
-		SpriteSheet spriteSheet = new SpriteSheet("src/asset/sprites/BODY_skeleton_leather.png", 64, 64);
-	    this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
-	    this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
-	    this.animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
-	    this.animations[3] = loadAnimation(spriteSheet, 0, 1, 3);
-	    this.animations[4] = loadAnimation(spriteSheet, 1, 9, 0);
-	    this.animations[5] = loadAnimation(spriteSheet, 1, 9, 1);
-	    this.animations[6] = loadAnimation(spriteSheet, 1, 9, 2);
-	    this.animations[7] = loadAnimation(spriteSheet, 1, 9, 3);
+		SpriteSheet spriteSheet;
+		if (this.getType() == 0) {
+			spriteSheet = new SpriteSheet("src/asset/sprites/BODY_skeleton_leather.png", 64, 64);
+		    this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
+		    this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
+		    this.animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
+		    this.animations[3] = loadAnimation(spriteSheet, 0, 1, 3);
+		    this.animations[4] = loadAnimation(spriteSheet, 1, 9, 0);
+		    this.animations[5] = loadAnimation(spriteSheet, 1, 9, 1);
+		    this.animations[6] = loadAnimation(spriteSheet, 1, 9, 2);
+		    this.animations[7] = loadAnimation(spriteSheet, 1, 9, 3);
+		}
+		else if (this.getType() == 1) {
+			spriteSheet = new SpriteSheet("src/asset/sprites/BODY_male_iron.png", 64, 64);
+		    this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
+		    this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
+		    this.animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
+		    this.animations[3] = loadAnimation(spriteSheet, 0, 1, 3);
+		    this.animations[4] = loadAnimation(spriteSheet, 1, 9, 0);
+		    this.animations[5] = loadAnimation(spriteSheet, 1, 9, 1);
+		    this.animations[6] = loadAnimation(spriteSheet, 1, 9, 2);
+		    this.animations[7] = loadAnimation(spriteSheet, 1, 9, 3);
+		}
+
 	
 	}
 	
@@ -86,6 +110,11 @@ public class Player {
 	  //Test walking player
 	  public float getAction_finie() { return action_finie; }
 	  public void setAction_finie(float x) { this.action_finie = x; }
+	  
+	  //Test with severals players
+	  public boolean getSelectedPlayer() { return selectedPlayer; }
+	  public void setSelectedPlayer(boolean select) { this.selectedPlayer = select; }
+	  public int getType() {return type;}
 	  
 	  public int getDirection() { return direction; }  
 	  public void setDirection(int direction) { this.direction = direction; }

@@ -14,7 +14,9 @@ public class MapGameState extends BasicGameState {
 	
 	private GameContainer container;
 	//private Map map = new Map();
-	private Player player = new Player();
+	private Player player;
+	private Player player1 = new Player(0);
+	private Player player2 = new Player(1);
 	private Hud hud = new Hud();
 	public static final int ID = 2;
 	private String playerData;
@@ -31,11 +33,16 @@ public class MapGameState extends BasicGameState {
 	 * Initialise le contenu du jeu, charge les animations
 	 */
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+		this.player = player1;
+		this.player.setSelectedPlayer(true);
 		this.container = container;
 		this.map.init();
-		this.player.init();
-		PlayerController controller = new PlayerController(player);
-		container.getInput().addKeyListener(controller);
+		this.player1.init();
+		this.player2.init();
+		PlayerController controller1 = new PlayerController(player1);
+		container.getInput().addKeyListener(controller1);
+		PlayerController controller2 = new PlayerController(player2);
+		container.getInput().addKeyListener(controller2);
 		this.hud.init();
 	}
 	
@@ -44,7 +51,8 @@ public class MapGameState extends BasicGameState {
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		this.map.render(g);
-		this.player.render(g);
+		this.player1.render(g);
+		this.player2.render(g);
 		g.resetTransform(); 
 		g.scale(1, 1);
 		if (showhud) {
@@ -54,6 +62,7 @@ public class MapGameState extends BasicGameState {
 		g.drawString(playerData, 10, 30);
 		g.drawString(mouse, 10, 50);
 		g.drawString("Appuie sur le personnage pour afficher ses données !" , 10, 70);
+		g.drawString("Pour changer de personnage, appuyer sur 'ESPACE' !", 10, 90);
 		
 	}
 
@@ -71,6 +80,17 @@ public class MapGameState extends BasicGameState {
 	public void keyReleased(int key, char c) {
 		if (Input.KEY_ESCAPE == key) {
 		container.exit();
+		}
+		if (Input.KEY_SPACE == key) {
+			if (player == player1) {
+				player = player2;
+				player.setSelectedPlayer(true);
+				player1.setSelectedPlayer(false);
+			} else if (player == player2) {
+				player = player1;
+				player.setSelectedPlayer(true);
+				player2.setSelectedPlayer(false);
+			}
 		}
 	}
 	
