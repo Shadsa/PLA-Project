@@ -10,6 +10,7 @@ public class Personnage extends Observable{
 	Automate _brain;
 	protected int _parralysie = 0;
 	protected Case _location;
+	int _etat;
 
 	protected int _id;
 
@@ -25,6 +26,7 @@ public class Personnage extends Observable{
 
 	public Personnage(Automate brain, int x, int y)
 	{
+		_etat = 0;
 		_id = nextID();
 		_brain = brain;
 		_parralysie = 0;
@@ -43,6 +45,11 @@ public class Personnage extends Observable{
 		_brain.agir(this);
 	}
 
+	public int etat()
+	{
+		return _etat;
+	}
+
 	public void parralyse() {
 		System.out.print("je n'ai rien à faire.\n");
 		_parralysie++;
@@ -51,6 +58,12 @@ public class Personnage extends Observable{
 	public void setCase(Case loc) {
 		_location = loc;
 		setChanged();
+	}
+	public Case Case() {
+		return _location;
+	}
+	public void setetat(Integer etat) {
+		_etat = etat;
 	}
 
 }

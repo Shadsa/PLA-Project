@@ -21,7 +21,6 @@ public final class Avancer extends Action {
 		if(World.isfree(destX, destY))
 		{
 			System.out.print(pers.ID() + "j'avance vers le " + _direction + destX + destY + ".\n");
-			World.Case(pers.X(), pers.Y()).setPersonnage(null);
 			World.Case(destX, destY).setPersonnage(pers);
 			pers.notifyObservers(States.AVANCE.init(_direction));
 		}

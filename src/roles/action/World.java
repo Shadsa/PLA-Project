@@ -29,7 +29,7 @@ public abstract class World {
 	}
 
 	public static Case Case(int x, int y) {
-		return (x < 0 || y < 0 || x >= _map.size() | y >= _map.size())? null : _map.get(x).get(y);
+		return (x < 0 || y < 0 || x >= _map.size() || y >= _map.get(x).size())? null : _map.get(x).get(y);
 	}
 
 	public static void nextTurn()
