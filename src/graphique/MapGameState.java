@@ -48,6 +48,31 @@ public class MapGameState extends BasicGameState {
 		World.BuildMap();
 		j2.createPersonnage(0, 5, 5);
 		j2.createPersonnage(0, 6, 6);
+		j2.createPersonnage(0, 3, 6);
+		j2.createPersonnage(0, 6, 2);
+		j2.createPersonnage(0, 0, 0);
+		j2.createPersonnage(0, 2, 1);
+		j2.createPersonnage(0, 4, 7);
+
+		j2.createPersonnage(0, 0, 1);
+		j2.createPersonnage(0, 0, 2);
+		j2.createPersonnage(0, 0, 3);
+		j2.createPersonnage(0, 0, 4);
+		j2.createPersonnage(0, 0, 5);
+		j2.createPersonnage(0, 0, 6);
+		j2.createPersonnage(0, 0, 7);
+		j2.createPersonnage(0, 0, 8);
+		j2.createPersonnage(0, 0, 9);
+
+		j2.createPersonnage(0, 1, 1);
+		j2.createPersonnage(0, 1, 2);
+		j2.createPersonnage(0, 1, 3);
+		j2.createPersonnage(0, 1, 4);
+		j2.createPersonnage(0, 1, 5);
+		j2.createPersonnage(0, 1, 6);
+		j2.createPersonnage(0, 1, 7);
+		j2.createPersonnage(0, 1, 8);
+		j2.createPersonnage(0, 1, 9);
 		//personnage = j2.getPersonnages().get(0);
 
 
@@ -94,9 +119,9 @@ public class MapGameState extends BasicGameState {
 				player.update(delta);
 
 		_time += delta;
-		if(_time > 1000)
+		if(_time > 400)
 		{
-			_time -= 1000;
+			_time -= 400;
 			World.nextTurn();
 		}
 	}

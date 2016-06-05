@@ -15,9 +15,9 @@ import roles.Personnage;
 import roles.States;
 
 public class Player implements Observer{
-	private int _destX = 300, _destY = 300;
+	private int _destX, _destY;
 	//Position d'origine du personnage (x, y)
-	private float x = 300, y = 300;
+	private float x, y;
 	//direction : 0 -> haut, 1 -> gauche, 2 -> bas, droit -> 3
 	private int direction = 0;
 	//Boolean pour savoir si le personnage bouge
@@ -25,6 +25,8 @@ public class Player implements Observer{
 	//Tableau des modèles d'animation
 	private Animation[] animations = new Animation[8];
 
+	public final int x0 = 116, y0 = 116;
+	public final int tx = 40, ty = 40;
 
 	protected int _id;
 
@@ -40,10 +42,10 @@ public class Player implements Observer{
 
 	public void init(Personnage pers) throws SlickException {
 		_id = nextID();
-		x = pers.X()*20+300;
-		y = pers.Y()*20+300;
-		_destX = pers.X()*20+300;
-		_destY = pers.Y()*20+300;
+		x = pers.X()*tx+x0;
+		y = pers.Y()*ty+y0;
+		_destX = pers.X()*tx+x0;
+		_destY = pers.Y()*ty+y0;
 		pers.addObserver(this);
 		SpriteSheet spriteSheet = new SpriteSheet("src/asset/sprites/BODY_skeleton.png", 64, 64);
 	    this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
@@ -148,8 +150,8 @@ public class Player implements Observer{
 		public void update(Observable obs, Object obj) {
 			if(obs instanceof Personnage){
 				Personnage pers = (Personnage)obs;
-				_destX = pers.X()*20+300;
-				_destY = pers.Y()*20+300;
+				_destX = pers.X()*tx+x0;
+				_destY = pers.Y()*ty+y0;
 				States st = (States)obj;
 				if(st == States.AVANCE)
 				{
