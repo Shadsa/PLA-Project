@@ -10,9 +10,14 @@ import org.newdawn.slick.SpriteSheet;
 public class MapTest {
 
 	private Vector<Vector<ObjetTest>> map;
+	private SpriteSheet spriteSheet;
 
 	public void init() throws SlickException {
 		
+		//Dans ce sprite -> cellule 0 : buisson, cellule 1 : arbre, cellule 2 : herbe, cellule 3 : tonneaux, cellule 4 : rochers. (format des cases : 96x96).
+		//Pour utiliser la méthode renderInUse(...), je dois appeler la méthode startUse() pour dire que je commence à lire cette table de sprite.
+		spriteSheet = new SpriteSheet("src/asset/sprites/tiles.png", 96, 96);
+
 		//J'initialise ma map test.
 		map = new Vector<Vector<ObjetTest>> (5);
 		for (int i = 0; i < 5; i++) {
@@ -30,11 +35,7 @@ public class MapTest {
 		
 		//Pour dézoomer de moitié décommenter la ligne dessous (attention, les coordonnées de la souris reste à l'échelle 1 donc l'affichage de l'hud ne sera plus à l'échelle)
 		//g.scale(0.75f, 0.75f);
-		//Dans ce sprite -> cellule 0 : buisson, cellule 1 : arbre, cellule 2 : herbe, cellule 3 : tonneaux, cellule 4 : rochers. (format des cases : 96x96).
-		SpriteSheet spriteSheet = new SpriteSheet("src/asset/sprites/tiles.png", 96, 96);
-		//Pour utiliser la méthode renderInUse(...), je dois appeler la méthode startUse() pour dire que je commence à lire cette table de sprite.
 		spriteSheet.startUse();
-		
 		//Parcours de la map test
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {

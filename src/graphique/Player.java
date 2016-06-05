@@ -18,6 +18,7 @@ public class Player {
 	private Animation[] animations = new Animation[8];
 	
 	//Test walking player
+	//type : 0 -> squelette, type : 1 -> soldat
 	private int type;
 	private float action_finie = 0;
 	private boolean selectedPlayer = false;
