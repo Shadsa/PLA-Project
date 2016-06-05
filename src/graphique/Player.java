@@ -13,6 +13,7 @@ import org.newdawn.slick.SpriteSheet;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;
+import roles.States.Statut;
 
 public class Player implements Observer{
 	private int _destX, _destY;
@@ -23,12 +24,14 @@ public class Player implements Observer{
 	//Boolean pour savoir si le personnage bouge
 	private boolean moving = false;
 	//Tableau des modèles d'animation
-	private Animation[] animations = new Animation[8];
+	private Animation[] animations = new Animation[12];
 
 	public final int x0 = 116, y0 = 116;
 	public final int tx = 40, ty = 40;
 
 	protected int _id;
+
+	protected States _state;
 
 	private static int _nextID = 0;
 	protected static int nextID()
@@ -42,12 +45,14 @@ public class Player implements Observer{
 
 	public void init(Personnage pers) throws SlickException {
 		_id = nextID();
+		_state = new States(Statut.ATTENDS, Cardinaux.SUD);
 		x = pers.X()*tx+x0;
 		y = pers.Y()*ty+y0;
 		_destX = pers.X()*tx+x0;
 		_destY = pers.Y()*ty+y0;
 		pers.addObserver(this);
 		SpriteSheet spriteSheet = new SpriteSheet("src/asset/sprites/BODY_skeleton.png", 64, 64);
+		SpriteSheet spriteSheet2 = new SpriteSheet("src/asset/sprites/slash_skeleton.png", 64, 64);
 	    this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
 	    this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
 	    this.animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
@@ -57,6 +62,11 @@ public class Player implements Observer{
 	    this.animations[6] = loadAnimation(spriteSheet, 1, 9, 2);
 	    this.animations[7] = loadAnimation(spriteSheet, 1, 9, 3);
 
+
+	    this.animations[8] = loadAnimation(spriteSheet2, 0, 5, 0);
+	    this.animations[9] = loadAnimation(spriteSheet2, 0, 5, 1);
+	    this.animations[10] = loadAnimation(spriteSheet2, 0, 5, 2);
+	    this.animations[11] = loadAnimation(spriteSheet2, 0, 5, 3);
 	}
 
 	/**
@@ -76,17 +86,40 @@ public class Player implements Observer{
 	}
 
 	public void render(Graphics g) throws SlickException {
+		int anim = 0;
 		//Affichage du personnage avec l'ombre et modification des coordonnées des pieds du personnage
 				g.setColor(new Color(0, 0, 0, .5f));
 			    g.fillOval(x - 16, y - 8, 32, 16);
-			    g.drawAnimation(animations[direction + (moving ? 4 : 0)], x-32, y-60);
+
+				switch(_state.direction)
+				{
+				case NORD: anim = 2; break;
+				case SUD: anim = 0; break;
+				case EST: anim = 3; break;
+				case OUEST: anim = 1; break;
+				}
+
+			    switch(_state.statut)
+			    {
+			    case AVANCE:
+			    	anim += 4;
+			    break;
+			    case ATTENDS:
+			    	anim += 0;
+			    break;
+				case ATTAQUE:
+					anim += 8;
+				break;
+			    }//
+			    //System.out.println(_state.statut);
+			    g.drawAnimation(animations[anim], x-32, y-60);
 	}
 
 	/**
 	 * Met à jour le conteneur du jeu
 	 */
 	public void update(int delta) {
-		if(!moving) return;
+		if(_state.statut != Statut.AVANCE) return;
 	    if (_destX > x)
 	    {
 
@@ -119,7 +152,7 @@ public class Player implements Observer{
 	    }
 
 	    if(_destX == x && _destY == y)
-	    	setMoving(false);
+	    	_state.statut = Statut.ATTENDS;
 	}
 
 	  public float getX() { return x; }
@@ -152,13 +185,7 @@ public class Player implements Observer{
 				Personnage pers = (Personnage)obs;
 				_destX = pers.X()*tx+x0;
 				_destY = pers.Y()*ty+y0;
-				States st = (States)obj;
-				if(st == States.AVANCE)
-				{
-					setMoving(true);
-					// dir doit pas être null
-					setDirection(st.Dir());
-				}
+				_state = (States)obj;
 			}
 		}
 		private void setDirection(Cardinaux dir) {

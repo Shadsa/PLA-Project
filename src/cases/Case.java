@@ -42,4 +42,8 @@ public abstract class Case {
 	{
 		return _y;
 	}
+
+	public Personnage Personnage() {
+		return _personnage;
+	}
 }

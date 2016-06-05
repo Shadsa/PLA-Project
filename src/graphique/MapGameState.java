@@ -13,9 +13,11 @@ import org.newdawn.slick.state.StateBasedGame;
 import roles.Automate;
 import roles.Cardinaux;
 import roles.Personnage;
+import roles.action.Attaquer;
 import roles.action.Avancer;
 import roles.action.Joueur;
 import roles.action.World;
+import roles.conditions.Ennemy;
 import roles.conditions.Libre;
 
 public class MapGameState extends BasicGameState {
@@ -33,6 +35,9 @@ public class MapGameState extends BasicGameState {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		Automate aut1 = new Automate(2);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD, 1), new Libre(Cardinaux.NORD), 0);
+		// décommenter pour tester attaque
+		//aut1.ajoute_transition(0, new Attaquer(Cardinaux.SUD, 1), new Ennemy(Cardinaux.SUD), 0);
+		//aut1.ajoute_transition(0, new Attaquer(Cardinaux.NORD, 1), new Ennemy(Cardinaux.NORD), 0);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.EST, 1), new Libre(Cardinaux.EST), 0);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD, 0), new Libre(Cardinaux.SUD), 1);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.OUEST, 0), new Libre(Cardinaux.OUEST), 1);

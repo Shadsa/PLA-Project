@@ -1,22 +1,16 @@
 package roles;
+public class States {
+	public enum Statut {
 
-public enum States {
+	    AVANCE, ATTAQUE, ATTENDS;
 
-    AVANCE;
+	}
 
-    private Cardinaux _Dir;
-
-    private States() {
-    	_Dir = null;
-    }
-
-    public Cardinaux Dir() {
-        return _Dir;
-    }
-
-    public States init(Cardinaux Dir)
+    public Statut statut;
+    public Cardinaux direction;
+    public States(Statut stat, Cardinaux dir)
     {
-    	_Dir = Dir;
-    	return this;
+    	statut = stat;
+    	direction = dir;
     }
 }

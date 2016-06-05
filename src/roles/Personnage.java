@@ -3,6 +3,7 @@ package roles;
 import java.util.Observable;
 
 import cases.Case;
+import roles.States.Statut;
 import roles.action.World;
 
 public class Personnage extends Observable{
@@ -57,13 +58,16 @@ public class Personnage extends Observable{
 
 	public void setCase(Case loc) {
 		_location = loc;
-		setChanged();
 	}
 	public Case Case() {
 		return _location;
 	}
 	public void setetat(Integer etat) {
 		_etat = etat;
+	}
+	public void setState(States states) {
+		setChanged();
+		notifyObservers(states);
 	}
 
 }
