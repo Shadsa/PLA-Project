@@ -18,6 +18,12 @@ public abstract class World {
 		_joueurs.add(j);
 	}
 
+	// final return...
+	public static ArrayList<Joueur> getPlayers()
+	{
+		return _joueurs;
+	}
+
 	public static Boolean isfree(int x, int y) {
 		return World.Case(x, y) != null && World.Case(x, y).isfree();
 	}

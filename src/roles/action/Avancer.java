@@ -2,6 +2,7 @@ package roles.action;
 
 import roles.Cardinaux;
 import roles.Personnage;
+import roles.States;
 
 public final class Avancer extends Action {
 
@@ -19,9 +20,10 @@ public final class Avancer extends Action {
 		int destY = pers.Y() + ((_direction == Cardinaux.SUD)? (-1) : ((_direction == Cardinaux.NORD)? 1 : 0));
 		if(World.isfree(destX, destY))
 		{
-			System.out.print("j'avance vers le " + _direction + destX + destY + ".\n");
-			World.Case(destX, destY).setPersonnage(pers);
+			System.out.print(pers.ID() + "j'avance vers le " + _direction + destX + destY + ".\n");
 			World.Case(pers.X(), pers.Y()).setPersonnage(null);
+			World.Case(destX, destY).setPersonnage(pers);
+			pers.notifyObservers(States.AVANCE.init(_direction));
 		}
 	}
 

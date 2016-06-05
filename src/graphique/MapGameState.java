@@ -22,8 +22,8 @@ public class MapGameState extends BasicGameState {
 
 	private GameContainer container;
 	private Map map = new Map();
-	private Player player = new Player();
-	private Personnage personnage;
+	private ArrayList<Player> _players = new ArrayList<Player>();
+	//private Personnage personnage;
 	private Hud hud = new Hud();
 	public static final int ID = 2;
 
@@ -43,23 +43,37 @@ public class MapGameState extends BasicGameState {
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.OUEST, 1), new Libre(Cardinaux.OUEST), 1);
 		ArrayList<Automate> autlist = new ArrayList<Automate>();
 		autlist.add(aut1);
-		Joueur j = new Joueur("Moi", autlist);
-		World.addPlayer(j);
+		Joueur j2 = new Joueur("Moi", autlist);
+		World.addPlayer(j2);
 		World.BuildMap();
-		j.createPersonnage(0, 5, 5);
-		personnage = j.getPersonnages().get(0);
-
+		j2.createPersonnage(0, 5, 5);
+		j2.createPersonnage(0, 6, 6);
+		//personnage = j2.getPersonnages().get(0);
 
 
 		this.container = container;
 		this.map.init();
-		this.player.init();
-		this.player.setX(100+300);
-		this.player.setDestX(100+300);
-		this.player.setY(100+300);
-		this.player.setDestY(100+300);
-		PlayerController controller = new PlayerController(player);
-		container.getInput().addKeyListener(controller);
+
+		Player pla;
+		for(Joueur j : World.getPlayers())
+		for(Personnage pers : j.getPersonnages())
+		{
+			pla = new Player();
+			pla.init(pers);
+			_players.add(pla);
+		}
+
+		//System.out.print(_players.size());
+
+
+		/*_players.add(new Player());
+		_players.get(0).init();
+		_players.get(0).setX(100+300);
+		_players.get(0).setDestX(100+300);
+		_players.get(0).setY(100+300);
+		_players.get(0).setDestY(100+300);*/
+		//PlayerController controller = new PlayerController(_players.get(0));
+		//container.getInput().addKeyListener(controller);
 		this.hud.init();
 	}
 
@@ -68,21 +82,22 @@ public class MapGameState extends BasicGameState {
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		this.map.render();
-		this.player.render(g);
+		for(Player p : _players)
+			p.render(g);
 		this.hud.render(g);
 	}
 
 	protected long _time = 0;
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		this.player.update(delta);
+		for(Player player : _players)
+				player.update(delta);
+
 		_time += delta;
 		if(_time > 1000)
 		{
 			_time -= 1000;
 			World.nextTurn();
-			player.setDestX(personnage.X()*20+300);
-			player.setDestY(personnage.Y()*20+300);
 		}
 	}
 

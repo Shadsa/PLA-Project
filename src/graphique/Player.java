@@ -1,5 +1,8 @@
 package graphique;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -7,7 +10,11 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-public class Player {
+import roles.Cardinaux;
+import roles.Personnage;
+import roles.States;
+
+public class Player implements Observer{
 	private int _destX = 300, _destY = 300;
 	//Position d'origine du personnage (x, y)
 	private float x = 300, y = 300;
@@ -18,7 +25,26 @@ public class Player {
 	//Tableau des modèles d'animation
 	private Animation[] animations = new Animation[8];
 
-	public void init() throws SlickException {
+
+	protected int _id;
+
+	private static int _nextID = 0;
+	protected static int nextID()
+	{
+		return _nextID++;
+	}
+	public int ID()
+	{
+		return _id;
+	}
+
+	public void init(Personnage pers) throws SlickException {
+		_id = nextID();
+		x = pers.X()*20+300;
+		y = pers.Y()*20+300;
+		_destX = pers.X()*20+300;
+		_destY = pers.Y()*20+300;
+		pers.addObserver(this);
 		SpriteSheet spriteSheet = new SpriteSheet("src/asset/sprites/BODY_skeleton.png", 64, 64);
 	    this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
 	    this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
@@ -58,6 +84,7 @@ public class Player {
 	 * Met à jour le conteneur du jeu
 	 */
 	public void update(int delta) {
+		if(!moving) return;
 	    if (_destX > x)
 	    {
 
@@ -88,6 +115,9 @@ public class Player {
 	    	else
 	    		this.y -= .1f * delta;
 	    }
+
+	    if(_destX == x && _destY == y)
+	    	setMoving(false);
 	}
 
 	  public float getX() { return x; }
@@ -113,5 +143,29 @@ public class Player {
 
 		public int DestY() {
 			return _destY;
+		}
+
+		public void update(Observable obs, Object obj) {
+			if(obs instanceof Personnage){
+				Personnage pers = (Personnage)obs;
+				_destX = pers.X()*20+300;
+				_destY = pers.Y()*20+300;
+				States st = (States)obj;
+				if(st == States.AVANCE)
+				{
+					setMoving(true);
+					// dir doit pas être null
+					setDirection(st.Dir());
+				}
+			}
+		}
+		private void setDirection(Cardinaux dir) {
+			switch(dir)
+			{
+			case NORD: direction = 2; break;
+			case SUD: direction = 0; break;
+			case EST: direction = 3; break;
+			case OUEST: direction = 1; break;
+			}
 		}
 }
