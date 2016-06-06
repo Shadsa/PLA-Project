@@ -52,24 +52,24 @@ let cellule_to_string (c : cellule) : String.t =
    | E -> "E"
    | O -> "O"
 
-let condition_to_string (c : condition) : String.t =
+let condition_to_string (c : condition) : String.t*(String.t option) =
   match c with
-   | Vide -> "Vide"
-   | Ennemi(cellule) -> "Ennemi "^(cellule_to_string cellule)
+   | Vide -> "Vide",None
+   | Ennemi(cellule) -> "Ennemi",Some(cellule_to_string cellule)
   (*
     | ...
   *)
-   | _ -> ""
+   | _ -> "",None
 
-let action_to_string (a : action) : String.t =
+let action_to_string (a : action) : String.t*(String.t option) =
   match a with
-   | Attendre -> "Attendre "
-   | Avancer(cellule) -> "Avancer "^(cellule_to_string cellule)
-   | Frapper(cellule) -> "Frapper "^(cellule_to_string cellule)
+   | Attendre -> "Attendre",None
+   | Avancer(cellule) -> "Avancer",Some(cellule_to_string cellule)
+   | Frapper(cellule) -> "Frapper",Some(cellule_to_string cellule)
   (*
     | ...
   *)
-   | _ -> ""
+   | _ -> "",None
 
 let cate_to_string (c : categorie) : String.t =
   match c with
@@ -82,20 +82,22 @@ let cate_to_string (c : categorie) : String.t =
     
 
 
-let element_to_xml (s : String.t) (nom: String.t) : String.t =
-  "\t\t\t<"^nom^">"^s^"</"^nom^">"
+let attribute_to_xml (s : String.t) (nom : String.t) : String.t =
+  nom^"=\""^s^"\""
+
+let element_to_xml ((s,attribute) : String.t*(String.t option)) (nom : String.t) : String.t =
+  match attribute with
+   |None -> "\t\t\t<"^nom^">"^s^"</"^nom^">"
+   |Some(attribute) -> "\t\t\t<"^nom^" "^(attribute_to_xml attribute "direction")^">"^s^"</"^nom^">"
   
 let etat_to_xml (e : etat) : String.t =
-  element_to_xml (string_of_int e) "etat"
+  element_to_xml (string_of_int e,None) "etat"
 
 let condition_to_xml (c : condition) : String.t =
   element_to_xml (condition_to_string c) "condition"
 
 let action_to_xml (a : action) : String.t =
   element_to_xml (action_to_string a) "action"
-
-let attribute_to_xml (s : String.t) (nom : String.t) : String.t =
-  nom^"=\""^s^"\""
   
 let cate_to_xml (c : categorie) : String.t =
   attribute_to_xml (cate_to_string c) "type"
