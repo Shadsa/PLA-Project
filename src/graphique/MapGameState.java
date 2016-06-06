@@ -15,6 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import roles.Automate;
 import roles.Cardinaux;
 import roles.Personnage;
+import roles.States.Statut;
 import roles.action.Attaquer;
 import roles.action.Avancer;
 import roles.action.Joueur;
@@ -34,10 +35,10 @@ public class MapGameState extends BasicGameState {
 	private int mouseX;
 	private int mouseY;
 	private boolean showhud = false;
-	
+
 	//Test
 	private MapTest map = new MapTest();
-	
+
 
 	/**
 	 * Initialise le contenu du jeu, charge les animations
@@ -130,8 +131,11 @@ public class MapGameState extends BasicGameState {
 	protected long _time = 0;
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		for(Player player : _players)
-				player.update(delta);
+		for(int i = _players.size()-1; i>=0; i--)
+			if(_players.get(i).states().statut != Statut.MORT)
+				_players.get(i).update(delta);
+			else
+				_players.remove(_players.get(i));
 
 		_time += delta;
 		if(_time > 400)
@@ -162,21 +166,21 @@ public class MapGameState extends BasicGameState {
 			}
 		}*/
 	}
-	
+
 	public void mousePressed(int arg0, int arg1, int arg2) {
 		/*if (Input.MOUSE_LEFT_BUTTON == arg0 && mouseX >= this.player.getX()-32 && mouseX <= this.player.getX()+32 && mouseY >= this.player.getY()-60 && mouseY <= this.player.getY()+4) {
 			this.showhud = true;
 		}*/
-		
+
 	}
-	
+
 	public void mouseReleased(int arg0, int arg1, int arg2) {
 		if (Input.MOUSE_LEFT_BUTTON == arg0) {
 			this.showhud = false;
 		}
-		
+
 	}
- 
+
 	public int getID() {
 		return ID;
 	}

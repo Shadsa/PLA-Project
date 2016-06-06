@@ -23,8 +23,8 @@ public final class Attaquer extends Action {
 		{
 			Personnage target = World.Case(destX, destY).Personnage();
 			System.out.print(pers.ID() + " attaque " + target.ID() + ".\n");
-			//World.Case(destX, destY).setPersonnage(pers);
 			pers.setState(new States(Statut.ATTAQUE, _direction));
+			target.change_vie(-1);
 		}
 	}
 
