@@ -10,7 +10,7 @@ public class Map {
 		this.tileMap = new TiledMap("src/asset/maps/maptest.tmx");
 		System.out.println(tileMap.getTileSetCount());
 	}
-	
+
 	public void render() {
 		this.tileMap.render(0, 0);
 	}

@@ -4,9 +4,9 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.KeyListener;
 
 public class PlayerController implements KeyListener {
-	
+
 	private Player player = new Player();
-	
+
 	public PlayerController(Player player) {
 		this.player = player;
 	}
@@ -15,7 +15,7 @@ public class PlayerController implements KeyListener {
 
 
 	public boolean isAcceptingInput() { return true; }
-	 
+
 	public void inputEnded() { }
 
 	public void inputStarted() { }
@@ -35,7 +35,7 @@ public class PlayerController implements KeyListener {
 			}
 		}
 	}
-		
+
 	/**
 	 * Gestion d'évènements lors du relâchement d'une touche de clavier
 	 */

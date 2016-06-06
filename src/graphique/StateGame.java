@@ -16,12 +16,12 @@ public class StateGame extends StateBasedGame {
 	public StateGame() {
 		super("StateGame");
 	}
-    
+
     public void initStatesList(GameContainer container) throws SlickException {
     	addState(new MainScreenGameState());
     	addState(new MapGameState());
     }
-    
+
 	public void enterState(int id, String s) throws SlickException {
 		super.enterState(id);
 		Music music = new Music(s);
@@ -37,6 +37,7 @@ public class StateGame extends StateBasedGame {
 	}
 	
     public static void main(String[] args) throws SlickException {
+    	app.setTargetFrameRate(60);
         AppGameContainer game = new AppGameContainer(new StateGame(), width, height, false);
         game.setShowFPS(true);
         game.start();

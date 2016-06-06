@@ -18,12 +18,18 @@ public abstract class World {
 		_joueurs.add(j);
 	}
 
+	// final return...
+	public static ArrayList<Joueur> getPlayers()
+	{
+		return _joueurs;
+	}
+
 	public static Boolean isfree(int x, int y) {
 		return World.Case(x, y) != null && World.Case(x, y).isfree();
 	}
 
 	public static Case Case(int x, int y) {
-		return (x < 0 || y < 0 || x >= _map.size() | y >= _map.size())? null : _map.get(x).get(y);
+		return (x < 0 || y < 0 || x >= _map.size() || y >= _map.get(x).size())? null : _map.get(x).get(y);
 	}
 
 	public static void nextTurn()
