@@ -27,7 +27,7 @@ import roles.conditions.*;
 public class XML_Reader {
 	
 	@SuppressWarnings("null")
-	public static ArrayList<Automate> readXML(File f){
+	public static ArrayList<Automate> readXML(File f) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException, DOMException{
 		ArrayList<Automate> liste = null;
 		Automate automate = null;
 	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
