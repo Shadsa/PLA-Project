@@ -48,7 +48,7 @@ public class MainScreenGameState extends BasicGameState {
 
 	/**
 	 * Contenons nous d'afficher l'image de fond. 
-	 * Le text est placé approximativement au centre.
+	 * Le texte est placé approximativement au centre.
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		background.draw(0, 0, container.getWidth(), container.getHeight());
@@ -59,7 +59,7 @@ public class MainScreenGameState extends BasicGameState {
 	}
 
 	/**
-	 * Passer à l’écran de jeu à l'appui de n'importe quel touche.
+	 * Passer à l’écran de jeu à l'appui de n'importe quelle touche.
 	 */
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 	}

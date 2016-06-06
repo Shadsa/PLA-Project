@@ -21,7 +21,7 @@ public class PlayerController implements KeyListener {
 	public void inputStarted() { }
 
 	/**
-	* Gestion d'évènements lors de la pression sur la touche de clavier
+	* Gestion d'évènements lors de la pression sur la touche du clavier
 	*/
 	public void keyPressed(int key, char c) {
 		/*if(player.getSelectedPlayer()) {
@@ -37,7 +37,7 @@ public class PlayerController implements KeyListener {
 	}
 
 	/**
-	 * Gestion d'évènements lors du relâchement d'une touche de clavier
+	 * Gestion d'évènements lors du relâchement d'une touche du clavier
 	 */
 	public void keyReleased(int key, char c) {
 		//player.setMoving(false);

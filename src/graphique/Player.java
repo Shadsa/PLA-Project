@@ -70,7 +70,7 @@ public class Player implements Observer{
 	}
 
 	/**
-	 * Permet de charger les animations à partir du la feuille de sprite pour créer les modèles d'animations.
+	 * Permet de charger les animations à partir de la feuille de sprite pour créer les modèles d'animations.
 	 * @param spriteSheet : la feuille de sprites
 	 * @param startX :
 	 * @param endX
