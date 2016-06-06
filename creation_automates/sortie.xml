@@ -6,8 +6,8 @@
 	<automate type="Citoyen">
 		<transition poids="1">
 			<etat>0</etat>
-			<condition direction="N">Ennemi </condition>
-			<action direction="N">Frapper</action>
+			<condition>Ennemi N</condition>
+			<action>Frapper N</action>
 			<etat>2</etat>
 		</transition>
 	</automate>
