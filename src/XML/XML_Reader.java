@@ -63,7 +63,7 @@ public class XML_Reader {
 	    return liste;
 	}	
 
-	public static Automate ListeCreate(Node n){
+	public static Automate ListeCreate(Node n) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException, DOMException{
 		Automate auto = null;
 		if(n instanceof Element){
 			if(n.getNodeName()=="nombre" && n.getAttributes() != null && n.getAttributes().getLength() == 1){
