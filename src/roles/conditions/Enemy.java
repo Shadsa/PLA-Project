@@ -4,11 +4,11 @@ import roles.Cardinaux;
 import roles.Personnage;
 import roles.action.World;
 
-public class Ennemy extends Condition {
+public class Enemy extends Condition {
 
 	Cardinaux _direction;
 
-	public Ennemy(Cardinaux card) {
+	public Enemy(Cardinaux card) {
 		_direction = card;
 	}
 
