@@ -34,7 +34,7 @@ type automate = categorie * automate_sans_type
 
 
 
-let en_garde (cour : etat) (suiv : etat) : automate_sans_type = 
+let hostile (cour : etat) (suiv : etat) : automate_sans_type = 
   List.map  (fun direction -> (cour, Ennemi(direction), Frapper(direction), suiv, 5) ) [N;S;E;O]
 
 let add (a1 : automate_sans_type) (a2 : automate_sans_type) : automate_sans_type =
@@ -44,64 +44,64 @@ let add ((c1,a1) : automate) ((c2,a2) : automate) : automate =
   if c1!=c2 then failwith "erreur" else (c1,add a1 a2)
   
 
-let cellule_to_int (c : cellule) : int =
+let cellule_to_string (c : cellule) : String.t =
   match c with
-   | C -> 0
-   | N -> 1
-   | S -> 2
-   | E -> 3
-   | O -> 4
+   | C -> "C"
+   | N -> "N"
+   | S -> "S"
+   | E -> "E"
+   | O -> "O"
 
-let condition_to_int (c : condition) : int =
+let condition_to_string (c : condition) : String.t =
   match c with
-   | Vide -> 0
-   | Ennemi(cellule) -> 1 + (cellule_to_int cellule) (* 1..5 *)
+   | Vide -> "Vide"
+   | Ennemi(cellule) -> "Ennemi "^(cellule_to_string cellule)
   (*
     | ...
   *)
-   | _ -> 0
+   | _ -> ""
 
-let action_to_int (a : action) : int =
+let action_to_string (a : action) : String.t =
   match a with
-   | Attendre -> 0
-   | Avancer(cellule) -> 1 + (cellule_to_int cellule) (* 1..5 *)
-   | Frapper(cellule) -> 5 + (cellule_to_int cellule) (* 6..10 *)
+   | Attendre -> "Attendre "
+   | Avancer(cellule) -> "Avancer "^(cellule_to_string cellule)
+   | Frapper(cellule) -> "Frapper "^(cellule_to_string cellule)
   (*
     | ...
   *)
-   | _ -> 0
+   | _ -> ""
 
-let cate_to_int (c : categorie) : int =
+let cate_to_string (c : categorie) : String.t =
   match c with
-   | Citoyen -> 0
-   | Zombie -> 1
-   | Soldat -> 2
+   | Citoyen -> "Citoyen"
+   | Zombie -> "Zombie"
+   | Soldat -> "Soldat"
 (*
   | ...
 *)
     
 
 
-let element_to_xml (i : int) (nom: String.t) : String.t =
-  "\t\t\t<"^nom^">"^string_of_int i^"</"^nom^">"
+let element_to_xml (s : String.t) (nom: String.t) : String.t =
+  "\t\t\t<"^nom^">"^s^"</"^nom^">"
   
 let etat_to_xml (e : etat) : String.t =
-  element_to_xml e "etat"
+  element_to_xml (string_of_int e) "etat"
 
 let condition_to_xml (c : condition) : String.t =
-  element_to_xml (condition_to_int c) "condition"
+  element_to_xml (condition_to_string c) "condition"
 
 let action_to_xml (a : action) : String.t =
-  element_to_xml (action_to_int a) "action"
+  element_to_xml (action_to_string a) "action"
 
-let attribute_to_xml (i : int) : String.t =
-  "type=\""^string_of_int i^"\""
+let attribute_to_xml (s : String.t) (nom : String.t) : String.t =
+  nom^"=\""^s^"\""
   
 let cate_to_xml (c : categorie) : String.t =
-  attribute_to_xml (cate_to_int c)
+  attribute_to_xml (cate_to_string c) "type"
 
 let poids_to_xml (p : poids) : String.t =
-  attribute_to_xml p
+  attribute_to_xml (string_of_int p) "poids"
 
 let transition_to_xml ((ec,c,a,es,p) : transition) : String.t =
   String.concat "\n" ["\t\t<transition "^poids_to_xml p^">";
