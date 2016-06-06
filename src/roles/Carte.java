@@ -15,7 +15,7 @@ public class Carte extends Vector<Vector<Case>>{
 		for(int y=0 ; y<hauteur ; y++){
 			Vector<Case> ligne = new Vector<Case>(largeur);
 			for(int x=0 ; x<largeur ; x++){
-				ligne.add(new Plaine(x,y));
+				ligne.add(new Plaine(y,x));
 			}
 			add(ligne);
 		}
