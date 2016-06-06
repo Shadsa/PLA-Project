@@ -101,26 +101,34 @@ public static void AutomateCreate(Automate auto, Node n) throws InstantiationExc
 	Condition cond=null;
 	
 	if(n.getAttributes() != null && n.getAttributes().getLength() == 1){
-
-		int nbChild = n.getChildNodes().getLength();
-		NodeList list = n.getChildNodes();
-		if(nbChild == 4){
 			
-			Node node1 = list.item(0);
-			if(node1 instanceof Element && node1.getAttributes() != null && node1.getAttributes().getLength() == 1)
-				etat = Integer.parseInt(node1.getAttributes().item(0).getNodeValue());
-			Node node2 = list.item(0);
-			if(node2 instanceof Element && node2.getAttributes() != null && node2.getAttributes().getLength() == 2)
-				cond = (Condition) Class.forName(node2.getAttributes().item(0).getNodeValue()).getDeclaredConstructor(Cardinaux.class).newInstance(node2.getAttributes().item(1).getNodeValue());
-
-			Node node3 = list.item(0);
-			if(node3 instanceof Element && node3.getAttributes() != null && node3.getAttributes().getLength() == 2)
-				action = (Action) Class.forName(node3.getAttributes().item(0).getNodeValue()).getDeclaredConstructor(Cardinaux.class).newInstance(node3.getAttributes().item(1).getNodeValue());
-
-			Node node4 = list.item(0);
-			if(node4 instanceof Element && node4.getAttributes() != null && node4.getAttributes().getLength() == 1)
-				suiv = Integer.parseInt(node4.getAttributes().item(0).getNodeValue());
-
+		final NodeList trans = ((Document) n).getElementsByTagName("transition");
+		final int nbElt = trans.getLength();
+		
+		if(nbElt == 4){
+			Node node1 = trans.item(0);
+			if(node1 instanceof Element && node1.getAttributes() == null){
+				final Element e1 = (Element) ((NamedNodeMap) n).item(0);
+				etat = Integer.parseInt(e1.getTextContent());
+			}
+			//etat = Integer.parseInt(node1.getAttributes().item(0).getNodeValue());
+			Node node2 = trans.item(0);
+			if(node2 instanceof Element && node2.getAttributes() != null && node2.getAttributes().getLength() == 1){
+				final Element e2 = (Element) ((NamedNodeMap) n).item(0);
+				String s1 = e2.getTextContent();
+				cond = (Condition) Class.forName(s1).getDeclaredConstructor(Cardinaux.class).newInstance(node2.getAttributes().item(0).getNodeValue());
+			}
+			Node node3 = trans.item(0);
+			if(node3 instanceof Element && node3.getAttributes() != null && node3.getAttributes().getLength() == 1){
+				final Element e3 = (Element) ((NamedNodeMap) n).item(0);
+				String s2 = e3.getTextContent();
+				action = (Action) Class.forName(s2).getDeclaredConstructor(Cardinaux.class).newInstance(node3.getAttributes().item(0).getNodeValue());
+			}				
+			Node node4 = trans.item(0);
+			if(node4 instanceof Element && node4.getAttributes() == null){
+				final Element e4 = (Element) ((NamedNodeMap) n).item(0);
+				suiv = Integer.parseInt(e4.getTextContent());
+			}
 		}
 		auto.ajoute_transition(etat,action,cond,suiv);
 	}
