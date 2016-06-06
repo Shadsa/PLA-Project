@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.9" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="workshop.WorkshopUI" project="PLA-Project" 
+    file="/PLA-Project/src/workshop/WorkshopUI.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="79" width="94" x="147" y="307"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="workshop.WorkshopTest" project="PLA-Project" 
+    file="/PLA-Project/src/workshop/WorkshopTest.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="97" width="113" x="281" y="307"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="workshop.WorkshopInit" project="PLA-Project" 
+    file="/PLA-Project/src/workshop/WorkshopInit.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="79" width="99" x="434" y="307"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="workshop.WorkshopCreator" project="PLA-Project" 
+    file="/PLA-Project/src/workshop/WorkshopCreator.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="79" width="126" x="573" y="307"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
