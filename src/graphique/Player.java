@@ -160,7 +160,7 @@ public class Player implements Observer{
 	  public float getY() { return y; }
 	  public void setY(float y) { this.y = y; }
 	  
-	  //Test walking player
+	 /* //Test walking player
 	  public float getAction_finie() { return action_finie; }
 	  public void setAction_finie(float x) { this.action_finie = x; }
 	  
@@ -168,7 +168,7 @@ public class Player implements Observer{
 	  public boolean getSelectedPlayer() { return selectedPlayer; }
 	  public void setSelectedPlayer(boolean select) { this.selectedPlayer = select; }
 	  public int getType() {return type;}
-	  
+	  */
 	  public int getDirection() { return direction; }  
 	  public void setDirection(int direction) { this.direction = direction; }
 	  public boolean isMoving() { return moving; }

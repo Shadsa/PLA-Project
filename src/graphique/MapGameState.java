@@ -25,7 +25,6 @@ import roles.conditions.Libre;
 public class MapGameState extends BasicGameState {
 
 	private GameContainer container;
-	private Map map = new Map();
 	private ArrayList<Player> _players = new ArrayList<Player>();
 	//private Personnage personnage;
 	private Hud hud = new Hud();
@@ -47,8 +46,8 @@ public class MapGameState extends BasicGameState {
 		Automate aut1 = new Automate(2);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD, 1), new Libre(Cardinaux.NORD), 0);
 		// décommenter pour tester attaque
-		//aut1.ajoute_transition(0, new Attaquer(Cardinaux.SUD, 1), new Ennemy(Cardinaux.SUD), 0);
-		//aut1.ajoute_transition(0, new Attaquer(Cardinaux.NORD, 1), new Ennemy(Cardinaux.NORD), 0);
+		aut1.ajoute_transition(0, new Attaquer(Cardinaux.SUD, 1), new Ennemy(Cardinaux.SUD), 0);
+		aut1.ajoute_transition(0, new Attaquer(Cardinaux.NORD, 1), new Ennemy(Cardinaux.NORD), 0);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.EST, 1), new Libre(Cardinaux.EST), 0);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD, 0), new Libre(Cardinaux.SUD), 1);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.OUEST, 0), new Libre(Cardinaux.OUEST), 1);
@@ -122,7 +121,7 @@ public class MapGameState extends BasicGameState {
 	 * Affichage des différents éléments du jeu
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		this.map.render();
+		this.map.render(g);
 		for(Player p : _players)
 			p.render(g);
 		this.hud.render(g);
@@ -140,7 +139,7 @@ public class MapGameState extends BasicGameState {
 			_time -= 400;
 			World.nextTurn();
 		}
-		playerData = "Coord X :" + this.player.getX() + ", Coord Y : " + this.player.getY() + ", action_finie : " + this.player.getAction_finie();
+		//playerData = "Coord X :" + this.player.getX() + ", Coord Y : " + this.player.getY() + ", action_finie : " + this.player.getAction_finie();
 		Input input = container.getInput();
 		mouseX = input.getMouseX();
 		mouseY = input.getMouseY();
@@ -151,7 +150,7 @@ public class MapGameState extends BasicGameState {
 		if (Input.KEY_ESCAPE == key) {
 		container.exit();
 		}
-		if (Input.KEY_SPACE == key) {
+		/*if (Input.KEY_SPACE == key) {
 			if (player == player1) {
 				player = player2;
 				player.setSelectedPlayer(true);
@@ -161,13 +160,13 @@ public class MapGameState extends BasicGameState {
 				player.setSelectedPlayer(true);
 				player2.setSelectedPlayer(false);
 			}
-		}
+		}*/
 	}
 	
 	public void mousePressed(int arg0, int arg1, int arg2) {
-		if (Input.MOUSE_LEFT_BUTTON == arg0 && mouseX >= this.player.getX()-32 && mouseX <= this.player.getX()+32 && mouseY >= this.player.getY()-60 && mouseY <= this.player.getY()+4) {
+		/*if (Input.MOUSE_LEFT_BUTTON == arg0 && mouseX >= this.player.getX()-32 && mouseX <= this.player.getX()+32 && mouseY >= this.player.getY()-60 && mouseY <= this.player.getY()+4) {
 			this.showhud = true;
-		}
+		}*/
 		
 	}
 	
