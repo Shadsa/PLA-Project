@@ -20,8 +20,8 @@ public class MapTest {
 
 		//J'initialise ma map test.
 		map = new Vector<Vector<ObjetTest>> (5);
-		for (int i = 0; i < 5; i++) {
-			map.insertElementAt(new Vector<ObjetTest> (5), i);
+		for (int j = 0; j < 5; j++) {
+			map.insertElementAt(new Vector<ObjetTest> (5), j);
 		}
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
@@ -37,10 +37,13 @@ public class MapTest {
 		//g.scale(0.75f, 0.75f);
 		spriteSheet.startUse();
 		//Parcours de la map test
+		System.out.println("Début");
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
 				Vector <ObjetTest> vi = map.elementAt(i);
 				ObjetTest vj = vi.elementAt(j);
+				System.out.println(i + " " + j);
+				System.out.println(vj.getNum());
 				if (vj.getNum() == 0) {
 					//Affiche la cellule demandée dans la table des sprites : renderInUse(coordX du container, coordY du container, indiceX de la cellule, indiceY de la cellule). 
 					spriteSheet.renderInUse(0+i*96, 0, 0, 0);
