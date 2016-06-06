@@ -6,12 +6,14 @@ import cases.Case;
 import roles.States.Statut;
 import roles.action.Joueur;
 import roles.action.World;
+import roles.classe.Classe;
 
 public class Personnage extends Observable{
 
 	Automate _brain;
 	protected int _parralysie = 0;
 	protected Case _location;
+	protected Classe classe;
 	private int _etat;
 	private int _vie;
 
