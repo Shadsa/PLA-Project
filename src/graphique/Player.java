@@ -91,6 +91,7 @@ public class Player implements Observer{
 				g.setColor(new Color(0, 0, 0, .5f));
 			    g.fillOval(x - 16, y - 8, 32, 16);
 
+			    if(_state.direction != null)
 				switch(_state.direction)
 				{
 				case NORD: anim = 2; break;
@@ -159,17 +160,17 @@ public class Player implements Observer{
 	  public void setX(float x) { this.x = x; }
 	  public float getY() { return y; }
 	  public void setY(float y) { this.y = y; }
-	  
+
 	 /* //Test walking player
 	  public float getAction_finie() { return action_finie; }
 	  public void setAction_finie(float x) { this.action_finie = x; }
-	  
+
 	  //Test with severals players
 	  public boolean getSelectedPlayer() { return selectedPlayer; }
 	  public void setSelectedPlayer(boolean select) { this.selectedPlayer = select; }
 	  public int getType() {return type;}
 	  */
-	  public int getDirection() { return direction; }  
+	  public int getDirection() { return direction; }
 	  public void setDirection(int direction) { this.direction = direction; }
 	  public boolean isMoving() { return moving; }
 	  public void setMoving(boolean moving) { this.moving = moving; }
@@ -195,7 +196,8 @@ public class Player implements Observer{
 				Personnage pers = (Personnage)obs;
 				_destX = pers.X()*tx+x0;
 				_destY = pers.Y()*ty+y0;
-				_state = (States)obj;
+				if(_state.statut != Statut.MORT)
+					_state = (States)obj;
 			}
 		}
 		private void setDirection(Cardinaux dir) {
@@ -206,5 +208,8 @@ public class Player implements Observer{
 			case EST: direction = 3; break;
 			case OUEST: direction = 1; break;
 			}
+		}
+		public States states() {
+			return _state;
 		}
 }

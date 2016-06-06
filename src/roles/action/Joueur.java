@@ -25,6 +25,6 @@ public class Joueur {
 	public void createPersonnage(int type, int x, int y)
 	{
 		// WARNING faire plutot un get automate avec gestion d'erreur
-		_personnages.add(new Personnage(_automates.get(type), x, y));
+		_personnages.add(new Personnage(_automates.get(type), x, y, this));
 	}
 }
