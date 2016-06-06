@@ -83,7 +83,7 @@ let cate_to_int (c : categorie) : int =
 
 
 let element_to_xml (i : int) (nom: String.t) : String.t =
-  "\t\t<"^nom^">"^string_of_int i^"</"^nom^">"
+  "\t\t\t<"^nom^">"^string_of_int i^"</"^nom^">"
   
 let etat_to_xml (e : etat) : String.t =
   element_to_xml e "etat"
@@ -104,26 +104,27 @@ let poids_to_xml (p : poids) : String.t =
   attribute_to_xml p
 
 let transition_to_xml ((ec,c,a,es,p) : transition) : String.t =
-  String.concat "\n" ["\t<transition "^poids_to_xml p^">";
+  String.concat "\n" ["\t\t<transition "^poids_to_xml p^">";
 		      etat_to_xml ec;
 		      condition_to_xml c;
 		      action_to_xml a;
 		      etat_to_xml es;
-		      "\t</transition>"]
+		      "\t\t</transition>"]
 
 let transition_list_to_xml (l : transition list) : String.t =
   String.concat "\n" (List.map transition_to_xml l)
 
 let automate_to_xml ((cat,l) : automate) : String.t =
-  "<automate "^cate_to_xml cat^">\n"^transition_list_to_xml l^"\n</automate>"
+  "\t<automate "^cate_to_xml cat^">\n"^transition_list_to_xml l^"\n\t</automate>"
 
 let aut1 : automate = (Citoyen,[(0,Ennemi(N),Frapper(N),2,1)])
 
 let main =
   let output = open_out "sortie.xml" in
   begin
-  output_string output "<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n\n<!DOCTYPE liste SYSTEM \"automate.dtd\">\n";
+  output_string output "<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n\n<!DOCTYPE liste SYSTEM \"automate.dtd\">\n\n<liste>\n";
   output_string output (automate_to_xml aut1);
+  output_string output "\n</liste>";
   close_out output
   end
   
