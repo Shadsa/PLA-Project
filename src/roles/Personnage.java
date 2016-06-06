@@ -13,9 +13,10 @@ public class Personnage extends Observable{
 	Automate _brain;
 	protected int _parralysie = 0;
 	protected Case _location;
-	protected Classe classe;
+	protected Classe _classe;
 	private int _etat;
 	private int _vie;
+	private int _damage;
 
 	protected int _id;
 	protected Joueur _owner;
@@ -30,7 +31,7 @@ public class Personnage extends Observable{
 		return _id;
 	}
 
-	public Personnage(Automate brain, int x, int y, Joueur owner)
+	public Personnage(Automate brain, int x, int y, Joueur owner,Classe classe)
 	{
 		_etat = 0;
 		_vie = 10;
@@ -38,6 +39,9 @@ public class Personnage extends Observable{
 		_brain = brain;
 		_parralysie = 0;
 		_owner = owner;
+		_classe = classe;
+		_vie = _classe.HP();
+		_damage = _classe.damage();
 		World.Case(x, y).setPersonnage(this);
 	}
 
@@ -75,6 +79,16 @@ public class Personnage extends Observable{
 	public void setState(States states) {
 		setChanged();
 		notifyObservers(states);
+	}
+	
+	public Classe classe(){
+		return _classe;
+	}
+	public int damage(){
+		return _damage;
+	}
+	public int vie(){
+		return _vie;
 	}
 
 	public void change_vie(int delta)

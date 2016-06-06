@@ -12,6 +12,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import roles.classe.*;
 import roles.Automate;
 import roles.Cardinaux;
 import roles.Personnage;
@@ -59,7 +60,10 @@ public class MapGameState extends BasicGameState {
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.OUEST, 1), new Libre(Cardinaux.OUEST), 1);
 		ArrayList<Automate> autlist = new ArrayList<Automate>();
 		autlist.add(aut1);
-		Joueur j2 = new Joueur("Moi", autlist);
+		Classe generique = new Classe(1,1,0,"default class","none");
+		ArrayList<Classe> classes = new ArrayList<Classe>();
+		classes.add(generique);
+		Joueur j2 = new Joueur("Moi", autlist,classes);
 		World.addPlayer(j2);
 		World.BuildMap();
 		j2.createPersonnage(0, 5, 5);
