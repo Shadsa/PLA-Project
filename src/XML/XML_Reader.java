@@ -2,11 +2,13 @@ package XML;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -18,6 +20,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import roles.Automate;
+import roles.Cardinaux;
 import roles.action.*;
 import roles.conditions.*;
 
@@ -91,10 +94,11 @@ public class XML_Reader {
 	}
 	
 	
-public static void AutomateCreate(Automate auto, Node n){
-	int etat, suiv;
-	Action action;
-	Condition cond;
+public static void AutomateCreate(Automate auto, Node n) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException, DOMException{
+	@SuppressWarnings("null")
+	int etat=(Integer) null, suiv=(Integer) null;
+	Action action=null;
+	Condition cond=null;
 	
 	if(n.getAttributes() != null && n.getAttributes().getLength() == 1){
 
@@ -107,10 +111,12 @@ public static void AutomateCreate(Automate auto, Node n){
 				etat = Integer.parseInt(node1.getAttributes().item(0).getNodeValue());
 			Node node2 = list.item(0);
 			if(node2 instanceof Element && node2.getAttributes() != null && node2.getAttributes().getLength() == 2)
-				cond = node2.getAttributes().item(0).getNodeValue();
+				cond = (Condition) Class.forName(node2.getAttributes().item(0).getNodeValue()).getDeclaredConstructor(Cardinaux.class).newInstance(node2.getAttributes().item(1).getNodeValue());
+
 			Node node3 = list.item(0);
 			if(node3 instanceof Element && node3.getAttributes() != null && node3.getAttributes().getLength() == 2)
-				action = Integer.parseInt(node3.getAttributes().item(0).getNodeValue());
+				action = (Action) Class.forName(node3.getAttributes().item(0).getNodeValue()).getDeclaredConstructor(Cardinaux.class).newInstance(node3.getAttributes().item(1).getNodeValue());
+
 			Node node4 = list.item(0);
 			if(node4 instanceof Element && node4.getAttributes() != null && node4.getAttributes().getLength() == 1)
 				suiv = Integer.parseInt(node4.getAttributes().item(0).getNodeValue());

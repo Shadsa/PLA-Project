@@ -1,0 +1,14 @@
+<?xml version = "1.0" encoding="UTF-8" standalone="no" ?>
+
+<!DOCTYPE liste SYSTEM "automate.dtd">
+
+<liste>
+	<automate type="Citoyen">
+		<transition poids="1">
+			<etat>0</etat>
+			<condition>Ennemi N</condition>
+			<action>Frapper N</action>
+			<etat>2</etat>
+		</transition>
+	</automate>
+</liste>
