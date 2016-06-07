@@ -30,7 +30,7 @@
   </class>  
   <class id="4" language="java" name="graphique.Hud" project="PLA-Project" file="/PLA-Project/src/graphique/Hud.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="169" width="130" x="1092" y="409"/>    
+    <position height="-1" width="-1" x="1176" y="718"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -66,7 +66,7 @@
   </class>  
   <class id="8" language="java" name="graphique.MapTest" project="PLA-Project" 
     file="/PLA-Project/src/graphique/MapTest.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="151" width="182" x="1262" y="409"/>    
+    <position height="-1" width="-1" x="1373" y="715"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -92,51 +92,75 @@
     </display>  
   </class>  
   <association id="11">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="12" name="player"/>      
-      <multiplicity id="13" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="12" name="hud">        
+        <position height="0" width="0" x="19" y="225"/>      
+      </attribute>      
+      <multiplicity id="13" minimum="0" maximum="1">        
+        <position height="0" width="0" x="19" y="225"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
+    <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="14">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="15" name="player"/>      
-      <multiplicity id="16" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="15" name="player">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="16" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="17">    
     <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="18" name="game"/>      
-      <multiplicity id="19" minimum="0" maximum="1"/>    
+      <attribute id="18" name="game">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="19" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="20">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="21" name="map"/>      
-      <multiplicity id="22" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="21" name="player">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="22" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
+    <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="23">    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="24" name="_players"/>      
-      <multiplicity id="25" minimum="0" maximum="2147483647"/>    
+      <attribute id="24" name="_players">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="25" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="26">    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="27" name="hud"/>      
-      <multiplicity id="28" minimum="0" maximum="1"/>    
+      <attribute id="27" name="map">        
+        <position height="0" width="0" x="20" y="231"/>      
+      </attribute>      
+      <multiplicity id="28" minimum="0" maximum="1">        
+        <position height="0" width="0" x="20" y="231"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
+    <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

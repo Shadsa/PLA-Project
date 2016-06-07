@@ -95,12 +95,12 @@ public class MapGameState extends BasicGameState {
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.OUEST, 1), new Libre(Cardinaux.OUEST), 1);
 		ArrayList<Automate> autlist = new ArrayList<Automate>();
 		autlist.add(aut1);
-		Classe generique = new Classe(1,1,0,"default class","none");
+		Classe generique = new Classe(10,5,0,"default class","none");
 		ArrayList<Classe> classes = new ArrayList<Classe>();
 		classes.add(generique);
 		Joueur j2 = new Joueur("Moi", autlist,classes);
 		World.addPlayer(j2);
-		World.BuildMap();
+		World.BuildMap(10,10);
 		j2.createPersonnage(0, 5, 5);
 		j2.createPersonnage(0, 6, 6);
 		j2.createPersonnage(0, 3, 6);

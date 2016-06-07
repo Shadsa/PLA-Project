@@ -30,7 +30,7 @@
   </enumeration>  
   <class id="4" language="java" name="roles.Automate" project="PLA-Project" file="/PLA-Project/src/roles/Automate.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="403" y="648"/>    
+    <position height="-1" width="-1" x="252" y="688"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -47,33 +47,33 @@
     </display>  
   </class>  
   <association id="6">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="7" name="_brain">        
-        <position height="0" width="0" x="-147" y="24"/>      
-      </attribute>      
-      <multiplicity id="8" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-147" y="24"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="9">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="10" name="direction">        
+      <attribute id="7" name="direction">        
         <position height="0" width="0" x="-52" y="-165"/>      
       </attribute>      
-      <multiplicity id="11" minimum="0" maximum="1">        
+      <multiplicity id="8" minimum="0" maximum="1">        
         <position height="0" width="0" x="-52" y="-165"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="12">    
+  <nesting id="9">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="2"/>  
   </nesting>  
+  <association id="10">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="11" name="_brain">        
+        <position height="0" width="0" x="-298" y="64"/>      
+      </attribute>      
+      <multiplicity id="12" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-298" y="64"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <association id="13">    
     <end type="SOURCE" refId="1" navigable="false">      
       <attribute id="14" name="statut">        

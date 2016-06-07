@@ -11,7 +11,7 @@ import roles.Personnage;
 
 public abstract class World {
 
-	static Carte _map = new Carte(10,10);
+	static Carte _map;
 	static ArrayList<Joueur> _joueurs = new ArrayList<Joueur>();
 
 	public static void addPlayer(Joueur j)
@@ -47,16 +47,7 @@ public abstract class World {
 				p.agir();
 	}
 
-	public static void BuildMap() {
-		/*Vector<Case> temp;
-		for(int i=0; i<10; i++)
-		{
-			temp = new Vector<Case>();
-			for(int j=0; j<10; j++)
-			{
-				temp.add(new Plaine(i, j));
-			}
-			_map.add(temp);
-		}*/
+	public static void BuildMap(int hauteur, int largeur) {
+		_map = new Carte(hauteur,largeur);
 	}
 }
