@@ -178,6 +178,7 @@ public class MapGameState extends BasicGameState {
 		g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
 		g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 90);
 		g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 110);
+		g.drawString("Direction joueur : " + World.getPlayers().get(0).directionJoueur(), 10, 130);
 
 		//Affichage des huds
 		if(showhud) {
@@ -269,6 +270,10 @@ public class MapGameState extends BasicGameState {
 			if (zoom() < 0) {
 				setZoom(0);
 			}
+		}
+		
+		if (_input.isKeyPressed(Input.KEY_P)) {
+			 container.setPaused(!container.isPaused());
 		}
 
 	}
