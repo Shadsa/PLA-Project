@@ -18,14 +18,17 @@ public class Carte extends Vector<Vector<Case>>{
 			for(int x=0 ; x<largeur ; x++){
 				type = R.nextInt(4);
 				switch(type){
-				case 0 : case 1 : ligne.add(new Plaine(x,y)); 
-				System.out.print('P');
-				break;
-				case 2 : ligne.add(new Arbre(x,y));
-				System.out.print('A');
-				break;
-				case 3 : ligne.add(new Caillou(x,y));
-				System.out.print('C');
+				case 0 : case 1 : 
+					ligne.add(new Plaine(x,y)); 
+					System.out.print('P');
+					break;
+				case 2 : 
+					ligne.add(new Arbre(x,y));
+					System.out.print('A');
+					break;
+				case 3 : 
+					ligne.add(new Caillou(x,y));
+					System.out.print('C');
 				}
 			}
 			add(ligne);
