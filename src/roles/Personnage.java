@@ -95,6 +95,9 @@ public class Personnage extends Observable{
 	public int armor(){
 		return _armor;
 	}
+	public Joueur owner() {
+		return _owner;
+	}
 
 	public void change_vie(int delta)
 	{
