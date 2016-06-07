@@ -24,7 +24,11 @@ public class Player implements Observer{
 	//Boolean pour savoir si le personnage bouge
 	private boolean moving = false;
 	//Tableau des modèles d'animation
-	private Animation[] animations = new Animation[12];
+	private Animation[] animations = new Animation[13];
+	//
+	private int AnimDuration;
+	public int AnimDead;
+	private Boolean _isDead;
 
 
 	protected int _id;
@@ -43,6 +47,9 @@ public class Player implements Observer{
 
 	public void init(Personnage pers) throws SlickException {
 		_id = nextID();
+		_isDead = false;
+		AnimDuration = MapGameState.Tick;
+		AnimDead = MapGameState.Tick;
 		_state = new States(Statut.ATTENDS, Cardinaux.SUD);
 		x = MapGameState.toX(pers.X());
 		y = MapGameState.toY(pers.Y());
@@ -51,6 +58,7 @@ public class Player implements Observer{
 		pers.addObserver(this);
 		SpriteSheet spriteSheet = new SpriteSheet("src/asset/sprites/BODY_skeleton.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("src/asset/sprites/slash_skeleton.png", 64, 64);
+		SpriteSheet spriteSheet3 = new SpriteSheet("src/asset/sprites/Die_skeleton.png", 64, 64);
 	    this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
 	    this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
 	    this.animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
@@ -65,6 +73,14 @@ public class Player implements Observer{
 	    this.animations[9] = loadAnimation(spriteSheet2, 0, 5, 1);
 	    this.animations[10] = loadAnimation(spriteSheet2, 0, 5, 2);
 	    this.animations[11] = loadAnimation(spriteSheet2, 0, 5, 3);
+
+	    this.animations[12] = new Animation();
+	    for (int x = 0; x < 5; x++) {
+	    	animations[12].addFrame(spriteSheet3.getSprite(x, 0), 40);
+	    }
+	    for (int x = 0; x < 30; x++) {
+	    	animations[12].addFrame(spriteSheet3.getSprite(5, 0), 40);
+	    }
 	}
 
 	/**
@@ -109,7 +125,9 @@ public class Player implements Observer{
 				case ATTAQUE:
 					anim += 8;
 				break;
-			    }//
+			    }
+			    if(_isDead && AnimDuration <= 0)
+			    	anim = 12;
 			    //System.out.println(_state.statut);
 			    g.drawAnimation(animations[anim], x-32, y-60);
 	}
@@ -118,6 +136,12 @@ public class Player implements Observer{
 	 * Met à jour le conteneur du jeu
 	 */
 	public void update(int delta) {
+		AnimDuration -= delta;
+		if(_isDead)
+		if(AnimDuration<0)
+		{
+			AnimDead -= delta;
+		}
 		if(_state.statut != Statut.AVANCE) return;
 	    if (_destX > x)
 	    {
@@ -194,8 +218,13 @@ public class Player implements Observer{
 				Personnage pers = (Personnage)obs;
 				_destX = MapGameState.toX(pers.X());
 				_destY = MapGameState.toX(pers.Y());
-				if(_state.statut != Statut.MORT)
+				if(((States)obj).statut != Statut.MORT)
+				{
 					_state = (States)obj;
+					AnimDuration += MapGameState.Tick;
+				}
+				else
+					_isDead = true;
 			}
 		}
 		private void setDirection(Cardinaux dir) {

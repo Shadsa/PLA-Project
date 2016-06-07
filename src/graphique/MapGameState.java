@@ -30,7 +30,7 @@ public class MapGameState extends BasicGameState {
 
 	static final int Tick = 1000;
 	static final int TileSize = 96;
-	static final float MoveSpeed = ((float)TileSize)/((float)Tick);
+	static final float MoveSpeed = ((float)TileSize)/((float)Tick-400);
 	static final float Ox = 48;
 	static final float Oy = 48;
 
@@ -99,7 +99,7 @@ public class MapGameState extends BasicGameState {
 		aut1.ajoute_transition(1, new AvancerJoueur(5), new OrdreDonne(), 1);
 		ArrayList<Automate> autlist = new ArrayList<Automate>();
 		autlist.add(aut1);
-		Classe generique = new Classe(10,5,0,"default class","none");
+		Classe generique = new Classe(1,5,0,"default class","none");
 		ArrayList<Classe> classes = new ArrayList<Classe>();
 		classes.add(generique);
 		Joueur j2 = new Joueur("Moi", autlist,classes);
@@ -190,7 +190,7 @@ public class MapGameState extends BasicGameState {
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		for(int i = _players.size()-1; i>=0; i--)
-			if(_players.get(i).states().statut != Statut.MORT)
+			if(_players.get(i).AnimDead>0)
 				_players.get(i).update(delta);
 			else
 				_players.remove(_players.get(i));
