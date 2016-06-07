@@ -139,6 +139,7 @@ public class MapGameState extends BasicGameState {
 		this.container = container;
 		this.map.init();
 
+		Player.sinit();
 		Player pla;
 		for(Joueur j : World.getPlayers())
 		for(Personnage pers : j.getPersonnages())
