@@ -43,7 +43,8 @@ public abstract class World {
 		Collections.shuffle(activated);
 
 		for(Personnage p : activated)
-			p.agir();
+			if(p.vie()>0)
+				p.agir();
 	}
 
 	public static void BuildMap() {
