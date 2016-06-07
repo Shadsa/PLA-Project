@@ -19,10 +19,12 @@ import roles.Personnage;
 import roles.States.Statut;
 import roles.action.Attaquer;
 import roles.action.Avancer;
+import roles.action.AvancerJoueur;
 import roles.action.Joueur;
 import roles.action.World;
 import roles.conditions.Enemy;
 import roles.conditions.Libre;
+import roles.conditions.OrdreDonne;
 
 public class MapGameState extends BasicGameState {
 
@@ -88,11 +90,13 @@ public class MapGameState extends BasicGameState {
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.EST, 1), new Libre(Cardinaux.EST), 0);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD, 0), new Libre(Cardinaux.SUD), 1);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.OUEST, 0), new Libre(Cardinaux.OUEST), 1);
+		aut1.ajoute_transition(0, new AvancerJoueur(5), new OrdreDonne(), 0);
 
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.NORD, 0), new Libre(Cardinaux.NORD), 0);
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.EST, 0), new Libre(Cardinaux.EST), 0);
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.SUD, 1), new Libre(Cardinaux.SUD), 1);
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.OUEST, 1), new Libre(Cardinaux.OUEST), 1);
+		aut1.ajoute_transition(1, new AvancerJoueur(5), new OrdreDonne(), 1);
 		ArrayList<Automate> autlist = new ArrayList<Automate>();
 		autlist.add(aut1);
 		Classe generique = new Classe(10,5,0,"default class","none");
