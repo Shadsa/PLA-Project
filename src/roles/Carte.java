@@ -1,23 +1,35 @@
 package roles;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Vector;
 
-import cases.Case;
-import cases.CaseAction;
-import cases.Plaine;
+import cases.*;
 import roles.action.World;
 
 public class Carte extends Vector<Vector<Case>>{
 
 	public Carte(int hauteur,int largeur){
 		super(hauteur);
+		Random R = new Random();
+		int type;
 		for(int y=0 ; y<hauteur ; y++){
 			Vector<Case> ligne = new Vector<Case>(largeur);
 			for(int x=0 ; x<largeur ; x++){
-				ligne.add(new Plaine(y,x));
+				type = R.nextInt(4);
+				switch(type){
+				case 0 : case 1 : ligne.add(new Plaine(y,x)); 
+				System.out.print('P');
+				break;
+				case 2 : ligne.add(new Arbre(y,x));
+				System.out.print('A');
+				break;
+				case 3 : ligne.add(new Caillou(y,x));
+				System.out.print('C');
+				}
 			}
 			add(ligne);
+			System.out.print('\n');
 		}
 	}
 	
