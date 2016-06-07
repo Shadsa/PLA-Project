@@ -26,7 +26,7 @@ import roles.conditions.Libre;
 
 public class MapGameState extends BasicGameState {
 
-	static final int Tick = 400;
+	static final int Tick = 1000;
 	static final int TileSize = 96;
 	static final float MoveSpeed = ((float)TileSize)/((float)Tick);
 	static final float Ox = 48;
@@ -265,6 +265,33 @@ public class MapGameState extends BasicGameState {
 	}
 
 	public void keyReleased(int key, char c) {
+		switch(key)
+		{
+			case Input.KEY_DOWN:
+				if(World.getPlayers().get(0).directionJoueur() == null)
+					World.getPlayers().get(0).setDirection(Cardinaux.SUD);
+				else
+					World.getPlayers().get(0).setDirection(null);
+			break;
+			case Input.KEY_UP:
+				if(World.getPlayers().get(0).directionJoueur() == null)
+					World.getPlayers().get(0).setDirection(Cardinaux.SUD);
+				else
+					World.getPlayers().get(0).setDirection(null);
+			break;
+			case Input.KEY_LEFT:
+				if(World.getPlayers().get(0).directionJoueur() == null)
+					World.getPlayers().get(0).setDirection(Cardinaux.EST);
+				else
+					World.getPlayers().get(0).setDirection(null);
+			break;
+			case Input.KEY_RIGHT:
+				if(World.getPlayers().get(0).directionJoueur() == null)
+					World.getPlayers().get(0).setDirection(Cardinaux.OUEST);
+				else
+					World.getPlayers().get(0).setDirection(null);
+			break;
+		}
 	}
 
 	public void keyPressed(int key, char c) {
