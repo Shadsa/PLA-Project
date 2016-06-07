@@ -19,12 +19,20 @@ import roles.Personnage;
 import roles.States.Statut;
 import roles.action.Attaquer;
 import roles.action.Avancer;
+import roles.action.AvancerJoueur;
 import roles.action.Joueur;
 import roles.action.World;
 import roles.conditions.Enemy;
 import roles.conditions.Libre;
+import roles.conditions.OrdreDonne;
 
 public class MapGameState extends BasicGameState {
+
+	static final int Tick = 1000;
+	static final int TileSize = 96;
+	static final float MoveSpeed = ((float)TileSize)/((float)Tick-400);
+	static final float Ox = 48;
+	static final float Oy = 48;
 
 	private GameContainer container;
 	private ArrayList<Player> _players = new ArrayList<Player>();
@@ -39,9 +47,19 @@ public class MapGameState extends BasicGameState {
 	private float _mouseMapY;
 	private boolean showhud = false;
 	private Player _selected = null;
+
 	
 	private float _offsetMapX = 0;
 	private float _offsetMapY = 0;
+
+	public static float toX(int x)
+	{
+		return x * TileSize + Ox;
+	}
+	public static float toY(int y)
+	{
+		return y * TileSize + Oy;
+	}
 
 	//Test
 	private MapTest map = new MapTest();
@@ -61,8 +79,8 @@ public class MapGameState extends BasicGameState {
 	 * Initialise le contenu du jeu, charge les animations
 	 */
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-		_input = container.getInput(); 
-		
+		_input = container.getInput();
+
 		Automate aut1 = new Automate(2);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD, 1), new Libre(Cardinaux.NORD), 0);
 		// décommenter pour tester attaque
@@ -71,19 +89,21 @@ public class MapGameState extends BasicGameState {
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.EST, 1), new Libre(Cardinaux.EST), 0);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD, 0), new Libre(Cardinaux.SUD), 1);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.OUEST, 0), new Libre(Cardinaux.OUEST), 1);
+		aut1.ajoute_transition(0, new AvancerJoueur(5), new OrdreDonne(), 0);
 
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.NORD, 0), new Libre(Cardinaux.NORD), 0);
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.EST, 0), new Libre(Cardinaux.EST), 0);
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.SUD, 1), new Libre(Cardinaux.SUD), 1);
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.OUEST, 1), new Libre(Cardinaux.OUEST), 1);
+		aut1.ajoute_transition(1, new AvancerJoueur(5), new OrdreDonne(), 1);
 		ArrayList<Automate> autlist = new ArrayList<Automate>();
 		autlist.add(aut1);
-		Classe generique = new Classe(1,1,0,"default class","none");
+		Classe generique = new Classe(1,5,0,"default class","none");
 		ArrayList<Classe> classes = new ArrayList<Classe>();
 		classes.add(generique);
 		Joueur j2 = new Joueur("Moi", autlist,classes);
 		World.addPlayer(j2);
-		World.BuildMap();
+		World.BuildMap(10,10);
 		j2.createPersonnage(0, 5, 5);
 		j2.createPersonnage(0, 6, 6);
 		j2.createPersonnage(0, 3, 6);
@@ -149,11 +169,7 @@ public class MapGameState extends BasicGameState {
 		//Affichage des personnages
 		for(Player p : _players)
 			p.render(g);
-		
-		//Affichage des huds
-		if(showhud) {
-			this.hud.render(g);
-		}
+
 		//Annule la translation pour l'affichage du string en dessous
 		g.resetTransform();
 		g.setColor(Color.white);
@@ -162,21 +178,26 @@ public class MapGameState extends BasicGameState {
 		g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
 		g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 90);
 		g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 110);
+
+		//Affichage des huds
+		if(showhud) {
+			this.hud.render(g);
+		}
 	}
 
 	protected long _time = 0;
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		for(int i = _players.size()-1; i>=0; i--)
-			if(_players.get(i).states().statut != Statut.MORT)
+			if(_players.get(i).AnimDead>0)
 				_players.get(i).update(delta);
 			else
 				_players.remove(_players.get(i));
 
 		_time += delta;
-		if(_time > 400)
+		if(_time > Tick)
 		{
-			_time -= 400;
+			_time -= Tick;
 			World.nextTurn();
 		}
 		//playerData = "Coord X :" + this.player.getX() + ", Coord Y : " + this.player.getY() + ", action_finie : " + this.player.getAction_finie();
@@ -185,7 +206,7 @@ public class MapGameState extends BasicGameState {
 		_mouseMapX = (int) ((mouseAbsoluteX + offsetMapX()) / zoom());
 		_mouseMapY = (int) ((mouseAbsoluteY + offsetMapY()) / zoom());
 		mouse = "MouseAbsoluteX : " + mouseAbsoluteX + ", MouseAbsoluteY : " + mouseAbsoluteY;
-		
+
 		//Gestion du scrolling de la map avec la souris
 		if (mouseAbsoluteY == container.getScreenHeight()) {
 			setOffsetMapY(offsetMapY() + _scrollingSpeed);
@@ -199,7 +220,7 @@ public class MapGameState extends BasicGameState {
 		if (mouseAbsoluteY == 1) {
 			setOffsetMapY(offsetMapY() - _scrollingSpeed);
 		}
-		
+
 		//Gestion du scrolling de la map avec la manette
 		if (_input.isControllerDown(0)) {
 			setOffsetMapY(offsetMapY() + _scrollingSpeed);
@@ -230,7 +251,7 @@ public class MapGameState extends BasicGameState {
 		if (_input.isKeyDown(200)) {
 			setOffsetMapY(offsetMapY() - _scrollingSpeed);
 		}
-		
+
 		//Gestion du zoom
 		//Zoom avant
 		if (_input.isKeyDown(201)) {
@@ -249,15 +270,67 @@ public class MapGameState extends BasicGameState {
 				setZoom(0);
 			}
 		}
-		
+
 	}
 
 	public void keyReleased(int key, char c) {
+		switch(key)
+		{
+		case Input.KEY_Z:
+			if(World.getPlayers().get(0).directionJoueur() != Cardinaux.NORD)
+				World.getPlayers().get(0).setDirection(Cardinaux.NORD);
+			else
+				World.getPlayers().get(0).setDirection(null);
+		break;
+		case Input.KEY_S:
+			if(World.getPlayers().get(0).directionJoueur() != Cardinaux.SUD)
+				World.getPlayers().get(0).setDirection(Cardinaux.SUD);
+			else
+				World.getPlayers().get(0).setDirection(null);
+		break;
+		case Input.KEY_D:
+			if(World.getPlayers().get(0).directionJoueur() != Cardinaux.EST)
+				World.getPlayers().get(0).setDirection(Cardinaux.EST);
+			else
+				World.getPlayers().get(0).setDirection(null);
+		break;
+		case Input.KEY_Q:
+			if(World.getPlayers().get(0).directionJoueur() != Cardinaux.OUEST)
+				World.getPlayers().get(0).setDirection(Cardinaux.OUEST);
+			else
+				World.getPlayers().get(0).setDirection(null);
+		break;
+		/*
+			case Input.KEY_DOWN:
+				if(World.getPlayers().get(0).directionJoueur() == null)
+					World.getPlayers().get(0).setDirection(Cardinaux.SUD);
+				else
+					World.getPlayers().get(0).setDirection(null);
+			break;
+			case Input.KEY_UP:
+				if(World.getPlayers().get(0).directionJoueur() == null)
+					World.getPlayers().get(0).setDirection(Cardinaux.SUD);
+				else
+					World.getPlayers().get(0).setDirection(null);
+			break;
+			case Input.KEY_LEFT:
+				if(World.getPlayers().get(0).directionJoueur() == null)
+					World.getPlayers().get(0).setDirection(Cardinaux.EST);
+				else
+					World.getPlayers().get(0).setDirection(null);
+			break;
+			case Input.KEY_RIGHT:
+				if(World.getPlayers().get(0).directionJoueur() == null)
+					World.getPlayers().get(0).setDirection(Cardinaux.OUEST);
+				else
+					World.getPlayers().get(0).setDirection(null);
+			break;*/
+		}
 	}
-	
+
 	public void keyPressed(int key, char c) {
 	}
-	
+
 	public void mousePressed(int arg0, int arg1, int arg2) {
 		//if (Input.MOUSE_LEFT_BUTTON == arg0) {//&& mouseMapX() >= this.player.getX()-32 && mouseMapX() <= this.player.getX()+32 && mouseMapY() >= this.player.getY()-60 && mouseMapY() <= this.player.getY()+4) {
 			for(Player p : _players)
@@ -290,14 +363,15 @@ public class MapGameState extends BasicGameState {
 	public float mouseMapY() {
 		return _mouseMapY;
 	}
-	
+
 	public void setMouseMapX(int x) {
 		this._mouseMapX = x;
 	}
-	
+
 	public void setMouseMapY(int y) {
 		this._mouseMapY = y;
 	}
+
 	
 	public float offsetMapX() {
 		return _offsetMapX;
@@ -311,7 +385,8 @@ public class MapGameState extends BasicGameState {
 		this._offsetMapX = x;
 	}
 	
-	public void setOffsetMapY(float f) {
-		this._offsetMapY = f;
+	public void setOffsetMapY(float y) {
+		this._offsetMapY = y;
+
 	}
 }

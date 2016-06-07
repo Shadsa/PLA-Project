@@ -1,8 +1,8 @@
 package cases;
 
-public final class Plaine extends Terrain {
+public final class Caillou extends Terrain {
 
-	public Plaine(int x, int y) {
+	public Caillou(int x, int y) {
 		super(x, y);
 	}
 

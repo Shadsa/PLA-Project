@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import roles.classe.*;
 import cases.CaseAction;
 import roles.action.Action;
 import roles.conditions.Condition;
@@ -83,5 +84,9 @@ public class Automate {
 		Collections.shuffle(choice);
 		_action.get(pers.etat()).get(choice.get(0)).Act(pers);
 		pers.setetat(_next.get(pers.etat()).get(choice.get(0)));
+	}
+	
+	public boolean match(Classe classe){
+		return true;
 	}
 }

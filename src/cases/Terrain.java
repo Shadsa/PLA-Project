@@ -17,20 +17,6 @@ public abstract class Terrain extends Case {
 	}
 
 	/*
-	 public Caillou (String type, int i){
-	 	 super();
-	 	 this.type = caillou;
-	 	 this.i = 0;
-
-	}
-
-
-	 public Arbre (String type, int i){
-		super();
-		this.type = arbre;
-		this.i = 1;
-
-	}
 
 	 public Batiment (String type, int i){
 		super();

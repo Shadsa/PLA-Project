@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import roles.Automate;
 import roles.Personnage;
 import roles.classe.Classe;
+import roles.Cardinaux;
 
 public class Joueur {
 
@@ -12,7 +13,16 @@ public class Joueur {
 	ArrayList<Personnage> _personnages;
 	ArrayList<Automate> _automates;
 	ArrayList<Classe> _classes; //indicage sur celui de Automate pour la cores'
+	Cardinaux _directionJoueur = null;
 	
+
+	public Cardinaux directionJoueur() {
+		return _directionJoueur;
+	}
+
+	public void setDirection(Cardinaux direction) {
+		this._directionJoueur = direction;
+	}
 
 	public Joueur(String nom, ArrayList<Automate> automates,ArrayList<Classe> classes)
 	{
