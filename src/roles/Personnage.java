@@ -18,6 +18,7 @@ public class Personnage extends Observable{
 	private int _vie;
 	private int _damage;
 	private int _armor;
+	private Cardinaux _directionJoueur = null;
 
 	protected int _id;
 	protected Joueur _owner;
@@ -30,6 +31,15 @@ public class Personnage extends Observable{
 	public int ID()
 	{
 		return _id;
+	}
+
+
+	public Cardinaux directionJoueur() {
+		return _directionJoueur;
+	}
+
+	public void setDirection(Cardinaux direction) {
+		this._directionJoueur = direction;
 	}
 
 	public Personnage(Automate brain, int x, int y, Joueur owner,Classe classe)

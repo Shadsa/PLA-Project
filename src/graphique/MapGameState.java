@@ -180,7 +180,7 @@ public class MapGameState extends BasicGameState {
 		g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
 		g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 90);
 		g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 110);
-		g.drawString("Direction joueur : " + World.getPlayers().get(0).directionJoueur(), 10, 130);
+		//g.drawString("Direction joueur : " + World.getPlayers().get(0).directionJoueur(), 10, 130);
 
 		//Affichage des huds
 		if(showhud) {
@@ -281,31 +281,32 @@ public class MapGameState extends BasicGameState {
 	}
 
 	public void keyReleased(int key, char c) {
+		if(showhud == false) return;
 		switch(key)
 		{
 		case Input.KEY_Z:
-			if(World.getPlayers().get(0).directionJoueur() != Cardinaux.NORD)
-				World.getPlayers().get(0).setDirection(Cardinaux.NORD);
+			if(_targetp.directionJoueur() != Cardinaux.NORD)
+				_targetp.setDirection(Cardinaux.NORD);
 			else
-				World.getPlayers().get(0).setDirection(null);
+				_targetp.setDirection(null);
 		break;
 		case Input.KEY_S:
-			if(World.getPlayers().get(0).directionJoueur() != Cardinaux.SUD)
-				World.getPlayers().get(0).setDirection(Cardinaux.SUD);
+			if(_targetp.directionJoueur() != Cardinaux.SUD)
+				_targetp.setDirection(Cardinaux.SUD);
 			else
-				World.getPlayers().get(0).setDirection(null);
+				_targetp.setDirection(null);
 		break;
 		case Input.KEY_D:
-			if(World.getPlayers().get(0).directionJoueur() != Cardinaux.EST)
-				World.getPlayers().get(0).setDirection(Cardinaux.EST);
+			if(_targetp.directionJoueur() != Cardinaux.EST)
+				_targetp.setDirection(Cardinaux.EST);
 			else
-				World.getPlayers().get(0).setDirection(null);
+				_targetp.setDirection(null);
 		break;
 		case Input.KEY_Q:
-			if(World.getPlayers().get(0).directionJoueur() != Cardinaux.OUEST)
-				World.getPlayers().get(0).setDirection(Cardinaux.OUEST);
+			if(_targetp.directionJoueur() != Cardinaux.OUEST)
+				_targetp.setDirection(Cardinaux.OUEST);
 			else
-				World.getPlayers().get(0).setDirection(null);
+				_targetp.setDirection(null);
 		break;
 		/*
 			case Input.KEY_DOWN:
@@ -352,9 +353,9 @@ public class MapGameState extends BasicGameState {
 	}
 
 	public void mouseReleased(int arg0, int arg1, int arg2) {
-		if (Input.MOUSE_LEFT_BUTTON == arg0) {
+		/*if (Input.MOUSE_LEFT_BUTTON == arg0) {
 			this.showhud = false;
-		}
+		}*/
 
 	}
 
