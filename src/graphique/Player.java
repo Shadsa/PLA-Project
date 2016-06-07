@@ -16,8 +16,7 @@ import roles.States;
 import roles.States.Statut;
 
 public class Player implements Observer{
-	private int _distanceDeplacement = 96;
-	private int _destX, _destY;
+	private float _destX, _destY;
 	//Position d'origine du personnage (x, y)
 	private float x, y;
 	//direction : 0 -> haut, 1 -> gauche, 2 -> bas, droit -> 3
@@ -27,8 +26,6 @@ public class Player implements Observer{
 	//Tableau des modèles d'animation
 	private Animation[] animations = new Animation[12];
 
-	public final int x0 = 116, y0 = 116;
-	public final int tx = 40, ty = 40;
 
 	protected int _id;
 
@@ -47,10 +44,10 @@ public class Player implements Observer{
 	public void init(Personnage pers) throws SlickException {
 		_id = nextID();
 		_state = new States(Statut.ATTENDS, Cardinaux.SUD);
-		x = pers.X()*tx+x0;
-		y = pers.Y()*ty+y0;
-		_destX = pers.X()*tx+x0;
-		_destY = pers.Y()*ty+y0;
+		x = MapGameState.toX(pers.X());
+		y = MapGameState.toY(pers.Y());
+		_destX = MapGameState.toX(pers.X());
+		_destY = MapGameState.toX(pers.Y());
 		pers.addObserver(this);
 		SpriteSheet spriteSheet = new SpriteSheet("src/asset/sprites/BODY_skeleton.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("src/asset/sprites/slash_skeleton.png", 64, 64);
@@ -125,32 +122,32 @@ public class Player implements Observer{
 	    if (_destX > x)
 	    {
 
-	    	if(_destX-x-.1f * delta<0)
+	    	if(_destX-x-MapGameState.MoveSpeed * delta<0)
 	    		x = _destX;
 	    	else
-	    		this.x += .1f * delta;
+	    		this.x += MapGameState.MoveSpeed * delta;
 	    }
 	    else if(_destX < x)
 	    {
-	    	if(x-_destX-.1f * delta<0)
+	    	if(x-_destX-MapGameState.MoveSpeed * delta<0)
 	    		x = _destX;
 	    	else
-	    		this.x -= .1f * delta;
+	    		this.x -= MapGameState.MoveSpeed * delta;
 	    }
 	    if (_destY > y)
 	    {
 
-	    	if(_destY-y-.1f * delta<0)
+	    	if(_destY-y-MapGameState.MoveSpeed * delta<0)
 	    		y = _destY;
 	    	else
-	    		this.y += .1f * delta;
+	    		this.y += MapGameState.MoveSpeed * delta;
 	    }
 	    else if(_destY < y)
 	    {
-	    	if(y-_destY-.1f * delta<0)
+	    	if(y-_destY-MapGameState.MoveSpeed * delta<0)
 	    		y = _destY;
 	    	else
-	    		this.y -= .1f * delta;
+	    		this.y -= MapGameState.MoveSpeed * delta;
 	    }
 
 	    if(_destX == x && _destY == y)
@@ -180,7 +177,7 @@ public class Player implements Observer{
 			_destX = f;
 		}
 
-		public int DestX() {
+		public float DestX() {
 			return _destX;
 		}
 
@@ -188,15 +185,15 @@ public class Player implements Observer{
 			_destY = i;
 		}
 
-		public int DestY() {
+		public float DestY() {
 			return _destY;
 		}
 
 		public void update(Observable obs, Object obj) {
 			if(obs instanceof Personnage){
 				Personnage pers = (Personnage)obs;
-				_destX = pers.X()*tx+x0;
-				_destY = pers.Y()*ty+y0;
+				_destX = MapGameState.toX(pers.X());
+				_destY = MapGameState.toX(pers.Y());
 				if(_state.statut != Statut.MORT)
 					_state = (States)obj;
 			}
