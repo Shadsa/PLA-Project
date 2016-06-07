@@ -1,8 +1,10 @@
 package cases;
 
+import java.util.Observable;
+
 import roles.Personnage;
 
-public abstract class Case {
+public abstract class Case extends Observable{
 
 	final public static int firstCaseActionId = 1000;
 

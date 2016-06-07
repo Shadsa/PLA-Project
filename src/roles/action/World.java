@@ -1,11 +1,13 @@
 package roles.action;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Vector;
 
 import cases.Case;
 import cases.Plaine;
+import graphique.ObjetTest;
 import roles.Carte;
 import roles.Personnage;
 
@@ -49,5 +51,9 @@ public abstract class World {
 
 	public static void BuildMap(int hauteur, int largeur) {
 		_map = new Carte(hauteur,largeur);
+	}
+
+	public static int SizeX() {
+		return _map.size();
 	}
 }

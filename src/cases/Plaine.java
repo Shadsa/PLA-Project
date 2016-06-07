@@ -6,7 +6,7 @@ public final class Plaine extends Terrain {
 		super(x, y);
 	}
 
-	private static int _id = getId(1);
+	public final static int _id = getId(1);
 
 	@Override
 	public int value() {
