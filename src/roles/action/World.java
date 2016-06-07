@@ -47,7 +47,7 @@ public abstract class World {
 				p.agir();
 	}
 
-	public static void BuildMap() {
-		_map = new Carte(10,10);
+	public static void BuildMap(int hauteur, int largeur) {
+		_map = new Carte(hauteur,largeur);
 	}
 }

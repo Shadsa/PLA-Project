@@ -84,7 +84,7 @@ public class MapGameState extends BasicGameState {
 		classes.add(generique);
 		Joueur j2 = new Joueur("Moi", autlist,classes);
 		World.addPlayer(j2);
-		World.BuildMap();
+		World.BuildMap(10,10);
 		j2.createPersonnage(0, 5, 5);
 		j2.createPersonnage(0, 6, 6);
 		j2.createPersonnage(0, 3, 6);
