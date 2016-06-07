@@ -2,7 +2,7 @@ package workshop;
 
 import java.util.ArrayList;
 import roles.*;
-import roles.action.Action;
+import roles.action.*;
 import roles.conditions.Condition;
 import java.io.File;
 
@@ -23,20 +23,29 @@ public class WorkshopCreator {
 	}
 	
 	public void load(){
+		// WorkShop Action
 		File f = new File(filepath+"/action.deck/");
-		//initialiser le tableau
+		//initialisation de la liste
 		ArrayList<File> files=new ArrayList<File>();
 		for (File file : f.listFiles()){
 			files.add(file);
-			// création d'un tableau regroupant tous les fichiers
+		// création d'une ArrayList regroupant tous les fichiers
 		}
-		int x = 0;
-		for (int i = 0 ; i < files.length ; i++) {
-		  if (f[i].isFile()) {
-		    x++;
-		  }
+		long taille = files.size(); // Nombre de fichiers total dans le dossier
+		for (int i=0;i< taille;i++){
+			files.get(i); // me donne le fichier
+			deckActionName.add(files.get(i).getName());
+			deckAction.add(new ArrayList<Action>()); //initialisation d'un arraylist
+			while (){ //tant que ce n'est pas la fin du fichier
+				//Lire le fichier ligne par ligne
+				
+						
+				}
+			}
+			//deckAction.get(i);
 		}
-		
+
+		// WorkShop Condition
 	}
 	
 	
