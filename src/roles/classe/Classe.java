@@ -1,5 +1,10 @@
 package roles.classe;
 
+import java.util.ArrayList;
+
+import roles.action.*;
+import roles.conditions.*;
+
 public class Classe {
 	
 	private int _HP;
@@ -7,6 +12,8 @@ public class Classe {
 	private int _armor;
 	private String _name;
 	private String _bonus;
+	private ArrayList<Action> avaibleAction;
+	private ArrayList<Condition> avaibleCondition;
 	
 	
 	public Classe(int HP, int damage, int armor, String name, String bonus){
@@ -30,6 +37,12 @@ public class Classe {
 		return _name;
 	}
 	
+	public void addAction(Action act){
+		avaibleAction.add(act);
+	}
 	
+	public void addCondition(Condition cond){
+		avaibleCondition.add(cond);
+	}
 
 }
