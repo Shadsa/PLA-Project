@@ -3,7 +3,7 @@
 <!DOCTYPE liste SYSTEM "automate.dtd">
 
 <liste>
-	<automate type="Citoyen">
+	<automate type="0">
 		<transition poids="1">
 			<etat>0</etat>
 			<condition direction="N">Libre</condition>

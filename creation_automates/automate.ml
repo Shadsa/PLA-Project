@@ -21,12 +21,16 @@ type condition =
   | ...
 *)
 
+
+type categorie = int
+(*
 type categorie =
   | Citoyen
   | Zombie
   | Soldat
 (*
   | ...
+*)
 *)
 
 type etat = int
@@ -77,6 +81,9 @@ let action_to_string (a : action) : String.t*(String.t option) =
   *)
    | _ -> "",None
 
+
+let cate_to_string (c : categorie) : String.t = string_of_int c
+(*
 let cate_to_string (c : categorie) : String.t =
   match c with
    | Citoyen -> "Citoyen"
@@ -85,7 +92,7 @@ let cate_to_string (c : categorie) : String.t =
 (*
   | ...
 *)
-    
+*)
 
 
 let attribute_to_xml (s : String.t) (nom : String.t) : String.t =
@@ -125,7 +132,7 @@ let transition_list_to_xml (l : transition list) : String.t =
 let automate_to_xml ((cat,l) : automate) : String.t =
   "\t<automate "^cate_to_xml cat^">\n"^transition_list_to_xml l^"\n\t</automate>"
 
-let aut1 : automate = (Citoyen,[(0,Libre(N),Avancer(N),0,1);
+let aut1 : automate = (0,[(0,Libre(N),Avancer(N),0,1);
 				(0,Ennemi(S),Attaquer(S),0,1);
 				(0,Ennemi(N),Attaquer(N),0,1);
 				(0,Libre(E),Avancer(E),0,1);
