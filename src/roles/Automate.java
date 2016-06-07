@@ -6,31 +6,38 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import cases.CaseAction;
 import roles.action.Action;
 import roles.conditions.Condition;
 
 public class Automate {
-	ArrayList<ArrayList<Action>> _action;
+	ArrayList<ArrayList<CaseAction>> _action;
 	ArrayList<ArrayList<Condition>> _condition;
 	ArrayList<ArrayList<Integer>> _next;
 
 	public Automate(int nb_etat)
 	{
-		_action = new ArrayList<ArrayList<Action>>();
+		_action = new ArrayList<ArrayList<CaseAction>>();
 		_condition = new ArrayList<ArrayList<Condition>>();
 		_next = new ArrayList<ArrayList<Integer>>();
 		while(nb_etat>0)
 		{
-			_action.add(new ArrayList<Action>());
+			_action.add(new ArrayList<CaseAction>());
 			_condition.add(new ArrayList<Condition>());
 			_next.add(new ArrayList<Integer>());
 			nb_etat--;
 		}
 	}
 
+
+	public ArrayList<ArrayList<CaseAction>> get_action() {
+		return _action;
+	}
+
+	
 	public void ajoute_transition(int etat, Action a, Condition c, int etat_suivant)
 	{
-		_action.get(etat).add(a);
+		_action.get(etat).add(new CaseAction(a));
 		_condition.get(etat).add(c);
 		_next.get(etat).add(etat_suivant);
 	}
