@@ -7,6 +7,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+import cases.*;
 import roles.action.World;
 
 public class MapTest {
@@ -50,7 +51,18 @@ public class MapTest {
 			for (int j = 0; j < World.SizeX(); j++) {
 				Vector <ObjetTest> vi = map.elementAt(i);
 				ObjetTest vj = vi.elementAt(j);
-				if (vj.getNum() == 0) {
+				int img = 0;
+
+				if (vj.getNum() == Arbre._id)
+					img = 1;
+				else if (vj.getNum() == Plaine._id)
+					img = 2;
+				else if (vj.getNum() == Caillou._id)
+					img = 3;
+				else if (vj.getNum() == Eau._id)
+					img = 5;
+
+				/*if (vj.getNum() == 0) {
 					//Affiche la cellule demandée dans la table des sprites : renderInUse(coordX du container, coordY du container, indiceX de la cellule, indiceY de la cellule).
 					spriteSheet.renderInUse(i*96, j*96, 0, 0);
 				} else if (vj.getNum() == 1) {
@@ -63,7 +75,8 @@ public class MapTest {
 					spriteSheet.renderInUse(i*96, j*96, 0, 3);
 				} else if (vj.getNum() == 5) {
 					spriteSheet.renderInUse(i*96, j*96, 0, 5);
-				}
+				}*/
+				spriteSheet.renderInUse(i*96, j*96, 0, img);
 
 			}
 		}

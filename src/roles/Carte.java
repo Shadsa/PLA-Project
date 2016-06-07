@@ -16,36 +16,39 @@ public class Carte extends Vector<Vector<Case>>{
 		for(int y=0 ; y<hauteur ; y++){
 			Vector<Case> ligne = new Vector<Case>(largeur);
 			for(int x=0 ; x<largeur ; x++){
-				type = R.nextInt(4);
+				type = R.nextInt(5);
 				switch(type){
-				case 0 : case 1 : 
-					ligne.add(new Plaine(x,y)); 
+				case 0 : case 1 :
+					ligne.add(new Plaine(x,y));
 					System.out.print('P');
 					break;
-				case 2 : 
+				case 2 :
 					ligne.add(new Arbre(x,y));
 					System.out.print('A');
 					break;
-				case 3 : 
+				case 3 :
 					ligne.add(new Caillou(x,y));
 					System.out.print('C');
+				case 4 :
+					ligne.add(new Eau(x,y));
+					System.out.print('E');
 				}
 			}
 			add(ligne);
 			System.out.print('\n');
 		}
 	}
-	
+
 	public Case Case(int x, int y) {
 		return (y < 0 || x < 0 || y >= size() || x >= get(y).size())? null : get(y).get(x);
 	}
-	
+
 	public Boolean isfree(int x, int y) {
 		return Case(x, y) != null && Case(x, y).isfree();
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param c : la case à placer
 	 * @param x : abscisse où placer la case c
 	 * @param y : ordonnée où placer la case c
@@ -57,9 +60,9 @@ public class Carte extends Vector<Vector<Case>>{
 		c.setPosition(x, y);
 		get(y).set(x, c);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param a : automate à placer
 	 * @param x : abscisse où placer l'automate
 	 * @param y : ordonnée où placer l'automate
