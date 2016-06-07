@@ -26,6 +26,12 @@ import roles.conditions.Libre;
 
 public class MapGameState extends BasicGameState {
 
+	static final int Tick = 400;
+	static final int TileSize = 96;
+	static final float MoveSpeed = ((float)TileSize)/((float)Tick);
+	static final float Ox = 48;
+	static final float Oy = 48;
+
 	private GameContainer container;
 	private ArrayList<Player> _players = new ArrayList<Player>();
 	//private Personnage personnage;
@@ -39,10 +45,20 @@ public class MapGameState extends BasicGameState {
 	private int _mouseMapY;
 	private boolean showhud = false;
 	private Player _selected = null;
-	
+
 	private int _offsetMapX = 0;
 	private int _offsetMapY = 0;
 	private Player player = new Player();;
+
+
+	public static float toX(int x)
+	{
+		return x * TileSize + Ox;
+	}
+	public static float toY(int y)
+	{
+		return y * TileSize + Oy;
+	}
 
 	//Test
 	private MapTest map = new MapTest();
@@ -62,8 +78,8 @@ public class MapGameState extends BasicGameState {
 	 * Initialise le contenu du jeu, charge les animations
 	 */
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-		_input = container.getInput(); 
-		
+		_input = container.getInput();
+
 		Automate aut1 = new Automate(2);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD, 1), new Libre(Cardinaux.NORD), 0);
 		// décommenter pour tester attaque
@@ -150,13 +166,13 @@ public class MapGameState extends BasicGameState {
 		//Affichage des personnages
 		for(Player p : _players)
 			p.render(g);
-		
+
 		//Affichage des huds
 		if(showhud) {
 			this.hud.render(g);
 		}
 		g.scale(1.25f, 1.25f);
-		
+
 		//Annule la translation pour l'affichage du string en dessous
 		g.resetTransform();
 		g.setColor(Color.white);
@@ -176,9 +192,9 @@ public class MapGameState extends BasicGameState {
 				_players.remove(_players.get(i));
 
 		_time += delta;
-		if(_time > 400)
+		if(_time > Tick)
 		{
-			_time -= 400;
+			_time -= Tick;
 			World.nextTurn();
 		}
 		//playerData = "Coord X :" + this.player.getX() + ", Coord Y : " + this.player.getY() + ", action_finie : " + this.player.getAction_finie();
@@ -187,7 +203,7 @@ public class MapGameState extends BasicGameState {
 		_mouseMapX = (int) ((mouseAbsoluteX + offsetMapX()) / zoom());
 		_mouseMapY = (int) ((mouseAbsoluteY + offsetMapY()) / zoom());
 		mouse = "MouseAbsoluteX : " + mouseAbsoluteX + ", MouseAbsoluteY : " + mouseAbsoluteY;
-		
+
 		//Gestion du scrolling de la map avec la souris
 		if (mouseAbsoluteY == container.getScreenHeight()) {
 			setDestMapY(offsetMapY() + _scrollingSpeed);
@@ -201,7 +217,7 @@ public class MapGameState extends BasicGameState {
 		if (mouseAbsoluteY == 1) {
 			setDestMapY(offsetMapY() - _scrollingSpeed);
 		}
-		
+
 		//Gestion du scrolling de la map avec la manette
 		if (_input.isControllerDown(0)) {
 			setDestMapY(offsetMapY() + _scrollingSpeed);
@@ -232,7 +248,7 @@ public class MapGameState extends BasicGameState {
 		if (_input.isKeyDown(200)) {
 			setDestMapY(offsetMapY() - _scrollingSpeed);
 		}
-		
+
 		//Gestion du zoom
 		//Zoom avant
 		if (_input.isKeyDown(201)) {
@@ -245,15 +261,15 @@ public class MapGameState extends BasicGameState {
 				setZoom(0);
 			}
 		}
-		
+
 	}
 
 	public void keyReleased(int key, char c) {
 	}
-	
+
 	public void keyPressed(int key, char c) {
 	}
-	
+
 	public void mousePressed(int arg0, int arg1, int arg2) {
 		/*if (Input.MOUSE_LEFT_BUTTON == arg0 && mouseX >= this.player.getX()-32 && mouseX <= this.player.getX()+32 && mouseY >= this.player.getY()-60 && mouseY <= this.player.getY()+4) {
 			this.showhud = true;
@@ -267,41 +283,41 @@ public class MapGameState extends BasicGameState {
 		}
 
 	}
-	
-	
+
+
 
 	public int getID() {
 		return ID;
 	}
-	
+
 	public int mouseMapX() {
 		return _mouseMapX;
 	}
-	
+
 	public int mouseMapY() {
 		return _mouseMapY;
 	}
-	
+
 	public void setMouseMapX(int x) {
 		this._mouseMapX = x;
 	}
-	
+
 	public void setMouseMapY(int y) {
 		this._mouseMapY = y;
 	}
-	
+
 	public int offsetMapX() {
 		return _offsetMapX;
 	}
-	
+
 	public int offsetMapY() {
 		return _offsetMapY;
 	}
-	
+
 	public void setDestMapX(int x) {
 		this._offsetMapX = x;
 	}
-	
+
 	public void setDestMapY(int y) {
 		this._offsetMapY = y;
 	}
