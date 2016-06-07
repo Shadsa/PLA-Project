@@ -267,6 +267,31 @@ public class MapGameState extends BasicGameState {
 	public void keyReleased(int key, char c) {
 		switch(key)
 		{
+		case Input.KEY_Z:
+			if(World.getPlayers().get(0).directionJoueur() == null)
+				World.getPlayers().get(0).setDirection(Cardinaux.NORD);
+			else
+				World.getPlayers().get(0).setDirection(null);
+		break;
+		case Input.KEY_S:
+			if(World.getPlayers().get(0).directionJoueur() == null)
+				World.getPlayers().get(0).setDirection(Cardinaux.SUD);
+			else
+				World.getPlayers().get(0).setDirection(null);
+		break;
+		case Input.KEY_D:
+			if(World.getPlayers().get(0).directionJoueur() == null)
+				World.getPlayers().get(0).setDirection(Cardinaux.EST);
+			else
+				World.getPlayers().get(0).setDirection(null);
+		break;
+		case Input.KEY_Q:
+			if(World.getPlayers().get(0).directionJoueur() == null)
+				World.getPlayers().get(0).setDirection(Cardinaux.OUEST);
+			else
+				World.getPlayers().get(0).setDirection(null);
+		break;
+		/*
 			case Input.KEY_DOWN:
 				if(World.getPlayers().get(0).directionJoueur() == null)
 					World.getPlayers().get(0).setDirection(Cardinaux.SUD);
@@ -290,7 +315,7 @@ public class MapGameState extends BasicGameState {
 					World.getPlayers().get(0).setDirection(Cardinaux.OUEST);
 				else
 					World.getPlayers().get(0).setDirection(null);
-			break;
+			break;*/
 		}
 	}
 
