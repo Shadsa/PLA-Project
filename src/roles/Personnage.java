@@ -82,7 +82,7 @@ public class Personnage extends Observable{
 		setChanged();
 		notifyObservers(states);
 	}
-	
+
 	public Classe classe(){
 		return _classe;
 	}
@@ -99,10 +99,10 @@ public class Personnage extends Observable{
 	public void change_vie(int delta)
 	{
 		if(delta <0){
-			delta = _armor - delta;
-			if(delta>0){delta =0;}
+			delta = _armor + delta;
+			if(delta>=0){delta =1;}
 		}
-		
+
 		_vie += delta;
 		if(_vie <= 0)
 		{

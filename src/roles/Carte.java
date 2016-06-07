@@ -34,7 +34,7 @@ public class Carte extends Vector<Vector<Case>>{
 	 * @param c : la case à placer
 	 * @param x : abscisse où placer la case c
 	 * @param y : ordonnée où placer la case c
-	 * @throws Exception 
+	 * @throws Exception : si cette case n'existe pas
 	 */
 	public void putCaseAction(CaseAction c, int x, int y) throws Exception {
 		if(x < 0 || y < 0 || x >= size() || y >= get(x).size())
@@ -43,6 +43,13 @@ public class Carte extends Vector<Vector<Case>>{
 		get(y).set(x, c);
 	}
 	
+	/**
+	 * 
+	 * @param a : automate à placer
+	 * @param x : abscisse où placer l'automate
+	 * @param y : ordonnée où placer l'automate
+	 * @throws Exception : si on ne peut placer l'automate à cette position
+	 */
 	public void putAutomate(Automate a, int x, int y) throws Exception {
 		for(ArrayList<CaseAction> ligne : a.get_action())
 			for(CaseAction c : ligne)
