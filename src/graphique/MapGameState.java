@@ -48,7 +48,9 @@ public class MapGameState extends BasicGameState {
 	private boolean showhud = false;
 	private Player _selected = null;
 
-	
+	public static Player _target = null;
+	public static Personnage _targetp = null;
+
 	private float _offsetMapX = 0;
 	private float _offsetMapY = 0;
 
@@ -271,7 +273,7 @@ public class MapGameState extends BasicGameState {
 				setZoom(0);
 			}
 		}
-		
+
 		if (_input.isKeyPressed(Input.KEY_P)) {
 			 container.setPaused(!container.isPaused());
 		}
@@ -338,10 +340,13 @@ public class MapGameState extends BasicGameState {
 
 	public void mousePressed(int arg0, int arg1, int arg2) {
 		//if (Input.MOUSE_LEFT_BUTTON == arg0) {//&& mouseMapX() >= this.player.getX()-32 && mouseMapX() <= this.player.getX()+32 && mouseMapY() >= this.player.getY()-60 && mouseMapY() <= this.player.getY()+4) {
-			for(Player p : _players)
-				if (Input.MOUSE_LEFT_BUTTON == arg0 && curseurSurPerso(p, mouseMapX(), mouseMapY())) {
-					this.showhud = true;
-				}
+		for(Player p : _players)
+			if (Input.MOUSE_LEFT_BUTTON == arg0 && curseurSurPerso(p, mouseMapX(), mouseMapY())) {
+				_target = p;
+				_targetp = World.Case((int)(MapGameState._target.DestX()-Ox)/TileSize, (int)(MapGameState._target.DestY()-Oy)/TileSize).Personnage();
+				this.showhud = true;
+				return;
+			}
 		//}
 
 	}
@@ -352,7 +357,7 @@ public class MapGameState extends BasicGameState {
 		}
 
 	}
-	
+
 	public boolean curseurSurPerso(Player p, float mouseX, float mouseY) {
 		return (mouseX >= p.getX()-32 && mouseX <= p.getX()+32 && mouseY >= p.getY()-60 && mouseY <= p.getY()+4);
 	}
@@ -360,11 +365,11 @@ public class MapGameState extends BasicGameState {
 	public int getID() {
 		return ID;
 	}
-	
+
 	public float mouseMapX() {
 		return _mouseMapX;
 	}
-	
+
 	public float mouseMapY() {
 		return _mouseMapY;
 	}
@@ -377,19 +382,19 @@ public class MapGameState extends BasicGameState {
 		this._mouseMapY = y;
 	}
 
-	
+
 	public float offsetMapX() {
 		return _offsetMapX;
 	}
-	
+
 	public float offsetMapY() {
 		return _offsetMapY;
 	}
-	
+
 	public void setOffsetMapX(float x) {
 		this._offsetMapX = x;
 	}
-	
+
 	public void setOffsetMapY(float y) {
 		this._offsetMapY = y;
 
