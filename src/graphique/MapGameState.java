@@ -286,7 +286,7 @@ public class MapGameState extends BasicGameState {
 				World.getPlayers().get(0).setDirection(null);
 		break;
 		case Input.KEY_Q:
-			if(World.getPlayers().get(0).directionJoueur() != Cardinaux.NORD)
+			if(World.getPlayers().get(0).directionJoueur() != Cardinaux.OUEST)
 				World.getPlayers().get(0).setDirection(Cardinaux.OUEST);
 			else
 				World.getPlayers().get(0).setDirection(null);
