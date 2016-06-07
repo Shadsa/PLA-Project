@@ -30,7 +30,7 @@ public class MapTest {
 		for (int i = 0; i < 100; i++) {
 			for (int j = 0; j < 100; j++) {
 				Vector <ObjetTest> vi = map.elementAt(i);
-				var = rand.nextInt(5);
+				var = rand.nextInt(6);
 				vi.insertElementAt(new ObjetTest(var), j);
 			}
 		}
@@ -64,6 +64,8 @@ public class MapTest {
 					spriteSheet.renderInUse(i*96, j*96, 0, 4);
 				} else if (vj.getNum() == 4) {
 					spriteSheet.renderInUse(i*96, j*96, 0, 3);
+				} else if (vj.getNum() == 5) {
+					spriteSheet.renderInUse(i*96, j*96, 0, 5);
 				}
 				
 			}
