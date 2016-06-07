@@ -3,10 +3,10 @@ package graphique;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.MouseListener;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -33,18 +33,37 @@ public class MapGameState extends BasicGameState {
 	public static final int ID = 2;
 	private String playerData;
 	private String mouse;
-	private int mouseX;
-	private int mouseY;
+	private int mouseAbsoluteX;
+	private int mouseAbsoluteY;
+	private int _mouseMapX;
+	private int _mouseMapY;
 	private boolean showhud = false;
+	private Player _selected = null;
+	
+	private int _offsetMapX = 0;
+	private int _offsetMapY = 0;
+	private Player player = new Player();;
 
 	//Test
 	private MapTest map = new MapTest();
+	private Input _input;
+	private int _scrollingSpeed = 8;
+	private float _zoom = 1;
 
+	public float zoom() {
+		return _zoom;
+	}
+
+	public void setZoom(float _zoom) {
+		this._zoom = _zoom;
+	}
 
 	/**
 	 * Initialise le contenu du jeu, charge les animations
 	 */
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+		_input = container.getInput(); 
+		
 		Automate aut1 = new Automate(2);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD, 1), new Libre(Cardinaux.NORD), 0);
 		// décommenter pour tester attaque
@@ -126,10 +145,25 @@ public class MapGameState extends BasicGameState {
 	 * Affichage des différents éléments du jeu
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		this.map.render(g);
+		//Affichage de la map
+		this.map.render(g, _offsetMapX, _offsetMapY, zoom());
+		//Affichage des personnages
 		for(Player p : _players)
 			p.render(g);
-		this.hud.render(g);
+		
+		//Affichage des huds
+		if(showhud) {
+			this.hud.render(g);
+		}
+		g.scale(1.25f, 1.25f);
+		
+		//Annule la translation pour l'affichage du string en dessous
+		g.resetTransform();
+		g.setColor(Color.white);
+		//Affichage de la position de la souris sur la map
+		g.drawString(mouse, 10, 50);
+		g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
+		g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 90);
 	}
 
 	protected long _time = 0;
@@ -148,29 +182,78 @@ public class MapGameState extends BasicGameState {
 			World.nextTurn();
 		}
 		//playerData = "Coord X :" + this.player.getX() + ", Coord Y : " + this.player.getY() + ", action_finie : " + this.player.getAction_finie();
-		Input input = container.getInput();
-		mouseX = input.getMouseX();
-		mouseY = input.getMouseY();
-		mouse = "MouseX : " + mouseX + ", MouseY : " + mouseY;
+		mouseAbsoluteX = _input.getAbsoluteMouseX();// + offsetMapX();
+		mouseAbsoluteY = _input.getAbsoluteMouseY();// + offsetMapY();
+		_mouseMapX = (int) ((mouseAbsoluteX + offsetMapX()) / zoom());
+		_mouseMapY = (int) ((mouseAbsoluteY + offsetMapY()) / zoom());
+		mouse = "MouseAbsoluteX : " + mouseAbsoluteX + ", MouseAbsoluteY : " + mouseAbsoluteY;
+		
+		//Gestion du scrolling de la map avec la souris
+		if (mouseAbsoluteY == container.getScreenHeight()) {
+			setDestMapY(offsetMapY() + _scrollingSpeed);
+		}
+		if (mouseAbsoluteX == 0) {
+			setDestMapX(offsetMapX() - _scrollingSpeed);
+		}
+		if (mouseAbsoluteX == container.getScreenWidth() - 1) {
+			setDestMapX(offsetMapX() + _scrollingSpeed);
+		}
+		if (mouseAbsoluteY == 1) {
+			setDestMapY(offsetMapY() - _scrollingSpeed);
+		}
+		
+		//Gestion du scrolling de la map avec la manette
+		if (_input.isControllerDown(0)) {
+			setDestMapY(offsetMapY() + _scrollingSpeed);
+		}
+		if (_input.isControllerLeft(0)) {
+			setDestMapX(offsetMapX() - _scrollingSpeed);
+		}
+		if (_input.isControllerRight(0)) {
+			setDestMapX(offsetMapX() + _scrollingSpeed);
+		}
+		if (_input.isControllerUp(0)) {
+			setDestMapY(offsetMapY() - _scrollingSpeed);
+		}
+		//Gestion du scrolling de la map avec le clavier
+		//Touche bas
+		if (_input.isKeyDown(208)) {
+			setDestMapY(offsetMapY() + _scrollingSpeed);
+		}
+		//Touche gauche
+		if (_input.isKeyDown(203)) {
+			setDestMapX(offsetMapX() - _scrollingSpeed);
+		}
+		//Touche droite
+		if (_input.isKeyDown(205)) {
+			setDestMapX(offsetMapX() + _scrollingSpeed);
+		}
+		//Touche haut
+		if (_input.isKeyDown(200)) {
+			setDestMapY(offsetMapY() - _scrollingSpeed);
+		}
+		
+		//Gestion du zoom
+		//Zoom avant
+		if (_input.isKeyDown(201)) {
+			setZoom(zoom() + 0.01f);
+		}
+		//Zoom arrière
+		if (_input.isKeyDown(209) && zoom() > 0) {
+			setZoom(zoom() - 0.01f);
+			if (zoom() < 0) {
+				setZoom(0);
+			}
+		}
+		
 	}
 
 	public void keyReleased(int key, char c) {
-		if (Input.KEY_ESCAPE == key) {
-		container.exit();
-		}
-		/*if (Input.KEY_SPACE == key) {
-			if (player == player1) {
-				player = player2;
-				player.setSelectedPlayer(true);
-				player1.setSelectedPlayer(false);
-			} else if (player == player2) {
-				player = player1;
-				player.setSelectedPlayer(true);
-				player2.setSelectedPlayer(false);
-			}
-		}*/
 	}
-
+	
+	public void keyPressed(int key, char c) {
+	}
+	
 	public void mousePressed(int arg0, int arg1, int arg2) {
 		/*if (Input.MOUSE_LEFT_BUTTON == arg0 && mouseX >= this.player.getX()-32 && mouseX <= this.player.getX()+32 && mouseY >= this.player.getY()-60 && mouseY <= this.player.getY()+4) {
 			this.showhud = true;
@@ -184,8 +267,42 @@ public class MapGameState extends BasicGameState {
 		}
 
 	}
+	
+	
 
 	public int getID() {
 		return ID;
+	}
+	
+	public int mouseMapX() {
+		return _mouseMapX;
+	}
+	
+	public int mouseMapY() {
+		return _mouseMapY;
+	}
+	
+	public void setMouseMapX(int x) {
+		this._mouseMapX = x;
+	}
+	
+	public void setMouseMapY(int y) {
+		this._mouseMapY = y;
+	}
+	
+	public int offsetMapX() {
+		return _offsetMapX;
+	}
+	
+	public int offsetMapY() {
+		return _offsetMapY;
+	}
+	
+	public void setDestMapX(int x) {
+		this._offsetMapX = x;
+	}
+	
+	public void setDestMapY(int y) {
+		this._offsetMapY = y;
 	}
 }

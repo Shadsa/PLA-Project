@@ -9,6 +9,7 @@ import org.newdawn.slick.SpriteSheet;
 
 public class MapTest {
 
+	public static int tileSize = 96;
 	private Vector<Vector<ObjetTest>> map;
 	private SpriteSheet spriteSheet;
 
@@ -16,45 +17,49 @@ public class MapTest {
 		
 		//Dans ce sprite -> cellule 0 : buisson, cellule 1 : arbre, cellule 2 : herbe, cellule 3 : tonneaux, cellule 4 : rochers. (format des cases : 96x96).
 		//Pour utiliser la méthode renderInUse(...), je dois appeler la méthode startUse() pour dire que je commence à lire cette table de sprite.
-		spriteSheet = new SpriteSheet("src/asset/sprites/tiles.png", 96, 96);
+		spriteSheet = new SpriteSheet("src/asset/sprites/tiles.png", tileSize, tileSize);
 
 		//J'initialise ma map test.
-		map = new Vector<Vector<ObjetTest>> (5);
-		for (int j = 0; j < 5; j++) {
-			map.insertElementAt(new Vector<ObjetTest> (5), j);
+		map = new Vector<Vector<ObjetTest>> (100);
+		for (int j = 0; j < 100; j++) {
+			map.insertElementAt(new Vector<ObjetTest> (100), j);
 		}
-		for (int i = 0; i < 5; i++) {
-			for (int j = 0; j < 5; j++) {
+		for (int i = 0; i < 100; i++) {
+			for (int j = 0; j < 100; j++) {
 				Vector <ObjetTest> vi = map.elementAt(i);
 				vi.insertElementAt(new ObjetTest(j%5), j);
 			}
 		}
 	}
 	
-	public void render(Graphics g) throws SlickException {
+	public void render(Graphics g, int x, int y, float zoom) throws SlickException {
 		
+		//g.resetTransform();
+		g.translate(-x, -y);
 		//Pour dézoomer de moitié décommenter la ligne dessous (attention, les coordonnées de la souris reste à l'échelle 1 donc l'affichage de l'hud ne sera plus à l'échelle)
-		//g.scale(0.75f, 0.75f);
+		//if (zoomIn) {
+		g.scale(zoom, zoom);
+		//}
+		//if (zoomOut) {
+			//g.scale(0.50f, 0.50f);
+		//}
 		spriteSheet.startUse();
 		//Parcours de la map test
-		System.out.println("Début");
-		for (int i = 0; i < 5; i++) {
-			for (int j = 0; j < 5; j++) {
+		for (int i = 0; i < 100; i++) {
+			for (int j = 0; j < 100; j++) {
 				Vector <ObjetTest> vi = map.elementAt(i);
 				ObjetTest vj = vi.elementAt(j);
-				System.out.println(i + " " + j);
-				System.out.println(vj.getNum());
 				if (vj.getNum() == 0) {
 					//Affiche la cellule demandée dans la table des sprites : renderInUse(coordX du container, coordY du container, indiceX de la cellule, indiceY de la cellule). 
-					spriteSheet.renderInUse(0+i*96, 0, 0, 0);
+					spriteSheet.renderInUse(i*96, j*96, 0, 0);
 				} else if (vj.getNum() == 1) {
-					spriteSheet.renderInUse(0+i*96, 96, 0, 2);
+					spriteSheet.renderInUse(i*96, j*96, 0, 2);
 				} else if (vj.getNum() == 2) {
-					spriteSheet.renderInUse(0+i*96, 192, 0, 1);
+					spriteSheet.renderInUse(i*96, j*96, 0, 1);
 				} else if (vj.getNum() == 3) {
-					spriteSheet.renderInUse(0+i*96, 288, 0, 4);
+					spriteSheet.renderInUse(i*96, j*96, 0, 4);
 				} else if (vj.getNum() == 4) {
-					spriteSheet.renderInUse(0+i*96, 384, 0, 3);
+					spriteSheet.renderInUse(i*96, j*96, 0, 3);
 				}
 				
 			}

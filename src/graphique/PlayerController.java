@@ -24,6 +24,7 @@ public class PlayerController implements KeyListener {
 	* Gestion d'évènements lors de la pression sur la touche de clavier
 	*/
 	public void keyPressed(int key, char c) {
+		
 		/*if(player.getSelectedPlayer()) {
 			if(!player.isMoving()) {
 				switch (key) {

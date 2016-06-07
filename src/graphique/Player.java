@@ -16,6 +16,7 @@ import roles.States;
 import roles.States.Statut;
 
 public class Player implements Observer{
+	private int _distanceDeplacement = 96;
 	private int _destX, _destY;
 	//Position d'origine du personnage (x, y)
 	private float x, y;

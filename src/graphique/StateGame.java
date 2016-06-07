@@ -1,22 +1,25 @@
 package graphique;
 
+import java.awt.Dimension;
 import java.io.File;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class StateGame extends StateBasedGame {
 
-	private static int width = 800;
-	private static int height = 600;
+	static Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize(); 
+	private static int height = (int)screenSize.getHeight(); 
+	private static int width = (int)screenSize.getWidth();
 
 	public StateGame() {
-		super("StateGame");
+		super("Jeu en cours de développement !");
 	}
-
+	
     public void initStatesList(GameContainer container) throws SlickException {
     	addState(new MainScreenGameState());
     	addState(new MapGameState());
@@ -28,16 +31,13 @@ public class StateGame extends StateBasedGame {
 	    music.loop();
 	}
 
-	public int getHeight() {
-		return this.height;
+	public void keyPressed(int key, char c) {
+		if (Input.KEY_ESCAPE == key) {
+				getContainer().exit();
+		}
 	}
-
-	public int getWidth() {
-		return this.width;
-	}
-
+	
     public static void main(String[] args) throws SlickException {
-
         AppGameContainer game = new AppGameContainer(new StateGame(), width, height, false);
         game.setTargetFrameRate(60);
         game.setShowFPS(true);
