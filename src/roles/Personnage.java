@@ -17,6 +17,7 @@ public class Personnage extends Observable{
 	private int _etat;
 	private int _vie;
 	private int _damage;
+	private int _armor;
 
 	protected int _id;
 	protected Joueur _owner;
@@ -42,6 +43,7 @@ public class Personnage extends Observable{
 		_classe = classe;
 		_vie = _classe.HP();
 		_damage = _classe.damage();
+		_armor = _classe.armor();
 		World.Case(x, y).setPersonnage(this);
 	}
 
@@ -90,9 +92,17 @@ public class Personnage extends Observable{
 	public int vie(){
 		return _vie;
 	}
+	public int armor(){
+		return _armor;
+	}
 
 	public void change_vie(int delta)
 	{
+		if(delta <0){
+			delta = _armor - delta;
+			if(delta>0){delta =0;}
+		}
+		
 		_vie += delta;
 		if(_vie <= 0)
 		{
