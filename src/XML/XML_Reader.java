@@ -44,7 +44,7 @@ public class XML_Reader {
 	           xml = builder.parse(fileXML);
 	           Element n = xml.getDocumentElement();
 	   			if(n instanceof Element){
-	   				if(n.getNodeName()=="nombre" && n.getAttributes() != null && n.getAttributes().getLength() == 1){
+	   				if(n.getNodeName()=="nombre" && n.getAttributes() == null){
 	   					int nbChild = n.getChildNodes().getLength();
 	   					NodeList list = n.getChildNodes();
 	   					for(int i = 0; i < nbChild; i++)
