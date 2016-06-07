@@ -8,7 +8,7 @@ public class Hud {
 	
 	private Image playerBars;
 	private static final int HUD_BAR_X = 10;
-	private static final int HUD_BAR_Y = 110;
+	private static final int HUD_BAR_Y = 130;
 	
 	public void init() throws SlickException {
 		this.playerBars = new Image("src/asset/sprites/hud.png");

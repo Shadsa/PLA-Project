@@ -9,12 +9,15 @@ import org.newdawn.slick.SpriteSheet;
 
 public class MapTest {
 
+	Random rand = new Random();
+	
+	
 	public static int tileSize = 96;
 	private Vector<Vector<ObjetTest>> map;
 	private SpriteSheet spriteSheet;
 
 	public void init() throws SlickException {
-		
+		rand.setSeed(0);int var;
 		//Dans ce sprite -> cellule 0 : buisson, cellule 1 : arbre, cellule 2 : herbe, cellule 3 : tonneaux, cellule 4 : rochers. (format des cases : 96x96).
 		//Pour utiliser la méthode renderInUse(...), je dois appeler la méthode startUse() pour dire que je commence à lire cette table de sprite.
 		spriteSheet = new SpriteSheet("src/asset/sprites/tiles.png", tileSize, tileSize);
@@ -27,12 +30,13 @@ public class MapTest {
 		for (int i = 0; i < 100; i++) {
 			for (int j = 0; j < 100; j++) {
 				Vector <ObjetTest> vi = map.elementAt(i);
-				vi.insertElementAt(new ObjetTest(j%5), j);
+				var = rand.nextInt(5);
+				vi.insertElementAt(new ObjetTest(var), j);
 			}
 		}
 	}
 	
-	public void render(Graphics g, int x, int y, float zoom) throws SlickException {
+	public void render(Graphics g, float x, float y, float zoom) throws SlickException {
 		
 		//g.resetTransform();
 		g.translate(-x, -y);

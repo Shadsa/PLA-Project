@@ -33,16 +33,15 @@ public class MapGameState extends BasicGameState {
 	public static final int ID = 2;
 	private String playerData;
 	private String mouse;
-	private int mouseAbsoluteX;
-	private int mouseAbsoluteY;
-	private int _mouseMapX;
-	private int _mouseMapY;
+	private float mouseAbsoluteX;
+	private float mouseAbsoluteY;
+	private float _mouseMapX;
+	private float _mouseMapY;
 	private boolean showhud = false;
 	private Player _selected = null;
 	
-	private int _offsetMapX = 0;
-	private int _offsetMapY = 0;
-	private Player player = new Player();;
+	private float _offsetMapX = 0;
+	private float _offsetMapY = 0;
 
 	//Test
 	private MapTest map = new MapTest();
@@ -155,8 +154,6 @@ public class MapGameState extends BasicGameState {
 		if(showhud) {
 			this.hud.render(g);
 		}
-		g.scale(1.25f, 1.25f);
-		
 		//Annule la translation pour l'affichage du string en dessous
 		g.resetTransform();
 		g.setColor(Color.white);
@@ -164,6 +161,7 @@ public class MapGameState extends BasicGameState {
 		g.drawString(mouse, 10, 50);
 		g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
 		g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 90);
+		g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 110);
 	}
 
 	protected long _time = 0;
@@ -190,57 +188,63 @@ public class MapGameState extends BasicGameState {
 		
 		//Gestion du scrolling de la map avec la souris
 		if (mouseAbsoluteY == container.getScreenHeight()) {
-			setDestMapY(offsetMapY() + _scrollingSpeed);
+			setOffsetMapY(offsetMapY() + _scrollingSpeed);
 		}
 		if (mouseAbsoluteX == 0) {
-			setDestMapX(offsetMapX() - _scrollingSpeed);
+			setOffsetMapX(offsetMapX() - _scrollingSpeed);
 		}
 		if (mouseAbsoluteX == container.getScreenWidth() - 1) {
-			setDestMapX(offsetMapX() + _scrollingSpeed);
+			setOffsetMapX(offsetMapX() + _scrollingSpeed);
 		}
 		if (mouseAbsoluteY == 1) {
-			setDestMapY(offsetMapY() - _scrollingSpeed);
+			setOffsetMapY(offsetMapY() - _scrollingSpeed);
 		}
 		
 		//Gestion du scrolling de la map avec la manette
 		if (_input.isControllerDown(0)) {
-			setDestMapY(offsetMapY() + _scrollingSpeed);
+			setOffsetMapY(offsetMapY() + _scrollingSpeed);
 		}
 		if (_input.isControllerLeft(0)) {
-			setDestMapX(offsetMapX() - _scrollingSpeed);
+			setOffsetMapX(offsetMapX() - _scrollingSpeed);
 		}
 		if (_input.isControllerRight(0)) {
-			setDestMapX(offsetMapX() + _scrollingSpeed);
+			setOffsetMapX(offsetMapX() + _scrollingSpeed);
 		}
 		if (_input.isControllerUp(0)) {
-			setDestMapY(offsetMapY() - _scrollingSpeed);
+			setOffsetMapY(offsetMapY() - _scrollingSpeed);
 		}
 		//Gestion du scrolling de la map avec le clavier
 		//Touche bas
 		if (_input.isKeyDown(208)) {
-			setDestMapY(offsetMapY() + _scrollingSpeed);
+			setOffsetMapY(offsetMapY() + _scrollingSpeed);
 		}
 		//Touche gauche
 		if (_input.isKeyDown(203)) {
-			setDestMapX(offsetMapX() - _scrollingSpeed);
+			setOffsetMapX(offsetMapX() - _scrollingSpeed);
 		}
 		//Touche droite
 		if (_input.isKeyDown(205)) {
-			setDestMapX(offsetMapX() + _scrollingSpeed);
+			setOffsetMapX(offsetMapX() + _scrollingSpeed);
 		}
 		//Touche haut
 		if (_input.isKeyDown(200)) {
-			setDestMapY(offsetMapY() - _scrollingSpeed);
+			setOffsetMapY(offsetMapY() - _scrollingSpeed);
 		}
 		
 		//Gestion du zoom
 		//Zoom avant
 		if (_input.isKeyDown(201)) {
 			setZoom(zoom() + 0.01f);
+			//Marche pas
+			//setOffsetMapY(container.getScreenWidth()/zoom()/2 - mouseAbsoluteX);
+			//setOffsetMapX(container.getScreenHeight()/zoom()/2 - mouseAbsoluteY);
 		}
 		//Zoom arrière
 		if (_input.isKeyDown(209) && zoom() > 0) {
 			setZoom(zoom() - 0.01f);
+			//Marche pas
+			//setOffsetMapY(container.getScreenWidth()/zoom()/2 - mouseAbsoluteX);
+			//setOffsetMapX(container.getScreenHeight()/zoom()/2 - mouseAbsoluteY);
 			if (zoom() < 0) {
 				setZoom(0);
 			}
@@ -255,9 +259,12 @@ public class MapGameState extends BasicGameState {
 	}
 	
 	public void mousePressed(int arg0, int arg1, int arg2) {
-		/*if (Input.MOUSE_LEFT_BUTTON == arg0 && mouseX >= this.player.getX()-32 && mouseX <= this.player.getX()+32 && mouseY >= this.player.getY()-60 && mouseY <= this.player.getY()+4) {
-			this.showhud = true;
-		}*/
+		//if (Input.MOUSE_LEFT_BUTTON == arg0) {//&& mouseMapX() >= this.player.getX()-32 && mouseMapX() <= this.player.getX()+32 && mouseMapY() >= this.player.getY()-60 && mouseMapY() <= this.player.getY()+4) {
+			for(Player p : _players)
+				if (Input.MOUSE_LEFT_BUTTON == arg0 && curseurSurPerso(p, mouseMapX(), mouseMapY())) {
+					this.showhud = true;
+				}
+		//}
 
 	}
 
@@ -268,17 +275,19 @@ public class MapGameState extends BasicGameState {
 
 	}
 	
-	
+	public boolean curseurSurPerso(Player p, float mouseX, float mouseY) {
+		return (mouseX >= p.getX()-32 && mouseX <= p.getX()+32 && mouseY >= p.getY()-60 && mouseY <= p.getY()+4);
+	}
 
 	public int getID() {
 		return ID;
 	}
 	
-	public int mouseMapX() {
+	public float mouseMapX() {
 		return _mouseMapX;
 	}
 	
-	public int mouseMapY() {
+	public float mouseMapY() {
 		return _mouseMapY;
 	}
 	
@@ -290,19 +299,19 @@ public class MapGameState extends BasicGameState {
 		this._mouseMapY = y;
 	}
 	
-	public int offsetMapX() {
+	public float offsetMapX() {
 		return _offsetMapX;
 	}
 	
-	public int offsetMapY() {
+	public float offsetMapY() {
 		return _offsetMapY;
 	}
 	
-	public void setDestMapX(int x) {
+	public void setOffsetMapX(float x) {
 		this._offsetMapX = x;
 	}
 	
-	public void setDestMapY(int y) {
-		this._offsetMapY = y;
+	public void setOffsetMapY(float f) {
+		this._offsetMapY = f;
 	}
 }
