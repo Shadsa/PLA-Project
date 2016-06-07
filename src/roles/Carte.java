@@ -18,13 +18,13 @@ public class Carte extends Vector<Vector<Case>>{
 			for(int x=0 ; x<largeur ; x++){
 				type = R.nextInt(4);
 				switch(type){
-				case 0 : case 1 : ligne.add(new Plaine(y,x)); 
+				case 0 : case 1 : ligne.add(new Plaine(x,y)); 
 				System.out.print('P');
 				break;
-				case 2 : ligne.add(new Arbre(y,x));
+				case 2 : ligne.add(new Arbre(x,y));
 				System.out.print('A');
 				break;
-				case 3 : ligne.add(new Caillou(y,x));
+				case 3 : ligne.add(new Caillou(x,y));
 				System.out.print('C');
 				}
 			}
@@ -34,7 +34,7 @@ public class Carte extends Vector<Vector<Case>>{
 	}
 	
 	public Case Case(int x, int y) {
-		return (x < 0 || y < 0 || x >= size() || y >= get(x).size())? null : get(x).get(y);
+		return (y < 0 || x < 0 || y >= size() || x >= get(y).size())? null : get(y).get(x);
 	}
 	
 	public Boolean isfree(int x, int y) {
