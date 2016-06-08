@@ -1,20 +1,33 @@
 package cases;
 
-public final class Eau extends Terrain {
+import roles.Cardinaux;
+import roles.Personnage;
+import roles.action.Action;
+import roles.action.Attaquer;
 
-	public Eau(int x, int y) {
-		super(x, y);
-	}
+public final class Eau extends TypeCase {
 
+	protected static Action _action = new Attaquer(Cardinaux.NORD,1);
+	
+	private static Eau _instance = new Eau();
+	
 	public final static int _id = getId(1);
 
-	@Override
 	public int value() {
 		return _id;
 	}
 
 	@Override
-	public Boolean isfree() {
+	protected void Act(Personnage pers) {
+		_action.Act(pers);		
+	}
+
+	public static TypeCase getInstance() {
+		return _instance;
+	}
+
+	@Override
+	public boolean franchissable() {
 		return false;
 	}
 

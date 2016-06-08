@@ -6,16 +6,16 @@ import roles.Personnage;
 
 public abstract class Case extends Observable{
 
-	final public static int firstCaseActionId = 1000;
-
 	Personnage _personnage;
 	protected int _x;
 	protected int _y;
+	protected TypeCase _type;
 
-	Case(int x, int y)
+	Case(int x, int y, TypeCase type)
 	{
 		_x = x;
 		_y = y;
+		_type = type;
 	}
 
 	public Boolean isfree() {
@@ -33,9 +33,13 @@ public abstract class Case extends Observable{
 		}
 	}
 	
-	public abstract Case modifierCase(Class<? extends Case> c);
+	public void modifierCase(TypeCase type){
+		_type = type;
+	}
 
-	public abstract int value();
+	public int value(){
+		return _type.value();
+	}
 
 	public int X()
 	{
