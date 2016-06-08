@@ -28,6 +28,7 @@ public class Player implements Observer{
 	//Tableau des modèles d'animation
 	private static Animation[] animations = new Animation[13];
 	private static Animation[] Hanimations = new Animation[13];
+	private static Animation[] Danimations = new Animation[4];
 	//
 	private int AnimDuration;
 	public int AnimDead;
@@ -121,6 +122,13 @@ public static void sinit() throws SlickException
 	    for (int x = 0; x < 30; x++) {
 	    	Hanimations[12].addFrame(HspriteSheet3.getSprite(5, 0), 40);
 	    }
+
+	    SpriteSheet spriteSheetW = new SpriteSheet("src/asset/sprites/WEAPON_dagger.png", 64, 64);
+	    Danimations[0] = loadAnimation(spriteSheetW, 0, 5, 0);
+	    Danimations[1] = loadAnimation(spriteSheetW, 0, 5, 1);
+	    Danimations[2] = loadAnimation(spriteSheetW, 0, 5, 2);
+	    Danimations[3] = loadAnimation(spriteSheetW, 0, 5, 3);
+
 	}
 
 	/**
@@ -141,6 +149,8 @@ public static void sinit() throws SlickException
 
 	public void render(Graphics g) throws SlickException {
 		int anim = 0;
+		int dir = 0;
+		int danim = -1;
 		//Affichage du personnage avec l'ombre et modification des coordonnées des pieds du personnage
 				g.setColor(new Color(0, 0, 0, .5f));
 			    g.fillOval(x - 16, y - 8, 32, 16);
@@ -148,24 +158,28 @@ public static void sinit() throws SlickException
 			    if(_state.direction != null)
 				switch(_state.direction)
 				{
-				case NORD: anim = 2; break;
-				case SUD: anim = 0; break;
-				case EST: anim = 3; break;
-				case OUEST: anim = 1; break;
+				case NORD: dir = 2; break;
+				case SUD: dir = 0; break;
+				case EST: dir = 3; break;
+				case OUEST: dir = 1; break;
 				}
 
 			    switch(_state.statut)
 			    {
 			    case AVANCE:
-			    	anim += 4;
+			    	anim = 4;
 			    break;
 			    case ATTENDS:
-			    	anim += 0;
+			    	anim = 0;
 			    break;
 				case ATTAQUE:
-					anim += 8;
+					anim = 8;
+					danim = dir;
 				break;
 			    }
+
+			    anim += dir;
+
 			    if(_isDead && AnimDuration <= 0)
 			    	anim = 12;
 			    //System.out.println(_state.statut);
@@ -173,6 +187,9 @@ public static void sinit() throws SlickException
 			    	g.drawAnimation(Hanimations[anim], x-32, y-60);
 			    else
 			    	g.drawAnimation(animations[anim], x-32, y-60);
+
+			    if(danim != -1 && anim != 12)
+			    	g.drawAnimation(Danimations[danim], x-32, y-60);
 	}
 
 	/**
