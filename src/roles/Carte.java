@@ -13,27 +13,34 @@ public class Carte extends Vector<Vector<Case>>{
 		super(hauteur);
 		Random R = new Random();
 		int type;
+		Case c;
 		for(int y=0 ; y<hauteur ; y++){
 			Vector<Case> ligne = new Vector<Case>(largeur);
 			for(int x=0 ; x<largeur ; x++){
 				type = R.nextInt(5);
 				switch(type){
 				case 0 : case 1 :
-					ligne.add(new Plaine(x,y));
+					c = new Plaine(x,y);
 					System.out.print('P');
 					break;
 				case 2 :
-					ligne.add(new Arbre(x,y));
+					c = new Arbre(x,y);
 					System.out.print('A');
 					break;
 				case 3 :
-					ligne.add(new Caillou(x,y));
+					c = new Caillou(x,y);
 					System.out.print('C');
 					break;
 				case 4 :
-					ligne.add(new Eau(x,y));
+					c = new Eau(x,y);
 					System.out.print('E');
+					break;
+				default :
+					c = new Plaine(x,y);
+					System.out.print('D');
 				}
+				//NE PAS OUBLIER LES BREAKS QUAND ON RAJOUTE UN TYPE DE CASE
+				ligne.add(c);
 			}
 			add(ligne);
 			System.out.print('\n');

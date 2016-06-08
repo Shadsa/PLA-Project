@@ -32,6 +32,8 @@ public abstract class Case extends Observable{
 			personnage.setCase(this);
 		}
 	}
+	
+	public abstract Case modifierCase(Class<? extends Case> c);
 
 	public abstract int value();
 
