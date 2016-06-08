@@ -1,6 +1,8 @@
 package workshop;
+import java.util.Observable;
+
 import roles.*;
 
-public class WorkshopUI {
+public class WorkshopUI extends Observable {
 
 }
