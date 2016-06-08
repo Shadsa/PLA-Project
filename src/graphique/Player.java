@@ -27,10 +27,12 @@ public class Player implements Observer{
 	private boolean moving = false;
 	//Tableau des modèles d'animation
 	private static Animation[] animations = new Animation[13];
+	private static Animation[] Hanimations = new Animation[13];
 	//
 	private int AnimDuration;
 	public int AnimDead;
 	private Boolean _isDead;
+	private Boolean _human;
 
 
 	protected int _id;
@@ -47,7 +49,8 @@ public class Player implements Observer{
 		return _id;
 	}
 
-	public void init(Personnage pers) throws SlickException {
+	public void init(Personnage pers, Boolean human) throws SlickException {
+		_human = human;
 		_id = nextID();
 		_isDead = false;
 		AnimDuration = MapGameState.Tick;
@@ -86,6 +89,37 @@ public static void sinit() throws SlickException
 	    }
 	    for (int x = 0; x < 30; x++) {
 	    	animations[12].addFrame(spriteSheet3.getSprite(5, 0), 40);
+	    }
+
+
+
+
+
+
+	    SpriteSheet HspriteSheet = new SpriteSheet("src/asset/sprites/BODY_male.png", 64, 64);
+		SpriteSheet HspriteSheet2 = new SpriteSheet("src/asset/sprites/Human_Slash.png", 64, 64);
+		SpriteSheet HspriteSheet3 = new SpriteSheet("src/asset/sprites/Human_Die.png", 64, 64);
+	    Hanimations[0] = loadAnimation(HspriteSheet, 0, 1, 0);
+	    Hanimations[1] = loadAnimation(HspriteSheet, 0, 1, 1);
+	    Hanimations[2] = loadAnimation(HspriteSheet, 0, 1, 2);
+	    Hanimations[3] = loadAnimation(HspriteSheet, 0, 1, 3);
+	    Hanimations[4] = loadAnimation(HspriteSheet, 1, 9, 0);
+	    Hanimations[5] = loadAnimation(HspriteSheet, 1, 9, 1);
+	    Hanimations[6] = loadAnimation(HspriteSheet, 1, 9, 2);
+	    Hanimations[7] = loadAnimation(HspriteSheet, 1, 9, 3);
+
+
+	    Hanimations[8] = loadAnimation(HspriteSheet2, 0, 5, 0);
+	    Hanimations[9] = loadAnimation(HspriteSheet2, 0, 5, 1);
+	    Hanimations[10] = loadAnimation(HspriteSheet2, 0, 5, 2);
+	    Hanimations[11] = loadAnimation(HspriteSheet2, 0, 5, 3);
+
+	    Hanimations[12] = new Animation();
+	    for (int x = 0; x < 5; x++) {
+	    	Hanimations[12].addFrame(HspriteSheet3.getSprite(x, 0), 40);
+	    }
+	    for (int x = 0; x < 30; x++) {
+	    	Hanimations[12].addFrame(HspriteSheet3.getSprite(5, 0), 40);
 	    }
 	}
 
@@ -135,7 +169,10 @@ public static void sinit() throws SlickException
 			    if(_isDead && AnimDuration <= 0)
 			    	anim = 12;
 			    //System.out.println(_state.statut);
-			    g.drawAnimation(animations[anim], x-32, y-60);
+			    if(_human)
+			    	g.drawAnimation(Hanimations[anim], x-32, y-60);
+			    else
+			    	g.drawAnimation(animations[anim], x-32, y-60);
 	}
 
 	/**

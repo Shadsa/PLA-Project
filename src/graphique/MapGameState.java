@@ -105,7 +105,9 @@ public class MapGameState extends BasicGameState {
 		ArrayList<Classe> classes = new ArrayList<Classe>();
 		classes.add(generique);
 		Joueur j2 = new Joueur("Moi", autlist,classes);
+		Joueur jZ = new Joueur("Zombie", autlist,classes);
 		World.addPlayer(j2);
+		World.addPlayer(jZ);
 		World.BuildMap(10,10);
 		j2.createPersonnage(0, 5, 5);
 		j2.createPersonnage(0, 6, 6);
@@ -125,15 +127,15 @@ public class MapGameState extends BasicGameState {
 		j2.createPersonnage(0, 0, 8);
 		j2.createPersonnage(0, 0, 9);
 
-		j2.createPersonnage(0, 1, 1);
-		j2.createPersonnage(0, 1, 2);
-		j2.createPersonnage(0, 1, 3);
-		j2.createPersonnage(0, 1, 4);
-		j2.createPersonnage(0, 1, 5);
-		j2.createPersonnage(0, 1, 6);
-		j2.createPersonnage(0, 1, 7);
-		j2.createPersonnage(0, 1, 8);
-		j2.createPersonnage(0, 1, 9);
+		jZ.createPersonnage(0, 1, 1);
+		jZ.createPersonnage(0, 1, 2);
+		jZ.createPersonnage(0, 1, 3);
+		jZ.createPersonnage(0, 1, 4);
+		jZ.createPersonnage(0, 1, 5);
+		jZ.createPersonnage(0, 1, 6);
+		jZ.createPersonnage(0, 1, 7);
+		jZ.createPersonnage(0, 1, 8);
+		jZ.createPersonnage(0, 1, 9);
 		//personnage = j2.getPersonnages().get(0);
 
 
@@ -146,7 +148,7 @@ public class MapGameState extends BasicGameState {
 		for(Personnage pers : j.getPersonnages())
 		{
 			pla = new Player();
-			pla.init(pers);
+			pla.init(pers, j == j2);
 			_players.add(pla);
 		}
 
