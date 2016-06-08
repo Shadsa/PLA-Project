@@ -36,23 +36,18 @@ public class WorkshopCreator {
 			files.get(i); // me donne le fichier
 			deckActionName.add(files.get(i).getName());
 			deckAction.add(new ArrayList<Action>()); //initialisation d'un arraylist
-			/*while (){ //tant que ce n'est pas la fin du fichier
+			while (){ //tant que ce n'est pas la fin du fichier
 				//Lire le fichier ligne par ligne
-<<<<<<< HEAD
-				²
-						
-				}
-=======
 
 
-				}*/
->>>>>>> a508c3e77f08483686e558e624b058bd6d57721a
+
 			}
-			//deckAction.get(i);
+
+			deckAction.get(i);
 		}
 
 		// WorkShop Condition
-	//}
+	}
 
 
 	public ArrayList<Action> getDeckAction(String name){
