@@ -29,6 +29,7 @@ public class Carte extends Vector<Vector<Case>>{
 				case 3 :
 					ligne.add(new Caillou(x,y));
 					System.out.print('C');
+					break;
 				case 4 :
 					ligne.add(new Eau(x,y));
 					System.out.print('E');
