@@ -19,7 +19,7 @@ public abstract class Case extends Observable{
 	}
 
 	public Boolean isfree() {
-		return _personnage == null;
+		return _type.franchissable()&&_personnage == null;
 	}
 
 	public void setPersonnage(Personnage personnage) {

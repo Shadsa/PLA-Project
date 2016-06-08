@@ -5,9 +5,11 @@ import roles.action.Action;
 
 public class CaseAction extends Case {
 
+	Batiment _initial;
 	
-	CaseAction(int x, int y, TypeCase type) {
-		super(x, y, type);
+	public CaseAction(Batiment type) {
+		super(0, 0, type);
+		_initial = type;
 	}
 
 	public void setPosition(int x, int y){
