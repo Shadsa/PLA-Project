@@ -49,14 +49,12 @@ public class WorkshopCreator {
 
 			deckAction.get(i);
 		}
-<<<<<<< HEAD
 
 		// WorkShop Condition
 	}
 
 
 	public ArrayList<Action> getDeckAction(String name){
-=======
 		
 	}
 	
@@ -70,7 +68,6 @@ public class WorkshopCreator {
 	
 	
 	public ArrayList<Class<Action>> getDeckAction(String name){
->>>>>>> e1187004348e62b6110225146ea1277060dd88ad
 		for(int i=0;i<deckActionName.size();i++){
 			if(deckActionName.get(i)==name){
 				return deckAction.get(deckActionName.indexOf(deckActionName.get(i)));
