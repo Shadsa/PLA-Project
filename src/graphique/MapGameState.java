@@ -9,6 +9,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.MouseListener;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -48,6 +49,7 @@ public class MapGameState extends BasicGameState {
 	private float _mouseMapY;
 	private boolean showhud = false;
 	private Player _selected = null;
+	private float alpha = 0;
 
 	public static Player _target = null;
 	public static Personnage _targetp = null;
@@ -168,6 +170,7 @@ public class MapGameState extends BasicGameState {
 	 * Affichage des différents éléments du jeu
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+
 		//Affichage de la map
 		this.map.render(g, _offsetMapX, _offsetMapY, zoom());
 		//Affichage des personnages
@@ -188,6 +191,26 @@ public class MapGameState extends BasicGameState {
 		if(showhud) {
 			this.hud.render(g);
 		}
+		
+		if (container.isPaused()) {
+		    Rectangle rect = new Rectangle (0, 0, container.getScreenWidth(), container.getScreenHeight());
+		 //   g.scale(1.5f,1.5f);
+		    
+		    
+		    g.setColor(new Color (0, 0, 0, alpha));
+		    g.fill(rect);
+		    g.setColor(Color.white);
+		    g.drawString("PAUSE", container.getScreenWidth()/2-5, container.getScreenHeight()/2);
+
+		    if (alpha < 0.7f) {
+		        alpha += 0.01f;
+		    }
+		}
+		else {
+		    if (alpha > 0) {
+		        alpha -= 0.01f;
+		    }
+	    }
 	}
 
 	protected long _time = 0;
