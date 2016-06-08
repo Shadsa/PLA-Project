@@ -48,7 +48,9 @@ public class MapGameState extends BasicGameState {
 	private boolean showhud = false;
 	private Player _selected = null;
 
-	
+	public static Player _target = null;
+	public static Personnage _targetp = null;
+
 	private float _offsetMapX = 0;
 	private float _offsetMapY = 0;
 
@@ -137,6 +139,7 @@ public class MapGameState extends BasicGameState {
 		this.container = container;
 		this.map.init();
 
+		Player.sinit();
 		Player pla;
 		for(Joueur j : World.getPlayers())
 		for(Personnage pers : j.getPersonnages())
@@ -178,7 +181,7 @@ public class MapGameState extends BasicGameState {
 		g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
 		g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 90);
 		g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 110);
-		g.drawString("Direction joueur : " + World.getPlayers().get(0).directionJoueur(), 10, 130);
+		//g.drawString("Direction joueur : " + World.getPlayers().get(0).directionJoueur(), 10, 130);
 
 		//Affichage des huds
 		if(showhud) {
@@ -271,7 +274,7 @@ public class MapGameState extends BasicGameState {
 				setZoom(0);
 			}
 		}
-		
+
 		if (_input.isKeyPressed(Input.KEY_P)) {
 			 container.setPaused(!container.isPaused());
 		}
@@ -279,31 +282,32 @@ public class MapGameState extends BasicGameState {
 	}
 
 	public void keyReleased(int key, char c) {
+		if(showhud == false) return;
 		switch(key)
 		{
 		case Input.KEY_Z:
-			if(World.getPlayers().get(0).directionJoueur() != Cardinaux.NORD)
-				World.getPlayers().get(0).setDirection(Cardinaux.NORD);
+			if(_targetp.directionJoueur() != Cardinaux.NORD)
+				_targetp.setDirection(Cardinaux.NORD);
 			else
-				World.getPlayers().get(0).setDirection(null);
+				_targetp.setDirection(null);
 		break;
 		case Input.KEY_S:
-			if(World.getPlayers().get(0).directionJoueur() != Cardinaux.SUD)
-				World.getPlayers().get(0).setDirection(Cardinaux.SUD);
+			if(_targetp.directionJoueur() != Cardinaux.SUD)
+				_targetp.setDirection(Cardinaux.SUD);
 			else
-				World.getPlayers().get(0).setDirection(null);
+				_targetp.setDirection(null);
 		break;
 		case Input.KEY_D:
-			if(World.getPlayers().get(0).directionJoueur() != Cardinaux.EST)
-				World.getPlayers().get(0).setDirection(Cardinaux.EST);
+			if(_targetp.directionJoueur() != Cardinaux.EST)
+				_targetp.setDirection(Cardinaux.EST);
 			else
-				World.getPlayers().get(0).setDirection(null);
+				_targetp.setDirection(null);
 		break;
 		case Input.KEY_Q:
-			if(World.getPlayers().get(0).directionJoueur() != Cardinaux.OUEST)
-				World.getPlayers().get(0).setDirection(Cardinaux.OUEST);
+			if(_targetp.directionJoueur() != Cardinaux.OUEST)
+				_targetp.setDirection(Cardinaux.OUEST);
 			else
-				World.getPlayers().get(0).setDirection(null);
+				_targetp.setDirection(null);
 		break;
 		/*
 			case Input.KEY_DOWN:
@@ -338,21 +342,24 @@ public class MapGameState extends BasicGameState {
 
 	public void mousePressed(int arg0, int arg1, int arg2) {
 		//if (Input.MOUSE_LEFT_BUTTON == arg0) {//&& mouseMapX() >= this.player.getX()-32 && mouseMapX() <= this.player.getX()+32 && mouseMapY() >= this.player.getY()-60 && mouseMapY() <= this.player.getY()+4) {
-			for(Player p : _players)
-				if (Input.MOUSE_LEFT_BUTTON == arg0 && curseurSurPerso(p, mouseMapX(), mouseMapY())) {
-					this.showhud = true;
-				}
+		for(Player p : _players)
+			if (Input.MOUSE_LEFT_BUTTON == arg0 && curseurSurPerso(p, mouseMapX(), mouseMapY())) {
+				_target = p;
+				_targetp = World.Case((int)(MapGameState._target.DestX()-Ox)/TileSize, (int)(MapGameState._target.DestY()-Oy)/TileSize).Personnage();
+				this.showhud = true;
+				return;
+			}
 		//}
 
 	}
 
 	public void mouseReleased(int arg0, int arg1, int arg2) {
-		if (Input.MOUSE_LEFT_BUTTON == arg0) {
+		/*if (Input.MOUSE_LEFT_BUTTON == arg0) {
 			this.showhud = false;
-		}
+		}*/
 
 	}
-	
+
 	public boolean curseurSurPerso(Player p, float mouseX, float mouseY) {
 		return (mouseX >= p.getX()-32 && mouseX <= p.getX()+32 && mouseY >= p.getY()-60 && mouseY <= p.getY()+4);
 	}
@@ -360,11 +367,11 @@ public class MapGameState extends BasicGameState {
 	public int getID() {
 		return ID;
 	}
-	
+
 	public float mouseMapX() {
 		return _mouseMapX;
 	}
-	
+
 	public float mouseMapY() {
 		return _mouseMapY;
 	}
@@ -377,19 +384,19 @@ public class MapGameState extends BasicGameState {
 		this._mouseMapY = y;
 	}
 
-	
+
 	public float offsetMapX() {
 		return _offsetMapX;
 	}
-	
+
 	public float offsetMapY() {
 		return _offsetMapY;
 	}
-	
+
 	public void setOffsetMapX(float x) {
 		this._offsetMapX = x;
 	}
-	
+
 	public void setOffsetMapY(float y) {
 		this._offsetMapY = y;
 

@@ -26,7 +26,7 @@ public class Player implements Observer{
 	//Boolean pour savoir si le personnage bouge
 	private boolean moving = false;
 	//Tableau des modèles d'animation
-	private Animation[] animations = new Animation[13];
+	private static Animation[] animations = new Animation[13];
 	//
 	private int AnimDuration;
 	public int AnimDead;
@@ -58,25 +58,29 @@ public class Player implements Observer{
 		_destX = MapGameState.toX(pers.X());
 		_destY = MapGameState.toX(pers.Y());
 		pers.addObserver(this);
+	}
+
+public static void sinit() throws SlickException
+{
 		SpriteSheet spriteSheet = new SpriteSheet("src/asset/sprites/BODY_skeleton.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("src/asset/sprites/slash_skeleton.png", 64, 64);
 		SpriteSheet spriteSheet3 = new SpriteSheet("src/asset/sprites/Die_skeleton.png", 64, 64);
-	    this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
-	    this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
-	    this.animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
-	    this.animations[3] = loadAnimation(spriteSheet, 0, 1, 3);
-	    this.animations[4] = loadAnimation(spriteSheet, 1, 9, 0);
-	    this.animations[5] = loadAnimation(spriteSheet, 1, 9, 1);
-	    this.animations[6] = loadAnimation(spriteSheet, 1, 9, 2);
-	    this.animations[7] = loadAnimation(spriteSheet, 1, 9, 3);
+	    animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
+	    animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
+	    animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
+	    animations[3] = loadAnimation(spriteSheet, 0, 1, 3);
+	    animations[4] = loadAnimation(spriteSheet, 1, 9, 0);
+	    animations[5] = loadAnimation(spriteSheet, 1, 9, 1);
+	    animations[6] = loadAnimation(spriteSheet, 1, 9, 2);
+	    animations[7] = loadAnimation(spriteSheet, 1, 9, 3);
 
 
-	    this.animations[8] = loadAnimation(spriteSheet2, 0, 5, 0);
-	    this.animations[9] = loadAnimation(spriteSheet2, 0, 5, 1);
-	    this.animations[10] = loadAnimation(spriteSheet2, 0, 5, 2);
-	    this.animations[11] = loadAnimation(spriteSheet2, 0, 5, 3);
+	    animations[8] = loadAnimation(spriteSheet2, 0, 5, 0);
+	    animations[9] = loadAnimation(spriteSheet2, 0, 5, 1);
+	    animations[10] = loadAnimation(spriteSheet2, 0, 5, 2);
+	    animations[11] = loadAnimation(spriteSheet2, 0, 5, 3);
 
-	    this.animations[12] = new Animation();
+	    animations[12] = new Animation();
 	    for (int x = 0; x < 5; x++) {
 	    	animations[12].addFrame(spriteSheet3.getSprite(x, 0), 40);
 	    }
@@ -93,7 +97,7 @@ public class Player implements Observer{
 	 * @param y
 	 * @return
 	 */
-	private Animation loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
+	private static Animation loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
 	    Animation animation = new Animation();
 	    for (int x = startX; x < endX; x++) {
 	        animation.addFrame(spriteSheet.getSprite(x, y), 100);
@@ -241,5 +245,5 @@ public class Player implements Observer{
 		public States states() {
 			return _state;
 		}
-		
+
 }

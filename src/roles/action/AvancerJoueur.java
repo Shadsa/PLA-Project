@@ -15,7 +15,7 @@ public final class AvancerJoueur extends Action {
 
 	@Override
 	public void Act(Personnage pers) {
-		Cardinaux direction = pers.owner().directionJoueur();
+		Cardinaux direction = pers.directionJoueur();
 		if(direction==null) return;
 		int destX = pers.X() + ((direction == Cardinaux.OUEST)? (-1) : ((direction == Cardinaux.EST)? 1 : 0));
 		int destY = pers.Y() + ((direction == Cardinaux.SUD)? (-1) : ((direction == Cardinaux.NORD)? 1 : 0));

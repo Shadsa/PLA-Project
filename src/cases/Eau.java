@@ -1,8 +1,8 @@
 package cases;
 
-public final class Plaine extends Terrain {
+public final class Eau extends Terrain {
 
-	public Plaine(int x, int y) {
+	public Eau(int x, int y) {
 		super(x, y);
 	}
 
@@ -11,6 +11,11 @@ public final class Plaine extends Terrain {
 	@Override
 	public int value() {
 		return _id;
+	}
+
+	@Override
+	public Boolean isfree() {
+		return false;
 	}
 
 }
