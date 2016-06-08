@@ -2,22 +2,49 @@ package roles.classe;
 
 import java.util.ArrayList;
 
+import roles.Bonus;
 import roles.action.*;
 import roles.conditions.*;
 
 public class Classe {
 	
+	
+	
 	private int _HP;
 	private int _damage;
 	private int _armor;
 	private String _name;
-	private String _bonus;
+	private Bonus _bonus;
 	private ArrayList<Action> avaibleAction;
 	private ArrayList<Condition> avaibleCondition;
 	
 	
-	public Classe(int HP, int damage, int armor, String name, String bonus){
+	public Classe(int HP, int damage, int armor, String name, Bonus bonus){
 		_HP = HP; _damage=damage; _armor=armor; _name= name; _bonus=bonus;
+		modifier(bonus);
+	}
+	
+	public Classe(int HP, int damage, int armor, String name, Bonus bonus, ArrayList<Action> act , ArrayList<Condition> cond){
+		_HP = HP; _damage=damage; _armor=armor; _name= name; _bonus=bonus; avaibleAction = act; avaibleCondition = cond;
+		modifier(bonus);
+	}
+	
+	public void modifier(Bonus x){
+		switch(x){
+			case FORCE : 
+				_damage += 10; 
+				break;
+			case VIE :
+				_HP+=10;
+				break;
+			case ARMURE:
+				_armor+=10;
+				break;
+			case OPBUFF:
+				_HP+=30;_damage+=30;_armor+=30;
+				break;
+		}
+		
 	}
 	
 	public int HP(){
