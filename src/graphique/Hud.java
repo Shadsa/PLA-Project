@@ -15,8 +15,10 @@ public class Hud {
 	}
 
 	public void render (Graphics g) {
-		g.drawImage(this.playerBars, HUD_BAR_X, HUD_BAR_Y);
-		g.drawString("Vie : " + MapGameState._targetp.vie(), 20, 140);
+		if (MapGameState._targetp != null) {
+			g.drawImage(this.playerBars, HUD_BAR_X, HUD_BAR_Y);
+			g.drawString("Vie : " + MapGameState._targetp.vie(), 20, 140);
+		}
 	}
 
 }
