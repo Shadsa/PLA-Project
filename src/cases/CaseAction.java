@@ -28,4 +28,12 @@ public class CaseAction extends Case {
 	public int poids() {
 		return _type.poids();
 	}
+
+	@Override
+	public Case modifierCase(Class<? extends Case> c) {
+		if(CaseAction.class.isAssignableFrom(c)){
+			
+		}
+		return this;
+	}
 }
