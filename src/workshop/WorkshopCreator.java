@@ -38,7 +38,7 @@ public class WorkshopCreator {
 			deckAction.add(new ArrayList<Action>()); //initialisation d'un arraylist
 			while (){ //tant que ce n'est pas la fin du fichier
 				//Lire le fichier ligne par ligne
-				
+				²
 						
 				}
 			}
