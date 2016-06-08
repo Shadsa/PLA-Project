@@ -10,17 +10,6 @@ public class Terrain extends Case {
 
 	protected String _ressource;
 
-
-	/*
-
-	 public Batiment (String type, int i){
-		super();
-		this.type = batiment;
-		this.i = 2;
-
-	}
-	*/
-
 	public void Ressources (String type){
 		this._ressource = type ;
 	}
