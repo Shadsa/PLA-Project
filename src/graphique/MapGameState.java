@@ -12,6 +12,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import roles.Bonus;
 import roles.classe.*;
 import roles.Automate;
 import roles.Cardinaux;
@@ -100,7 +101,7 @@ public class MapGameState extends BasicGameState {
 		aut1.ajoute_transition(1, new AvancerJoueur(5), new OrdreDonne(), 1);
 		ArrayList<Automate> autlist = new ArrayList<Automate>();
 		autlist.add(aut1);
-		Classe generique = new Classe(1,5,0,"default class","none");
+		Classe generique = new Classe(10,5,0,"default class",Bonus.VIE);
 		ArrayList<Classe> classes = new ArrayList<Classe>();
 		classes.add(generique);
 		Joueur j2 = new Joueur("Moi", autlist,classes);
