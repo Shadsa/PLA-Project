@@ -40,7 +40,7 @@ public class WorkshopCreator {
 			files.get(i); // me donne le fichier
 			deckActionName.add(files.get(i).getName());
 			deckAction.add(new ArrayList<Action>()); //initialisation d'un arraylist
-			while (){ //tant que ce n'est pas la fin du fichier
+			/*while (){ //tant que ce n'est pas la fin du fichier
 				//Lire le fichier ligne par ligne
 
 
@@ -51,7 +51,7 @@ public class WorkshopCreator {
 		}
 
 		// WorkShop Condition
-	}
+	}*/
 
 
 	public ArrayList<Action> getDeckAction(String name){
