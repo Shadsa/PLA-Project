@@ -10,8 +10,8 @@ public final class Avancer extends Action {
 	Cardinaux _direction;
 	private static int _Id = Action.getId(4);
 
-	public Avancer(Cardinaux card, int poids) {
-		super(poids);
+	public Avancer(Cardinaux card) {
+		super();
 		_direction = card;
 	}
 
