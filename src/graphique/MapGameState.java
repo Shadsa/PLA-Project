@@ -22,6 +22,7 @@ import roles.States.Statut;
 import roles.action.Attaquer;
 import roles.action.Avancer;
 import roles.action.AvancerJoueur;
+import roles.action.Dupliquer;
 import roles.action.Joueur;
 import roles.action.Raser;
 import roles.action.World;
@@ -91,15 +92,15 @@ public class MapGameState extends BasicGameState {
 		Automate aut1 = new Automate(2);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD), new Libre(Cardinaux.NORD), 0, 1);
 		// décommenter pour tester attaque
-		aut1.ajoute_transition(0, new Attaquer(Cardinaux.SUD), new Ennemi(Cardinaux.SUD), 0, 1);
-		aut1.ajoute_transition(0, new Attaquer(Cardinaux.NORD), new Ennemi(Cardinaux.NORD), 0, 1);
-		aut1.ajoute_transition(0, new Attaquer(Cardinaux.EST), new Ennemi(Cardinaux.EST), 0, 1);
-		aut1.ajoute_transition(0, new Attaquer(Cardinaux.OUEST), new Ennemi(Cardinaux.OUEST), 0, 1);
+		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.SUD), new Libre(Cardinaux.SUD), 0, 1);
+		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.NORD), new Libre(Cardinaux.NORD), 0, 1);
+		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.EST), new Libre(Cardinaux.EST), 0, 1);
+		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.OUEST), new Libre(Cardinaux.OUEST), 0, 1);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.EST), new Libre(Cardinaux.EST), 0, 1);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD), new Libre(Cardinaux.SUD), 1, 0);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.OUEST), new Libre(Cardinaux.OUEST), 1, 0);
 		aut1.ajoute_transition(0, new AvancerJoueur(), new OrdreDonne(), 0, 5);
-		aut1.ajoute_transition(0, new Raser(), new Vide(), 1, 1);
+		//aut1.ajoute_transition(0, new Raser(), new Vide(), 1, 1);
 
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.NORD), new Libre(Cardinaux.NORD), 0, 0);
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.EST), new Libre(Cardinaux.EST), 0, 0);
