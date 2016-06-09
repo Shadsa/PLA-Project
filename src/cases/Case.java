@@ -35,6 +35,8 @@ public abstract class Case extends Observable{
 	
 	public void modifierCase(TypeCase type){
 		_type = type;
+		setChanged();
+		notifyObservers(value());
 	}
 
 	public int value(){

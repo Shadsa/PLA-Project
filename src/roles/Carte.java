@@ -85,4 +85,8 @@ public class Carte extends Vector<Vector<Case>>{
 					throw new Exception("Impossible de placer l'automate");
 				}
 	}
+	
+	public void setCase(TypeCase type, int x, int y){
+		Case(x,y).modifierCase(type);
+	}
 }
