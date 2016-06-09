@@ -130,7 +130,8 @@ public class XML_Reader {
 					suiv = Integer.parseInt(e4.getTextContent());
 				}
 			}
-			auto.ajoute_transition(etat,action,cond,suiv);
+			//j'ai mis le poids à 0 pour l'instant
+			auto.ajoute_transition(etat,action,cond,suiv,0);
 		}
 	}
 }
