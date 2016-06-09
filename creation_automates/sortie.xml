@@ -1,7 +1,7 @@
 <?xml version = "1.0" encoding="UTF-8" standalone="no" ?>
 
 <liste>
-	<automate type="2">
+	<automate nbEtats="2">
 		<transition poids="1">
 			<etat>0</etat>
 			<condition direction="N">Libre</condition>
