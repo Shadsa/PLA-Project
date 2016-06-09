@@ -15,6 +15,6 @@ public class Type extends Condition {
 
 	@Override
 	public boolean value(Personnage target) {
-		return World.Case(target.X(), target.Y()) != null && World.Case(target.X(), target.Y()).type().value()==_type;
+		return World.Case(target.X(), target.Y()).type().value()==_type;
 	}
 }
