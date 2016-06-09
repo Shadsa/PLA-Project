@@ -122,8 +122,8 @@ public class MapGameState extends BasicGameState {
 				| NoSuchMethodException | SecurityException | ClassNotFoundException | DOMException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("Erreur XML");
 		}
-		System.out.println(autlist.size());
 		//autlist.add(aut1);
 		Classe generique = new Classe(10,5,0,"default class",Bonus.VIE);
 		ArrayList<Classe> classes = new ArrayList<Classe>();

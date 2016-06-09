@@ -16,6 +16,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.lang.reflect.Method;
+
+import cases.TypeCase;
+
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -48,8 +53,6 @@ public class XML_Reader {
 	   					int nbChild = n.getChildNodes().getLength();
 	   					NodeList list = n.getChildNodes();
 	   					for(int i = 1; i < nbChild; i+=2){
-	   						System.out.println("esthd");
-
 	   						automate = ListeCreate(list.item(i));
 	   						liste.add(automate);
 	   					}
@@ -58,10 +61,16 @@ public class XML_Reader {
 	       } catch (SAXParseException e) {}    
 	    }catch (ParserConfigurationException e) {
 	        e.printStackTrace();
+	        System.out.println("Erreur XML");
+	        return null;
 	     } catch (SAXException e1) {
 	        e1.printStackTrace();
+	        System.out.println("Erreur XML");
+	        return null;
 	     } catch (IOException e2) {
 	        e2.printStackTrace();
+	        System.out.println("Erreur XML");
+	        return null;
 	     }
 	    return liste;
 	}	
@@ -123,7 +132,7 @@ public class XML_Reader {
 		int etat=0, suiv=0, poids=0;
 		Action action=null;
 		Condition cond=null;
-		System.out.println("esthd");
+		System.out.println("esrdfndf");
 		if(n.getAttributes() != null && n.getAttributes().getLength() == 1){
 			poids = Integer.parseInt(n.getAttributes().item(0).getNodeValue());
 			//final NodeList trans = ((Element) n).getElementsByTagName("transition");
@@ -144,7 +153,17 @@ public class XML_Reader {
 					//final Element e2 = node2.item(0);
 					final Element e2 = (Element) ((Element) trans).getElementsByTagName("condition").item(0);
 					String s1 = e2.getTextContent();
-					cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(Cardinaux.class).newInstance(CardOfString(node2.getAttributes().item(0).getNodeValue()));
+					Cardinaux C = CardOfString(node2.getAttributes().item(0).getNodeValue());
+					if(C!=null)
+						cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(Cardinaux.class).newInstance(C);
+					else{
+						Method meth = null;
+						meth = Class.forName("roles.conditions."+s1).getMethod("getInstance",  (Class<?>[]) null);
+						if(meth != null)
+							cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(TypeCase.class).newInstance(meth.invoke(null, null));
+						else
+							cond = (Condition) Class.forName("roles.conditions."+s1).newInstance();
+					}
 				}
 				else{
 					if(node2 instanceof Element){
@@ -173,12 +192,6 @@ public class XML_Reader {
 					suiv = Integer.parseInt(e4.getTextContent());
 				}
 			}
-			System.out.println();
-			System.out.println(etat);
-			System.out.println(cond);
-			System.out.println(action);
-			System.out.println(suiv);
-			System.out.println();
 			auto.ajoute_transition(etat,action,cond,suiv,poids);
 		}
 	}
