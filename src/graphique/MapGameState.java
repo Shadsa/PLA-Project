@@ -132,7 +132,7 @@ public class MapGameState extends BasicGameState {
 		Joueur jZ = new Joueur("Zombie", autlist,classes);
 		World.addPlayer(j2);
 		World.addPlayer(jZ);
-		World.BuildMap(10,100);
+		World.BuildMap(40,75);
 		j2.createPersonnage(0, 5, 5);
 		j2.createPersonnage(0, 6, 6);
 		j2.createPersonnage(0, 3, 6);
