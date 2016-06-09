@@ -8,6 +8,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 
 import roles.Cardinaux;
@@ -34,7 +35,7 @@ public class Player implements Observer{
 	public int AnimDead;
 	private Boolean _isDead;
 	private Boolean _human;
-
+	private SoundEffect soundEffect;
 
 	protected int _id;
 
@@ -62,6 +63,8 @@ public class Player implements Observer{
 		_destX = MapGameState.toX(pers.X());
 		_destY = MapGameState.toX(pers.Y());
 		pers.addObserver(this);
+		soundEffect = new SoundEffect();
+		soundEffect.init();
 	}
 
 public static void sinit() throws SlickException
@@ -98,7 +101,7 @@ public static void sinit() throws SlickException
 
 
 	    SpriteSheet HspriteSheet = new SpriteSheet("src/asset/sprites/BODY_male.png", 64, 64);
-		SpriteSheet HspriteSheet2 = new SpriteSheet("src/asset/sprites/Human_Slash.png", 64, 64);
+		SpriteSheet HspriteSheet2 = new SpriteSheet("src/asset/sprites/BODY_human_slash_test.png", 64, 64);
 		SpriteSheet HspriteSheet3 = new SpriteSheet("src/asset/sprites/Human_Die.png", 64, 64);
 	    Hanimations[0] = loadAnimation(HspriteSheet, 0, 1, 0);
 	    Hanimations[1] = loadAnimation(HspriteSheet, 0, 1, 1);
@@ -180,8 +183,9 @@ public static void sinit() throws SlickException
 
 			    anim += dir;
 
-			    if(_isDead && AnimDuration <= 0)
+			    if(_isDead && AnimDuration <= 0) {
 			    	anim = 12;
+			    }
 			    //System.out.println(_state.statut);
 			    if(_human)
 			    	g.drawAnimation(Hanimations[anim], x-32, y-60);
@@ -283,8 +287,13 @@ public static void sinit() throws SlickException
 					_state = (States)obj;
 					AnimDuration += MapGameState.Tick;
 				}
-				else
+				else {
 					_isDead = true;
+					if(_human)
+						soundEffect.dead_human().play();
+					if(!_human)
+						soundEffect.dead_skeleton().play();
+				}
 			}
 		}
 		private void setDirection(Cardinaux dir) {

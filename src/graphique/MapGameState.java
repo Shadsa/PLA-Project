@@ -91,6 +91,8 @@ public class MapGameState extends BasicGameState {
 		// décommenter pour tester attaque
 		aut1.ajoute_transition(0, new Attaquer(Cardinaux.SUD, 1), new Ennemi(Cardinaux.SUD), 0);
 		aut1.ajoute_transition(0, new Attaquer(Cardinaux.NORD, 1), new Ennemi(Cardinaux.NORD), 0);
+		aut1.ajoute_transition(0, new Attaquer(Cardinaux.EST, 1), new Ennemi(Cardinaux.EST), 0);
+		aut1.ajoute_transition(0, new Attaquer(Cardinaux.OUEST, 1), new Ennemi(Cardinaux.OUEST), 0);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.EST, 1), new Libre(Cardinaux.EST), 0);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD, 0), new Libre(Cardinaux.SUD), 1);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.OUEST, 0), new Libre(Cardinaux.OUEST), 1);
@@ -386,6 +388,7 @@ public class MapGameState extends BasicGameState {
 
 	}
 
+	//Méthode permettant de savoir si le curseur de la souris est sur le personnage
 	public boolean curseurSurPerso(Player p, float mouseX, float mouseY) {
 		return (mouseX >= p.getX()-32 && mouseX <= p.getX()+32 && mouseY >= p.getY()-60 && mouseY <= p.getY()+4);
 	}
