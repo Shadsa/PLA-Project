@@ -40,7 +40,7 @@ public class Joueur extends Observable{
 		notifyObservers(newPers);
 		return newPers;
 	}
-	
+
 	public int ressources(){
 		return _ressources;
 	}
@@ -49,7 +49,7 @@ public class Joueur extends Observable{
 		if(_ressources+modificateur>=0){
 			_ressources+=modificateur;
 			return true;
-		}			
+		}
 		return false;
 	}
 }
