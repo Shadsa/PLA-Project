@@ -33,11 +33,9 @@ public class WorkshopCreator {
 	public void load(){
 		// WorkShop Action
 		File f = new File(filepath+"/action.deck/");
-		//initialisation de la liste
 		ArrayList<File> files=new ArrayList<File>();
 		for (File file : f.listFiles()){
 			files.add(file);
-		// création d'une ArrayList regroupant tous les fichiers
 		}
 		int taille = files.size(); // Nombre de fichiers total dans le dossier
 		for (int i=0;i< taille;i++){
@@ -45,12 +43,43 @@ public class WorkshopCreator {
 			deckActionName.add(files.get(i).getName());
 			deckAction.add(new ArrayList<Class<Action>>()); //initialisation d'un arraylist
 			files.get(i).list();
-			while (c!=-1){ //.read renvoi -1 à la fin du fichier
-				//Lire le fichier ligne par ligne
+			FileInputStream fis = null;
+			      try {
+			         fis = new FileInputStream(new File(files.get(i).getName()));
+			         byte[] buf = new byte[8];
+			         int n = 0;
+			       /*  while ((n = fis.read(buf)) >= 0) {
+			            // On écrit dans notre deuxième fichier avec l'objet adéquat
+			        	Class.forName()
+			            // On affiche ce qu'a lu notre boucle au format byte et au
+			            // format char
+			            for (byte bit : buf) {
+			               System.out.print("\t" + bit + "(" + (char) bit + ")");
+			               System.out.println("");
+			            }
+			            buf = new byte[8];
+
+			         }
+
+			      } catch (FileNotFoundException e) {
+			         e.printStackTrace();
+			      } catch (IOException e) {
+			         e.printStackTrace();
+			      } finally {
+			         try {
+			            if (fis != null)
+			               fis.close();
+			         } catch (IOException e) {
+			            e.printStackTrace();
+			         }
+			         }
+			      }
+			   }
+			}*/
 				//Class.forName(ligne lue)
 
 
-			}
+			      }
 
 			deckAction.get(i);
 		}
