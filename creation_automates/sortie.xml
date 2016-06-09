@@ -1,80 +1,102 @@
 <?xml version = "1.0" encoding="UTF-8" standalone="no" ?>
 
-<!DOCTYPE liste SYSTEM "automate.dtd">
-
 <liste>
 	<automate type="0">
 		<transition poids="1">
 			<etat>0</etat>
 			<condition direction="N">Libre</condition>
 			<action direction="N">Avancer</action>
-			<etat>0</etat>
+			<suivant>0</suivant>
 		</transition>
+		<transition poids="1">
+			<etat>0</etat>
+			<condition direction="E">Libre</condition>
+			<action direction="E">Avancer</action>
+			<suivant>0</suivant>
+		</transition>
+		<transition poids="0">
+			<etat>0</etat>
+			<condition direction="S">Libre</condition>
+			<action direction="S">Avancer</action>
+			<suivant>1</suivant>
+		</transition>
+		<transition poids="0">
+			<etat>0</etat>
+			<condition direction="O">Libre</condition>
+			<action direction="O">Avancer</action>
+			<suivant>1</suivant>
+		</transition>
+		<transition poids="1">
+			<etat>0</etat>
+			<condition direction="S">Libre</condition>
+			<action direction="S">Dupliquer</action>
+			<suivant>0</suivant>
+		</transition>		
+		<transition poids="1">
+			<etat>0</etat>
+			<condition direction="N">Libre</condition>
+			<action direction="N">Dupliquer</action>
+			<suivant>0</suivant>
+		</transition>	
+		<transition poids="1">
+			<etat>0</etat>
+			<condition direction="E">Libre</condition>
+			<action direction="E">Dupliquer</action>
+			<suivant>0</suivant>
+		</transition>	
+		<transition poids="1">
+			<etat>0</etat>
+			<condition direction="O">Libre</condition>
+			<action direction="O">Dupliquer</action>
+			<suivant>0</suivant>
+		</transition>	
 		<transition poids="1">
 			<etat>0</etat>
 			<condition direction="S">Ennemi</condition>
 			<action direction="S">Attaquer</action>
-			<etat>0</etat>
+			<suivant>0</suivant>
 		</transition>
 		<transition poids="1">
 			<etat>0</etat>
 			<condition direction="N">Ennemi</condition>
 			<action direction="N">Attaquer</action>
-			<etat>0</etat>
-		</transition>
-		<transition poids="1">
-			<etat>0</etat>
-			<condition direction="E">Libre</condition>
-			<action direction="E">Avancer</action>
-			<etat>0</etat>
-		</transition>
-		<transition poids="0">
-			<etat>0</etat>
-			<condition direction="S">Libre</condition>
-			<action direction="S">Avancer</action>
-			<etat>0</etat>
-		</transition>
-		<transition poids="0">
-			<etat>0</etat>
-			<condition direction="O">Libre</condition>
-			<action direction="O">Avancer</action>
-			<etat>1</etat>
+			<suivant>0</suivant>
 		</transition>
 		<transition poids="5">
 			<etat>0</etat>
 			<condition>OrdreDonne</condition>
 			<action>AvancerJoueur</action>
-			<etat>0</etat>
+			<suivant>0</suivant>
 		</transition>
 		<transition poids="0">
 			<etat>1</etat>
 			<condition direction="N">Libre</condition>
 			<action direction="N">Avancer</action>
-			<etat>0</etat>
+			<suivant>0</suivant>
 		</transition>
 		<transition poids="0">
 			<etat>1</etat>
 			<condition direction="E">Libre</condition>
 			<action direction="E">Avancer</action>
-			<etat>0</etat>
+			<suivant>0</suivant>
 		</transition>
 		<transition poids="1">
 			<etat>1</etat>
 			<condition direction="S">Libre</condition>
 			<action direction="S">Avancer</action>
-			<etat>1</etat>
+			<suivant>1</suivant>
 		</transition>
 		<transition poids="1">
 			<etat>1</etat>
 			<condition direction="O">Libre</condition>
 			<action direction="O">Avancer</action>
-			<etat>1</etat>
+			<suivant>1</suivant>
 		</transition>
 		<transition poids="5">
 			<etat>0</etat>
 			<condition>OrdreDonne</condition>
 			<action>AvancerJoueur</action>
-			<etat>1</etat>
+			<suivant>1</suivant>
 		</transition>
 	</automate>
 </liste>

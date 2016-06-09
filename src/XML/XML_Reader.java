@@ -42,13 +42,14 @@ public class XML_Reader {
 	       Document xml;
 	       try {
 	           xml = builder.parse(fileXML);
-				Element n = xml.getDocumentElement();
-
+	           Element n = xml.getDocumentElement();
 				if(n instanceof Element){
 	   				if(n.getNodeName()=="liste"){
 	   					int nbChild = n.getChildNodes().getLength();
 	   					NodeList list = n.getChildNodes();
 	   					for(int i = 1; i < nbChild; i+=2){
+	   						System.out.println("esthd");
+
 	   						automate = ListeCreate(list.item(i));
 	   						liste.add(automate);
 	   					}
@@ -122,7 +123,7 @@ public class XML_Reader {
 		int etat=0, suiv=0, poids=0;
 		Action action=null;
 		Condition cond=null;
-		
+		System.out.println("esthd");
 		if(n.getAttributes() != null && n.getAttributes().getLength() == 1){
 			poids = Integer.parseInt(n.getAttributes().item(0).getNodeValue());
 			//final NodeList trans = ((Element) n).getElementsByTagName("transition");

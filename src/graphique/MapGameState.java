@@ -1,6 +1,8 @@
 package graphique;
 
 import java.util.ArrayList;
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -12,7 +14,9 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.w3c.dom.DOMException;
 
+import XML.XML_Reader;
 import roles.Bonus;
 import roles.classe.*;
 import roles.Automate;
@@ -90,15 +94,17 @@ public class MapGameState extends BasicGameState {
 		_input = container.getInput();
 
 		Automate aut1 = new Automate(2);
+		/*
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD), new Libre(Cardinaux.NORD), 0, 1);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.EST), new Libre(Cardinaux.EST), 0, 1);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD), new Libre(Cardinaux.SUD), 1, 0);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.OUEST), new Libre(Cardinaux.OUEST), 1, 0);
 		// décommenter pour tester attaque
 		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.SUD), new Libre(Cardinaux.SUD), 0, 1);
 		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.NORD), new Libre(Cardinaux.NORD), 0, 1);
 		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.EST), new Libre(Cardinaux.EST), 0, 1);
 		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.OUEST), new Libre(Cardinaux.OUEST), 0, 1);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.EST), new Libre(Cardinaux.EST), 0, 1);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD), new Libre(Cardinaux.SUD), 1, 0);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.OUEST), new Libre(Cardinaux.OUEST), 1, 0);
+		
 		aut1.ajoute_transition(0, new AvancerJoueur(), new OrdreDonne(), 0, 5);
 		//aut1.ajoute_transition(0, new Raser(), new Vide(), 1, 1);
 
@@ -107,8 +113,18 @@ public class MapGameState extends BasicGameState {
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.SUD), new Libre(Cardinaux.SUD), 1, 1);
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.OUEST), new Libre(Cardinaux.OUEST), 1, 1);
 		aut1.ajoute_transition(1, new AvancerJoueur(), new OrdreDonne(), 1, 5);
-		ArrayList<Automate> autlist = new ArrayList<Automate>();
-		autlist.add(aut1);
+		*/
+		File f = new File("./creation_automates/sortie.xml");
+		ArrayList<Automate> autlist = null;
+		try {
+			autlist = XML_Reader.readXML(f);
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException | ClassNotFoundException | DOMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(autlist.size());
+		//autlist.add(aut1);
 		Classe generique = new Classe(10,5,0,"default class",Bonus.VIE);
 		ArrayList<Classe> classes = new ArrayList<Classe>();
 		classes.add(generique);
