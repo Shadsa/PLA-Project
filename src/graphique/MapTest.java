@@ -24,12 +24,12 @@ public class MapTest {
 		spriteSheet = new SpriteSheet("src/asset/sprites/tiles.png", tileSize, tileSize);
 
 		//J'initialise ma map test.
-		map = new Vector<Vector<ObjetTest>> (World.SizeX());
-		for (int j = 0; j < World.SizeX(); j++) {
-			map.insertElementAt(new Vector<ObjetTest> (World.SizeX()), j);
+		map = new Vector<Vector<ObjetTest>> ();
+		for (int j = 0; j < World.SizeY(); j++) {
+			map.add(new Vector<ObjetTest> ());
 		}
-		for (int i = 0; i < World.SizeX(); i++) {
-			for (int j = 0; j < World.SizeX(); j++) {
+		for (int j = 0; j < World.SizeY(); j++) {
+			for (int i = 0; i < World.SizeX(); i++) {
 				Vector <ObjetTest> vi = map.elementAt(i);
 				vi.insertElementAt(new ObjetTest(World.Case(i, j).value()), j);
 				World.Case(i, j).addObserver(map.elementAt(i).elementAt(j));
@@ -50,10 +50,9 @@ public class MapTest {
 		//}
 		spriteSheet.startUse();
 		//Parcours de la map test
-		for (int i = 0; i < World.SizeX(); i++) {
+		for (int i = 0; i < World.SizeY(); i++) {
 			for (int j = 0; j < World.SizeX(); j++) {
-				Vector <ObjetTest> vi = map.elementAt(i);
-				ObjetTest vj = vi.elementAt(j);
+				ObjetTest vj = map.get(j).get(i);
 				int img = 0;
 
 				if (vj.getNum() == Arbre._id)
@@ -79,7 +78,7 @@ public class MapTest {
 				} else if (vj.getNum() == 5) {
 					spriteSheet.renderInUse(i*96, j*96, 0, 5);
 				}*/
-				spriteSheet.renderInUse(i*96, j*96, 0, img);
+				spriteSheet.renderInUse(j*96, i*96, 0, img);
 
 			}
 		}
