@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.Vector;
 
 import cases.*;
+import roles.action.Joueur;
 import roles.action.World;
 
 public class Carte extends Vector<Vector<Case>>{
@@ -62,10 +63,10 @@ public class Carte extends Vector<Vector<Case>>{
 	 * @param y : ordonnée où placer la case c
 	 * @throws Exception : si cette case n'existe pas
 	 */
-	public void putCaseAction(CaseAction c, int x, int y) throws Exception {
+	public void putCaseAction(CaseAction c, int x, int y, Joueur j) throws Exception {
 		if(x < 0 || y < 0 || x >= size() || y >= get(x).size())
 			throw new Exception("Dépassement de la carte");
-		c.setPosition(x, y);
+		c.setCase(x, y, j);
 		get(y).set(x, c);
 	}
 
@@ -76,17 +77,17 @@ public class Carte extends Vector<Vector<Case>>{
 	 * @param y : ordonnée où placer l'automate
 	 * @throws Exception : si on ne peut placer l'automate à cette position
 	 */
-	public void putAutomate(Automate a, int x, int y) throws Exception {
+	public void putAutomate(Automate a, int x, int y, Joueur j) throws Exception {
 		for(ArrayList<CaseAction> ligne : a.get_action())
 			for(CaseAction c : ligne)
 				try {
-					putCaseAction(c,x++,y++);
+					putCaseAction(c,x++,y++,j);
 				} catch (Exception e) {
 					throw new Exception("Impossible de placer l'automate");
 				}
 	}
 
-	public void setCase(TypeCase type, int x, int y){
+	public void modifierCase(TypeCase type, int x, int y){
 		Case(x,y).modifierCase(type);
 	}
 }

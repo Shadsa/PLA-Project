@@ -58,7 +58,7 @@ public abstract class World {
 	}
 
 	public static void modifierCase(TypeCase type, int x, int y){
-		_map.setCase(type, x, y);
+		_map.modifierCase(type, x, y);
 	}
 
 	public static int SizeY() {
