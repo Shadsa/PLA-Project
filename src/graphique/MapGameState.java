@@ -92,9 +92,9 @@ public class MapGameState extends BasicGameState {
 	 */
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		_input = container.getInput();
-
+/*
 		Automate aut1 = new Automate(2);
-		/*
+		
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD), new Libre(Cardinaux.NORD), 0, 1);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.EST), new Libre(Cardinaux.EST), 0, 1);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD), new Libre(Cardinaux.SUD), 1, 0);
