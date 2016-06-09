@@ -27,9 +27,16 @@ type condition =
   | Libre of cellule
   | OrdreDonne
   | Type of typeCellule
+  | RessourcesPossedees of int
 (*
   | ...
 *)
+
+type attribut =
+  | Direction of String.t
+  | Type of String.t
+  | Quantite of String.t
+  | None
 
 
 (*
@@ -73,25 +80,25 @@ let typeCellule_to_string (t : typeCellule) : String.t =
   | Caillou -> "Caillou"
   | Eau -> "Eau"
 
-let condition_to_string (c : condition) : String.t*(String.t option) =
+let condition_to_string (c : condition) : String.t*attribut =
   match c with
    | Vide -> "Vide",None
-   | Ennemi(cellule) -> "Ennemi",Some(cellule_to_string cellule)
-   | Libre(cellule) -> "Libre",Some(cellule_to_string cellule)
+   | Ennemi(cellule) -> "Ennemi",Direction(cellule_to_string cellule)
+   | Libre(cellule) -> "Libre",Direction(cellule_to_string cellule)
    | OrdreDonne -> "OrdreDonne",None
-   | Type(typeCellule) -> "Type",Some(typeCellule_to_string typeCellule)
+   | Type(typeCellule) -> "Type",Type(typeCellule_to_string typeCellule)
   (*
     | ...
   *)
    | _ -> "",None
 
-let action_to_string (a : action) : String.t*(String.t option) =
+let action_to_string (a : action) : String.t*attribut =
   match a with
    | Attendre -> "Attendre",None
-   | Avancer(cellule) -> "Avancer",Some(cellule_to_string cellule)
-   | Attaquer(cellule) -> "Attaquer",Some(cellule_to_string cellule)
+   | Avancer(cellule) -> "Avancer",Direction(cellule_to_string cellule)
+   | Attaquer(cellule) -> "Attaquer",Direction(cellule_to_string cellule)
    | AvancerJoueur -> "AvancerJoueur",None
-   | Dupliquer(cellule) -> "Dupliquer",Some(cellule_to_string cellule)
+   | Dupliquer(cellule) -> "Dupliquer",Direction(cellule_to_string cellule)
    | Raser -> "Raser",None
    | CouperBois -> "CouperBois",None
   (*
@@ -115,10 +122,12 @@ let cate_to_string (c : categorie) : String.t =
 let attribute_to_xml (s : String.t) (nom : String.t) : String.t =
   nom^"=\""^s^"\""
 
-let element_to_xml ((s,attribute) : String.t*(String.t option)) (nom : String.t) : String.t =
+let element_to_xml ((s,attribute) : String.t*attribut) (nom : String.t) : String.t =
   match attribute with
    |None -> "\t\t\t<"^nom^">"^s^"</"^nom^">"
-   |Some(attribute) -> "\t\t\t<"^nom^" "^(attribute_to_xml attribute "direction")^">"^s^"</"^nom^">"
+   |Direction(attribute) -> "\t\t\t<"^nom^" "^(attribute_to_xml attribute "direction")^">"^s^"</"^nom^">"
+   |Type(attribute) -> "\t\t\t<"^nom^" "^(attribute_to_xml attribute "type")^">"^s^"</"^nom^">"
+   |Quantite(attribute) -> "\t\t\t<"^nom^" "^(attribute_to_xml attribute "quantite")^">"^s^"</"^nom^">"
   
 let etat_to_xml (e : etat) : String.t =
   element_to_xml (string_of_int e,None) "etat"
