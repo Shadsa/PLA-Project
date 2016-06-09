@@ -4,13 +4,15 @@ import roles.Cardinaux;
 import roles.Personnage;
 import roles.action.*;
 
-public final class Plaine extends TypeCase {
+public final class Batiment extends TypeCase {
 
-	protected static Action _action = new Avancer(Cardinaux.SUD,1);
+	protected Action _action;
 	
-	private static Plaine _instance = new Plaine();
+	public final static int _id = 0;
 	
-	public final static int _id = getId(1);
+	public Batiment(Action a){
+		_action = a;
+	}
 
 	public int value() {
 		return _id;
@@ -19,10 +21,6 @@ public final class Plaine extends TypeCase {
 	@Override
 	protected void Act(Personnage pers) {
 		_action.Act(pers);		
-	}
-
-	public static TypeCase getInstance() {
-		return _instance;
 	}
 
 	@Override

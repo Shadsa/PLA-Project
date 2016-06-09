@@ -43,7 +43,6 @@ public abstract class World {
 				activated.add(p);
 
 		Collections.shuffle(activated);
-
 		for(Personnage p : activated)
 			if(p.vie()>0)
 				p.agir();

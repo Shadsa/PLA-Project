@@ -20,23 +20,23 @@ public class Carte extends Vector<Vector<Case>>{
 				type = R.nextInt(5);
 				switch(type){
 				case 0 : case 1 :
-					c = new Plaine(x,y);
+					c = new Terrain(x,y,Plaine.getInstance());
 					System.out.print('P');
 					break;
 				case 2 :
-					c = new Arbre(x,y);
+					c = new Terrain(x,y,Arbre.getInstance());
 					System.out.print('A');
 					break;
 				case 3 :
-					c = new Caillou(x,y);
+					c = new Terrain(x,y,Caillou.getInstance());
 					System.out.print('C');
 					break;
 				case 4 :
-					c = new Eau(x,y);
+					c = new Terrain(x,y,Eau.getInstance());
 					System.out.print('E');
 					break;
 				default :
-					c = new Plaine(x,y);
+					c = new Terrain(x,y,Plaine.getInstance());
 					System.out.print('D');
 				}
 				//NE PAS OUBLIER LES BREAKS QUAND ON RAJOUTE UN TYPE DE CASE

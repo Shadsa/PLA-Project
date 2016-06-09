@@ -1,16 +1,34 @@
 package cases;
 
-public final class Caillou extends Terrain {
+import roles.Personnage;
+import roles.action.*;
+import roles.Cardinaux;
 
-	public Caillou(int x, int y) {
-		super(x, y);
-	}
 
+public final class Caillou extends TypeCase {
+
+	protected static Action _action = new Attaquer(Cardinaux.NORD,1);
+	
+	private static Caillou _instance = new Caillou();
+	
 	public final static int _id = getId(1);
 
-	@Override
 	public int value() {
 		return _id;
+	}
+
+	@Override
+	protected void Act(Personnage pers) {
+		_action.Act(pers);		
+	}
+
+	public static TypeCase getInstance() {
+		return _instance;
+	}
+
+	@Override
+	public boolean franchissable() {
+		return true;
 	}
 
 }

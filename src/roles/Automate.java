@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import roles.classe.*;
+import cases.Batiment;
 import cases.CaseAction;
 import roles.action.Action;
 import roles.conditions.Condition;
@@ -38,7 +39,7 @@ public class Automate {
 	
 	public void ajoute_transition(int etat, Action a, Condition c, int etat_suivant)
 	{
-		_action.get(etat).add(new CaseAction(a));
+		_action.get(etat).add(new CaseAction(new Batiment(a)));
 		_condition.get(etat).add(c);
 		_next.get(etat).add(etat_suivant);
 	}
