@@ -4,13 +4,14 @@ import roles.Personnage;
 import roles.action.Action;
 
 public class CaseAction extends Case {
-	public CaseAction(Action type) {
-		super(0, 0);
-		_type = type;
+
+	Batiment _initial;
+	
+	public CaseAction(Batiment type) {
+		super(0, 0, type);
+		_initial = type;
 	}
 
-	Action _type;
-	
 	public void setPosition(int x, int y){
 		_x = x;
 		_y = y;
@@ -18,7 +19,7 @@ public class CaseAction extends Case {
 
 	@Override
 	public int value() {
-		return firstCaseActionId + _type.toInt();
+		return _type.value();
 	}
 	
 	public void Act(Personnage pers){
@@ -26,14 +27,7 @@ public class CaseAction extends Case {
 	}
 
 	public int poids() {
-		return _type.poids();
+		return 1;
 	}
 
-	@Override
-	public Case modifierCase(Class<? extends Case> c) {
-		if(CaseAction.class.isAssignableFrom(c)){
-			
-		}
-		return this;
-	}
 }
