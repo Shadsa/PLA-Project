@@ -1,5 +1,7 @@
 package graphique;
 
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 import java.util.Vector;
 
@@ -30,6 +32,7 @@ public class MapTest {
 			for (int j = 0; j < World.SizeX(); j++) {
 				Vector <ObjetTest> vi = map.elementAt(i);
 				vi.insertElementAt(new ObjetTest(World.Case(i, j).value()), j);
+				World.Case(i, j).addObserver(map.elementAt(i).elementAt(j));
 			}
 		}
 	}
