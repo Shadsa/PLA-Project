@@ -5,7 +5,7 @@ import org.newdawn.slick.KeyListener;
 
 public class PlayerController implements KeyListener {
 
-	private Player player = new Player();
+	private Player player;// = new Player();
 
 	public PlayerController(Player player) {
 		this.player = player;

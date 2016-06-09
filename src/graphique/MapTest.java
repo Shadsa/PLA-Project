@@ -30,9 +30,8 @@ public class MapTest {
 		}
 		for (int j = 0; j < World.SizeY(); j++) {
 			for (int i = 0; i < World.SizeX(); i++) {
-				Vector <ObjetTest> vi = map.elementAt(i);
-				vi.insertElementAt(new ObjetTest(World.Case(i, j).value()), j);
-				World.Case(i, j).addObserver(map.elementAt(i).elementAt(j));
+				map.get(j).add(new ObjetTest(World.Case(i, j).value()));
+				World.Case(i, j).addObserver(map.get(j).get(i));
 			}
 		}
 	}
@@ -52,7 +51,7 @@ public class MapTest {
 		//Parcours de la map test
 		for (int i = 0; i < World.SizeY(); i++) {
 			for (int j = 0; j < World.SizeX(); j++) {
-				ObjetTest vj = map.get(j).get(i);
+				ObjetTest vj = map.get(i).get(j);
 				int img = 0;
 
 				if (vj.getNum() == Arbre._id)

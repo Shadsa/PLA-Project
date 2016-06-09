@@ -27,9 +27,9 @@ public class Player implements Observer{
 	//Boolean pour savoir si le personnage bouge
 	private boolean moving = false;
 	//Tableau des modèles d'animation
-	private static Animation[] animations = new Animation[13];
-	private static Animation[] Hanimations = new Animation[13];
-	private static Animation[] Danimations = new Animation[4];
+	public static Animation[] animations = new Animation[13];
+	public static Animation[] Hanimations = new Animation[13];
+	public static Animation[] Danimations = new Animation[4];
 	//
 	private int AnimDuration;
 	public int AnimDead;
@@ -106,7 +106,7 @@ public static void sinit() throws SlickException
 
 
 	    SpriteSheet HspriteSheet = new SpriteSheet("src/asset/sprites/BODY_male.png", 64, 64);
-		SpriteSheet HspriteSheet2 = new SpriteSheet("src/asset/sprites/BODY_human_slash_test.png", 64, 64);
+		SpriteSheet HspriteSheet2 = new SpriteSheet("src/asset/sprites/Human_Slash.png", 64, 64);
 		SpriteSheet HspriteSheet3 = new SpriteSheet("src/asset/sprites/Human_Die.png", 64, 64);
 	    Hanimations[0] = loadAnimation(HspriteSheet, 0, 1, 0);
 	    Hanimations[1] = loadAnimation(HspriteSheet, 0, 1, 1);
@@ -312,6 +312,15 @@ public static void sinit() throws SlickException
 		}
 		public States states() {
 			return _state;
+		}
+		public boolean isDead() {
+			return _isDead;
+		}
+		public TypeUnit human() {
+			return _human;
+		}
+		public int AnimDuration() {
+			return AnimDuration;
 		}
 
 }

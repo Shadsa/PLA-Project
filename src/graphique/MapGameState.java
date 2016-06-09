@@ -94,7 +94,7 @@ public class MapGameState extends BasicGameState {
 		_input = container.getInput();
 /*
 		Automate aut1 = new Automate(2);
-		
+
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD), new Libre(Cardinaux.NORD), 0, 1);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.EST), new Libre(Cardinaux.EST), 0, 1);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD), new Libre(Cardinaux.SUD), 1, 0);
@@ -104,7 +104,7 @@ public class MapGameState extends BasicGameState {
 		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.NORD), new Libre(Cardinaux.NORD), 0, 1);
 		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.EST), new Libre(Cardinaux.EST), 0, 1);
 		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.OUEST), new Libre(Cardinaux.OUEST), 0, 1);
-		
+
 		aut1.ajoute_transition(0, new AvancerJoueur(), new OrdreDonne(), 0, 5);
 		//aut1.ajoute_transition(0, new Raser(), new Vide(), 1, 1);
 
@@ -132,7 +132,7 @@ public class MapGameState extends BasicGameState {
 		Joueur jZ = new Joueur("Zombie", autlist,classes);
 		World.addPlayer(j2);
 		World.addPlayer(jZ);
-		World.BuildMap(10,10);
+		World.BuildMap(40,75);
 		j2.createPersonnage(0, 5, 5);
 		j2.createPersonnage(0, 6, 6);
 		j2.createPersonnage(0, 3, 6);

@@ -17,6 +17,7 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.gui.GUIContext;
+import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -35,6 +36,8 @@ public class MainScreenGameState extends BasicGameState {
 	private String sizeScreen;
 	private GameContainer container;
 	private Input _input;
+	private Bouton _bouton_jouer;
+	private Bouton _bouton_quitter;
 
 
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -42,6 +45,7 @@ public class MainScreenGameState extends BasicGameState {
 		_input = container.getInput();
 		this.game = (StateGame) game;
 		this.background = new Image("src/asset/images/skeleton_army.jpg");
+		_bouton_jouer = new Bouton(container, new Image("src/asset/sprites/bouton_jouer.png"), new Image("src/asset/sprites/bouton_jouer_on.png"), 10, 10, 96, 96);
 		Music music = new Music("src/asset/musics/menu_music.ogg");
 	    music.loop();
 	    sizeScreen = "Taille de l'écran : " + container.getScreenWidth() + "x" + container.getScreenHeight();
@@ -65,6 +69,7 @@ public class MainScreenGameState extends BasicGameState {
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		background.draw(0, 0, container.getWidth(), container.getHeight());
+		_bouton_jouer.render(container, g);
 		g.setColor(Color.white);
 		/*if (_input.getControllerCount() >= 1) {
 			g.drawString("Appuyez sur START pour commencer.", 240, 300);
@@ -77,10 +82,15 @@ public class MainScreenGameState extends BasicGameState {
 	 * Passer à l’écran de jeu à l'appui de n'importe quelle touche.
 	 */
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {	
-	}
-
-	public void keyPressed(int key, char c) {
-		
+		if (_bouton_jouer.isMouseOver()) {
+			if (_input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+				try {
+					this.game.enterState(MapGameState.ID, "src/asset/musics/game_music.ogg");
+				} catch (SlickException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	public void keyReleased(int key, char c) {
