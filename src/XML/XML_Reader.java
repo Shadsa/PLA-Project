@@ -118,7 +118,6 @@ public class XML_Reader {
 		case "S" :
 			C = Cardinaux.SUD; break;
 		default :
-			C = Cardinaux.NORD; break;
 		}
 		return C;
 	}
@@ -128,7 +127,6 @@ public class XML_Reader {
 		int etat=0, suiv=0, poids=0;
 		Action action=null;
 		Condition cond=null;
-		System.out.println("esrdfndf");
 		if(n.getAttributes() != null && n.getAttributes().getLength() == 1){
 			poids = Integer.parseInt(n.getAttributes().item(0).getNodeValue());
 			//final NodeList trans = ((Element) n).getElementsByTagName("transition");
@@ -145,21 +143,26 @@ public class XML_Reader {
 				}
 				//etat = Integer.parseInt(node1.getAttributes().item(0).getNodeValue());
 				Node node2 = trans.item(3);
-				if(node2 instanceof Element && node2.getAttributes() != null && node2.getAttributes().getLength() == 1){
-					//final Element e2 = node2.item(0);
+				NamedNodeMap att = node2.getAttributes();
+				if(node2 instanceof Element && att != null && att.getLength() == 1){
+
 					final Element e2 = (Element) ((Element) trans).getElementsByTagName("condition").item(0);
 					String s1 = e2.getTextContent();
-					Cardinaux C = CardOfString(node2.getAttributes().item(0).getNodeValue());
-					if(C!=null)
+					Cardinaux C = CardOfString(att.item(0).getNodeValue());
+					if(att.item(0).getNodeName()=="direction" && C!=null)
 						cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(Cardinaux.class).newInstance(C);
-					else{
-						Method meth = null;
-						meth = Class.forName("roles.conditions."+s1).getMethod("getInstance",  (Class<?>[]) null);
-						if(meth != null)
-							cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(TypeCase.class).newInstance(meth.invoke(null, null));
-						else
-							cond = (Condition) Class.forName("roles.conditions."+s1).newInstance();
-					}
+					else
+						if(att.item(0).getNodeName()=="quantite")
+							cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(int.class).newInstance(Integer.parseInt(att.item(0).getNodeValue()));
+						else{
+							Method meth = null;
+							meth = Class.forName("cases."+att.item(0).getNodeValue()).getMethod("getInstance",  (Class<?>[]) null);
+							System.out.println(meth);
+							if(meth != null)
+								cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(TypeCase.class).newInstance(meth.invoke(null, null));
+							else
+								cond = (Condition) Class.forName("roles.conditions."+s1).newInstance();
+						}
 				}
 				else{
 					if(node2 instanceof Element){
