@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.Vector;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
@@ -17,12 +18,13 @@ public class MapTest {
 	public static int tileSize = 96;
 	private Vector<Vector<ObjetTest>> map;
 	private SpriteSheet spriteSheet;
+	private Image Tree;
 
 	public void init() throws SlickException {
 		//Dans ce sprite -> cellule 0 : buisson, cellule 1 : arbre, cellule 2 : herbe, cellule 3 : tonneaux, cellule 4 : rochers. (format des cases : 96x96).
 		//Pour utiliser la méthode renderInUse(...), je dois appeler la méthode startUse() pour dire que je commence à lire cette table de sprite.
 		spriteSheet = new SpriteSheet("src/asset/sprites/tiles.png", tileSize, tileSize);
-
+		Tree = new Image("src/asset/sprites/SimpleTree.png");
 		//J'initialise ma map test.
 		map = new Vector<Vector<ObjetTest>> ();
 		for (int j = 0; j < World.SizeY(); j++) {
@@ -55,7 +57,15 @@ public class MapTest {
 				int img = 0;
 
 				if (vj.getNum() == Arbre._id)
-					img = 1;
+				{
+					spriteSheet.renderInUse(j*96, i*96, 0, 2);
+					spriteSheet.renderInUse(j*96, i*96, 0, 6);
+					if(i>0 && map.get(i-1).get(j).getNum() == Arbre._id)
+						spriteSheet.renderInUse(j*96-12, i*96-48, 0, 6);
+					if(j>0 && map.get(i).get(j-1).getNum() == Arbre._id)
+						spriteSheet.renderInUse(j*96-48, i*96-12, 0, 6);
+					continue;
+				}
 				else if (vj.getNum() == Plaine._id)
 					img = 2;
 				else if (vj.getNum() == Caillou._id)
