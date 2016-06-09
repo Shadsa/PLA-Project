@@ -39,7 +39,6 @@ public class MapGameState extends BasicGameState {
 	static final float Oy = 48;
 
 	private GameContainer container;
-	private ArrayList<Player> _players = new ArrayList<Player>();
 	private ArrayList<graphique.Joueur> _joueurs = new ArrayList<graphique.Joueur>();
 	//private Personnage personnage;
 	private Hud hud = new Hud();
@@ -157,10 +156,7 @@ public class MapGameState extends BasicGameState {
 			_joueurs.add(new graphique.Joueur((j == World.getPlayers().get(0))?TypeUnit.Human:TypeUnit.Zombie));
 			j.addObserver(_joueurs.get(_joueurs.size()-1));
 			for(Personnage pers : j.getPersonnages())
-			{
-				pla = new Player(pers, j == j2);
-				_players.add(pla);
-			}
+				_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
 		}
 
 		//System.out.print(_players.size());
@@ -185,8 +181,9 @@ public class MapGameState extends BasicGameState {
 		//Affichage de la map
 		this.map.render(g, _offsetMapX, _offsetMapY, zoom());
 		//Affichage des personnages
-		for(Player p : _players)
-			p.render(g);
+		for(graphique.Joueur j : _joueurs)
+			for(Player p : j.getPersonnage())
+				p.render(g);
 
 		//Annule la translation pour l'affichage du string en dessous
 		g.resetTransform();
@@ -227,11 +224,12 @@ public class MapGameState extends BasicGameState {
 	protected long _time = 0;
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		for(int i = _players.size()-1; i>=0; i--)
-			if(_players.get(i).AnimDead>0)
-				_players.get(i).update(delta);
-			else
-				_players.remove(_players.get(i));
+		for(graphique.Joueur j : _joueurs)
+			for(int i = j.getPersonnage().size()-1; i>=0; i--)
+				if(j.getPersonnage().get(i).AnimDead>0)
+					j.getPersonnage().get(i).update(delta);
+				else
+					j.getPersonnage().remove(j.getPersonnage().get(i));
 
 		_time += delta;
 		if(_time > Tick)
@@ -377,8 +375,9 @@ public class MapGameState extends BasicGameState {
 
 	public void mousePressed(int arg0, int arg1, int arg2) {
 		//if (Input.MOUSE_LEFT_BUTTON == arg0) {//&& mouseMapX() >= this.player.getX()-32 && mouseMapX() <= this.player.getX()+32 && mouseMapY() >= this.player.getY()-60 && mouseMapY() <= this.player.getY()+4) {
-		for(Player p : _players)
-			if (Input.MOUSE_LEFT_BUTTON == arg0 && curseurSurPerso(p, mouseMapX(), mouseMapY())) {
+		for(graphique.Joueur j : _joueurs)
+			for(Player p : j.getPersonnage())
+				if (Input.MOUSE_LEFT_BUTTON == arg0 && curseurSurPerso(p, mouseMapX(), mouseMapY())) {
 				_target = p;
 				_targetp = World.Case((int)(MapGameState._target.DestX()-Ox)/TileSize, (int)(MapGameState._target.DestY()-Oy)/TileSize).Personnage();
 				this.showhud = true;
