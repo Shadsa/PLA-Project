@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import cases.Case;
 import cases.Plaine;
+import cases.TypeCase;
 import graphique.ObjetTest;
 import roles.Carte;
 import roles.Personnage;
@@ -54,5 +55,9 @@ public abstract class World {
 
 	public static int SizeX() {
 		return _map.size();
+	}
+	
+	public static void modifierCase(TypeCase type, int x, int y){
+		_map.setCase(type, x, y);
 	}
 }
