@@ -7,6 +7,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
@@ -19,6 +20,7 @@ import roles.States.Statut;
 public class Player implements Observer{
 
 	private float _destX, _destY;
+	private boolean _hide;
 
 	//Position d'origine du personnage (x, y)
 	private float x, y;
@@ -27,8 +29,8 @@ public class Player implements Observer{
 	//Boolean pour savoir si le personnage bouge
 	private boolean moving = false;
 	//Tableau des modèles d'animation
-	public static Animation[] animations = new Animation[13];
-	public static Animation[] Hanimations = new Animation[13];
+	public static Animation[] animations = new Animation[21];
+	public static Animation[] Hanimations = new Animation[21];
 	public static Animation[] Danimations = new Animation[4];
 	//
 	private int AnimDuration;
@@ -52,6 +54,7 @@ public class Player implements Observer{
 	}
 
 	public Player(Personnage pers, TypeUnit _type_unit) {
+		_hide = false;
 		_human = _type_unit;
 		_id = nextID();
 		_isDead = false;
@@ -97,9 +100,101 @@ public static void sinit() throws SlickException
 	    	animations[12].addFrame(spriteSheet3.getSprite(x, 0), 40);
 	    }
 	    animations[12].setLooping(false);
+
+
+	    for(int j=0; j<4; j++)
+	    {
+		    animations[13+j] = new Animation();
+		    animations[13+j].addFrame(spriteSheet.getSprite(0, j), 100);
+		    animations[13+j].addFrame(spriteSheet.getSprite(1, j), 100);
+
+		    Image iii = spriteSheet.getSprite(2, j);
+		    iii.setAlpha(0.95f);
+		    animations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+		    iii = spriteSheet.getSprite(3, j);
+		    iii.setAlpha(0.9f);
+		    animations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = spriteSheet.getSprite(4, j);
+		    iii.setAlpha(0.8f);
+		    animations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = spriteSheet.getSprite(5, j);
+		    iii.setAlpha(0.7f);
+		    animations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = spriteSheet.getSprite(6, j);
+		    iii.setAlpha(0.6f);
+		    animations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = spriteSheet.getSprite(7, j);
+		    iii.setAlpha(0.3f);
+		    animations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = spriteSheet.getSprite(8, j);
+		    iii.setAlpha(0f);
+		    animations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+		    animations[13+j].setLooping(false);
+	    }
 	    /*for (int x = 0; x < 30; x++) {
 	    	animations[12].addFrame(spriteSheet3.getSprite(5, 0), 40);
 	    }*/
+
+
+	    for(int j=0; j<4; j++)
+	    {
+		    animations[17+j] = new Animation();
+
+		    Image iii = spriteSheet.getSprite(2, j);
+		    iii.setAlpha(0);
+		    animations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+		    iii = spriteSheet.getSprite(3, j);
+		    iii.setAlpha(0.3f);
+		    animations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+		    iii = spriteSheet.getSprite(3, j);
+		    iii.setAlpha(0.6f);
+		    animations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+		    iii = spriteSheet.getSprite(3, j);
+		    iii.setAlpha(0.7f);
+		    animations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = spriteSheet.getSprite(4, j);
+		    iii.setAlpha(0.8f);
+		    animations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = spriteSheet.getSprite(5, j);
+		    iii.setAlpha(0.9f);
+		    animations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = spriteSheet.getSprite(6, j);
+		    iii.setAlpha(0.95f);
+		    animations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = spriteSheet.getSprite(7, j);
+		    iii.setAlpha(1);
+		    animations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = spriteSheet.getSprite(8, j);
+		    iii.setAlpha(1);
+		    animations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+		    animations[17+j].setLooping(false);
+	    }
 
 
 
@@ -133,6 +228,99 @@ public static void sinit() throws SlickException
 	    	Hanimations[12].addFrame(HspriteSheet3.getSprite(5, 0), 40);
 	    }*/
 
+	    for(int j=0; j<4; j++)
+	    {
+		    Hanimations[13+j] = new Animation();
+		    Hanimations[13+j].addFrame(HspriteSheet.getSprite(0, j), 100);
+		    Hanimations[13+j].addFrame(HspriteSheet.getSprite(1, j), 100);
+
+		    Image iii = HspriteSheet.getSprite(2, j);
+		    iii.setAlpha(0.95f);
+		    Hanimations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+		    iii = HspriteSheet.getSprite(3, j);
+		    iii.setAlpha(0.9f);
+		    Hanimations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = HspriteSheet.getSprite(4, j);
+		    iii.setAlpha(0.8f);
+		    Hanimations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = HspriteSheet.getSprite(5, j);
+		    iii.setAlpha(0.7f);
+		    Hanimations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = HspriteSheet.getSprite(6, j);
+		    iii.setAlpha(0.6f);
+		    Hanimations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = HspriteSheet.getSprite(7, j);
+		    iii.setAlpha(0.3f);
+		    Hanimations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = HspriteSheet.getSprite(8, j);
+		    iii.setAlpha(0f);
+		    Hanimations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+		    Hanimations[13+j].setLooping(false);
+	    }
+
+
+
+	    for(int j=0; j<4; j++)
+	    {
+		    Hanimations[17+j] = new Animation();
+
+		    Image iii = HspriteSheet.getSprite(2, j);
+		    iii.setAlpha(0);
+		    Hanimations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+		    iii = HspriteSheet.getSprite(3, j);
+		    iii.setAlpha(0.3f);
+		    Hanimations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+		    iii = HspriteSheet.getSprite(3, j);
+		    iii.setAlpha(0.6f);
+		    Hanimations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+		    iii = HspriteSheet.getSprite(3, j);
+		    iii.setAlpha(0.7f);
+		    Hanimations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = HspriteSheet.getSprite(4, j);
+		    iii.setAlpha(0.8f);
+		    Hanimations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = HspriteSheet.getSprite(5, j);
+		    iii.setAlpha(0.9f);
+		    Hanimations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = HspriteSheet.getSprite(6, j);
+		    iii.setAlpha(0.95f);
+		    Hanimations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = HspriteSheet.getSprite(7, j);
+		    iii.setAlpha(1);
+		    Hanimations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = HspriteSheet.getSprite(8, j);
+		    iii.setAlpha(1);
+		    Hanimations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+		    Hanimations[17+j].setLooping(false);
+	    }
+
+
 	    SpriteSheet spriteSheetW = new SpriteSheet("src/asset/sprites/WEAPON_dagger.png", 64, 64);
 	    Danimations[0] = loadAnimation(spriteSheetW, 0, 5, 0);
 	    Danimations[1] = loadAnimation(spriteSheetW, 0, 5, 1);
@@ -162,10 +350,7 @@ public static void sinit() throws SlickException
 		int dir = 0;
 		int danim = -1;
 		//Affichage du personnage avec l'ombre et modification des coordonnées des pieds du personnage
-				g.setColor(new Color(0, 0, 0, .5f));
-			    g.fillOval(x - 16, y - 8, 32, 16);
-
-			    if(_state.direction != null)
+				if(_state.direction != null)
 				switch(_state.direction)
 				{
 				case NORD: dir = 2; break;
@@ -186,6 +371,14 @@ public static void sinit() throws SlickException
 					anim = 8;
 					danim = dir;
 				break;
+				case HIDING:
+					anim = 13;
+				break;
+				case HIDE:
+					return;
+				case REVEAL:
+					anim = 17;
+				break;
 			    }
 
 			    anim += dir;
@@ -194,6 +387,9 @@ public static void sinit() throws SlickException
 			    	anim = 12;
 			    }
 			    //System.out.println(_state.statut);
+			    g.setColor(new Color(0, 0, 0, .5f));
+			    g.fillOval(x - 16, y - 8, 32, 16);
+
 			    if(_human == TypeUnit.Human)
 			    	g.drawAnimation(Hanimations[anim], x-32, y-60);
 			    else
@@ -213,7 +409,8 @@ public static void sinit() throws SlickException
 		{
 			AnimDead -= delta;
 		}
-		if(_state.statut != Statut.AVANCE) return;
+		//if(_state.statut != Statut.AVANCE) return;
+		if(_destX == x && _destY==y) return;
 	    if (_destX > x)
 	    {
 
@@ -246,7 +443,12 @@ public static void sinit() throws SlickException
 	    }
 
 	    if(_destX == x && _destY == y)
-	    	_state.statut = Statut.ATTENDS;
+	    {
+	    	if(_hide)
+	    		_state.statut = Statut.HIDE;
+	    	else
+	    		_state.statut = Statut.ATTENDS;
+	    }
 	}
 
 	  public float getX() { return x; }
@@ -289,17 +491,30 @@ public static void sinit() throws SlickException
 				Personnage pers = (Personnage)obs;
 				_destX = MapGameState.toX(pers.X());
 				_destY = MapGameState.toX(pers.Y());
-				if(((States)obj).statut != Statut.MORT)
-				{
-					_state = (States)obj;
-					AnimDuration += MapGameState.Tick;
-				}
-				else {
+				if(((States)obj).statut == Statut.MORT) {
 					_isDead = true;
 					if(_human == TypeUnit.Human)
 						soundEffect.dead_human().play();
 					else
 						soundEffect.dead_skeleton().play();
+				}
+				else if(((States)obj).statut == Statut.HIDING) {
+					if(_hide)
+					{
+						_state = new States(Statut.HIDE);
+					}
+					else
+					{
+						_state = (States)obj;
+						_hide = true;
+					}
+				}
+				else
+				{
+					if(((States)obj).statut == Statut.REVEAL)
+						_hide = false;
+					_state = (States)obj;
+					AnimDuration += MapGameState.Tick;
 				}
 			}
 		}

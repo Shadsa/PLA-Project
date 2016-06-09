@@ -8,5 +8,6 @@ trouver des images
 zombie caché dans la foret, oiseau random arbre bloquant
 plus d'arbre quand foret
 ralentir le temps
-
+Optimiser l'affichage des perso en virant les statut etc en attribut et en mettant des variable
+(minimise les test durant les render)
 Optionnel

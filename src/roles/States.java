@@ -2,7 +2,7 @@ package roles;
 public class States {
 	public enum Statut {
 
-	    AVANCE, ATTAQUE, ATTENDS, MORT;
+	    AVANCE, ATTAQUE, ATTENDS, MORT, HIDE, HIDING, REVEAL;
 
 	}
 

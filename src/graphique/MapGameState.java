@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -38,8 +39,9 @@ import roles.conditions.Vide;
 public class MapGameState extends BasicGameState {
 
 	static final int Tick = 1000;
+	static final int AnimTick = Tick-400;
 	static final int TileSize = 96;
-	static final float MoveSpeed = ((float)TileSize)/((float)Tick-400);
+	static final float MoveSpeed = ((float)TileSize)/((float)AnimTick);
 	static final float Ox = 48;
 	static final float Oy = 48;
 
@@ -253,6 +255,12 @@ public class MapGameState extends BasicGameState {
 		{
 			_time -= Tick;
 			World.nextTurn();
+			for(Animation anim : Player.animations)
+				anim.restart();
+			for(Animation anim : Player.Hanimations)
+				anim.restart();
+			for(Animation anim : Player.Danimations)
+				anim.restart();
 		}
 		//playerData = "Coord X :" + this.player.getX() + ", Coord Y : " + this.player.getY() + ", action_finie : " + this.player.getAction_finie();
 		mouseAbsoluteX = _input.getAbsoluteMouseX();// + offsetMapX();
