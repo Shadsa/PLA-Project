@@ -101,7 +101,7 @@ public static void sinit() throws SlickException
 
 
 	    SpriteSheet HspriteSheet = new SpriteSheet("src/asset/sprites/BODY_male.png", 64, 64);
-		SpriteSheet HspriteSheet2 = new SpriteSheet("src/asset/sprites/BODY_human_slash_test.png", 64, 64);
+		SpriteSheet HspriteSheet2 = new SpriteSheet("src/asset/sprites/Human_Slash.png", 64, 64);
 		SpriteSheet HspriteSheet3 = new SpriteSheet("src/asset/sprites/Human_Die.png", 64, 64);
 	    Hanimations[0] = loadAnimation(HspriteSheet, 0, 1, 0);
 	    Hanimations[1] = loadAnimation(HspriteSheet, 0, 1, 1);
