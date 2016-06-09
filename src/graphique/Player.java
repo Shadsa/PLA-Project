@@ -93,12 +93,13 @@ public static void sinit() throws SlickException
 	    animations[11] = loadAnimation(spriteSheet2, 0, 5, 3);
 
 	    animations[12] = new Animation();
-	    for (int x = 0; x < 5; x++) {
+	    for (int x = 0; x < 6; x++) {
 	    	animations[12].addFrame(spriteSheet3.getSprite(x, 0), 40);
 	    }
-	    for (int x = 0; x < 30; x++) {
+	    animations[12].setLooping(false);
+	    /*for (int x = 0; x < 30; x++) {
 	    	animations[12].addFrame(spriteSheet3.getSprite(5, 0), 40);
-	    }
+	    }*/
 
 
 
