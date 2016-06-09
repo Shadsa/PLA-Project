@@ -79,13 +79,10 @@ public class XML_Reader {
 	public static Automate ListeCreate(Node n) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException, DOMException{
 		Automate auto = null;
 
-		if(n instanceof Element){/*
-			if(n.getNodeName()=="nombre" && n.getAttributes() != null && n.getAttributes().getLength() == 1){
-			   	int nbChild = n.getChildNodes().getLength();
-				NodeList list = n.getChildNodes();	*/	
+		if(n instanceof Element){
 				if(n.getNodeName()=="automate" && n.getAttributes() != null && n.getAttributes().getLength() > 0){
 					NamedNodeMap att = n.getAttributes();
-					if(att.getLength()==1 && att.item(0).getNodeName()=="type"){
+					if(att.getLength()==1 && att.item(0).getNodeName()=="nbEtats"){
 						//auto = new Automate(Integer.parseInt(att.item(0).getNodeValue()));
 						auto = new Automate(Integer.parseInt(att.item(0).getNodeValue()));
 					}
@@ -102,7 +99,6 @@ public class XML_Reader {
 							AutomateCreate(auto, n2);
 					}
 				}
-			//}
 		}
 		else throw new RuntimeException("Bad Argument.");
 
