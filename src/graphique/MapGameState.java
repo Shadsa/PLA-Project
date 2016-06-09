@@ -89,23 +89,23 @@ public class MapGameState extends BasicGameState {
 		_input = container.getInput();
 
 		Automate aut1 = new Automate(2);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD, 1), new Libre(Cardinaux.NORD), 0);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD), new Libre(Cardinaux.NORD), 0, 1);
 		// décommenter pour tester attaque
-		aut1.ajoute_transition(0, new Attaquer(Cardinaux.SUD, 1), new Ennemi(Cardinaux.SUD), 0);
-		aut1.ajoute_transition(0, new Attaquer(Cardinaux.NORD, 1), new Ennemi(Cardinaux.NORD), 0);
-		aut1.ajoute_transition(0, new Attaquer(Cardinaux.EST, 1), new Ennemi(Cardinaux.EST), 0);
-		aut1.ajoute_transition(0, new Attaquer(Cardinaux.OUEST, 1), new Ennemi(Cardinaux.OUEST), 0);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.EST, 1), new Libre(Cardinaux.EST), 0);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD, 0), new Libre(Cardinaux.SUD), 1);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.OUEST, 0), new Libre(Cardinaux.OUEST), 1);
-		aut1.ajoute_transition(0, new AvancerJoueur(5), new OrdreDonne(), 0);
-		aut1.ajoute_transition(0, new Raser(1), new Vide(), 1);
+		aut1.ajoute_transition(0, new Attaquer(Cardinaux.SUD), new Ennemi(Cardinaux.SUD), 0, 1);
+		aut1.ajoute_transition(0, new Attaquer(Cardinaux.NORD), new Ennemi(Cardinaux.NORD), 0, 1);
+		aut1.ajoute_transition(0, new Attaquer(Cardinaux.EST), new Ennemi(Cardinaux.EST), 0, 1);
+		aut1.ajoute_transition(0, new Attaquer(Cardinaux.OUEST), new Ennemi(Cardinaux.OUEST), 0, 1);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.EST), new Libre(Cardinaux.EST), 0, 1);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD), new Libre(Cardinaux.SUD), 1, 0);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.OUEST), new Libre(Cardinaux.OUEST), 1, 0);
+		aut1.ajoute_transition(0, new AvancerJoueur(), new OrdreDonne(), 0, 5);
+		aut1.ajoute_transition(0, new Raser(), new Vide(), 1, 1);
 
-		aut1.ajoute_transition(1, new Avancer(Cardinaux.NORD, 0), new Libre(Cardinaux.NORD), 0);
-		aut1.ajoute_transition(1, new Avancer(Cardinaux.EST, 0), new Libre(Cardinaux.EST), 0);
-		aut1.ajoute_transition(1, new Avancer(Cardinaux.SUD, 1), new Libre(Cardinaux.SUD), 1);
-		aut1.ajoute_transition(1, new Avancer(Cardinaux.OUEST, 1), new Libre(Cardinaux.OUEST), 1);
-		aut1.ajoute_transition(1, new AvancerJoueur(5), new OrdreDonne(), 1);
+		aut1.ajoute_transition(1, new Avancer(Cardinaux.NORD), new Libre(Cardinaux.NORD), 0, 0);
+		aut1.ajoute_transition(1, new Avancer(Cardinaux.EST), new Libre(Cardinaux.EST), 0, 0);
+		aut1.ajoute_transition(1, new Avancer(Cardinaux.SUD), new Libre(Cardinaux.SUD), 1, 1);
+		aut1.ajoute_transition(1, new Avancer(Cardinaux.OUEST), new Libre(Cardinaux.OUEST), 1, 1);
+		aut1.ajoute_transition(1, new AvancerJoueur(), new OrdreDonne(), 1, 5);
 		ArrayList<Automate> autlist = new ArrayList<Automate>();
 		autlist.add(aut1);
 		Classe generique = new Classe(10,5,0,"default class",Bonus.VIE);

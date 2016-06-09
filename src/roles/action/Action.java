@@ -3,7 +3,6 @@ package roles.action;
 import roles.Personnage;
 
 public abstract class Action {
-	int _poids;
 
 	private static int _nextId = 0;
 
@@ -14,13 +13,7 @@ public abstract class Action {
 		return _nextId - range;
 	}
 
-	public Action(int poids)
-	{
-		_poids = poids;
-	}
 	public abstract void Act(Personnage pers);
-	public int poids() {
-		return _poids;
-	}
+
 	public abstract int toInt() ;
 }

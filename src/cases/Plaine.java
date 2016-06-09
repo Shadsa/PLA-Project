@@ -6,7 +6,7 @@ import roles.action.*;
 
 public final class Plaine extends TypeCase {
 
-	protected static Action _action = new Avancer(Cardinaux.SUD,1);
+	protected static Action _action = new Avancer(Cardinaux.SUD);
 	
 	private static Plaine _instance = new Plaine();
 	

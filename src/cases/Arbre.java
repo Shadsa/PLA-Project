@@ -8,7 +8,7 @@ import roles.action.Attaquer;
 public final class Arbre extends TypeCase {
 
 
-	protected static Action _action = new Attaquer(Cardinaux.SUD,1);
+	protected static Action _action = new Attaquer(Cardinaux.SUD);
 	
 	private static Arbre _instance = new Arbre();
 	
