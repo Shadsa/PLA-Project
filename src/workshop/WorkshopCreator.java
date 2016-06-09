@@ -6,6 +6,10 @@ import roles.action.Action;
 import roles.classe.Classe;
 import roles.conditions.Condition;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 public class WorkshopCreator {
@@ -35,14 +39,15 @@ public class WorkshopCreator {
 			files.add(file);
 		// création d'une ArrayList regroupant tous les fichiers
 		}
-		long taille = files.size(); // Nombre de fichiers total dans le dossier
+		int taille = files.size(); // Nombre de fichiers total dans le dossier
 		for (int i=0;i< taille;i++){
 			files.get(i); // me donne le fichier
 			deckActionName.add(files.get(i).getName());
-			deckAction.add(new ArrayList<Action>()); //initialisation d'un arraylist
-			/*while (){ //tant que ce n'est pas la fin du fichier
+			deckAction.add(new ArrayList<Class<Action>>()); //initialisation d'un arraylist
+			files.get(i).list();
+			while (c!=-1){ //.read renvoi -1 à la fin du fichier
 				//Lire le fichier ligne par ligne
-
+				//Class.forName(ligne lue)
 
 
 			}
@@ -51,7 +56,7 @@ public class WorkshopCreator {
 		}
 
 		// WorkShop Condition
-	}*/
+	}
 
 
 	public ArrayList<Action> getDeckAction(String name){
