@@ -10,8 +10,13 @@ import roles.action.World;
 
 public class Carte extends Vector<Vector<Case>>{
 
+	private int _hauteur;
+	private int _largeur;
+	
 	public Carte(int hauteur,int largeur){
 		super(hauteur);
+		_hauteur = hauteur;
+		_largeur = largeur;
 		Random R = new Random();
 		int type;
 		Case c;
@@ -28,10 +33,6 @@ public class Carte extends Vector<Vector<Case>>{
 					c = new Terrain(x,y,Caillou.getInstance());
 					System.out.print('C');
 					break;
-				case 3 :
-					c = new Terrain(x,y,Eau.getInstance());
-					System.out.print('E');
-					break;
 				default :
 					c = new Terrain(x,y,Plaine.getInstance());
 					System.out.print('D');
@@ -42,7 +43,8 @@ public class Carte extends Vector<Vector<Case>>{
 			add(ligne);
 			System.out.print('\n');
 		}
-		this.putForet(5, 5, 3);
+		this.randomLac();
+		this.randomForet();
 	}
 
 	public Case Case(int x, int y) {
@@ -88,7 +90,7 @@ public class Carte extends Vector<Vector<Case>>{
 		Case(x,y).modifierCase(type);
 	}
 	
-	public void putForet(int x, int y, int facteur){
+	private void putForet(int x, int y, int facteur){
 		if(Case(x,y)!=null && Case(x,y).type().franchissable() && Case(x,y).type().value() != Arbre.getInstance().value()){
 			Random R = new Random();
 			this.modifierCase(Arbre.getInstance(), x, y);
@@ -127,6 +129,76 @@ public class Carte extends Vector<Vector<Case>>{
 				else
 					nextFacteur=facteur-1;	
 				putForet(x,y+1,nextFacteur);
+			}
+		}
+	}
+	
+	private void randomForet(){
+		Random R = new Random();
+		for(int y=0; y<_hauteur; y+=5){
+			for(int x=0; x<=_largeur; x+=5){
+				int roll = R.nextInt(20);
+				if(roll==0){
+					putForet(x,y,4);
+				}
+				else if(roll<=4){
+					putForet(x,y,3);
+				}
+			}
+		}
+	}
+	
+	private void putLac(int x, int y, int facteur){
+		if(Case(x,y)!=null && Case(x,y).type().franchissable() && Case(x,y).type().value() != Eau.getInstance().value()){
+			Random R = new Random();
+			this.modifierCase(Eau.getInstance(), x, y);
+			if(facteur==1){
+				if(R.nextInt(3)>1)
+					putLac(x-1,y,0);
+				if(R.nextInt(3)>1)
+					putLac(x+1,y,0);
+				if(R.nextInt(3)>1)
+					putLac(x,y-1,0);
+				if(R.nextInt(3)>1)
+					putLac(x,y+1,0);
+			}
+			else if(facteur>1){
+				int nextFacteur;
+				if(R.nextInt(3)>1)
+					nextFacteur=facteur;
+				else
+					nextFacteur=facteur-1;	
+				putLac(x-1,y,nextFacteur);
+				
+				/*if(R.nextInt(3)>1)
+					nextFacteur=facteur;
+				else
+					nextFacteur=facteur-1;	*/
+				putLac(x+1,y,nextFacteur);
+				
+				/*if(R.nextInt(3)>1)
+					nextFacteur=facteur;
+				else
+					nextFacteur=facteur-1;*/	
+				putLac(x,y-1,nextFacteur);
+				
+				/*if(R.nextInt(3)>1)
+					nextFacteur=facteur;
+				else
+					nextFacteur=facteur-1;	*/
+				putLac(x,y+1,nextFacteur);
+			}
+		}
+	}
+	
+	private void randomLac(){
+		Random R = new Random();
+		for(int y=0; y<_hauteur; y+=5){
+			for(int x=0; x<=_largeur; x+=5){
+				int roll = R.nextInt(20);
+				if(roll==0){
+					putLac(x,y,5);
+				}
 			}
 		}
 	}
