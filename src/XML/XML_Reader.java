@@ -87,7 +87,7 @@ public class XML_Reader {
 					NamedNodeMap att = n.getAttributes();
 					if(att.getLength()==1 && att.item(0).getNodeName()=="type"){
 						//auto = new Automate(Integer.parseInt(att.item(0).getNodeValue()));
-						auto = new Automate(2);
+						auto = new Automate(Integer.parseInt(att.item(0).getNodeValue()));
 					}
 					else throw new RuntimeException("Bad format XML.");
 				}
