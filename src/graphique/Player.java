@@ -124,12 +124,13 @@ public static void sinit() throws SlickException
 	    Hanimations[11] = loadAnimation(HspriteSheet2, 0, 5, 3);
 
 	    Hanimations[12] = new Animation();
-	    for (int x = 0; x < 5; x++) {
+	    for (int x = 0; x < 6; x++) {
 	    	Hanimations[12].addFrame(HspriteSheet3.getSprite(x, 0), 40);
 	    }
-	    for (int x = 0; x < 30; x++) {
+	    Hanimations[12].setLooping(false);
+	    /*for (int x = 0; x < 30; x++) {
 	    	Hanimations[12].addFrame(HspriteSheet3.getSprite(5, 0), 40);
-	    }
+	    }*/
 
 	    SpriteSheet spriteSheetW = new SpriteSheet("src/asset/sprites/WEAPON_dagger.png", 64, 64);
 	    Danimations[0] = loadAnimation(spriteSheetW, 0, 5, 0);
