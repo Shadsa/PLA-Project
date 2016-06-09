@@ -52,6 +52,12 @@ public abstract class Case extends Observable{
 	{
 		return _y;
 	}
+	
+
+	public TypeCase type() {
+		return _type;
+	}
+
 
 	public Personnage Personnage() {
 		return _personnage;

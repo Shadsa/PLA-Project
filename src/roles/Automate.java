@@ -9,23 +9,27 @@ import java.util.Comparator;
 import roles.classe.*;
 import cases.Batiment;
 import cases.CaseAction;
+import roles.States.Statut;
 import roles.action.Action;
 import roles.conditions.Condition;
 
 public class Automate {
 	ArrayList<ArrayList<CaseAction>> _action;
 	ArrayList<ArrayList<Condition>> _condition;
+	ArrayList<ArrayList<Integer>> _poids;
 	ArrayList<ArrayList<Integer>> _next;
 
 	public Automate(int nb_etat)
 	{
 		_action = new ArrayList<ArrayList<CaseAction>>();
 		_condition = new ArrayList<ArrayList<Condition>>();
+		_poids = new ArrayList<ArrayList<Integer>>();
 		_next = new ArrayList<ArrayList<Integer>>();
 		while(nb_etat>0)
 		{
 			_action.add(new ArrayList<CaseAction>());
 			_condition.add(new ArrayList<Condition>());
+			_poids.add(new ArrayList<Integer>());
 			_next.add(new ArrayList<Integer>());
 			nb_etat--;
 		}
@@ -37,10 +41,11 @@ public class Automate {
 	}
 
 	
-	public void ajoute_transition(int etat, Action a, Condition c, int etat_suivant)
+	public void ajoute_transition(int etat, Action a, Condition c, int etat_suivant, int poids)
 	{
 		_action.get(etat).add(new CaseAction(new Batiment(a)));
 		_condition.get(etat).add(c);
+		_poids.get(etat).add(poids);
 		_next.get(etat).add(etat_suivant);
 	}
 
@@ -50,18 +55,21 @@ public class Automate {
 			if(_condition.get(pers.etat()).get(id).value(pers))
 				choice.add(id);
 
+		//le personnage ne fait rien, penser à Attendre quand cela sera implémenté
 		if(choice.size() == 0)
 		{
 			pers.parralyse();
+			pers.setState(new States(Statut.ATTENDS, Cardinaux.NORD));
 			return;
 		}
 
+		//comparateur utilisé pour comparer en utilisant les poids des transitions
 		Collections.sort(choice, (new Comparator<Integer>() {
 			int _etat;
 			@Override
 			public int compare(Integer i1, Integer i2)
 		    {
-				return  _action.get(_etat).get(i1).poids() - _action.get(_etat).get(i2).poids();
+				return  _poids.get(_etat).get(i1) - _poids.get(_etat).get(i2);
 		    }
 
 			Comparator<Integer> init(int etat)
@@ -71,14 +79,14 @@ public class Automate {
 			}
 		}).init(pers.etat()));
 
-		int poids = _action.get(pers.etat()).get(choice.get(choice.size()-1)).poids();
+		int poids = _poids.get(pers.etat()).get(choice.get(choice.size()-1));
 		/*for(Integer id : choice)
 		{
 			if(poids != _action.get(pers.etat()).get(id).poids())
 				choice.remove(id);
 		}*/
 		for(int id = choice.size()-1; id>=0; id--){
-			if(poids != _action.get(pers.etat()).get(choice.get(id)).poids())
+			if(poids != _poids.get(pers.etat()).get(choice.get(id)))
 				choice.remove(id);
 		}
 

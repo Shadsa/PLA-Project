@@ -10,8 +10,8 @@ public final class Attaquer extends Action {
 	Cardinaux _direction;
 	private static int _Id = Action.getId(4);
 
-	public Attaquer(Cardinaux card, int poids) {
-		super(poids);
+	public Attaquer(Cardinaux card) {
+		super();
 		_direction = card;
 	}
 

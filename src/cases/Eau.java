@@ -7,7 +7,7 @@ import roles.action.Attaquer;
 
 public final class Eau extends TypeCase {
 
-	protected static Action _action = new Attaquer(Cardinaux.NORD,1);
+	protected static Action _action = new Attaquer(Cardinaux.NORD);
 	
 	private static Eau _instance = new Eau();
 	

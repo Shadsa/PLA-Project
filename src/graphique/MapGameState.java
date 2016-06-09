@@ -1,6 +1,8 @@
 package graphique;
 
 import java.util.ArrayList;
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -12,7 +14,9 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.w3c.dom.DOMException;
 
+import XML.XML_Reader;
 import roles.Bonus;
 import roles.classe.*;
 import roles.Automate;
@@ -22,6 +26,7 @@ import roles.States.Statut;
 import roles.action.Attaquer;
 import roles.action.Avancer;
 import roles.action.AvancerJoueur;
+import roles.action.Dupliquer;
 import roles.action.Joueur;
 import roles.action.Raser;
 import roles.action.World;
@@ -39,7 +44,7 @@ public class MapGameState extends BasicGameState {
 	static final float Oy = 48;
 
 	private GameContainer container;
-	private ArrayList<Player> _players = new ArrayList<Player>();
+	private ArrayList<graphique.GJoueur> _joueurs = new ArrayList<graphique.GJoueur>();
 	//private Personnage personnage;
 	private Hud hud = new Hud();
 	public static final int ID = 2;
@@ -87,27 +92,39 @@ public class MapGameState extends BasicGameState {
 	 */
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		_input = container.getInput();
-
+/*
 		Automate aut1 = new Automate(2);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD, 1), new Libre(Cardinaux.NORD), 0);
-		// décommenter pour tester attaque
-		aut1.ajoute_transition(0, new Attaquer(Cardinaux.SUD, 1), new Ennemi(Cardinaux.SUD), 0);
-		aut1.ajoute_transition(0, new Attaquer(Cardinaux.NORD, 1), new Ennemi(Cardinaux.NORD), 0);
-		aut1.ajoute_transition(0, new Attaquer(Cardinaux.EST, 1), new Ennemi(Cardinaux.EST), 0);
-		aut1.ajoute_transition(0, new Attaquer(Cardinaux.OUEST, 1), new Ennemi(Cardinaux.OUEST), 0);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.EST, 1), new Libre(Cardinaux.EST), 0);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD, 0), new Libre(Cardinaux.SUD), 1);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.OUEST, 0), new Libre(Cardinaux.OUEST), 1);
-		aut1.ajoute_transition(0, new AvancerJoueur(5), new OrdreDonne(), 0);
-		aut1.ajoute_transition(0, new Raser(1), new Vide(), 1);
 
-		aut1.ajoute_transition(1, new Avancer(Cardinaux.NORD, 0), new Libre(Cardinaux.NORD), 0);
-		aut1.ajoute_transition(1, new Avancer(Cardinaux.EST, 0), new Libre(Cardinaux.EST), 0);
-		aut1.ajoute_transition(1, new Avancer(Cardinaux.SUD, 1), new Libre(Cardinaux.SUD), 1);
-		aut1.ajoute_transition(1, new Avancer(Cardinaux.OUEST, 1), new Libre(Cardinaux.OUEST), 1);
-		aut1.ajoute_transition(1, new AvancerJoueur(5), new OrdreDonne(), 1);
-		ArrayList<Automate> autlist = new ArrayList<Automate>();
-		autlist.add(aut1);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD), new Libre(Cardinaux.NORD), 0, 1);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.EST), new Libre(Cardinaux.EST), 0, 1);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD), new Libre(Cardinaux.SUD), 1, 0);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.OUEST), new Libre(Cardinaux.OUEST), 1, 0);
+		// décommenter pour tester attaque
+		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.SUD), new Libre(Cardinaux.SUD), 0, 1);
+		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.NORD), new Libre(Cardinaux.NORD), 0, 1);
+		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.EST), new Libre(Cardinaux.EST), 0, 1);
+		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.OUEST), new Libre(Cardinaux.OUEST), 0, 1);
+
+		aut1.ajoute_transition(0, new AvancerJoueur(), new OrdreDonne(), 0, 5);
+		//aut1.ajoute_transition(0, new Raser(), new Vide(), 1, 1);
+
+		aut1.ajoute_transition(1, new Avancer(Cardinaux.NORD), new Libre(Cardinaux.NORD), 0, 0);
+		aut1.ajoute_transition(1, new Avancer(Cardinaux.EST), new Libre(Cardinaux.EST), 0, 0);
+		aut1.ajoute_transition(1, new Avancer(Cardinaux.SUD), new Libre(Cardinaux.SUD), 1, 1);
+		aut1.ajoute_transition(1, new Avancer(Cardinaux.OUEST), new Libre(Cardinaux.OUEST), 1, 1);
+		aut1.ajoute_transition(1, new AvancerJoueur(), new OrdreDonne(), 1, 5);
+		*/
+		File f = new File("./creation_automates/sortie.xml");
+		ArrayList<Automate> autlist = null;
+		try {
+			autlist = XML_Reader.readXML(f);
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException | ClassNotFoundException | DOMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Erreur XML");
+		}
+		//autlist.add(aut1);
 		Classe generique = new Classe(10,5,0,"default class",Bonus.VIE);
 		ArrayList<Classe> classes = new ArrayList<Classe>();
 		classes.add(generique);
@@ -115,7 +132,7 @@ public class MapGameState extends BasicGameState {
 		Joueur jZ = new Joueur("Zombie", autlist,classes);
 		World.addPlayer(j2);
 		World.addPlayer(jZ);
-		World.BuildMap(10,10);
+		World.BuildMap(100,10);
 		j2.createPersonnage(0, 5, 5);
 		j2.createPersonnage(0, 6, 6);
 		j2.createPersonnage(0, 3, 6);
@@ -152,11 +169,11 @@ public class MapGameState extends BasicGameState {
 		Player.sinit();
 		Player pla;
 		for(Joueur j : World.getPlayers())
-		for(Personnage pers : j.getPersonnages())
 		{
-			pla = new Player();
-			pla.init(pers, j == j2);
-			_players.add(pla);
+			_joueurs.add(new graphique.GJoueur((j == World.getPlayers().get(0))?TypeUnit.Human:TypeUnit.Zombie));
+			j.addObserver(_joueurs.get(_joueurs.size()-1));
+			for(Personnage pers : j.getPersonnages())
+				_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
 		}
 
 		//System.out.print(_players.size());
@@ -181,8 +198,9 @@ public class MapGameState extends BasicGameState {
 		//Affichage de la map
 		this.map.render(g, _offsetMapX, _offsetMapY, zoom());
 		//Affichage des personnages
-		for(Player p : _players)
-			p.render(g);
+		for(graphique.GJoueur j : _joueurs)
+			for(Player p : j.getPersonnage())
+				p.render(g);
 
 		//Annule la translation pour l'affichage du string en dessous
 		g.resetTransform();
@@ -198,12 +216,12 @@ public class MapGameState extends BasicGameState {
 		if(showhud) {
 			this.hud.render(g);
 		}
-		
+
 		if (container.isPaused()) {
 		    Rectangle rect = new Rectangle (0, 0, container.getScreenWidth(), container.getScreenHeight());
 		 //   g.scale(1.5f,1.5f);
-		    
-		    
+
+
 		    g.setColor(new Color (0, 0, 0, alpha));
 		    g.fill(rect);
 		    g.setColor(Color.white);
@@ -223,11 +241,12 @@ public class MapGameState extends BasicGameState {
 	protected long _time = 0;
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		for(int i = _players.size()-1; i>=0; i--)
-			if(_players.get(i).AnimDead>0)
-				_players.get(i).update(delta);
-			else
-				_players.remove(_players.get(i));
+		for(graphique.GJoueur j : _joueurs)
+			for(int i = j.getPersonnage().size()-1; i>=0; i--)
+				if(j.getPersonnage().get(i).AnimDead>0)
+					j.getPersonnage().get(i).update(delta);
+				else
+					j.getPersonnage().remove(j.getPersonnage().get(i));
 
 		_time += delta;
 		if(_time > Tick)
@@ -373,8 +392,9 @@ public class MapGameState extends BasicGameState {
 
 	public void mousePressed(int arg0, int arg1, int arg2) {
 		//if (Input.MOUSE_LEFT_BUTTON == arg0) {//&& mouseMapX() >= this.player.getX()-32 && mouseMapX() <= this.player.getX()+32 && mouseMapY() >= this.player.getY()-60 && mouseMapY() <= this.player.getY()+4) {
-		for(Player p : _players)
-			if (Input.MOUSE_LEFT_BUTTON == arg0 && curseurSurPerso(p, mouseMapX(), mouseMapY())) {
+		for(graphique.GJoueur j : _joueurs)
+			for(Player p : j.getPersonnage())
+				if (Input.MOUSE_LEFT_BUTTON == arg0 && curseurSurPerso(p, mouseMapX(), mouseMapY())) {
 				_target = p;
 				_targetp = World.Case((int)(MapGameState._target.DestX()-Ox)/TileSize, (int)(MapGameState._target.DestY()-Oy)/TileSize).Personnage();
 				this.showhud = true;

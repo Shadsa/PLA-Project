@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.Vector;
 
 import cases.*;
+import roles.action.Joueur;
 import roles.action.World;
 
 public class Carte extends Vector<Vector<Case>>{
@@ -17,21 +18,17 @@ public class Carte extends Vector<Vector<Case>>{
 		for(int y=0 ; y<hauteur ; y++){
 			Vector<Case> ligne = new Vector<Case>(largeur);
 			for(int x=0 ; x<largeur ; x++){
-				type = R.nextInt(5);
+				type = R.nextInt(20);
 				switch(type){
 				case 0 : case 1 :
 					c = new Terrain(x,y,Plaine.getInstance());
 					System.out.print('P');
 					break;
 				case 2 :
-					c = new Terrain(x,y,Arbre.getInstance());
-					System.out.print('A');
-					break;
-				case 3 :
 					c = new Terrain(x,y,Caillou.getInstance());
 					System.out.print('C');
 					break;
-				case 4 :
+				case 3 :
 					c = new Terrain(x,y,Eau.getInstance());
 					System.out.print('E');
 					break;
@@ -45,6 +42,7 @@ public class Carte extends Vector<Vector<Case>>{
 			add(ligne);
 			System.out.print('\n');
 		}
+		this.putForet(5, 5, 3);
 	}
 
 	public Case Case(int x, int y) {
@@ -62,10 +60,10 @@ public class Carte extends Vector<Vector<Case>>{
 	 * @param y : ordonnée où placer la case c
 	 * @throws Exception : si cette case n'existe pas
 	 */
-	public void putCaseAction(CaseAction c, int x, int y) throws Exception {
+	public void putCaseAction(CaseAction c, int x, int y, Joueur j) throws Exception {
 		if(x < 0 || y < 0 || x >= size() || y >= get(x).size())
 			throw new Exception("Dépassement de la carte");
-		c.setPosition(x, y);
+		c.setCase(x, y, j);
 		get(y).set(x, c);
 	}
 
@@ -76,17 +74,77 @@ public class Carte extends Vector<Vector<Case>>{
 	 * @param y : ordonnée où placer l'automate
 	 * @throws Exception : si on ne peut placer l'automate à cette position
 	 */
-	public void putAutomate(Automate a, int x, int y) throws Exception {
+	public void putAutomate(Automate a, int x, int y, Joueur j) throws Exception {
 		for(ArrayList<CaseAction> ligne : a.get_action())
 			for(CaseAction c : ligne)
 				try {
-					putCaseAction(c,x++,y++);
+					putCaseAction(c,x++,y++,j);
 				} catch (Exception e) {
 					throw new Exception("Impossible de placer l'automate");
 				}
 	}
-	
-	public void setCase(TypeCase type, int x, int y){
+
+	public void modifierCase(TypeCase type, int x, int y){
 		Case(x,y).modifierCase(type);
 	}
+	
+	public void putForet(int x, int y, int facteur){
+		if(Case(x,y)!=null && Case(x,y).type().franchissable() && Case(x,y).type().value() != Arbre.getInstance().value()){
+			Random R = new Random();
+			this.modifierCase(Arbre.getInstance(), x, y);
+			if(facteur==1){
+				if(R.nextInt(3)>1)
+					putForet(x-1,y,0);
+				if(R.nextInt(3)>1)
+					putForet(x+1,y,0);
+				if(R.nextInt(3)>1)
+					putForet(x,y-1,0);
+				if(R.nextInt(3)>1)
+					putForet(x,y+1,0);
+			}
+			else if(facteur>1){
+				int nextFacteur;
+				if(R.nextInt(3)>1)
+					nextFacteur=facteur;
+				else
+					nextFacteur=facteur-1;	
+				putForet(x-1,y,nextFacteur);
+				
+				if(R.nextInt(3)>1)
+					nextFacteur=facteur;
+				else
+					nextFacteur=facteur-1;	
+				putForet(x+1,y,nextFacteur);
+				
+				if(R.nextInt(3)>1)
+					nextFacteur=facteur;
+				else
+					nextFacteur=facteur-1;	
+				putForet(x,y-1,nextFacteur);
+				
+				if(R.nextInt(3)>1)
+					nextFacteur=facteur;
+				else
+					nextFacteur=facteur-1;	
+				putForet(x,y+1,nextFacteur);
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

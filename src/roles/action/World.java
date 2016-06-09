@@ -54,10 +54,14 @@ public abstract class World {
 	}
 
 	public static int SizeX() {
-		return _map.size();
+		return _map.get(0).size();
 	}
-	
+
 	public static void modifierCase(TypeCase type, int x, int y){
-		_map.setCase(type, x, y);
+		_map.modifierCase(type, x, y);
+	}
+
+	public static int SizeY() {
+		return _map.size();
 	}
 }

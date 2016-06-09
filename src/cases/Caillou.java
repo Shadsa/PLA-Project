@@ -7,7 +7,7 @@ import roles.Cardinaux;
 
 public final class Caillou extends TypeCase {
 
-	protected static Action _action = new Attaquer(Cardinaux.NORD,1);
+	protected static Action _action = new Attaquer(Cardinaux.NORD);
 	
 	private static Caillou _instance = new Caillou();
 	

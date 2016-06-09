@@ -5,12 +5,12 @@ import roles.Personnage;
 import roles.States;
 import roles.States.Statut;
 
-public final class Avancer extends Action {
+public final class Dupliquer extends Action {
 
 	Cardinaux _direction;
 	private static int _Id = Action.getId(4);
 
-	public Avancer(Cardinaux card) {
+	public Dupliquer(Cardinaux card) {
 		super();
 		_direction = card;
 	}
@@ -21,9 +21,8 @@ public final class Avancer extends Action {
 		int destY = pers.Y() + ((_direction == Cardinaux.SUD)? (-1) : ((_direction == Cardinaux.NORD)? 1 : 0));
 		if(World.isfree(destX, destY))
 		{
-			System.out.print(pers.ID() + "j'avance vers le " + _direction + destX + destY + ".\n");
-			World.Case(destX, destY).setPersonnage(pers);
-			pers.setState(new States(Statut.AVANCE, _direction));
+			Personnage newPers = pers.owner().createPersonnage(0, destX, destY);
+			pers.setState(new States(Statut.ATTAQUE, _direction));
 		}
 	}
 

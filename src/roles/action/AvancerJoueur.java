@@ -9,10 +9,6 @@ public final class AvancerJoueur extends Action {
 
 	private static int _Id = Action.getId(4);
 
-	public AvancerJoueur(int poids) {
-		super(poids);
-	}
-
 	@Override
 	public void Act(Personnage pers) {
 		Cardinaux direction = pers.directionJoueur();

@@ -1,18 +1,20 @@
 package roles.action;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 import roles.Automate;
 import roles.Personnage;
 import roles.classe.Classe;
 import roles.Cardinaux;
 
-public class Joueur {
+public class Joueur extends Observable{
 
 	String _nom;
 	ArrayList<Personnage> _personnages;
 	ArrayList<Automate> _automates;
 	ArrayList<Classe> _classes; //indicage sur celui de Automate pour la cores'
+	private int _ressources;
 
 
 
@@ -21,6 +23,7 @@ public class Joueur {
 		_nom = nom;
 		_automates = automates;
 		_classes = classes;
+		_ressources = 0;
 		_personnages = new ArrayList<Personnage>();
 	}
 
@@ -28,9 +31,25 @@ public class Joueur {
 		return _personnages;
 	}
 
-	public void createPersonnage(int type, int x, int y)
+	public Personnage createPersonnage(int type, int x, int y)
 	{
 		// WARNING faire plutot un get automate avec gestion d'erreur
-		_personnages.add(new Personnage(_automates.get(type), x, y, this,_classes.get(type)));
+		Personnage newPers = new Personnage(_automates.get(type), x, y, this,_classes.get(type));
+		_personnages.add(newPers);
+		setChanged();
+		notifyObservers(newPers);
+		return newPers;
+	}
+
+	public int ressources(){
+		return _ressources;
+	}
+
+	public boolean changerRessource(int modificateur) {
+		if(_ressources+modificateur>=0){
+			_ressources+=modificateur;
+			return true;
+		}
+		return false;
 	}
 }

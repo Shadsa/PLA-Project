@@ -16,6 +16,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.lang.reflect.Method;
+
+import cases.TypeCase;
+
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -24,11 +29,11 @@ import roles.Cardinaux;
 import roles.action.*;
 import roles.conditions.*;
 
+
 public class XML_Reader {
 	
-	@SuppressWarnings("null")
 	public static ArrayList<Automate> readXML(File f) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException, DOMException{
-		ArrayList<Automate> liste = null;
+		ArrayList<Automate> liste = new ArrayList<Automate>();
 		Automate automate = null;
 	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	    factory.setIgnoringComments(true);	
@@ -43,50 +48,57 @@ public class XML_Reader {
 	       try {
 	           xml = builder.parse(fileXML);
 	           Element n = xml.getDocumentElement();
-	   			if(n instanceof Element){
-	   				if(n.getNodeName()=="nombre" && n.getAttributes() == null){
+				if(n instanceof Element){
+	   				if(n.getNodeName()=="liste"){
 	   					int nbChild = n.getChildNodes().getLength();
 	   					NodeList list = n.getChildNodes();
-	   					for(int i = 0; i < nbChild; i++)
+	   					for(int i = 1; i < nbChild; i+=2){
 	   						automate = ListeCreate(list.item(i));
-	   					liste.add(automate);
+	   						liste.add(automate);
+	   					}
 	   				}
 	   			}
 	       } catch (SAXParseException e) {}    
 	    }catch (ParserConfigurationException e) {
 	        e.printStackTrace();
+	        System.out.println("Erreur XML");
+	        return null;
 	     } catch (SAXException e1) {
 	        e1.printStackTrace();
+	        System.out.println("Erreur XML");
+	        return null;
 	     } catch (IOException e2) {
 	        e2.printStackTrace();
+	        System.out.println("Erreur XML");
+	        return null;
 	     }
 	    return liste;
 	}	
 
+
 	public static Automate ListeCreate(Node n) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException, DOMException{
 		Automate auto = null;
+
 		if(n instanceof Element){
-			if(n.getNodeName()=="nombre" && n.getAttributes() != null && n.getAttributes().getLength() == 1){
-			   	int nbChild = n.getChildNodes().getLength();
-				NodeList list = n.getChildNodes();		
 				if(n.getNodeName()=="automate" && n.getAttributes() != null && n.getAttributes().getLength() > 0){
 					NamedNodeMap att = n.getAttributes();
-					if(att.getLength()==1 && att.item(0).getNodeName()=="name")
+					if(att.getLength()==1 && att.item(0).getNodeName()=="nbEtats"){
+						//auto = new Automate(Integer.parseInt(att.item(0).getNodeValue()));
 						auto = new Automate(Integer.parseInt(att.item(0).getNodeValue()));
+					}
 					else throw new RuntimeException("Bad format XML.");
 				}
 				else throw new RuntimeException("Bad format XML.");
-			    nbChild = n.getChildNodes().getLength();
-				list = n.getChildNodes();
+			    int nbChild = n.getChildNodes().getLength();
+				NodeList list = n.getChildNodes();
 				
-				for(int i = 0; i < nbChild; i++){
+				for(int i = 1; i < nbChild; i+=2){
 					Node n2 = list.item(i);
 					if (n2 instanceof Element){
 						if(n2.getNodeName()=="transition")
-						AutomateCreate(auto, n2);
+							AutomateCreate(auto, n2);
 					}
 				}
-			}
 		}
 		else throw new RuntimeException("Bad Argument.");
 
@@ -94,43 +106,89 @@ public class XML_Reader {
 	}
 	
 	
+	public static Cardinaux CardOfString(String s){
+		Cardinaux C = null;
+		switch(s){
+		case "N" :
+			C = Cardinaux.NORD; break;
+		case "E" :
+			C = Cardinaux.EST; break;
+		case "O" :
+			C = Cardinaux.OUEST; break;
+		case "S" :
+			C = Cardinaux.SUD; break;
+		default :
+			C = Cardinaux.NORD; break;
+		}
+		return C;
+	}
+	
+	
 	public static void AutomateCreate(Automate auto, Node n) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException, DOMException{
-		@SuppressWarnings("null")
-		int etat=(Integer) null, suiv=(Integer) null;
+		int etat=0, suiv=0, poids=0;
 		Action action=null;
 		Condition cond=null;
-		
+		System.out.println("esrdfndf");
 		if(n.getAttributes() != null && n.getAttributes().getLength() == 1){
-				
-			final NodeList trans = ((Document) n).getElementsByTagName("transition");
-			final int nbElt = trans.getLength();
-			
-			if(nbElt == 4){
-				Node node1 = trans.item(0);
+			poids = Integer.parseInt(n.getAttributes().item(0).getNodeValue());
+			//final NodeList trans = ((Element) n).getElementsByTagName("transition");
+			//final int nbElt = trans.getLength();
+		    int nbElt = n.getChildNodes().getLength();
+			NodeList trans = n.getChildNodes();
+
+			if(nbElt == 9){
+
+				Node node1 = trans.item(1);
 				if(node1 instanceof Element && node1.getAttributes() == null){
-					final Element e1 = (Element) ((NamedNodeMap) n).item(0);
+					final Element e1 = (Element) ((Element) trans).getElementsByTagName("etat").item(0);
 					etat = Integer.parseInt(e1.getTextContent());
 				}
 				//etat = Integer.parseInt(node1.getAttributes().item(0).getNodeValue());
-				Node node2 = trans.item(0);
+				Node node2 = trans.item(3);
 				if(node2 instanceof Element && node2.getAttributes() != null && node2.getAttributes().getLength() == 1){
-					final Element e2 = (Element) ((NamedNodeMap) n).item(0);
+					//final Element e2 = node2.item(0);
+					final Element e2 = (Element) ((Element) trans).getElementsByTagName("condition").item(0);
 					String s1 = e2.getTextContent();
-					cond = (Condition) Class.forName(s1).getDeclaredConstructor(Cardinaux.class).newInstance(node2.getAttributes().item(0).getNodeValue());
+					Cardinaux C = CardOfString(node2.getAttributes().item(0).getNodeValue());
+					if(C!=null)
+						cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(Cardinaux.class).newInstance(C);
+					else{
+						Method meth = null;
+						meth = Class.forName("roles.conditions."+s1).getMethod("getInstance",  (Class<?>[]) null);
+						if(meth != null)
+							cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(TypeCase.class).newInstance(meth.invoke(null, null));
+						else
+							cond = (Condition) Class.forName("roles.conditions."+s1).newInstance();
+					}
 				}
-				Node node3 = trans.item(0);
+				else{
+					if(node2 instanceof Element){
+						//final Element e2 = node2.item(0);
+						final Element e2 = (Element) ((Element) trans).getElementsByTagName("condition").item(0);
+						String s1 = e2.getTextContent();
+						cond = (Condition) Class.forName("roles.conditions."+s1).newInstance();				
+					}
+				}
+				Node node3 = trans.item(5);
 				if(node3 instanceof Element && node3.getAttributes() != null && node3.getAttributes().getLength() == 1){
-					final Element e3 = (Element) ((NamedNodeMap) n).item(0);
+					final Element e3 = (Element) ((Element) trans).getElementsByTagName("action").item(0);
 					String s2 = e3.getTextContent();
-					action = (Action) Class.forName(s2).getDeclaredConstructor(Cardinaux.class).newInstance(node3.getAttributes().item(0).getNodeValue());
-				}				
-				Node node4 = trans.item(0);
+					action = (Action) Class.forName("roles.action."+s2).getDeclaredConstructor(Cardinaux.class).newInstance(CardOfString(node3.getAttributes().item(0).getNodeValue()));
+				}
+				else{
+					if(node3 instanceof Element){
+						final Element e3 = (Element) ((Element) trans).getElementsByTagName("action").item(0);
+						String s2 = e3.getTextContent();
+						action = (Action) Class.forName("roles.action."+s2).getDeclaredConstructor().newInstance();
+					}	
+				}
+				Node node4 = trans.item(7);
 				if(node4 instanceof Element && node4.getAttributes() == null){
-					final Element e4 = (Element) ((NamedNodeMap) n).item(0);
+					final Element e4 = (Element) ((Element) trans).getElementsByTagName("suivant").item(0);
 					suiv = Integer.parseInt(e4.getTextContent());
 				}
 			}
-			auto.ajoute_transition(etat,action,cond,suiv);
+			auto.ajoute_transition(etat,action,cond,suiv,poids);
 		}
 	}
 }

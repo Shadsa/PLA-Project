@@ -27,14 +27,14 @@ public class Player implements Observer{
 	//Boolean pour savoir si le personnage bouge
 	private boolean moving = false;
 	//Tableau des modèles d'animation
-	private static Animation[] animations = new Animation[13];
-	private static Animation[] Hanimations = new Animation[13];
-	private static Animation[] Danimations = new Animation[4];
+	public static Animation[] animations = new Animation[13];
+	public static Animation[] Hanimations = new Animation[13];
+	public static Animation[] Danimations = new Animation[4];
 	//
 	private int AnimDuration;
 	public int AnimDead;
 	private Boolean _isDead;
-	private Boolean _human;
+	private TypeUnit _human;
 	private SoundEffect soundEffect;
 
 	protected int _id;
@@ -51,8 +51,8 @@ public class Player implements Observer{
 		return _id;
 	}
 
-	public void init(Personnage pers, Boolean human) throws SlickException {
-		_human = human;
+	public Player(Personnage pers, TypeUnit _type_unit) {
+		_human = _type_unit;
 		_id = nextID();
 		_isDead = false;
 		AnimDuration = MapGameState.Tick;
@@ -64,7 +64,12 @@ public class Player implements Observer{
 		_destY = MapGameState.toX(pers.Y());
 		pers.addObserver(this);
 		soundEffect = new SoundEffect();
-		soundEffect.init();
+		try {
+			soundEffect.init();
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 public static void sinit() throws SlickException
@@ -187,7 +192,7 @@ public static void sinit() throws SlickException
 			    	anim = 12;
 			    }
 			    //System.out.println(_state.statut);
-			    if(_human)
+			    if(_human == TypeUnit.Human)
 			    	g.drawAnimation(Hanimations[anim], x-32, y-60);
 			    else
 			    	g.drawAnimation(animations[anim], x-32, y-60);
@@ -289,9 +294,9 @@ public static void sinit() throws SlickException
 				}
 				else {
 					_isDead = true;
-					if(_human)
+					if(_human == TypeUnit.Human)
 						soundEffect.dead_human().play();
-					if(!_human)
+					else
 						soundEffect.dead_skeleton().play();
 				}
 			}
@@ -307,6 +312,15 @@ public static void sinit() throws SlickException
 		}
 		public States states() {
 			return _state;
+		}
+		public boolean isDead() {
+			return _isDead;
+		}
+		public TypeUnit human() {
+			return _human;
+		}
+		public int AnimDuration() {
+			return AnimDuration;
 		}
 
 }
