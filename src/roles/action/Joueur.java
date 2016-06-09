@@ -14,6 +14,7 @@ public class Joueur extends Observable{
 	ArrayList<Personnage> _personnages;
 	ArrayList<Automate> _automates;
 	ArrayList<Classe> _classes; //indicage sur celui de Automate pour la cores'
+	private int _ressources;
 
 
 
@@ -22,6 +23,7 @@ public class Joueur extends Observable{
 		_nom = nom;
 		_automates = automates;
 		_classes = classes;
+		_ressources = 0;
 		_personnages = new ArrayList<Personnage>();
 	}
 
@@ -34,6 +36,20 @@ public class Joueur extends Observable{
 		// WARNING faire plutot un get automate avec gestion d'erreur
 		Personnage newPers = new Personnage(_automates.get(type), x, y, this,_classes.get(type));
 		_personnages.add(newPers);
+		setChanged();
+		notifyObservers(newPers);
 		return newPers;
+	}
+	
+	public int ressources(){
+		return _ressources;
+	}
+
+	public boolean changerRessource(int modificateur) {
+		if(_ressources+modificateur>=0){
+			_ressources+=modificateur;
+			return true;
+		}			
+		return false;
 	}
 }

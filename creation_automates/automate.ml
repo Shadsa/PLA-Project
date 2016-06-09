@@ -106,6 +106,9 @@ let element_to_xml ((s,attribute) : String.t*(String.t option)) (nom : String.t)
 let etat_to_xml (e : etat) : String.t =
   element_to_xml (string_of_int e,None) "etat"
 
+let suivant_to_xml (e : etat) : String.t =
+  element_to_xml (string_of_int e,None) "suivant"
+  
 let condition_to_xml (c : condition) : String.t =
   element_to_xml (condition_to_string c) "condition"
 
@@ -123,7 +126,7 @@ let transition_to_xml ((ec,c,a,es,p) : transition) : String.t =
 		      etat_to_xml ec;
 		      condition_to_xml c;
 		      action_to_xml a;
-		      etat_to_xml es;
+		      suivant_to_xml es;
 		      "\t\t</transition>"]
 
 let transition_list_to_xml (l : transition list) : String.t =

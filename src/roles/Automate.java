@@ -9,6 +9,7 @@ import java.util.Comparator;
 import roles.classe.*;
 import cases.Batiment;
 import cases.CaseAction;
+import roles.States.Statut;
 import roles.action.Action;
 import roles.conditions.Condition;
 
@@ -58,6 +59,7 @@ public class Automate {
 		if(choice.size() == 0)
 		{
 			pers.parralyse();
+			pers.setState(new States(Statut.ATTENDS, Cardinaux.NORD));
 			return;
 		}
 

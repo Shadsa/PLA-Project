@@ -8,13 +8,13 @@ import org.newdawn.slick.SlickException;
 
 import roles.Personnage;
 
-public class Joueur implements Observer{
+public class GJoueur implements Observer{
 	private TypeUnit _type_unit;
 	private int _ressource;
 
 	private ArrayList<Player> _players = new ArrayList<Player>();
 
-	public Joueur(TypeUnit type_unit)
+	public GJoueur(TypeUnit type_unit)
 	{
 		_type_unit = type_unit;
 		_ressource = 0;
@@ -24,9 +24,11 @@ public class Joueur implements Observer{
 	public void update(Observable o, Object arg) {
 		if(arg instanceof Integer)
 			_ressource = (Integer)arg;
+		if(arg instanceof Personnage)
+			addPersonnage((Personnage)arg);
 	}
 
-	public void addPersonnage(Personnage pers) throws SlickException
+	public void addPersonnage(Personnage pers)
 	{
 		_players.add(new Player(pers, _type_unit));
 	}

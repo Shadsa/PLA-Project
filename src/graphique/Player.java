@@ -51,7 +51,7 @@ public class Player implements Observer{
 		return _id;
 	}
 
-	public Player(Personnage pers, TypeUnit _type_unit) throws SlickException {
+	public Player(Personnage pers, TypeUnit _type_unit) {
 		_human = _type_unit;
 		_id = nextID();
 		_isDead = false;
@@ -64,7 +64,12 @@ public class Player implements Observer{
 		_destY = MapGameState.toX(pers.Y());
 		pers.addObserver(this);
 		soundEffect = new SoundEffect();
-		soundEffect.init();
+		try {
+			soundEffect.init();
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 public static void sinit() throws SlickException

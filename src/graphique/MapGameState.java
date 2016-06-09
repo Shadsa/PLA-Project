@@ -44,7 +44,7 @@ public class MapGameState extends BasicGameState {
 	static final float Oy = 48;
 
 	private GameContainer container;
-	private ArrayList<graphique.Joueur> _joueurs = new ArrayList<graphique.Joueur>();
+	private ArrayList<graphique.GJoueur> _joueurs = new ArrayList<graphique.GJoueur>();
 	//private Personnage personnage;
 	private Hud hud = new Hud();
 	public static final int ID = 2;
@@ -170,7 +170,7 @@ public class MapGameState extends BasicGameState {
 		Player pla;
 		for(Joueur j : World.getPlayers())
 		{
-			_joueurs.add(new graphique.Joueur((j == World.getPlayers().get(0))?TypeUnit.Human:TypeUnit.Zombie));
+			_joueurs.add(new graphique.GJoueur((j == World.getPlayers().get(0))?TypeUnit.Human:TypeUnit.Zombie));
 			j.addObserver(_joueurs.get(_joueurs.size()-1));
 			for(Personnage pers : j.getPersonnages())
 				_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
@@ -198,7 +198,7 @@ public class MapGameState extends BasicGameState {
 		//Affichage de la map
 		this.map.render(g, _offsetMapX, _offsetMapY, zoom());
 		//Affichage des personnages
-		for(graphique.Joueur j : _joueurs)
+		for(graphique.GJoueur j : _joueurs)
 			for(Player p : j.getPersonnage())
 				p.render(g);
 
@@ -241,7 +241,7 @@ public class MapGameState extends BasicGameState {
 	protected long _time = 0;
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		for(graphique.Joueur j : _joueurs)
+		for(graphique.GJoueur j : _joueurs)
 			for(int i = j.getPersonnage().size()-1; i>=0; i--)
 				if(j.getPersonnage().get(i).AnimDead>0)
 					j.getPersonnage().get(i).update(delta);
@@ -392,7 +392,7 @@ public class MapGameState extends BasicGameState {
 
 	public void mousePressed(int arg0, int arg1, int arg2) {
 		//if (Input.MOUSE_LEFT_BUTTON == arg0) {//&& mouseMapX() >= this.player.getX()-32 && mouseMapX() <= this.player.getX()+32 && mouseMapY() >= this.player.getY()-60 && mouseMapY() <= this.player.getY()+4) {
-		for(graphique.Joueur j : _joueurs)
+		for(graphique.GJoueur j : _joueurs)
 			for(Player p : j.getPersonnage())
 				if (Input.MOUSE_LEFT_BUTTON == arg0 && curseurSurPerso(p, mouseMapX(), mouseMapY())) {
 				_target = p;
