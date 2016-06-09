@@ -51,7 +51,7 @@ public class Player implements Observer{
 		return _id;
 	}
 
-	public void init(Personnage pers, Boolean human) throws SlickException {
+	public Player(Personnage pers, Boolean human) throws SlickException {
 		_human = human;
 		_id = nextID();
 		_isDead = false;

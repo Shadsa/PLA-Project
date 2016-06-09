@@ -40,6 +40,7 @@ public class MapGameState extends BasicGameState {
 
 	private GameContainer container;
 	private ArrayList<Player> _players = new ArrayList<Player>();
+	private ArrayList<graphique.Joueur> _joueurs = new ArrayList<graphique.Joueur>();
 	//private Personnage personnage;
 	private Hud hud = new Hud();
 	public static final int ID = 2;
@@ -152,11 +153,14 @@ public class MapGameState extends BasicGameState {
 		Player.sinit();
 		Player pla;
 		for(Joueur j : World.getPlayers())
-		for(Personnage pers : j.getPersonnages())
 		{
-			pla = new Player();
-			pla.init(pers, j == j2);
-			_players.add(pla);
+			_joueurs.add(new graphique.Joueur((j == World.getPlayers().get(0))?TypeUnit.Human:TypeUnit.Zombie));
+			j.addObserver(_joueurs.get(_joueurs.size()-1));
+			for(Personnage pers : j.getPersonnages())
+			{
+				pla = new Player(pers, j == j2);
+				_players.add(pla);
+			}
 		}
 
 		//System.out.print(_players.size());
@@ -198,12 +202,12 @@ public class MapGameState extends BasicGameState {
 		if(showhud) {
 			this.hud.render(g);
 		}
-		
+
 		if (container.isPaused()) {
 		    Rectangle rect = new Rectangle (0, 0, container.getScreenWidth(), container.getScreenHeight());
 		 //   g.scale(1.5f,1.5f);
-		    
-		    
+
+
 		    g.setColor(new Color (0, 0, 0, alpha));
 		    g.fill(rect);
 		    g.setColor(Color.white);

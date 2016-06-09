@@ -1,13 +1,14 @@
 package roles.action;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 import roles.Automate;
 import roles.Personnage;
 import roles.classe.Classe;
 import roles.Cardinaux;
 
-public class Joueur {
+public class Joueur extends Observable{
 
 	String _nom;
 	ArrayList<Personnage> _personnages;
