@@ -3,11 +3,20 @@ type cellule =
   | C
   | N | S | E | O
 
+type typeCellule =
+  | Arbre
+  | Plaine
+  | Caillou
+  | Eau
+
 type action =
   | Attendre
   | Avancer of cellule
   | Attaquer of cellule
   | AvancerJoueur
+  | Dupliquer of cellule
+  | Raser
+  | CouperBois
 (*
   | ...
 *)
@@ -17,6 +26,7 @@ type condition =
   | Ennemi of cellule
   | Libre of cellule
   | OrdreDonne
+  | Type of typeCellule
 (*
   | ...
 *)
@@ -44,6 +54,9 @@ type automate = categorie * automate_sans_type
 let hostile (cour : etat) (suiv : etat) : automate_sans_type = 
   List.map  (fun direction -> (cour, Ennemi(direction), Attaquer(direction), suiv, 5) ) [N;S;E;O]
 
+let reproducteur (cour : etat) (suiv : etat) : automate_sans_type = 
+  List.map  (fun direction -> (cour, Libre(direction), Dupliquer(direction), suiv, 5) ) [N;S;E;O]
+
 let add (a1 : automate_sans_type) (a2 : automate_sans_type) : automate_sans_type =
   a1@a2
 
@@ -59,12 +72,20 @@ let cellule_to_string (c : cellule) : String.t =
    | E -> "E"
    | O -> "O"
 
+let typeCellule_to_string (t : typeCellule) : String.t =
+  match t with
+  | Arbre -> "Arbre"
+  | Plaine -> "Plaine"
+  | Caillou -> "Caillou"
+  | Eau -> "Eau"
+
 let condition_to_string (c : condition) : String.t*(String.t option) =
   match c with
    | Vide -> "Vide",None
    | Ennemi(cellule) -> "Ennemi",Some(cellule_to_string cellule)
    | Libre(cellule) -> "Libre",Some(cellule_to_string cellule)
    | OrdreDonne -> "OrdreDonne",None
+   | Type(typeCellule) -> "Type",Some(typeCellule_to_string typeCellule)
   (*
     | ...
   *)
@@ -76,6 +97,9 @@ let action_to_string (a : action) : String.t*(String.t option) =
    | Avancer(cellule) -> "Avancer",Some(cellule_to_string cellule)
    | Attaquer(cellule) -> "Attaquer",Some(cellule_to_string cellule)
    | AvancerJoueur -> "AvancerJoueur",None
+   | Dupliquer(cellule) -> "Dupliquer",Some(cellule_to_string cellule)
+   | Raser -> "Raser",None
+   | CouperBois -> "CouperBois",None
   (*
     | ...
   *)
@@ -153,7 +177,7 @@ let aut1 : automate = (0,[(0,Libre(N),Avancer(N),0,1);
 let main =
   let output = open_out "sortie.xml" in
   begin
-  output_string output "<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n\n<!DOCTYPE liste SYSTEM \"automate.dtd\">\n\n<liste>\n";
+  output_string output "<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n\n";
   output_string output (automate_to_xml aut1);
   output_string output "\n</liste>";
   close_out output
