@@ -25,5 +25,14 @@ public abstract class TypeCase {
 	
 	public abstract boolean franchissable();
 	
-
+	public TypeCase string_to_type(String type){
+		switch(type){
+		case "Arbre" : return Arbre.getInstance();
+		case "Caillou" : return Caillou.getInstance();
+		case "Eau" : return Eau.getInstance();
+		case "Plaine" : return Plaine.getInstance();
+		default : return null;
+		}
+	}
+	
 }
