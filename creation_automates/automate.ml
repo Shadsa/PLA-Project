@@ -177,7 +177,7 @@ let aut1 : automate = (0,[(0,Libre(N),Avancer(N),0,1);
 let main =
   let output = open_out "sortie.xml" in
   begin
-  output_string output "<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n\n";
+  output_string output "<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n\n<liste>\n";
   output_string output (automate_to_xml aut1);
   output_string output "\n</liste>";
   close_out output
