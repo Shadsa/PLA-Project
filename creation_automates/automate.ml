@@ -181,7 +181,7 @@ let recolteur (p : poids) (el : etat list) : automate =
   List.map (fun e -> (e,Type(Arbre),CouperBois,e,p)) el
 
 let createur (p : poids) (el : etat list) : automate =
-  List.concat (List.map (fun e -> List.map (fun d -> (e,Et(Libre(d),RessourcesPossedees(10)),Dupliquer(d),e,p)) [N;S;E;O]) el)
+  List.concat (List.map (fun e -> List.map (fun d -> (e,Et(Libre(d),RessourcesPossedees(30)),Dupliquer(d),e,p)) [N;S;E;O]) el)
 
 let errant (p : poids) (e1 : etat) (e2 : etat) : automate =
   List.map (fun d -> (e1,Libre(d),Avancer(d),e2,p)) [N;S;E;O]
