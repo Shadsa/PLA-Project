@@ -24,7 +24,10 @@ public class StateGame extends StateBasedGame {
     	addState(new MainScreenGameState());
     	addState(new MapGameState());
       	addState (new DragAndDropState());
+<<<<<<< HEAD
 
+=======
+>>>>>>> 952ead1562ddb9f490677100e5599f57cdf9c6d4
  
     }
 
@@ -41,7 +44,7 @@ public class StateGame extends StateBasedGame {
 	}
 	
     public static void main(String[] args) throws SlickException {
-        AppGameContainer game = new AppGameContainer(new StateGame(), 800, 600, false);
+        AppGameContainer game = new AppGameContainer(new StateGame(), 1200, 900, false);
         game.setTargetFrameRate(60);
         game.setShowFPS(true);
         game.start();

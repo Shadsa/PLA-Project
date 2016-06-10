@@ -41,10 +41,10 @@ import roles.conditions.Vide;
 public class MapGameState extends BasicGameState {
 
 	static int Tick = 1000;
-	static int TickWait = Tick*4/10;
-	static int AnimTick = Tick-TickWait;
+	static boolean TickWait = true;
+	static int AnimTick = Tick*6/10;
 	static final int TileSize = 96;
-	static final float MoveSpeed = ((float)TileSize)/((float)AnimTick);
+	static float MoveSpeed = ((float)TileSize)/((float)AnimTick);
 	static final float Ox = 48;
 	static final float Oy = 48;
 
@@ -313,38 +313,66 @@ public class MapGameState extends BasicGameState {
 			}
 		}
 		
+		//Activer ou non l'attente
+		if (_input.isKeyDown(Input.KEY_W)){
+			if (TickWait){
+				TickWait=false;
+				AnimTick = Tick;
+			}
+			else{
+				TickWait=true;
+				AnimTick = Tick*6/10;
+			}
+			MoveSpeed = ((float)TileSize)/((float)AnimTick);			
+		}
+		
 		//Gestion de la vitesse du jeu
 		//Acc�l�rer
-		if (_input.isKeyDown(Input.KEY_N) && Tick > 500){
+		if (_input.isKeyDown(Input.KEY_N) && Tick > 250){
 			if (Tick > 1050 ){
 				Tick=Tick-100;
-				TickWait = Tick*4/10;
-				AnimTick = Tick-TickWait;				
+				if(TickWait)
+					AnimTick = Tick*6/10;
+				else
+					AnimTick = Tick;
+				MoveSpeed = ((float)TileSize)/((float)AnimTick);
 			}
 			else{
 			Tick=Tick-50;
-			TickWait = Tick*4/10;
-			AnimTick = Tick-TickWait;
+			if(TickWait)
+				AnimTick = Tick*6/10;
+			else
+				AnimTick = Tick;
+			MoveSpeed = ((float)TileSize)/((float)AnimTick);
 			}
 		}
 		//Ralentir
-		if (_input.isKeyDown(Input.KEY_B) && Tick < 2000){
+		if (_input.isKeyDown(Input.KEY_B) && Tick < 4000){
 			if (Tick < 950){
 				Tick = Tick+50;
-				TickWait = Tick*4/10;
-				AnimTick = Tick+TickWait;
+				if(TickWait)
+					AnimTick = Tick*6/10;
+				else
+					AnimTick = Tick;
+				MoveSpeed = ((float)TileSize)/((float)AnimTick);
 			}
 			else{
 				Tick = Tick+100;
-				TickWait = Tick*4/10;
-				AnimTick = Tick+TickWait;				
+				if(TickWait)
+					AnimTick = Tick*6/10;
+				else
+					AnimTick = Tick;
+				MoveSpeed = ((float)TileSize)/((float)AnimTick);
 			}
 		}
 		//R�-initialiser
 		if (_input.isKeyDown(Input.KEY_V)){
 			Tick = 1000;
-			TickWait = Tick*4/10;
-			AnimTick = Tick-TickWait;
+			if(TickWait)
+				AnimTick = Tick*6/10;
+			else
+				AnimTick = Tick;
+			MoveSpeed = ((float)TileSize)/((float)AnimTick);
 		}
 
 		//Gestion du scrolling de la map avec la manette
