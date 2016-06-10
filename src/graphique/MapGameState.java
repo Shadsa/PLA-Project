@@ -153,6 +153,13 @@ public class MapGameState extends BasicGameState {
 		World.addPlayer(j2);
 		World.addPlayer(jZ);
 		World.BuildMap(40,75);
+		try {
+			World.putAutomate(j2.automate(0), 1, 1, j2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		j2.createPersonnage(0, 5, 5);
 		j2.createPersonnage(0, 6, 6);
 		j2.createPersonnage(0, 3, 6);

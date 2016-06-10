@@ -41,7 +41,7 @@
 		<transition poids="5">
 			<etat>0</etat>
 			<condition>OrdreDonne</condition>
-			<action>AvancerJoueur</action>
+			<action>Raser</action>
 			<suivant>0</suivant>
 		</transition>
 		<transition poids="0">
@@ -69,10 +69,10 @@
 			<suivant>1</suivant>
 		</transition>
 		<transition poids="5">
-			<etat>0</etat>
+			<etat>1</etat>
 			<condition>OrdreDonne</condition>
-			<action>AvancerJoueur</action>
-			<suivant>1</suivant>
+			<action>Raser</action>
+			<suivant>0</suivant>
 		</transition>
 	</automate>
 </liste>

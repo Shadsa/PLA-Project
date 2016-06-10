@@ -68,6 +68,8 @@ public class MapTest {
 					img = 3;
 				else if (vj.getNum() == Eau._id)
 					img = 5;
+				else if (vj.getNum() == 0)
+					img = 7;
 
 				/*if (vj.getNum() == 0) {
 					//Affiche la cellule demandée dans la table des sprites : renderInUse(coordX du container, coordY du container, indiceX de la cellule, indiceY de la cellule).

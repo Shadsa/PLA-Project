@@ -137,7 +137,7 @@ public class XML_Reader {
 			if(nbElt == 9){
 
 				Node node1 = trans.item(1);
-				if(node1 instanceof Element && node1.getAttributes() == null){
+				if(node1.getNodeType()==1 && node1.getAttributes().getLength() == 0){
 					final Element e1 = (Element) ((Element) trans).getElementsByTagName("etat").item(0);
 					etat = Integer.parseInt(e1.getTextContent());
 				}
@@ -186,7 +186,7 @@ public class XML_Reader {
 					}	
 				}
 				Node node4 = trans.item(7);
-				if(node4 instanceof Element && node4.getAttributes() == null){
+				if(node1.getNodeType()==1 && node1.getAttributes().getLength() == 0){
 					final Element e4 = (Element) ((Element) trans).getElementsByTagName("suivant").item(0);
 					suiv = Integer.parseInt(e4.getTextContent());
 				}
