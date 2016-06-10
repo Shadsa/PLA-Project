@@ -15,7 +15,7 @@ public final class AvancerJoueur extends Action {
 		Cardinaux direction = pers.directionJoueur();
 		if(direction==null) return;
 		int destX = pers.X() + ((direction == Cardinaux.OUEST)? (-1) : ((direction == Cardinaux.EST)? 1 : 0));
-		int destY = pers.Y() + ((direction == Cardinaux.SUD)? (-1) : ((direction == Cardinaux.NORD)? 1 : 0));
+		int destY = pers.Y() + ((direction == Cardinaux.NORD)? (-1) : ((direction == Cardinaux.SUD)? 1 : 0));
 		if(World.isfree(destX, destY))
 		{
 			if(World.Case(destX, destY).type() instanceof Arbre)
