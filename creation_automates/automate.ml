@@ -105,15 +105,15 @@ let output_suiv (e : etat) (p : int) =
   output_stab ((balise "suivant" None)^(string_of_int e)^(fbalise "suivant")) p
 
 
-let rec output_cond (c : condition) (p : int) =
-  let b = "condition" in
+let rec output_cond (c : condition) (p : int) (suff : String.t) =
+  let b = "condition"^suff in
   match c with
    | Vide -> output_stab ((balise b None)^"Vide"^(fbalise b)) p
    | Et(c1,c2) ->
     begin
     output_stab (balise b (Compose("Et"))) p;
-    output_cond c1 (p+1);
-    output_cond c2 (p+1);
+    output_cond c1 (p+1) "1";
+    output_cond c2 (p+1) "2";
     output_stab (fbalise b) p
     end
    | Ennemi(cellule) -> output_stab ((balise b (Direction(cellule)))^"Ennemi"^(fbalise b)) p
@@ -138,7 +138,7 @@ let output_act (a : action) (p : int) =
 let output_transition ((ec,c,a,es,pds) : transition) (p : int) =
   output_stab (balise "transition" (Poids(pds))) p;
   output_cour ec (p+1);
-  output_cond c (p+1);
+  output_cond c (p+1) "";
   output_act a (p+1);
   output_suiv es (p+1);
   output_stab (fbalise "transition") p
@@ -181,7 +181,7 @@ let recolteur (p : poids) (el : etat list) : automate =
   List.map (fun e -> (e,Type(Arbre),CouperBois,e,p)) el
 
 let createur (p : poids) (el : etat list) : automate =
-  List.concat (List.map (fun e -> List.map (fun d -> (e,Et(Libre(d),RessourcesPossedees(10)),Dupliquer(d),e,p)) [N;S;E;O]) el)
+  List.concat (List.map (fun e -> List.map (fun d -> (e,Et(Libre(d),RessourcesPossedees(30)),Dupliquer(d),e,p)) [N;S;E;O]) el)
 
 let errant (p : poids) (e1 : etat) (e2 : etat) : automate =
   List.map (fun d -> (e1,Libre(d),Avancer(d),e2,p)) [N;S;E;O]
