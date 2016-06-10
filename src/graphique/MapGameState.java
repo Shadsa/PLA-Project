@@ -40,8 +40,9 @@ import roles.conditions.Vide;
 
 public class MapGameState extends BasicGameState {
 
-	static final int Tick = 1000;
-	static final int AnimTick = Tick-400;
+	static int Tick = 1000;
+	static int TickWait = Tick*4/10;
+	static int AnimTick = Tick-TickWait;
 	static final int TileSize = 96;
 	static final float MoveSpeed = ((float)TileSize)/((float)AnimTick);
 	static final float Ox = 48;
@@ -303,6 +304,40 @@ public class MapGameState extends BasicGameState {
 			if (mouseAbsoluteY == 1) {
 				setOffsetMapY(offsetMapY() - _scrollingSpeed);
 			}
+		}
+		
+		//Gestion de la vitesse du jeu
+		//Accélérer
+		if (_input.isKeyDown(Input.KEY_N) && Tick > 500){
+			if (Tick > 1050 ){
+				Tick=Tick-100;
+				TickWait = Tick*4/10;
+				AnimTick = Tick-TickWait;				
+			}
+			else{
+			Tick=Tick-50;
+			TickWait = Tick*4/10;
+			AnimTick = Tick-TickWait;
+			}
+		}
+		//Ralentir
+		if (_input.isKeyDown(Input.KEY_B) && Tick < 2000){
+			if (Tick < 950){
+				Tick = Tick+50;
+				TickWait = Tick*4/10;
+				AnimTick = Tick+TickWait;
+			}
+			else{
+				Tick = Tick+100;
+				TickWait = Tick*4/10;
+				AnimTick = Tick+TickWait;				
+			}
+		}
+		//Ré-initialiser
+		if (_input.isKeyDown(Input.KEY_V)){
+			Tick = 1000;
+			TickWait = Tick*4/10;
+			AnimTick = Tick-TickWait;
 		}
 
 		//Gestion du scrolling de la map avec la manette
