@@ -10,14 +10,20 @@ import roles.States.Statut;
 public final class CouperBois extends Action {
 
 	Cardinaux _direction;
+	private static int _Id = Action.getId(4);
 	
-	private static int _Id = Action.getId(1);
-
+	public CouperBois(Cardinaux card) {
+		super();
+		_direction = card;
+	}
+	
 	@Override
 	public void Act(Personnage pers) {
-		if(World.Case(pers.X(), pers.Y()).type().value() == Arbre.getInstance().value()){
-			World.modifierCase(Plaine.getInstance(), pers.X(), pers.Y());
-			pers.setState(new States(Statut.ATTAQUE, Cardinaux.EST));
+		int destX = pers.X() + ((_direction == Cardinaux.OUEST)? (-1) : ((_direction == Cardinaux.EST)? 1 : 0));
+		int destY = pers.Y() + ((_direction == Cardinaux.NORD)? (-1) : ((_direction == Cardinaux.SUD)? 1 : 0));
+		if(World.Case(destX, destY).type().value() == Arbre.getInstance().value()){
+			World.modifierCase(Plaine.getInstance(), destX, destY);
+			pers.setState(new States(Statut.ATTAQUE, _direction));
 			pers.owner().changerRessource(10);
 		}
 	}

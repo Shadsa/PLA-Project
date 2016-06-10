@@ -146,7 +146,7 @@ public class XML_Reader {
 						meth = Class.forName("cases."+att.item(0).getNodeValue()).getMethod("getInstance",  (Class<?>[]) null);
 						System.out.println(meth);
 						if(meth != null)
-							cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(TypeCase.class).newInstance(meth.invoke(null, null));
+							cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(TypeCase.class,Cardinaux.class).newInstance(meth.invoke(null, null),CardOfString(att.item(1).getNodeValue()));
 						else
 							cond = (Condition) Class.forName("roles.conditions."+s1).newInstance();
 					}
