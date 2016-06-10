@@ -133,10 +133,10 @@ public class MainScreenGameState extends BasicGameState {
 			}
 		}
 		
-		if (_input.isKeyPressed(Input.KEY_A)){
+		/*if (_input.isKeyPressed(Input.KEY_A)){
 			
 			game.enterState(DragAndDropState.ID);
-		}
+		}*/
 		
 		//Gestion des boutons en plein écran
 		_bouton_jouer.setLocation(container.getWidth()/2-62, container.getHeight()/2-80);
