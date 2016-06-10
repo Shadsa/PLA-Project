@@ -12,8 +12,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class StateGame extends StateBasedGame {
 
-	static Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize(); 
-	private static int height = (int)screenSize.getHeight(); 
+	static Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+	private static int height = (int)screenSize.getHeight();
 	private static int width = (int)screenSize.getWidth();
 
 	public StateGame() {
@@ -24,11 +24,7 @@ public class StateGame extends StateBasedGame {
     	addState(new MainScreenGameState());
     	addState(new MapGameState());
       	addState (new DragAndDropState());
-<<<<<<< HEAD
 
-=======
->>>>>>> 952ead1562ddb9f490677100e5599f57cdf9c6d4
- 
     }
 
 	public void enterState(int id, String s) throws SlickException {
@@ -42,7 +38,7 @@ public class StateGame extends StateBasedGame {
 				getContainer().exit();
 		}*/
 	}
-	
+
     public static void main(String[] args) throws SlickException {
         AppGameContainer game = new AppGameContainer(new StateGame(), 1200, 900, false);
         game.setTargetFrameRate(60);
