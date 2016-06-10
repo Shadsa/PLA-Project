@@ -95,40 +95,56 @@ public class Carte extends Vector<Vector<Case>>{
 			Random R = new Random();
 			this.modifierCase(Arbre.getInstance(), x, y);
 			if(facteur==1){
-				if(R.nextInt(3)>1)
+				if(R.nextInt(3)>1){
 					putForet(x-1,y,0);
-				if(R.nextInt(3)>1)
+					if(R.nextInt(5)>3){
+						putForet(x-1,y-1,0);
+					}
+					if(R.nextInt(5)>3){
+						putForet(x-1,y+1,0);
+					}
+				}
+				if(R.nextInt(3)>1){
 					putForet(x+1,y,0);
-				if(R.nextInt(3)>1)
+					if(R.nextInt(5)>3){
+						putForet(x-1,y-1,0);
+					}
+					if(R.nextInt(5)>3){
+						putForet(x-1,y+1,0);
+					}
+				}
+				if(R.nextInt(3)>1){
 					putForet(x,y-1,0);
-				if(R.nextInt(3)>1)
+
+					if(R.nextInt(5)>3){
+						putForet(x-1,y-1,0);
+					}
+					if(R.nextInt(5)>3){
+						putForet(x-1,y+1,0);
+					}
+				}
+				if(R.nextInt(3)>1){
 					putForet(x,y+1,0);
+					if(R.nextInt(5)>3){
+						putForet(x-1,y-1,0);
+					}
+					if(R.nextInt(5)>3){
+						putForet(x-1,y+1,0);
+					}
+				}
+				
 			}
 			else if(facteur>1){
 				int nextFacteur;
-				if(R.nextInt(3)>1)
-					nextFacteur=facteur;
-				else
-					nextFacteur=facteur-1;	
-				putForet(x-1,y,nextFacteur);
-				
-				if(R.nextInt(3)>1)
-					nextFacteur=facteur;
-				else
-					nextFacteur=facteur-1;	
-				putForet(x+1,y,nextFacteur);
-				
-				if(R.nextInt(3)>1)
-					nextFacteur=facteur;
-				else
-					nextFacteur=facteur-1;	
-				putForet(x,y-1,nextFacteur);
-				
-				if(R.nextInt(3)>1)
-					nextFacteur=facteur;
-				else
-					nextFacteur=facteur-1;	
-				putForet(x,y+1,nextFacteur);
+				for(int i=-1;i<=1;i++)
+					for(int j=-1;j<=1;j++)
+						if(j!=0 || i!=0){
+							if(R.nextInt(3)>1)
+								nextFacteur=facteur;
+							else
+								nextFacteur=facteur-1;	
+							putForet(x+i,y+j,nextFacteur);
+						}
 			}
 		}
 	}
@@ -139,10 +155,10 @@ public class Carte extends Vector<Vector<Case>>{
 			for(int x=0; x<=_largeur; x+=5){
 				int roll = R.nextInt(20);
 				if(roll==0){
-					putForet(x,y,4);
+					putForet(x,y,3);
 				}
 				else if(roll<=4){
-					putForet(x,y,3);
+					putForet(x,y,2);
 				}
 			}
 		}
