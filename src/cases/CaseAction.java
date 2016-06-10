@@ -33,5 +33,9 @@ public class CaseAction extends Case {
 	public int poids() {
 		return 1;
 	}
+	
+	public Action action(){
+		return _initial.action();
+	}
 
 }

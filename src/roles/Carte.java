@@ -77,13 +77,18 @@ public class Carte extends Vector<Vector<Case>>{
 	 * @throws Exception : si on ne peut placer l'automate à cette position
 	 */
 	public void putAutomate(Automate a, int x, int y, Joueur j) throws Exception {
-		for(ArrayList<CaseAction> ligne : a.get_action())
-			for(CaseAction c : ligne)
+		int ydeb = y;
+		for(ArrayList<CaseAction> ligne : a.get_action()){
+			for(CaseAction c : ligne){
 				try {
-					putCaseAction(c,x++,y++,j);
+					putCaseAction(c,x,y++,j);
 				} catch (Exception e) {
 					throw new Exception("Impossible de placer l'automate");
 				}
+			}
+			x++;
+			y=ydeb;
+		}
 	}
 
 	public void modifierCase(TypeCase type, int x, int y){

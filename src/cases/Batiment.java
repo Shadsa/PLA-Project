@@ -27,5 +27,9 @@ public final class Batiment extends TypeCase {
 	public boolean franchissable() {
 		return true;
 	}
+	
+	public Action action(){
+		return _action;
+	}
 
 }

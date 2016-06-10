@@ -44,6 +44,10 @@ public class Joueur extends Observable{
 	public int ressources(){
 		return _ressources;
 	}
+	
+	public Automate automate(int i){
+		return _automates.get(0);
+	}
 
 	public boolean changerRessource(int modificateur) {
 		if(_ressources+modificateur>=0){

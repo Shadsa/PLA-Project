@@ -9,6 +9,7 @@ import cases.Case;
 import cases.Plaine;
 import cases.TypeCase;
 import graphique.ObjetTest;
+import roles.Automate;
 import roles.Carte;
 import roles.Personnage;
 
@@ -63,5 +64,9 @@ public abstract class World {
 
 	public static int SizeY() {
 		return _map.size();
+	}
+	
+	public static void putAutomate(Automate a, int x, int y, Joueur j) throws Exception{
+		_map.putAutomate(a, x, y, j);
 	}
 }
