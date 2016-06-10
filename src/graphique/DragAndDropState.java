@@ -15,12 +15,19 @@ public class DragAndDropState extends BasicGameState {
 	private float _offsetMapX=0;
 	private float _offsetMapY=0;
 	private float zoom = 1;
+<<<<<<< HEAD
 	
+=======
+>>>>>>> c890c7b18ed4ada261d34ac42d5d10b6105ad705
 
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
+<<<<<<< HEAD
 		World.BuildMap(40,57);
+=======
+		World.BuildMap(5,5);
+>>>>>>> c890c7b18ed4ada261d34ac42d5d10b6105ad705
 		map.init();
 		
 	}
@@ -28,7 +35,7 @@ public class DragAndDropState extends BasicGameState {
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g)
 			throws SlickException {
-		this.map.render(g, _offsetMapX, _offsetMapY, zoom);
+		//this.map.render(g, _offsetMapX, _offsetMapY, zoom);
 		
 	}
 
