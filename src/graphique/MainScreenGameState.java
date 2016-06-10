@@ -134,7 +134,6 @@ public class MainScreenGameState extends BasicGameState {
 		}
 		
 		/*if (_input.isKeyPressed(Input.KEY_A)){
-			
 			game.enterState(DragAndDropState.ID);
 		}*/
 		

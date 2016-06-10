@@ -65,6 +65,9 @@ public class MapGameState extends BasicGameState {
 
 	public static Player _target = null;
 	public static Personnage _targetp = null;
+	
+	private int _tailleMapY = 45;
+	private int _tailleMapX = 75;
 
 	private float _offsetMapX = 0;
 	private float _offsetMapY = 0;
@@ -152,7 +155,7 @@ public class MapGameState extends BasicGameState {
 		Joueur jZ = new Joueur("Zombie", autlist,classes);
 		World.addPlayer(j2);
 		World.addPlayer(jZ);
-		World.BuildMap(40,75);
+		World.BuildMap(_tailleMapY,_tailleMapX);
 		try {
 			World.putAutomate(j2.automate(0), 1, 1, j2);
 		} catch (Exception e) {
@@ -362,19 +365,19 @@ public class MapGameState extends BasicGameState {
 		}
 		//Gestion du scrolling de la map avec le clavier
 		//Touche bas
-		if (_input.isKeyDown(208)) {
+		if (_input.isKeyDown(208) && offsetMapY() + container.getHeight() < TileSize * _tailleMapY) {
 			setOffsetMapY(offsetMapY() + _scrollingSpeed);
 		}
 		//Touche gauche
-		if (_input.isKeyDown(203)) {
+		if (_input.isKeyDown(203) && offsetMapX() > 0) {
 			setOffsetMapX(offsetMapX() - _scrollingSpeed);
 		}
 		//Touche droite
-		if (_input.isKeyDown(205)) {
+		if (_input.isKeyDown(205) && offsetMapX() + container.getWidth() < TileSize * _tailleMapX) {
 			setOffsetMapX(offsetMapX() + _scrollingSpeed);
 		}
 		//Touche haut
-		if (_input.isKeyDown(200)) {
+		if (_input.isKeyDown(200) && offsetMapY() > 0) {
 			setOffsetMapY(offsetMapY() - _scrollingSpeed);
 		}
 
@@ -387,13 +390,15 @@ public class MapGameState extends BasicGameState {
 			//setOffsetMapX(container.getScreenHeight()/zoom()/2 - mouseAbsoluteY);
 		}
 		//Zoom arrière
-		if (_input.isKeyDown(209) && zoom() > 0) {
-			setZoom(zoom() - 0.01f);
-			//Marche pas
-			//setOffsetMapY(container.getScreenWidth()/zoom()/2 - mouseAbsoluteX);
-			//setOffsetMapX(container.getScreenHeight()/zoom()/2 - mouseAbsoluteY);
-			if (zoom() < 0) {
-				setZoom(0);
+		if (_tailleMapX * TileSize * zoom() > container.getWidth() && _tailleMapX * TileSize * zoom() > container.getHeight()) {
+			if (_input.isKeyDown(209) && zoom() > 0) {
+				setZoom(zoom() - 0.01f);
+				//Marche pas
+				//setOffsetMapY(container.getScreenWidth()/zoom()/2 - mouseAbsoluteX);
+				//setOffsetMapX(container.getScreenHeight()/zoom()/2 - mouseAbsoluteY);
+				if (zoom() < 0) {
+					setZoom(0);
+				}
 			}
 		}
 
@@ -523,11 +528,11 @@ public class MapGameState extends BasicGameState {
 		}
 	}
 
-	public void keyPressed(int key, char c) {
+	/*public void keyPressed(int key, char c) {
 		if (key == Input.KEY_A){
 			this.game.enterState(3);
 		}
-	}
+	}*/
 
 	public void mousePressed(int arg0, int arg1, int arg2) {
 		//if (Input.MOUSE_LEFT_BUTTON == arg0) {//&& mouseMapX() >= this.player.getX()-32 && mouseMapX() <= this.player.getX()+32 && mouseMapY() >= this.player.getY()-60 && mouseMapY() <= this.player.getY()+4) {

@@ -2,6 +2,7 @@ package graphique;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -15,11 +16,15 @@ public class DragAndDropState extends BasicGameState {
 	private float _offsetMapX=0;
 	private float _offsetMapY=0;
 	private float zoom = 1;
+	private StateBasedGame game;
+	private Input _input;
 
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
-		World.BuildMap(5,5);
+		this._input = arg0.getInput();
+		this.game = arg1;
+		World.BuildMap(40,75);
 		map.init();
 		
 	}
@@ -27,15 +32,20 @@ public class DragAndDropState extends BasicGameState {
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g)
 			throws SlickException {
-		//this.map.render(g, _offsetMapX, _offsetMapY, zoom);
+		this.map.render(g, _offsetMapX, _offsetMapY, zoom);
 		
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2)
 			throws SlickException {
-		// TODO Auto-generated method stub
+		if (_input.isKeyPressed(Input.KEY_ESCAPE)) {
+			game.enterState(MainScreenGameState.ID);
+		}
 		
+	}
+	
+	public void keyPressed(int key, char c) {
 	}
 
 	@Override
