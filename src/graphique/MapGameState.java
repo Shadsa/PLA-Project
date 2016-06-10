@@ -476,6 +476,9 @@ public class MapGameState extends BasicGameState {
 	}
 
 	public void keyPressed(int key, char c) {
+		if (key == Input.KEY_A){
+			this.game.enterState(3);
+		}
 	}
 
 	public void mousePressed(int arg0, int arg1, int arg2) {
