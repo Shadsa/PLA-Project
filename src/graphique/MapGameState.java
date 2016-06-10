@@ -290,17 +290,19 @@ public class MapGameState extends BasicGameState {
 		mouse = "MouseAbsoluteX : " + mouseAbsoluteX + ", MouseAbsoluteY : " + mouseAbsoluteY;
 
 		//Gestion du scrolling de la map avec la souris
-		if (mouseAbsoluteY == container.getScreenHeight()) {
-			setOffsetMapY(offsetMapY() + _scrollingSpeed);
-		}
-		if (mouseAbsoluteX == 0) {
-			setOffsetMapX(offsetMapX() - _scrollingSpeed);
-		}
-		if (mouseAbsoluteX == container.getScreenWidth() - 1) {
-			setOffsetMapX(offsetMapX() + _scrollingSpeed);
-		}
-		if (mouseAbsoluteY == 1) {
-			setOffsetMapY(offsetMapY() - _scrollingSpeed);
+		if (container.isFullscreen()) {
+			if (mouseAbsoluteY == container.getScreenHeight()) {
+				setOffsetMapY(offsetMapY() + _scrollingSpeed);
+			}
+			if (mouseAbsoluteX == 0) {
+				setOffsetMapX(offsetMapX() - _scrollingSpeed);
+			}
+			if (mouseAbsoluteX == container.getScreenWidth() - 1) {
+				setOffsetMapX(offsetMapX() + _scrollingSpeed);
+			}
+			if (mouseAbsoluteY == 1) {
+				setOffsetMapY(offsetMapY() - _scrollingSpeed);
+			}
 		}
 
 		//Gestion du scrolling de la map avec la manette
