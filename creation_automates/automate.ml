@@ -13,7 +13,7 @@ type typeCellule =
   
 type attribut =
   | Direction of cellule
-  | Type of typeCellule
+  | Type of typeCellule*cellule
   | Quantite of int
   | Poids of int
   | Compose of String.t
@@ -27,7 +27,7 @@ type action =
   | AvancerJoueur
   | Dupliquer of cellule
   | Raser
-  | CouperBois
+  | CouperBois of cellule
 (*
   | ...
 *)
@@ -38,7 +38,7 @@ type condition =
   | Ennemi of cellule
   | Libre of cellule
   | OrdreDonne
-  | Type of typeCellule
+  | Type of typeCellule*cellule
   | RessourcesPossedees of int
 (*
   | ...
@@ -84,7 +84,7 @@ let balise (s : String.t) (a : attribut) =
   "<"^s^(
   match a with
    | Direction(d) -> " direction=\""^(string_of_cellule d)^"\""
-   | Type(t) -> " type=\""^(string_of_type t)^"\""
+   | Type(t,d) -> " type=\""^(string_of_type t)^"\" direction=\""^(string_of_cellule d)^"\""
    | Quantite(i) -> " quantite=\""^(string_of_int i)^"\""
    | Poids(i) -> " poids=\""^(string_of_int i)^"\""
    | Compose(s) -> " compose=\""^s^"\""
@@ -119,7 +119,7 @@ let rec output_cond (c : condition) (p : int) (suff : String.t) =
    | Ennemi(cellule) -> output_stab ((balise b (Direction(cellule)))^"Ennemi"^(fbalise b)) p
    | Libre(cellule) -> output_stab ((balise b (Direction(cellule)))^"Libre"^(fbalise b)) p
    | OrdreDonne -> output_stab ((balise b None)^"OrdreDonne"^(fbalise b)) p
-   | Type(typeCellule) -> output_stab ((balise b (Type(typeCellule)))^"Type"^(fbalise b)) p
+   | Type(typeCellule,cellule) -> output_stab ((balise b (Type(typeCellule,cellule)))^"Type"^(fbalise b)) p
    | RessourcesPossedees(quantite) -> output_stab ((balise b (Quantite(quantite)))^"RessourcesPossedees"^(fbalise b)) p
    |_ -> ()
 
@@ -132,7 +132,7 @@ let output_act (a : action) (p : int) =
    | AvancerJoueur -> output_stab ((balise b None)^"AvancerJoueur"^(fbalise b)) p
    | Dupliquer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Dupliquer"^(fbalise b)) p
    | Raser -> output_stab ((balise b None)^"Raser"^(fbalise b)) p
-   | CouperBois -> output_stab ((balise b None)^"CouperBois"^(fbalise b)) p
+   | CouperBois(cellule) -> output_stab ((balise b (Direction(cellule)))^"CouperBois"^(fbalise b)) p
   
   
 let output_transition ((ec,c,a,es,pds) : transition) (p : int) =
@@ -174,11 +174,11 @@ let output_automate (a : automate) (p : int) =
 let hostile (p : poids) (e1 : etat) (e2 : etat) : automate =
   List.map (fun d -> (e1,Ennemi(d),Attaquer(d),e2,p)) [N;S;E;O]
 
-let destructeur (p : poids) (el : etat list) : automate =
-  List.map (fun e -> (e,Type(Batiment),Raser,e,p)) el
+(*let destructeur (p : poids) (el : etat list) : automate =
+  List.map (fun e -> (e,Type(Batiment),Raser,e,p)) el*)
 
-let recolteur (p : poids) (el : etat list) : automate =
-  List.map (fun e -> (e,Type(Arbre),CouperBois,e,p)) el
+let recolteur (p : poids) (e1 : etat) (e2 : etat) : automate =
+  List.map (fun d -> (e1,Type(Arbre,d),CouperBois(d),e2,p)) [N;S;E;O]
 
 let createur (p : poids) (el : etat list) : automate =
   List.concat (List.map (fun e -> List.map (fun d -> (e,Et(Libre(d),RessourcesPossedees(30)),Dupliquer(d),e,p)) [N;S;E;O]) el)
@@ -186,7 +186,7 @@ let createur (p : poids) (el : etat list) : automate =
 let errant (p : poids) (e1 : etat) (e2 : etat) : automate =
   List.map (fun d -> (e1,Libre(d),Avancer(d),e2,p)) [N;S;E;O]
 
-let aut1 = (List.concat(List.map2 (errant 1) [0;1;2] [1;2;0]))@(recolteur 3 [0;1;2])@(createur 4 [0;1;2])
+let aut1 = (List.concat(List.map2 (errant 1) [0;1;2] [1;2;0]))@(createur 4 [0;1;2])@(List.concat(List.map2 (recolteur 3) [0;1;2] [1;2;0]))
 
 let main =
   output_string output "<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n\n";
