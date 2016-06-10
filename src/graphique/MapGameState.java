@@ -523,11 +523,11 @@ public class MapGameState extends BasicGameState {
 		}
 	}
 
-	public void keyPressed(int key, char c) {
+	/*public void keyPressed(int key, char c) {
 		if (key == Input.KEY_A){
 			this.game.enterState(3);
 		}
-	}
+	}*/
 
 	public void mousePressed(int arg0, int arg1, int arg2) {
 		//if (Input.MOUSE_LEFT_BUTTON == arg0) {//&& mouseMapX() >= this.player.getX()-32 && mouseMapX() <= this.player.getX()+32 && mouseMapY() >= this.player.getY()-60 && mouseMapY() <= this.player.getY()+4) {
