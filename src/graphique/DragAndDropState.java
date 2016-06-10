@@ -19,21 +19,15 @@ public class DragAndDropState extends BasicGameState {
 	private StateBasedGame game;
 	private Input _input;
 
-	@Override
-	public void init(GameContainer arg0, StateBasedGame arg1)
-			throws SlickException {
-		this._input = arg0.getInput();
-		this.game = arg1;
-		World.BuildMap(40,75);
-		map.init();
-		
+	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
+		//World.BuildMap(40,57);
+		//map.init();	
 	}
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g)
 			throws SlickException {
-		this.map.render(g, _offsetMapX, _offsetMapY, zoom);
-		
+		//this.map.render(g, _offsetMapX, _offsetMapY, zoom);
 	}
 
 	@Override

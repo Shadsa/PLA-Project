@@ -25,23 +25,18 @@ public class Carte extends Vector<Vector<Case>>{
 			for(int x=0 ; x<largeur ; x++){
 				type = R.nextInt(20);
 				switch(type){
-				case 0 : case 1 :
-					c = new Terrain(x,y,Plaine.getInstance());
-					System.out.print('P');
-					break;
-				case 2 :
+				case 0 :
 					c = new Terrain(x,y,Caillou.getInstance());
-					System.out.print('C');
+					//System.out.print('C');
 					break;
 				default :
 					c = new Terrain(x,y,Plaine.getInstance());
-					System.out.print('D');
+					//System.out.print('D');
 				}
 				//NE PAS OUBLIER LES BREAKS QUAND ON RAJOUTE UN TYPE DE CASE
 				ligne.add(c);
 			}
 			add(ligne);
-			System.out.print('\n');
 		}
 		this.randomLac();
 		this.randomForet();
@@ -77,17 +72,27 @@ public class Carte extends Vector<Vector<Case>>{
 	 * @throws Exception : si on ne peut placer l'automate à cette position
 	 */
 	public void putAutomate(Automate a, int x, int y, Joueur j) throws Exception {
-		int ydeb = y;
+		int xdeb = x, dim=0;
+		ArrayList<CaseAction> action_list = new ArrayList();
 		for(ArrayList<CaseAction> ligne : a.get_action()){
 			for(CaseAction c : ligne){
-				try {
-					putCaseAction(c,x,y++,j);
-				} catch (Exception e) {
-					throw new Exception("Impossible de placer l'automate");
-				}
+				action_list.add(c);
+				dim++;
+				
 			}
-			x++;
-			y=ydeb;
+		}
+		dim = x + (int) Math.sqrt(dim);
+		for(CaseAction c : action_list){
+			try {
+				putCaseAction(c,x++,y,j);
+			} catch (Exception e) {
+				throw new Exception("Impossible de placer l'automate");
+			}
+			if(x>dim){
+				y++;
+				x=xdeb;
+			}
+				
 		}
 	}
 

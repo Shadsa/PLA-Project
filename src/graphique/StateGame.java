@@ -12,19 +12,19 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class StateGame extends StateBasedGame {
 
-	static Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize(); 
-	private static int height = (int)screenSize.getHeight(); 
+	static Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+	private static int height = (int)screenSize.getHeight();
 	private static int width = (int)screenSize.getWidth();
 
 	public StateGame() {
 		super("Chateautomate");
 	}
-	
+
     public void initStatesList(GameContainer container) throws SlickException {
     	addState(new MainScreenGameState());
     	addState(new MapGameState());
-        //addState (new DragAndDropState());
- 
+      	addState (new DragAndDropState());
+
     }
 
 	public void enterState(int id, String s) throws SlickException {
@@ -38,9 +38,9 @@ public class StateGame extends StateBasedGame {
 				getContainer().exit();
 		}*/
 	}
-	
+
     public static void main(String[] args) throws SlickException {
-        AppGameContainer game = new AppGameContainer(new StateGame(), 800, 600, false);
+        AppGameContainer game = new AppGameContainer(new StateGame(), 1200, 900, false);
         game.setTargetFrameRate(60);
         game.setShowFPS(true);
         game.start();

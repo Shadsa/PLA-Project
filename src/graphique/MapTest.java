@@ -44,13 +44,14 @@ public class MapTest {
 		g.translate(-x, -y);
 		//Gestion du zoom
 		g.scale(zoom, zoom);
-		
+
 		spriteSheet.startUse();
 		//Parcours de la map test
 		for (int i = 0; i < World.SizeY(); i++) {
 			for (int j = 0; j < World.SizeX(); j++) {
 				ObjetTest vj = map.get(i).get(j);
 				int img = 0;
+				int img2 = 0;
 
 				if (vj.getNum() == Arbre._id)
 				{
@@ -66,10 +67,35 @@ public class MapTest {
 					img = 2;
 				else if (vj.getNum() == Caillou._id)
 					img = 3;
-				else if (vj.getNum() == Eau._id)
-					img = 5;
 				else if (vj.getNum() == 0)
 					img = 7;
+				else if (vj.getNum() == Eau._id)
+				{
+					img = 0;
+					img2 = 1;
+					/*if(i<map.size()-1 && map.get(i+1).get(j).getNum() != Eau._id)
+						img += 4;*/
+					if(j==map.get(0).size()-1 || map.get(i).get(j+1).getNum() != Eau._id)
+						img += 1;
+					if(j>0 && map.get(i).get(j-1).getNum() != Eau._id)
+						img += 2;
+					if(i>0 && map.get(i-1).get(j).getNum() != Eau._id)
+						img += 4;
+					if(i==map.size()-1 || map.get(i+1).get(j).getNum() != Eau._id)
+						img += 8;
+					spriteSheet.renderInUse(j*96, i*96, img2, img);
+
+
+						if(!((img&2) > 0 || (img&4) > 0) && j>0 && i>0 &&  map.get(i-1).get(j-1).getNum() != Eau._id)
+							spriteSheet.renderInUse(j*96, i*96, 0, 8);
+						if(!((img&8) > 0 || (img&2) > 0) && j>0 && i<map.size()-1 &&  map.get(i+1).get(j-1).getNum() != Eau._id)
+							spriteSheet.renderInUse(j*96, i*96, 0, 9);
+						if(!((img&1) > 0 || (img&8) > 0) && j<map.get(0).size()-1 && i<map.size()-1 &&  map.get(i+1).get(j+1).getNum() != Eau._id)
+							spriteSheet.renderInUse(j*96, i*96, 0, 11);
+						if(!((img&1) > 0 || (img&4) > 0) && j<map.get(0).size()-10 && i>0 &&  map.get(i-1).get(j+1).getNum() != Eau._id)
+							spriteSheet.renderInUse(j*96, i*96, 0, 10);
+					continue;
+				}
 
 				/*if (vj.getNum() == 0) {
 					//Affiche la cellule demandée dans la table des sprites : renderInUse(coordX du container, coordY du container, indiceX de la cellule, indiceY de la cellule).
@@ -85,7 +111,7 @@ public class MapTest {
 				} else if (vj.getNum() == 5) {
 					spriteSheet.renderInUse(i*96, j*96, 0, 5);
 				}*/
-				spriteSheet.renderInUse(j*96, i*96, 0, img);
+				spriteSheet.renderInUse(j*96, i*96, img2, img);
 
 			}
 		}

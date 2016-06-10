@@ -8,6 +8,17 @@ type typeCellule =
   | Plaine
   | Caillou
   | Eau
+  | Batiment
+
+  
+type attribut =
+  | Direction of cellule
+  | Type of typeCellule
+  | Quantite of int
+  | Poids of int
+  | Compose of String.t
+  | NbEtats of int
+  | None
 
 type action =
   | Attendre
@@ -23,6 +34,7 @@ type action =
 
 type condition =
   | Vide
+  | Et of condition*condition
   | Ennemi of cellule
   | Libre of cellule
   | OrdreDonne
@@ -32,144 +44,119 @@ type condition =
   | ...
 *)
 
-type attribut =
-  | Direction of String.t
-  | Type of String.t
-  | Quantite of String.t
-  | None
-
-
-(*
-type categorie =
-  | Citoyen
-  | Zombie
-  | Soldat
-(*
-  | ...
-*)
-*)
 
 type etat = int
 type poids = int
 type transition = etat * condition * action * etat * poids
 type automate = transition list
 
+let output = open_out "sortie.xml"
 
+let rec output_tab (n : int) =
+  if n>0 then
+    begin
+    output_string output "\t";
+    output_tab (n-1)
+    end
 
-let hostile (cour : etat) (suiv : etat) : automate = 
-  List.map  (fun direction -> (cour, Ennemi(direction), Attaquer(direction), suiv, 5) ) [N;S;E;O]
+let output_stab (s : String.t) (p : int) =
+  output_tab p;
+  output_string output s;
+  output_char output '\n'
 
-let reproducteur (cour : etat) (suiv : etat) : automate = 
-  List.map  (fun direction -> (cour, Libre(direction), Dupliquer(direction), suiv, 5) ) [N;S;E;O]
-
-let add (a1 : automate) (a2 : automate) : automate =
-  a1@a2
-
-let cellule_to_string (c : cellule) : String.t =
+let string_of_cellule (c : cellule) =
   match c with
-   | C -> "C"
-   | N -> "N"
-   | S -> "S"
-   | E -> "E"
-   | O -> "O"
+   |N -> "N"
+   |O -> "O"
+   |S -> "S"
+   |E -> "E"
+   |C -> "C"
 
-let typeCellule_to_string (t : typeCellule) : String.t =
+let string_of_type (t : typeCellule) =
   match t with
-  | Arbre -> "Arbre"
-  | Plaine -> "Plaine"
-  | Caillou -> "Caillou"
-  | Eau -> "Eau"
+   | Arbre -> "Arbre"
+   | Plaine -> "Plaine"
+   | Caillou -> "Caillou"
+   | Eau -> "Eau"
+   | Batiment -> "Batiment"
 
-let condition_to_string (c : condition) : String.t*attribut =
-  match c with
-   | Vide -> "Vide",None
-   | Ennemi(cellule) -> "Ennemi",Direction(cellule_to_string cellule)
-   | Libre(cellule) -> "Libre",Direction(cellule_to_string cellule)
-   | OrdreDonne -> "OrdreDonne",None
-   | Type(typeCellule) -> "Type",Type(typeCellule_to_string typeCellule)
-  (*
-    | ...
-  *)
-   | _ -> "",None
-
-let action_to_string (a : action) : String.t*attribut =
+let balise (s : String.t) (a : attribut) =
+  "<"^s^(
   match a with
-   | Attendre -> "Attendre",None
-   | Avancer(cellule) -> "Avancer",Direction(cellule_to_string cellule)
-   | Attaquer(cellule) -> "Attaquer",Direction(cellule_to_string cellule)
-   | AvancerJoueur -> "AvancerJoueur",None
-   | Dupliquer(cellule) -> "Dupliquer",Direction(cellule_to_string cellule)
-   | Raser -> "Raser",None
-   | CouperBois -> "CouperBois",None
-  (*
-    | ...
-  *)
-   | _ -> "",None
+   | Direction(d) -> " direction=\""^(string_of_cellule d)^"\""
+   | Type(t) -> " type=\""^(string_of_type t)^"\""
+   | Quantite(i) -> " quantite=\""^(string_of_int i)^"\""
+   | Poids(i) -> " poids=\""^(string_of_int i)^"\""
+   | Compose(s) -> " compose=\""^s^"\""
+   | NbEtats(i) -> " nbEtats=\""^(string_of_int i)^"\""
+   |_ -> ""
+
+  )^">"
+
+let fbalise(s : String.t) =
+  "</"^s^">"
+
+  
+  
+let output_cour (e : etat) (p : int) =
+  output_stab ((balise "etat" None)^(string_of_int e)^(fbalise "etat")) p
+
+let output_suiv (e : etat) (p : int) =
+  output_stab ((balise "suivant" None)^(string_of_int e)^(fbalise "suivant")) p
 
 
-(*
-let cate_to_string (c : categorie) : String.t =
+let rec output_cond (c : condition) (p : int) (suff : String.t) =
+  let b = "condition"^suff in
   match c with
-   | Citoyen -> "Citoyen"
-   | Zombie -> "Zombie"
-   | Soldat -> "Soldat"
-(*
-  | ...
-*)
-*)
+   | Vide -> output_stab ((balise b None)^"Vide"^(fbalise b)) p
+   | Et(c1,c2) ->
+    begin
+    output_stab (balise b (Compose("Et"))) p;
+    output_cond c1 (p+1) "1";
+    output_cond c2 (p+1) "2";
+    output_stab (fbalise b) p
+    end
+   | Ennemi(cellule) -> output_stab ((balise b (Direction(cellule)))^"Ennemi"^(fbalise b)) p
+   | Libre(cellule) -> output_stab ((balise b (Direction(cellule)))^"Libre"^(fbalise b)) p
+   | OrdreDonne -> output_stab ((balise b None)^"OrdreDonne"^(fbalise b)) p
+   | Type(typeCellule) -> output_stab ((balise b (Type(typeCellule)))^"Type"^(fbalise b)) p
+   | RessourcesPossedees(quantite) -> output_stab ((balise b (Quantite(quantite)))^"RessourcesPossedees"^(fbalise b)) p
+   |_ -> ()
 
-
-let attribute_to_xml (s : String.t) (nom : String.t) : String.t =
-  nom^"=\""^s^"\""
-
-let element_to_xml ((s,attribute) : String.t*attribut) (nom : String.t) : String.t =
-  match attribute with
-   |None -> "\t\t\t<"^nom^">"^s^"</"^nom^">"
-   |Direction(attribute) -> "\t\t\t<"^nom^" "^(attribute_to_xml attribute "direction")^">"^s^"</"^nom^">"
-   |Type(attribute) -> "\t\t\t<"^nom^" "^(attribute_to_xml attribute "type")^">"^s^"</"^nom^">"
-   |Quantite(attribute) -> "\t\t\t<"^nom^" "^(attribute_to_xml attribute "quantite")^">"^s^"</"^nom^">"
+let output_act (a : action) (p : int) =
+  let b = "action" in
+  match a with
+   | Attendre -> output_stab ((balise b None)^"Attendre"^(fbalise b)) p
+   | Avancer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Avancer"^(fbalise b)) p
+   | Attaquer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Attaquer"^(fbalise b)) p
+   | AvancerJoueur -> output_stab ((balise b None)^"AvancerJoueur"^(fbalise b)) p
+   | Dupliquer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Dupliquer"^(fbalise b)) p
+   | Raser -> output_stab ((balise b None)^"Raser"^(fbalise b)) p
+   | CouperBois -> output_stab ((balise b None)^"CouperBois"^(fbalise b)) p
   
-let etat_to_xml (e : etat) : String.t =
-  element_to_xml (string_of_int e,None) "etat"
-
-let suivant_to_xml (e : etat) : String.t =
-  element_to_xml (string_of_int e,None) "suivant"
   
-let condition_to_xml (c : condition) : String.t =
-  element_to_xml (condition_to_string c) "condition"
+let output_transition ((ec,c,a,es,pds) : transition) (p : int) =
+  output_stab (balise "transition" (Poids(pds))) p;
+  output_cour ec (p+1);
+  output_cond c (p+1) "";
+  output_act a (p+1);
+  output_suiv es (p+1);
+  output_stab (fbalise "transition") p
 
-let action_to_xml (a : action) : String.t =
-  element_to_xml (action_to_string a) "action"
-
-let poids_to_xml (p : poids) : String.t =
-  attribute_to_xml (string_of_int p) "poids"
-
-let transition_to_xml ((ec,c,a,es,p) : transition) : String.t =
-  String.concat "\n" ["\t\t<transition "^poids_to_xml p^">";
-		      etat_to_xml ec;
-		      condition_to_xml c;
-		      action_to_xml a;
-		      suivant_to_xml es;
-		      "\t\t</transition>"]
-
-let transition_list_to_xml (l : transition list) : String.t =
-  String.concat "\n" (List.map transition_to_xml l)
-
-
-let default_trans = (0,Vide,Attendre,0,0)
-
-let nb_etat (a : automate) : int =
-  let max_etat_trans ((_,_,_,e1,_) as t1 : transition) ((_,_,_,e2,_) as t2 : transition) : transition =
-    if e1>e2 then t1 else t2
+let maxEtat (i : int) ((e1,_,_,e2,_) : transition) =
+  max i (max e1 e2)
+  
+let output_automate (a : automate) (p : int) =
+  let rec inner (a : automate) =
+  match a with
+   |t::a -> (output_transition t (p+1); inner a)
+   |[] -> ()
   in
-  let (_,_,_,e,_) = List.fold_left (max_etat_trans) default_trans a in
-  1+e
+  output_stab (balise "automate" (NbEtats(1+(List.fold_left maxEtat 0 a)))) p;
+  inner a;
+  output_stab (fbalise "automate") p
 
-
-let automate_to_xml (a : automate) : String.t =
-  "\t<automate "^attribute_to_xml (string_of_int (nb_etat a)) "nbEtats"^">\n"^transition_list_to_xml a^"\n\t</automate>"
-
-let aut1 : automate = [(0,Libre(N),Avancer(N),0,1);
+(*let aut1 : automate = [(0,Libre(N),Avancer(N),0,1);
 				(0,Ennemi(S),Attaquer(S),0,1);
 				(0,Ennemi(N),Attaquer(N),0,1);
 				(0,Libre(E),Avancer(E),0,1);
@@ -181,20 +168,29 @@ let aut1 : automate = [(0,Libre(N),Avancer(N),0,1);
 				(1,Libre(E),Avancer(E),0,0);
 				(1,Libre(S),Avancer(S),1,1);			    
 				(1,Libre(O),Avancer(O),1,1);
-				(0,OrdreDonne,AvancerJoueur,1,5)			    
-			       ]
+				(1,OrdreDonne,AvancerJoueur,0,5)			    
+  ]*)
+
+let hostile (p : poids) (e1 : etat) (e2 : etat) : automate =
+  List.map (fun d -> (e1,Ennemi(d),Attaquer(d),e2,p)) [N;S;E;O]
+
+let destructeur (p : poids) (el : etat list) : automate =
+  List.map (fun e -> (e,Type(Batiment),Raser,e,p)) el
+
+let recolteur (p : poids) (el : etat list) : automate =
+  List.map (fun e -> (e,Type(Arbre),CouperBois,e,p)) el
+
+let createur (p : poids) (el : etat list) : automate =
+  List.concat (List.map (fun e -> List.map (fun d -> (e,Et(Libre(d),RessourcesPossedees(30)),Dupliquer(d),e,p)) [N;S;E;O]) el)
+
+let errant (p : poids) (e1 : etat) (e2 : etat) : automate =
+  List.map (fun d -> (e1,Libre(d),Avancer(d),e2,p)) [N;S;E;O]
+
+let aut1 = (List.concat(List.map2 (errant 1) [0;1;2] [1;2;0]))@(recolteur 3 [0;1;2])@(createur 4 [0;1;2])
 
 let main =
-  let output = open_out "sortie.xml" in
-  begin
-  output_string output "<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n\n<liste>\n";
-  output_string output (automate_to_xml aut1);
-  output_string output "\n</liste>";
+  output_string output "<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n\n";
+  output_stab (balise "liste" None) 0;
+  output_automate aut1 1;
+  output_stab (fbalise "liste") 0;
   close_out output
-  end
-  
-
-		 
-
-
-   
