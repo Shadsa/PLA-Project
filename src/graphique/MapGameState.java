@@ -41,10 +41,10 @@ import roles.conditions.Vide;
 public class MapGameState extends BasicGameState {
 
 	static int Tick = 1000;
-	static int TickWait = Tick*4/10;
-	static int AnimTick = Tick-TickWait;
+	static boolean TickWait = true;
+	static int AnimTick = Tick*6/10;
 	static final int TileSize = 96;
-	static final float MoveSpeed = ((float)TileSize)/((float)AnimTick);
+	static float MoveSpeed = ((float)TileSize)/((float)AnimTick);
 	static final float Ox = 48;
 	static final float Oy = 48;
 
@@ -153,6 +153,13 @@ public class MapGameState extends BasicGameState {
 		World.addPlayer(j2);
 		World.addPlayer(jZ);
 		World.BuildMap(40,75);
+		try {
+			World.putAutomate(j2.automate(0), 1, 1, j2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		j2.createPersonnage(0, 5, 5);
 		j2.createPersonnage(0, 6, 6);
 		j2.createPersonnage(0, 3, 6);
@@ -306,38 +313,66 @@ public class MapGameState extends BasicGameState {
 			}
 		}
 		
+		//Activer ou non l'attente
+		if (_input.isKeyDown(Input.KEY_W)){
+			if (TickWait){
+				TickWait=false;
+				AnimTick = Tick;
+			}
+			else{
+				TickWait=true;
+				AnimTick = Tick*6/10;
+			}
+			MoveSpeed = ((float)TileSize)/((float)AnimTick);			
+		}
+		
 		//Gestion de la vitesse du jeu
-		//Accélérer
-		if (_input.isKeyDown(Input.KEY_N) && Tick > 500){
+		//Accï¿½lï¿½rer
+		if (_input.isKeyDown(Input.KEY_N) && Tick > 250){
 			if (Tick > 1050 ){
 				Tick=Tick-100;
-				TickWait = Tick*4/10;
-				AnimTick = Tick-TickWait;				
+				if(TickWait)
+					AnimTick = Tick*6/10;
+				else
+					AnimTick = Tick;
+				MoveSpeed = ((float)TileSize)/((float)AnimTick);
 			}
 			else{
 			Tick=Tick-50;
-			TickWait = Tick*4/10;
-			AnimTick = Tick-TickWait;
+			if(TickWait)
+				AnimTick = Tick*6/10;
+			else
+				AnimTick = Tick;
+			MoveSpeed = ((float)TileSize)/((float)AnimTick);
 			}
 		}
 		//Ralentir
-		if (_input.isKeyDown(Input.KEY_B) && Tick < 2000){
+		if (_input.isKeyDown(Input.KEY_B) && Tick < 4000){
 			if (Tick < 950){
 				Tick = Tick+50;
-				TickWait = Tick*4/10;
-				AnimTick = Tick+TickWait;
+				if(TickWait)
+					AnimTick = Tick*6/10;
+				else
+					AnimTick = Tick;
+				MoveSpeed = ((float)TileSize)/((float)AnimTick);
 			}
 			else{
 				Tick = Tick+100;
-				TickWait = Tick*4/10;
-				AnimTick = Tick+TickWait;				
+				if(TickWait)
+					AnimTick = Tick*6/10;
+				else
+					AnimTick = Tick;
+				MoveSpeed = ((float)TileSize)/((float)AnimTick);
 			}
 		}
-		//Ré-initialiser
+		//Rï¿½-initialiser
 		if (_input.isKeyDown(Input.KEY_V)){
 			Tick = 1000;
-			TickWait = Tick*4/10;
-			AnimTick = Tick-TickWait;
+			if(TickWait)
+				AnimTick = Tick*6/10;
+			else
+				AnimTick = Tick;
+			MoveSpeed = ((float)TileSize)/((float)AnimTick);
 		}
 
 		//Gestion du scrolling de la map avec la manette
@@ -391,52 +426,58 @@ public class MapGameState extends BasicGameState {
 		}
 
 		//Configuration de la pause
-		if (_input.isKeyPressed(Input.KEY_ESCAPE) || _bouton_reprendre.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+		if (_input.isKeyPressed(Input.KEY_ESCAPE)) {
 			 container.setPaused(!container.isPaused());
 		}
 		
 		//Configuration du bouton quitter
-		if (_bouton_quitter.isMouseButtonDownOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
-			if (container.isPaused()) {
+		if (container.isPaused()) {
+			
+			//Configuration du bouton pause
+			 if (_bouton_reprendre.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+				 container.setPaused(!container.isPaused());
+			}
+			
+			if (_bouton_quitter.isMouseButtonDownOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
 				container.exit();
 			}
-		}
-		
-		//Configuration du bouton plein Ã©cran
-		if (_bouton_fullScreen.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
-			_input.clearMousePressedRecord();
-			if (container.isFullscreen()) {
-				_bouton_fullScreen.setNormalImage(new Image("src/asset/buttons/bouton_NOfullscreen_off.png"));
-				_bouton_fullScreen.setMouseOverImage(new Image("src/asset/buttons/bouton_NOfullscreen_on.png"));
-				((AppGameContainer) container).setDisplayMode(800,600, false);
-
-			} else {
-				_bouton_fullScreen.setNormalImage(new Image("src/asset/buttons/bouton_fullscreen_off.png"));
-				_bouton_fullScreen.setMouseOverImage(new Image("src/asset/buttons/bouton_fullscreen_on.png"));
-				((AppGameContainer) container).setDisplayMode(container.getScreenWidth(),container.getScreenHeight(), true);
+			
+			//Configuration du bouton plein Ã©cran
+			if (_bouton_fullScreen.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+				_input.clearMousePressedRecord();
+				if (container.isFullscreen()) {
+					_bouton_fullScreen.setNormalImage(new Image("src/asset/buttons/bouton_NOfullscreen_off.png"));
+					_bouton_fullScreen.setMouseOverImage(new Image("src/asset/buttons/bouton_NOfullscreen_on.png"));
+					((AppGameContainer) container).setDisplayMode(800,600, false);
+	
+				} else {
+					_bouton_fullScreen.setNormalImage(new Image("src/asset/buttons/bouton_fullscreen_off.png"));
+					_bouton_fullScreen.setMouseOverImage(new Image("src/asset/buttons/bouton_fullscreen_on.png"));
+					((AppGameContainer) container).setDisplayMode(container.getScreenWidth(),container.getScreenHeight(), true);
+				}
 			}
-		}
-		
-		//Configuration du bouton son
-		if (_bouton_son.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
-			if (container.getMusicVolume() > 0) {
-				container.setMusicVolume(0);
-				container.setSoundVolume(0);
-				_bouton_son.setNormalImage(new Image("src/asset/buttons/bouton_son_desactive_off.png"));
-				_bouton_son.setMouseOverImage(new Image("src/asset/buttons/bouton_son_desactive_on.png"));
-			} else {
-				container.setMusicVolume(100);
-				container.setSoundVolume(100);
-				_bouton_son.setNormalImage(new Image("src/asset/buttons/bouton_son_active_off.png"));
-				_bouton_son.setMouseOverImage(new Image("src/asset/buttons/bouton_son_active_on.png"));
+			
+			//Configuration du bouton son
+			if (_bouton_son.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+				if (container.getMusicVolume() > 0) {
+					container.setMusicVolume(0);
+					container.setSoundVolume(0);
+					_bouton_son.setNormalImage(new Image("src/asset/buttons/bouton_son_desactive_off.png"));
+					_bouton_son.setMouseOverImage(new Image("src/asset/buttons/bouton_son_desactive_on.png"));
+				} else {
+					container.setMusicVolume(100);
+					container.setSoundVolume(100);
+					_bouton_son.setNormalImage(new Image("src/asset/buttons/bouton_son_active_off.png"));
+					_bouton_son.setMouseOverImage(new Image("src/asset/buttons/bouton_son_active_on.png"));
+				}
 			}
-		}
-		
-		
-		//Configuration du bouton menu principal
-		if (_bouton_menuPrincipal.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
-			_input.clearMousePressedRecord();
-			this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
+			
+			
+			//Configuration du bouton menu principal
+			if (_bouton_menuPrincipal.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+				_input.clearMousePressedRecord();
+				this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
+			}
 		}
 		
 		//Configuration des boutons en plain Ã©cran
@@ -511,6 +552,9 @@ public class MapGameState extends BasicGameState {
 	}
 
 	public void keyPressed(int key, char c) {
+		/*if (key == Input.KEY_A){
+			this.game.enterState(3);
+		}*/
 	}
 
 	public void mousePressed(int arg0, int arg1, int arg2) {

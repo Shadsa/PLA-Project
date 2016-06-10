@@ -19,10 +19,13 @@ public class StateGame extends StateBasedGame {
 	public StateGame() {
 		super("Chateautomate");
 	}
-	
+
     public void initStatesList(GameContainer container) throws SlickException {
     	addState(new MainScreenGameState());
     	addState(new MapGameState());
+      	/*addState (new DragAndDropState());
+
+ */
     }
 
 	public void enterState(int id, String s) throws SlickException {
@@ -38,7 +41,7 @@ public class StateGame extends StateBasedGame {
 	}
 	
     public static void main(String[] args) throws SlickException {
-        AppGameContainer game = new AppGameContainer(new StateGame(), 800, 600, false);
+        AppGameContainer game = new AppGameContainer(new StateGame(), 1200, 900, false);
         game.setTargetFrameRate(60);
         game.setShowFPS(true);
         game.start();

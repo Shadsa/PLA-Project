@@ -122,6 +122,45 @@ public class XML_Reader {
 		return C;
 	}
 	
+	public static Condition getCondition(Node n, Element e) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException{
+		Condition cond = null, c1, c2;
+		NamedNodeMap att = n.getAttributes();
+		if(n instanceof Element && att != null && att.getLength() == 1){
+
+			Cardinaux C = CardOfString(att.item(0).getNodeValue());
+
+			if(att.item(0).getNodeName()=="compose") {
+				c1 = getCondition(n.getChildNodes().item(1),(Element) ((Element) n).getElementsByTagName("condition1").item(0));
+				c2 = getCondition(n.getChildNodes().item(3),(Element) ((Element) n).getElementsByTagName("condition2").item(0));
+				cond = (Condition) Class.forName("roles.conditions."+att.item(0).getNodeValue()).getDeclaredConstructor(Condition.class,Condition.class).newInstance(c1,c2);
+			}
+			else{
+				String s1 = e.getTextContent();
+				if(att.item(0).getNodeName()=="direction" && C!=null)
+					cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(Cardinaux.class).newInstance(C);
+				else
+					if(att.item(0).getNodeName()=="quantite")
+						cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(int.class).newInstance(Integer.parseInt(att.item(0).getNodeValue()));
+					else{
+						Method meth = null;
+						meth = Class.forName("cases."+att.item(0).getNodeValue()).getMethod("getInstance",  (Class<?>[]) null);
+						System.out.println(meth);
+						if(meth != null)
+							cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(TypeCase.class).newInstance(meth.invoke(null, null));
+						else
+							cond = (Condition) Class.forName("roles.conditions."+s1).newInstance();
+					}
+			}
+		}
+		else{
+			if(n instanceof Element){
+				//final Element e2 = node2.item(0);
+				String s1 = e.getTextContent();
+				cond = (Condition) Class.forName("roles.conditions."+s1).newInstance();				
+			}
+		}
+		return cond;
+	}
 	
 	public static void AutomateCreate(Automate auto, Node n) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException, DOMException{
 		int etat=0, suiv=0, poids=0;
@@ -137,41 +176,15 @@ public class XML_Reader {
 			if(nbElt == 9){
 
 				Node node1 = trans.item(1);
-				if(node1 instanceof Element && node1.getAttributes() == null){
+				if(node1.getNodeType()==1 && node1.getAttributes().getLength() == 0){
 					final Element e1 = (Element) ((Element) trans).getElementsByTagName("etat").item(0);
 					etat = Integer.parseInt(e1.getTextContent());
 				}
 				//etat = Integer.parseInt(node1.getAttributes().item(0).getNodeValue());
 				Node node2 = trans.item(3);
-				NamedNodeMap att = node2.getAttributes();
-				if(node2 instanceof Element && att != null && att.getLength() == 1){
+				final Element e2 = (Element) ((Element) trans).getElementsByTagName("condition").item(0);
+				cond = getCondition(node2, e2);
 
-					final Element e2 = (Element) ((Element) trans).getElementsByTagName("condition").item(0);
-					String s1 = e2.getTextContent();
-					Cardinaux C = CardOfString(att.item(0).getNodeValue());
-					if(att.item(0).getNodeName()=="direction" && C!=null)
-						cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(Cardinaux.class).newInstance(C);
-					else
-						if(att.item(0).getNodeName()=="quantite")
-							cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(int.class).newInstance(Integer.parseInt(att.item(0).getNodeValue()));
-						else{
-							Method meth = null;
-							meth = Class.forName("cases."+att.item(0).getNodeValue()).getMethod("getInstance",  (Class<?>[]) null);
-							System.out.println(meth);
-							if(meth != null)
-								cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(TypeCase.class).newInstance(meth.invoke(null, null));
-							else
-								cond = (Condition) Class.forName("roles.conditions."+s1).newInstance();
-						}
-				}
-				else{
-					if(node2 instanceof Element){
-						//final Element e2 = node2.item(0);
-						final Element e2 = (Element) ((Element) trans).getElementsByTagName("condition").item(0);
-						String s1 = e2.getTextContent();
-						cond = (Condition) Class.forName("roles.conditions."+s1).newInstance();				
-					}
-				}
 				Node node3 = trans.item(5);
 				if(node3 instanceof Element && node3.getAttributes() != null && node3.getAttributes().getLength() == 1){
 					final Element e3 = (Element) ((Element) trans).getElementsByTagName("action").item(0);
@@ -186,7 +199,7 @@ public class XML_Reader {
 					}	
 				}
 				Node node4 = trans.item(7);
-				if(node4 instanceof Element && node4.getAttributes() == null){
+				if(node1.getNodeType()==1 && node1.getAttributes().getLength() == 0){
 					final Element e4 = (Element) ((Element) trans).getElementsByTagName("suivant").item(0);
 					suiv = Integer.parseInt(e4.getTextContent());
 				}
