@@ -47,7 +47,6 @@ public class MainScreenGameState extends BasicGameState {
 	private Bouton _bouton_fullScreen;
 	private Bouton _bouton_son;
 
-
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		_input = container.getInput();
 		this.game = (StateGame) game;
@@ -106,16 +105,16 @@ public class MainScreenGameState extends BasicGameState {
 		}
 		
 		//Configuration du bouton plein écran
-		if (_bouton_fullScreen.isMouseButtonDownOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+		if (_bouton_fullScreen.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
 			_input.clearMousePressedRecord();
 			if (container.isFullscreen()) {
-				((AppGameContainer) container).setDisplayMode(800,600, false);
 				_bouton_fullScreen.setNormalImage(new Image("src/asset/buttons/bouton_NOfullscreen_off.png"));
 				_bouton_fullScreen.setMouseOverImage(new Image("src/asset/buttons/bouton_NOfullscreen_on.png"));
+				((AppGameContainer) container).setDisplayMode(800,600, false);
 			} else {
-				((AppGameContainer) container).setDisplayMode(container.getScreenWidth(),container.getScreenHeight(), true);
 				_bouton_fullScreen.setNormalImage(new Image("src/asset/buttons/bouton_fullscreen_off.png"));
 				_bouton_fullScreen.setMouseOverImage(new Image("src/asset/buttons/bouton_fullscreen_on.png"));
+				((AppGameContainer) container).setDisplayMode(container.getScreenWidth(),container.getScreenHeight(), true);
 			}
 		}
 		
@@ -124,13 +123,15 @@ public class MainScreenGameState extends BasicGameState {
 			if (container.getMusicVolume() > 0) {
 				container.setMusicVolume(0);
 				container.setSoundVolume(0);
+				_bouton_son.setNormalImage(new Image("src/asset/buttons/bouton_son_desactive_off.png"));
+				_bouton_son.setMouseOverImage(new Image("src/asset/buttons/bouton_son_desactive_on.png"));
 			} else {
 				container.setMusicVolume(100);
 				container.setSoundVolume(100);
+				_bouton_son.setNormalImage(new Image("src/asset/buttons/bouton_son_active_off.png"));
+				_bouton_son.setMouseOverImage(new Image("src/asset/buttons/bouton_son_active_on.png"));
 			}
 		}
-		_bouton_son.setNormalImage(container.getMusicVolume() > 0 ? new Image("src/asset/buttons/bouton_son_active_off.png") : new Image("src/asset/buttons/bouton_son_desactive_off.png"));
-		_bouton_son.setMouseOverImage(container.getMusicVolume() > 0 ? new Image("src/asset/buttons/bouton_son_active_on.png") : new Image("src/asset/buttons/bouton_son_desactive_on.png"));
 		
 		//Gestion des boutons en plein écran
 		_bouton_jouer.setLocation(container.getWidth()/2-62, container.getHeight()/2-80);
@@ -139,6 +140,13 @@ public class MainScreenGameState extends BasicGameState {
 		_bouton_quitter.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
 	}
 
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+		_bouton_son.setNormalImage(container.getMusicVolume() > 0 ? new Image("src/asset/buttons/bouton_son_active_off.png") : new Image("src/asset/buttons/bouton_son_desactive_off.png"));
+		_bouton_son.setMouseOverImage(container.getMusicVolume() > 0 ? new Image("src/asset/buttons/bouton_son_active_on.png") : new Image("src/asset/buttons/bouton_son_desactive_on.png"));
+		_bouton_fullScreen.setNormalImage(container.isFullscreen() ? new Image("src/asset/buttons/bouton_fullscreen_off.png") : new Image("src/asset/buttons/bouton_NOfullscreen_off.png"));
+		_bouton_fullScreen.setMouseOverImage(container.isFullscreen() ? new Image("src/asset/buttons/bouton_fullscreen_on.png") : new Image("src/asset/buttons/bouton_NOfullscreen_on.png"));
+	}
+	
 	/**
 	 * L'identifiant permet d'identifier les différentes boucles.
 	 * Pour passer de l'une à l'autre.

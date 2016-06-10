@@ -5,6 +5,7 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
 import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -40,8 +41,9 @@ import roles.conditions.Vide;
 public class MapGameState extends BasicGameState {
 
 	static final int Tick = 1000;
+	static final int AnimTick = Tick-400;
 	static final int TileSize = 96;
-	static final float MoveSpeed = ((float)TileSize)/((float)Tick-400);
+	static final float MoveSpeed = ((float)TileSize)/((float)AnimTick);
 	static final float Ox = 48;
 	static final float Oy = 48;
 
@@ -83,9 +85,9 @@ public class MapGameState extends BasicGameState {
 	private StateGame game;
 	
 	//Boutons
-	private Bouton _bouton_quitter;
 	private Bouton _bouton_fullScreen;
 	private Bouton _bouton_son;
+	private Bouton _bouton_quitter;
 	private Bouton _bouton_reprendre;
 	private Bouton _bouton_menuPrincipal;
 
@@ -243,8 +245,6 @@ public class MapGameState extends BasicGameState {
 		    //g.drawString("PAUSE", container.getScreenWidth()/2-5, container.getScreenHeight()/2);
 		    _bouton_fullScreen.render(container, g);
 		    _bouton_son.render(container, g);
-			_bouton_son.setNormalImage(container.getMusicVolume() > 0 ? new Image("src/asset/buttons/bouton_son_active_off.png") : new Image("src/asset/buttons/bouton_son_desactive_off.png"));
-			_bouton_son.setMouseOverImage(container.getMusicVolume() > 0 ? new Image("src/asset/buttons/bouton_son_active_on.png") : new Image("src/asset/buttons/bouton_son_desactive_on.png"));
 		    _bouton_quitter.render(container, g);
 		    _bouton_menuPrincipal.render(container, g);
 		    _bouton_reprendre.render(container, g);
@@ -275,6 +275,12 @@ public class MapGameState extends BasicGameState {
 		{
 			_time -= Tick;
 			World.nextTurn();
+			for(Animation anim : Player.animations)
+				anim.restart();
+			for(Animation anim : Player.Hanimations)
+				anim.restart();
+			for(Animation anim : Player.Danimations)
+				anim.restart();
 		}
 		//playerData = "Coord X :" + this.player.getX() + ", Coord Y : " + this.player.getY() + ", action_finie : " + this.player.getAction_finie();
 		mouseAbsoluteX = _input.getAbsoluteMouseX();// + offsetMapX();
@@ -360,29 +366,32 @@ public class MapGameState extends BasicGameState {
 		}
 		
 		//Configuration du bouton plein écran
-		if (_bouton_fullScreen.isMouseButtonDownOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+		if (_bouton_fullScreen.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
 			_input.clearMousePressedRecord();
 			if (container.isFullscreen()) {
-				((AppGameContainer) container).setDisplayMode(800,600, false);
 				_bouton_fullScreen.setNormalImage(new Image("src/asset/buttons/bouton_NOfullscreen_off.png"));
 				_bouton_fullScreen.setMouseOverImage(new Image("src/asset/buttons/bouton_NOfullscreen_on.png"));
+				((AppGameContainer) container).setDisplayMode(800,600, false);
+
 			} else {
-				((AppGameContainer) container).setDisplayMode(container.getScreenWidth(),container.getScreenHeight(), true);
 				_bouton_fullScreen.setNormalImage(new Image("src/asset/buttons/bouton_fullscreen_off.png"));
 				_bouton_fullScreen.setMouseOverImage(new Image("src/asset/buttons/bouton_fullscreen_on.png"));
+				((AppGameContainer) container).setDisplayMode(container.getScreenWidth(),container.getScreenHeight(), true);
 			}
 		}
 		
 		//Configuration du bouton son
 		if (_bouton_son.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
-			if (container.isPaused()) {
-				if (container.getMusicVolume() > 0) {
-					container.setMusicVolume(0);
-					container.setSoundVolume(0);
-				} else {
-					container.setMusicVolume(100);
-					container.setSoundVolume(100);
-				}
+			if (container.getMusicVolume() > 0) {
+				container.setMusicVolume(0);
+				container.setSoundVolume(0);
+				_bouton_son.setNormalImage(new Image("src/asset/buttons/bouton_son_desactive_off.png"));
+				_bouton_son.setMouseOverImage(new Image("src/asset/buttons/bouton_son_desactive_on.png"));
+			} else {
+				container.setMusicVolume(100);
+				container.setSoundVolume(100);
+				_bouton_son.setNormalImage(new Image("src/asset/buttons/bouton_son_active_off.png"));
+				_bouton_son.setMouseOverImage(new Image("src/asset/buttons/bouton_son_active_on.png"));
 			}
 		}
 		
@@ -399,7 +408,13 @@ public class MapGameState extends BasicGameState {
 		_bouton_quitter.setLocation(container.getWidth()/2-62, container.getHeight()/2+80);
 		_bouton_reprendre.setLocation(container.getWidth()/2-62, container.getHeight()/2-80);
 		_bouton_menuPrincipal.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
-
+	}
+	
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+		_bouton_son.setNormalImage(container.getMusicVolume() > 0 ? new Image("src/asset/buttons/bouton_son_active_off.png") : new Image("src/asset/buttons/bouton_son_desactive_off.png"));
+		_bouton_son.setMouseOverImage(container.getMusicVolume() > 0 ? new Image("src/asset/buttons/bouton_son_active_on.png") : new Image("src/asset/buttons/bouton_son_desactive_on.png"));
+		_bouton_fullScreen.setNormalImage(container.isFullscreen() ? new Image("src/asset/buttons/bouton_fullscreen_off.png") : new Image("src/asset/buttons/bouton_NOfullscreen_off.png"));
+		_bouton_fullScreen.setMouseOverImage(container.isFullscreen() ? new Image("src/asset/buttons/bouton_fullscreen_on.png") : new Image("src/asset/buttons/bouton_NOfullscreen_on.png"));
 	}
 
 	public void keyReleased(int key, char c) {

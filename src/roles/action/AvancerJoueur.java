@@ -1,5 +1,6 @@
 package roles.action;
 
+import cases.Arbre;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;
@@ -17,9 +18,24 @@ public final class AvancerJoueur extends Action {
 		int destY = pers.Y() + ((direction == Cardinaux.SUD)? (-1) : ((direction == Cardinaux.NORD)? 1 : 0));
 		if(World.isfree(destX, destY))
 		{
-			System.out.print(pers.ID() + "j'avance vers le " + direction + destX + destY + ".\n");
-			World.Case(destX, destY).setPersonnage(pers);
-			pers.setState(new States(Statut.AVANCE, direction));
+			if(World.Case(destX, destY).type() instanceof Arbre)
+			{
+				System.out.print(pers.ID() + "j'avance vers le " + direction + destX + destY + ".\n");
+				World.Case(destX, destY).setPersonnage(pers);
+				pers.setState(new States(Statut.HIDING, direction));
+			}
+			else if(World.Case(pers.X(), pers.Y()).type() instanceof Arbre)
+			{
+				System.out.print(pers.ID() + "j'avance vers le " + direction + destX + destY + ".\n");
+				World.Case(destX, destY).setPersonnage(pers);
+				pers.setState(new States(Statut.REVEAL, direction));
+			}
+			else
+			{
+				System.out.print(pers.ID() + "j'avance vers le " + direction + destX + destY + ".\n");
+				World.Case(destX, destY).setPersonnage(pers);
+				pers.setState(new States(Statut.AVANCE, direction));
+			}
 		}
 	}
 

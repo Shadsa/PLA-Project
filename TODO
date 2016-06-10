@@ -5,7 +5,9 @@ Creation de map intelligente (générateur de map, ex groupe de ressources)
 ajout automate sur le terrain
 interface set de la map
 trouver des images
-zombie caché dans la foret, oiseau random arbre bloquant
+[zombie caché dans la foret,] oiseau random arbre bloquant
+Les lacs fusionné  etc?
 ralentir le temps
-
+Optimiser l'affichage des perso en virant les statut etc en attribut et en mettant des variable
+(minimise les test durant les render)
 Optionnel
