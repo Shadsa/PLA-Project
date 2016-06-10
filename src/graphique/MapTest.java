@@ -38,15 +38,11 @@ public class MapTest {
 
 	public void render(Graphics g, float x, float y, float zoom) throws SlickException {
 
-		//g.resetTransform();
+		//Gestion du scrolling de la map
 		g.translate(-x, -y);
-		//Pour dézoomer de moitié décommenter la ligne dessous (attention, les coordonnées de la souris reste à l'échelle 1 donc l'affichage de l'hud ne sera plus à l'échelle)
-		//if (zoomIn) {
+		//Gestion du zoom
 		g.scale(zoom, zoom);
-		//}
-		//if (zoomOut) {
-			//g.scale(0.50f, 0.50f);
-		//}
+		
 		spriteSheet.startUse();
 		//Parcours de la map test
 		for (int i = 0; i < World.SizeY(); i++) {
