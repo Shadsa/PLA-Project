@@ -67,6 +67,8 @@ public class MapTest {
 					img = 2;
 				else if (vj.getNum() == Caillou._id)
 					img = 3;
+				else if (vj.getNum() == 0)
+					img = 7;
 				else if (vj.getNum() == Eau._id)
 				{
 					img = 0;
