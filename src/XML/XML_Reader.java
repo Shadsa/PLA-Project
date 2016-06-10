@@ -125,7 +125,7 @@ public class XML_Reader {
 	public static Condition getCondition(Node n, Element e) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException{
 		Condition cond = null, c1, c2;
 		NamedNodeMap att = n.getAttributes();
-		if(n instanceof Element && att != null && att.getLength() == 1){
+		if(n instanceof Element && att != null && att.getLength() >= 1){
 
 			Cardinaux C = CardOfString(att.item(0).getNodeValue());
 
@@ -136,17 +136,16 @@ public class XML_Reader {
 			}
 			else{
 				String s1 = e.getTextContent();
-				if(att.item(0).getNodeName()=="direction" && C!=null)
+				if(att.item(0).getNodeName()=="direction" && att.getLength()!=2 && C!=null)
 					cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(Cardinaux.class).newInstance(C);
 				else
 					if(att.item(0).getNodeName()=="quantite")
 						cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(int.class).newInstance(Integer.parseInt(att.item(0).getNodeValue()));
 					else{
 						Method meth = null;
-						meth = Class.forName("cases."+att.item(0).getNodeValue()).getMethod("getInstance",  (Class<?>[]) null);
-						System.out.println(meth);
+						meth = Class.forName("cases."+att.item(1).getNodeValue()).getMethod("getInstance",  (Class<?>[]) null);
 						if(meth != null)
-							cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(TypeCase.class,Cardinaux.class).newInstance(meth.invoke(null, null),CardOfString(att.item(1).getNodeValue()));
+							cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(TypeCase.class,Cardinaux.class).newInstance(meth.invoke(null, null),CardOfString(att.item(0).getNodeValue()));
 						else
 							cond = (Condition) Class.forName("roles.conditions."+s1).newInstance();
 					}
