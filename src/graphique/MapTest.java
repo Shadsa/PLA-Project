@@ -24,7 +24,7 @@ public class MapTest {
 		//Dans ce sprite -> cellule 0 : buisson, cellule 1 : arbre, cellule 2 : herbe, cellule 3 : tonneaux, cellule 4 : rochers. (format des cases : 96x96).
 		//Pour utiliser la méthode renderInUse(...), je dois appeler la méthode startUse() pour dire que je commence à lire cette table de sprite.
 		spriteSheet = new SpriteSheet("src/asset/sprites/tiles.png", tileSize, tileSize);
-		Tree = new Image("src/asset/sprites/SimpleTree.png");
+		//Tree = new Image("src/asset/sprites/SimpleTree.png");
 		//J'initialise ma map test.
 		map = new Vector<Vector<ObjetTest>> ();
 		for (int j = 0; j < World.SizeY(); j++) {
@@ -40,15 +40,11 @@ public class MapTest {
 
 	public void render(Graphics g, float x, float y, float zoom) throws SlickException {
 
-		//g.resetTransform();
+		//Gestion du scrolling de la map
 		g.translate(-x, -y);
-		//Pour dézoomer de moitié décommenter la ligne dessous (attention, les coordonnées de la souris reste à l'échelle 1 donc l'affichage de l'hud ne sera plus à l'échelle)
-		//if (zoomIn) {
+		//Gestion du zoom
 		g.scale(zoom, zoom);
-		//}
-		//if (zoomOut) {
-			//g.scale(0.50f, 0.50f);
-		//}
+		
 		spriteSheet.startUse();
 		//Parcours de la map test
 		for (int i = 0; i < World.SizeY(); i++) {

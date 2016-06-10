@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
+import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.MouseListener;
 import org.newdawn.slick.Music;
@@ -78,8 +80,16 @@ public class MapGameState extends BasicGameState {
 	//Test
 	private MapTest map = new MapTest();
 	private Input _input;
-	private int _scrollingSpeed = 8;
+	private int _scrollingSpeed = 15;
 	private float _zoom = 1;
+	private StateGame game;
+	
+	//Boutons
+	private Bouton _bouton_fullScreen;
+	private Bouton _bouton_son;
+	private Bouton _bouton_quitter;
+	private Bouton _bouton_reprendre;
+	private Bouton _bouton_menuPrincipal;
 
 	public float zoom() {
 		return _zoom;
@@ -94,7 +104,14 @@ public class MapGameState extends BasicGameState {
 	 */
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		_input = container.getInput();
-/*
+		this.game = (StateGame) game;
+		_bouton_fullScreen = new Bouton(container, new Image("src/asset/buttons/bouton_NOfullscreen_off.png"), new Image("src/asset/buttons/bouton_NOfullscreen_on.png"), container.getWidth()/2-62, container.getHeight()/2, 126, 30);
+		_bouton_son = new Bouton(container, new Image("src/asset/buttons/bouton_son_active_off.png"), new Image("src/asset/buttons/bouton_son_active_on.png"), container.getWidth()/2-62, container.getHeight()/2-40, 126, 30); 
+		_bouton_quitter = new Bouton(container, new Image("src/asset/buttons/bouton_quitter_off.png"), new Image("src/asset/buttons/bouton_quitter_on.png"), container.getWidth()/2-62, container.getHeight()/2+80, 126, 30);
+		_bouton_menuPrincipal = new Bouton(container, new Image("src/asset/buttons/bouton_menu_principal_off.png"), new Image("src/asset/buttons/bouton_menu_principal_on.png"), container.getWidth()/2-62, container.getHeight()/2+40, 126, 30);
+		_bouton_reprendre = new Bouton(container, new Image("src/asset/buttons/bouton_reprendre_off.png"), new Image("src/asset/buttons/bouton_reprendre_on.png"), container.getWidth()/2-62, container.getHeight()/2-80, 126, 30);
+		
+		/*
 		Automate aut1 = new Automate(2);
 
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD), new Libre(Cardinaux.NORD), 0, 1);
@@ -218,16 +235,19 @@ public class MapGameState extends BasicGameState {
 		if(showhud) {
 			this.hud.render(g);
 		}
-
+		
+		//Gestion de la pause
 		if (container.isPaused()) {
 		    Rectangle rect = new Rectangle (0, 0, container.getScreenWidth(), container.getScreenHeight());
-		 //   g.scale(1.5f,1.5f);
-
-
 		    g.setColor(new Color (0, 0, 0, alpha));
 		    g.fill(rect);
 		    g.setColor(Color.white);
-		    g.drawString("PAUSE", container.getScreenWidth()/2-5, container.getScreenHeight()/2);
+		    //g.drawString("PAUSE", container.getScreenWidth()/2-5, container.getScreenHeight()/2);
+		    _bouton_fullScreen.render(container, g);
+		    _bouton_son.render(container, g);
+		    _bouton_quitter.render(container, g);
+		    _bouton_menuPrincipal.render(container, g);
+		    _bouton_reprendre.render(container, g);
 
 		    if (alpha < 0.7f) {
 		        alpha += 0.01f;
@@ -265,22 +285,24 @@ public class MapGameState extends BasicGameState {
 		//playerData = "Coord X :" + this.player.getX() + ", Coord Y : " + this.player.getY() + ", action_finie : " + this.player.getAction_finie();
 		mouseAbsoluteX = _input.getAbsoluteMouseX();// + offsetMapX();
 		mouseAbsoluteY = _input.getAbsoluteMouseY();// + offsetMapY();
-		_mouseMapX = (int) ((mouseAbsoluteX + offsetMapX()) / zoom());
-		_mouseMapY = (int) ((mouseAbsoluteY + offsetMapY()) / zoom());
+		_mouseMapX = (mouseAbsoluteX + offsetMapX()) / zoom();
+		_mouseMapY = (mouseAbsoluteY + offsetMapY()) / zoom();
 		mouse = "MouseAbsoluteX : " + mouseAbsoluteX + ", MouseAbsoluteY : " + mouseAbsoluteY;
 
 		//Gestion du scrolling de la map avec la souris
-		if (mouseAbsoluteY == container.getScreenHeight()) {
-			setOffsetMapY(offsetMapY() + _scrollingSpeed);
-		}
-		if (mouseAbsoluteX == 0) {
-			setOffsetMapX(offsetMapX() - _scrollingSpeed);
-		}
-		if (mouseAbsoluteX == container.getScreenWidth() - 1) {
-			setOffsetMapX(offsetMapX() + _scrollingSpeed);
-		}
-		if (mouseAbsoluteY == 1) {
-			setOffsetMapY(offsetMapY() - _scrollingSpeed);
+		if (container.isFullscreen()) {
+			if (mouseAbsoluteY == container.getScreenHeight()) {
+				setOffsetMapY(offsetMapY() + _scrollingSpeed);
+			}
+			if (mouseAbsoluteX == 0) {
+				setOffsetMapX(offsetMapX() - _scrollingSpeed);
+			}
+			if (mouseAbsoluteX == container.getScreenWidth() - 1) {
+				setOffsetMapX(offsetMapX() + _scrollingSpeed);
+			}
+			if (mouseAbsoluteY == 1) {
+				setOffsetMapY(offsetMapY() - _scrollingSpeed);
+			}
 		}
 
 		//Gestion du scrolling de la map avec la manette
@@ -333,10 +355,68 @@ public class MapGameState extends BasicGameState {
 			}
 		}
 
-		if (_input.isKeyPressed(Input.KEY_P)) {
+		//Configuration de la pause
+		if (_input.isKeyPressed(Input.KEY_ESCAPE) || _bouton_reprendre.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
 			 container.setPaused(!container.isPaused());
 		}
+		
+		//Configuration du bouton quitter
+		if (_bouton_quitter.isMouseButtonDownOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+			if (container.isPaused()) {
+				container.exit();
+			}
+		}
+		
+		//Configuration du bouton plein écran
+		if (_bouton_fullScreen.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+			_input.clearMousePressedRecord();
+			if (container.isFullscreen()) {
+				_bouton_fullScreen.setNormalImage(new Image("src/asset/buttons/bouton_NOfullscreen_off.png"));
+				_bouton_fullScreen.setMouseOverImage(new Image("src/asset/buttons/bouton_NOfullscreen_on.png"));
+				((AppGameContainer) container).setDisplayMode(800,600, false);
 
+			} else {
+				_bouton_fullScreen.setNormalImage(new Image("src/asset/buttons/bouton_fullscreen_off.png"));
+				_bouton_fullScreen.setMouseOverImage(new Image("src/asset/buttons/bouton_fullscreen_on.png"));
+				((AppGameContainer) container).setDisplayMode(container.getScreenWidth(),container.getScreenHeight(), true);
+			}
+		}
+		
+		//Configuration du bouton son
+		if (_bouton_son.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+			if (container.getMusicVolume() > 0) {
+				container.setMusicVolume(0);
+				container.setSoundVolume(0);
+				_bouton_son.setNormalImage(new Image("src/asset/buttons/bouton_son_desactive_off.png"));
+				_bouton_son.setMouseOverImage(new Image("src/asset/buttons/bouton_son_desactive_on.png"));
+			} else {
+				container.setMusicVolume(100);
+				container.setSoundVolume(100);
+				_bouton_son.setNormalImage(new Image("src/asset/buttons/bouton_son_active_off.png"));
+				_bouton_son.setMouseOverImage(new Image("src/asset/buttons/bouton_son_active_on.png"));
+			}
+		}
+		
+		
+		//Configuration du bouton menu principal
+		if (_bouton_menuPrincipal.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+			_input.clearMousePressedRecord();
+			this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
+		}
+		
+		//Configuration des boutons en plain écran
+		_bouton_fullScreen.setLocation(container.getWidth()/2-62, container.getHeight()/2);
+		_bouton_son.setLocation(container.getWidth()/2-62, container.getHeight()/2-40);
+		_bouton_quitter.setLocation(container.getWidth()/2-62, container.getHeight()/2+80);
+		_bouton_reprendre.setLocation(container.getWidth()/2-62, container.getHeight()/2-80);
+		_bouton_menuPrincipal.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
+	}
+	
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+		_bouton_son.setNormalImage(container.getMusicVolume() > 0 ? new Image("src/asset/buttons/bouton_son_active_off.png") : new Image("src/asset/buttons/bouton_son_desactive_off.png"));
+		_bouton_son.setMouseOverImage(container.getMusicVolume() > 0 ? new Image("src/asset/buttons/bouton_son_active_on.png") : new Image("src/asset/buttons/bouton_son_desactive_on.png"));
+		_bouton_fullScreen.setNormalImage(container.isFullscreen() ? new Image("src/asset/buttons/bouton_fullscreen_off.png") : new Image("src/asset/buttons/bouton_NOfullscreen_off.png"));
+		_bouton_fullScreen.setMouseOverImage(container.isFullscreen() ? new Image("src/asset/buttons/bouton_fullscreen_on.png") : new Image("src/asset/buttons/bouton_NOfullscreen_on.png"));
 	}
 
 	public void keyReleased(int key, char c) {

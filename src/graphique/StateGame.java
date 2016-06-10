@@ -17,7 +17,7 @@ public class StateGame extends StateBasedGame {
 	private static int width = (int)screenSize.getWidth();
 
 	public StateGame() {
-		super("Jeu en cours de développement !");
+		super("Chateautomate");
 	}
 	
     public void initStatesList(GameContainer container) throws SlickException {
@@ -32,13 +32,13 @@ public class StateGame extends StateBasedGame {
 	}
 
 	public void keyPressed(int key, char c) {
-		if (Input.KEY_ESCAPE == key) {
+		/*if (Input.KEY_ESCAPE == key) {
 				getContainer().exit();
-		}
+		}*/
 	}
 	
     public static void main(String[] args) throws SlickException {
-        AppGameContainer game = new AppGameContainer(new StateGame(), width, height, false);
+        AppGameContainer game = new AppGameContainer(new StateGame(), 800, 600, false);
         game.setTargetFrameRate(60);
         game.setShowFPS(true);
         game.start();

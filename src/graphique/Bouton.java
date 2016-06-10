@@ -3,6 +3,7 @@ package graphique;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
@@ -19,5 +20,13 @@ public class Bouton extends MouseOverArea {
 	}
 	
 	public void update(GameContainer container, int delta) {
+	}
+	
+	public boolean isMouseButtonDownOnArea(Input input, int button) {
+		return super.isMouseOver() && input.isMouseButtonDown(button);
+	}
+	
+	public boolean isMouseButtonPressedOnArea(Input input, int button) {
+		return super.isMouseOver() && input.isMousePressed(button);
 	}
 }
