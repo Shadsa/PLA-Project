@@ -132,9 +132,9 @@ public class MainScreenGameState extends BasicGameState {
 				_bouton_son.setMouseOverImage(new Image("src/asset/buttons/bouton_son_active_on.png"));
 			}
 		}
+	}
 		
-		if (_input.isKeyPressed(Input.KEY_A)){
-			
+		/*if (_input.isKeyPressed(Input.KEY_A)){
 			game.enterState(DragAndDropState.ID);
 		}
 		
