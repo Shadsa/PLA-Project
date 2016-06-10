@@ -133,6 +133,11 @@ public class MainScreenGameState extends BasicGameState {
 			}
 		}
 		
+		if (_input.isKeyPressed(Input.KEY_A)){
+			
+			game.enterState(DragAndDropState.ID);
+		}
+		
 		//Gestion des boutons en plein écran
 		_bouton_jouer.setLocation(container.getWidth()/2-62, container.getHeight()/2-80);
 		_bouton_fullScreen.setLocation(container.getWidth()/2-62, container.getHeight()/2);
@@ -145,6 +150,9 @@ public class MainScreenGameState extends BasicGameState {
 		_bouton_son.setMouseOverImage(container.getMusicVolume() > 0 ? new Image("src/asset/buttons/bouton_son_active_on.png") : new Image("src/asset/buttons/bouton_son_desactive_on.png"));
 		_bouton_fullScreen.setNormalImage(container.isFullscreen() ? new Image("src/asset/buttons/bouton_fullscreen_off.png") : new Image("src/asset/buttons/bouton_NOfullscreen_off.png"));
 		_bouton_fullScreen.setMouseOverImage(container.isFullscreen() ? new Image("src/asset/buttons/bouton_fullscreen_on.png") : new Image("src/asset/buttons/bouton_NOfullscreen_on.png"));
+	}
+	
+	public void keyPressed(int key, char c) {
 	}
 	
 	/**
