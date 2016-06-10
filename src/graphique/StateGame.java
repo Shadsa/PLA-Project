@@ -23,12 +23,9 @@ public class StateGame extends StateBasedGame {
     public void initStatesList(GameContainer container) throws SlickException {
     	addState(new MainScreenGameState());
     	addState(new MapGameState());
-      	addState (new DragAndDropState());
-<<<<<<< HEAD
+      	/*addState (new DragAndDropState());
 
-=======
->>>>>>> 952ead1562ddb9f490677100e5599f57cdf9c6d4
- 
+ */
     }
 
 	public void enterState(int id, String s) throws SlickException {

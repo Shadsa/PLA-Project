@@ -19,7 +19,7 @@ public class DragAndDropState extends BasicGameState {
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//World.BuildMap(40,57);
-		map.init();
+		//map.init();
 		
 	}
 
