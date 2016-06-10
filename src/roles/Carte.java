@@ -25,23 +25,18 @@ public class Carte extends Vector<Vector<Case>>{
 			for(int x=0 ; x<largeur ; x++){
 				type = R.nextInt(20);
 				switch(type){
-				case 0 : case 1 :
-					c = new Terrain(x,y,Plaine.getInstance());
-					System.out.print('P');
-					break;
-				case 2 :
+				case 0 :
 					c = new Terrain(x,y,Caillou.getInstance());
-					System.out.print('C');
+					//System.out.print('C');
 					break;
 				default :
 					c = new Terrain(x,y,Plaine.getInstance());
-					System.out.print('D');
+					//System.out.print('D');
 				}
 				//NE PAS OUBLIER LES BREAKS QUAND ON RAJOUTE UN TYPE DE CASE
 				ligne.add(c);
 			}
 			add(ligne);
-			System.out.print('\n');
 		}
 		this.randomLac();
 		this.randomForet();
