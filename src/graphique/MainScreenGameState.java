@@ -132,11 +132,11 @@ public class MainScreenGameState extends BasicGameState {
 				_bouton_son.setMouseOverImage(new Image("src/asset/buttons/bouton_son_active_on.png"));
 			}
 		}
-	}
+
 		
 		/*if (_input.isKeyPressed(Input.KEY_A)){
 			game.enterState(DragAndDropState.ID);
-		}
+		}*/
 		
 		//Gestion des boutons en plein écran
 		_bouton_jouer.setLocation(container.getWidth()/2-62, container.getHeight()/2-80);
