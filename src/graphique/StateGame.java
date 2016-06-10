@@ -19,11 +19,15 @@ public class StateGame extends StateBasedGame {
 	public StateGame() {
 		super("Chateautomate");
 	}
-	
+
     public void initStatesList(GameContainer container) throws SlickException {
     	addState(new MainScreenGameState());
     	addState(new MapGameState());
       	addState (new DragAndDropState());
+<<<<<<< HEAD
+
+=======
+>>>>>>> 952ead1562ddb9f490677100e5599f57cdf9c6d4
  
     }
 
