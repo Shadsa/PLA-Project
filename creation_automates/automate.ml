@@ -8,6 +8,7 @@ type typeCellule =
   | Plaine
   | Caillou
   | Eau
+  | Batiment
 
   
 type attribut =
@@ -77,6 +78,7 @@ let string_of_type (t : typeCellule) =
    | Plaine -> "Plaine"
    | Caillou -> "Caillou"
    | Eau -> "Eau"
+   | Batiment -> "Batiment"
 
 let balise (s : String.t) (a : attribut) =
   "<"^s^(
@@ -154,7 +156,7 @@ let output_automate (a : automate) (p : int) =
   inner a;
   output_stab (fbalise "automate") p
 
-let aut1 : automate = [(0,Libre(N),Avancer(N),0,1);
+(*let aut1 : automate = [(0,Libre(N),Avancer(N),0,1);
 				(0,Ennemi(S),Attaquer(S),0,1);
 				(0,Ennemi(N),Attaquer(N),0,1);
 				(0,Libre(E),Avancer(E),0,1);
@@ -167,10 +169,25 @@ let aut1 : automate = [(0,Libre(N),Avancer(N),0,1);
 				(1,Libre(S),Avancer(S),1,1);			    
 				(1,Libre(O),Avancer(O),1,1);
 				(1,OrdreDonne,AvancerJoueur,0,5)			    
-			       ]
+  ]*)
 
+let hostile (p : poids) (e1 : etat) (e2 : etat) : automate =
+  List.map (fun d -> (e1,Ennemi(d),Attaquer(d),e2,p)) [N;S;E;O]
 
-    
+let destructeur (p : poids) (el : etat list) : automate =
+  List.map (fun e -> (e,Type(Batiment),Raser,e,p)) el
+
+let recolteur (p : poids) (el : etat list) : automate =
+  List.map (fun e -> (e,Type(Arbre),CouperBois,e,p)) el
+
+let createur (p : poids) (el : etat list) : automate =
+  List.concat (List.map (fun e -> List.map (fun d -> (e,Et(Libre(d),RessourcesPossedees(10)),Dupliquer(d),e,p)) [N;S;E;O]) el)
+
+let errant (p : poids) (e1 : etat) (e2 : etat) : automate =
+  List.map (fun d -> (e1,Libre(d),Avancer(d),e2,p)) [N;S;E;O]
+
+let aut1 = (List.concat(List.map2 (errant 1) [0;1;2] [1;2;0]))@(recolteur 3 [0;1;2])@(createur 4 [0;1;2])
+
 let main =
   output_string output "<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n\n";
   output_stab (balise "liste" None) 0;
