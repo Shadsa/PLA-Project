@@ -3,6 +3,7 @@ package roles;
 import java.util.Observable;
 
 import cases.Case;
+import cases.CaseProperty;
 import roles.States.Statut;
 import roles.action.Joueur;
 import roles.action.World;
@@ -115,16 +116,16 @@ public class Personnage extends Observable{
 	 * @param maxRange : la distance à laquelle regarder
 	 * @return la direction vers laquelle se trouve la case la plus proche, ou null si aucune case n'a été trouvée
 	 */
-	public Cardinaux find(Class<?> c, int maxRange){		
+	public Cardinaux find(CaseProperty c, int maxRange){		
 		for(int range=1;range<=maxRange;range++)
 			for(int xy=-range;xy<=range;xy++){
-				if(World.Case(X()+range, Y()+xy)!=null && c.isInstance(World.Case(X()+range, Y()+xy)))
+				if(World.Case(X()+range, Y()+xy)!=null && c.check(World.Case(X()+range, Y()+xy)))
 					return Cardinaux.EST;
-				if(World.Case(X()-range, Y()+xy)!=null && c.isInstance(World.Case(X()-range, Y()+xy)))
+				if(World.Case(X()-range, Y()+xy)!=null && c.check(World.Case(X()-range, Y()+xy)))
 					return Cardinaux.OUEST;
-				if(World.Case(X()+xy, Y()+range)!=null && c.isInstance(World.Case(X()+xy, Y()+range)))
+				if(World.Case(X()+xy, Y()+range)!=null && c.check(World.Case(X()+xy, Y()+range)))
 					return Cardinaux.SUD;
-				if(World.Case(X()+xy, Y()-range)!=null && c.isInstance(World.Case(X()+xy, Y()-range)))
+				if(World.Case(X()+xy, Y()-range)!=null && c.check(World.Case(X()+xy, Y()-range)))
 					return Cardinaux.NORD;
 			}
 		return null;
