@@ -424,10 +424,10 @@ public class MapGameState extends BasicGameState {
 		//Gestion du zoom
 		//Zoom avant
 		if (_input.isKeyDown(201)) {
-			setZoom(zoom() + 0.01f);
+			setOffsetMapX(mouseAbsoluteY/zoom());
+			//setZoom(zoom() + 0.01f);
 			//Marche pas
 			//setOffsetMapY(container.getScreenWidth()/zoom()/2 - mouseAbsoluteX);
-			//setOffsetMapX(container.getScreenHeight()/zoom()/2 - mouseAbsoluteY);
 		}
 		//Zoom arrière
 		if (_tailleMapX * TileSize * zoom() > container.getWidth() && _tailleMapX * TileSize * zoom() > container.getHeight()) {

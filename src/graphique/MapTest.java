@@ -50,7 +50,10 @@ public class MapTest {
 
 		int xf = MapGameState.fromX((x+width)/zoom)+2;
 		int yf = MapGameState.fromY((y+height)/zoom)+2;
-
+		if(yi<0)
+			yi = 0;
+		if(xi<0)
+			xi = 0;
 		spriteSheet.startUse();
 		//Parcours de la map test
 		for (int i = yi; i < World.SizeY() && i<yf; i++) {
