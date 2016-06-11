@@ -38,17 +38,23 @@ public class MapTest {
 		}
 	}
 
-	public void render(Graphics g, float x, float y, float zoom) throws SlickException {
+	public void render(Graphics g, float x, float y, float zoom, int width, int height) throws SlickException {
 
 		//Gestion du scrolling de la map
 		g.translate(-x, -y);
 		//Gestion du zoom
 		g.scale(zoom, zoom);
 
+		int xi = MapGameState.fromX(x/zoom);
+		int yi = MapGameState.fromY(y/zoom);
+
+		int xf = MapGameState.fromX((x+width)/zoom)+2;
+		int yf = MapGameState.fromY((y+height)/zoom)+2;
+
 		spriteSheet.startUse();
 		//Parcours de la map test
-		for (int i = 0; i < World.SizeY(); i++) {
-			for (int j = 0; j < World.SizeX(); j++) {
+		for (int i = yi; i < World.SizeY() && i<yf; i++) {
+			for (int j = xi; j < World.SizeX() && j<xf; j++) {
 				ObjetTest vj = map.get(i).get(j);
 				int img = 0;
 				int img2 = 0;
