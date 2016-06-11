@@ -377,7 +377,7 @@ public class MapGameState extends BasicGameState {
 				AnimTick = Tick;
 			MoveSpeed = ((float)TileSize)/((float)AnimTick);
 		}
-		
+
 		//Gestion du scrolling de la map avec la souris
 		if (container.isFullscreen()) {
 			if (mouseAbsoluteY == container.getScreenHeight()) {
@@ -428,8 +428,8 @@ public class MapGameState extends BasicGameState {
 		//Gestion du zoom
 		//Zoom avant
 		if (_input.isKeyDown(201)) {
-			setOffsetMapX(mouseAbsoluteY/zoom());
-			//setZoom(zoom() + 0.01f);
+			//setOffsetMapX(mouseAbsoluteY/zoom());
+			setZoom(zoom() + 0.01f);
 			//Marche pas
 			//setOffsetMapY(container.getScreenWidth()/zoom()/2 - mouseAbsoluteX);
 		}
@@ -591,7 +591,7 @@ public class MapGameState extends BasicGameState {
 		//}
 
 	}
-	
+
 	//Gestion du zoom avec molette de souris
 	public void mouseWheelMoved(int n) {
 		if (n < 0) {
