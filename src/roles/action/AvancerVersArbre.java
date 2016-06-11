@@ -6,13 +6,13 @@ import roles.Personnage;
 import roles.States;
 import roles.States.Statut;
 
-public final class AvancerJoueur extends Action {
+public final class AvancerVersArbre extends Action {
 
 	private static int _Id = Action.getId(1);
 
 	@Override
 	public void Act(Personnage pers) {
-		Cardinaux direction = pers.directionJoueur();
+		Cardinaux direction = pers.find(Arbre.class, 20);
 		if(direction==null) return;
 		int destX = pers.X() + ((direction == Cardinaux.OUEST)? (-1) : ((direction == Cardinaux.EST)? 1 : 0));
 		int destY = pers.Y() + ((direction == Cardinaux.NORD)? (-1) : ((direction == Cardinaux.SUD)? 1 : 0));
