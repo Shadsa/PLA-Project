@@ -108,6 +108,27 @@ public class Personnage extends Observable{
 	public Joueur owner() {
 		return _owner;
 	}
+	
+	/**
+	 * 
+	 * @param c : la propriété de la case à trouver
+	 * @param maxRange : la distance à laquelle regarder
+	 * @return la direction vers laquelle se trouve la case la plus proche, ou null si aucune case n'a été trouvée
+	 */
+	public Cardinaux find(Class<?> c, int maxRange){		
+		for(int range=1;range<=maxRange;range++)
+			for(int xy=-range;xy<=range;xy++){
+				if(World.Case(X()+range, Y()+xy)!=null && c.isInstance(World.Case(X()+range, Y()+xy)))
+					return Cardinaux.EST;
+				if(World.Case(X()-range, Y()+xy)!=null && c.isInstance(World.Case(X()-range, Y()+xy)))
+					return Cardinaux.OUEST;
+				if(World.Case(X()+xy, Y()+range)!=null && c.isInstance(World.Case(X()+xy, Y()+range)))
+					return Cardinaux.SUD;
+				if(World.Case(X()+xy, Y()-range)!=null && c.isInstance(World.Case(X()+xy, Y()-range)))
+					return Cardinaux.NORD;
+			}
+		return null;
+	}
 
 	public void change_vie(int delta)
 	{
