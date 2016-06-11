@@ -429,7 +429,7 @@ public class MapGameState extends BasicGameState {
 		//Zoom avant
 		if (_input.isKeyDown(201))
 		{
-			setZoom(zoom() + 0.01f);
+			setZoom(zoom() * 1.03f);
 			setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
 			setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
 			//Marche pas   _mouseMapX                                            x,y   ->   (50,100)
@@ -443,7 +443,7 @@ public class MapGameState extends BasicGameState {
 		//Zoom arrière
 		if (_tailleMapX * TileSize * zoom() > container.getWidth() && _tailleMapX * TileSize * zoom() > container.getHeight()) {
 			if (_input.isKeyDown(209) && zoom() > 0) {
-				setZoom(zoom() - 0.01f);
+				setZoom(zoom() / 1.03f);
 				//Marche pas
 				//setOffsetMapY(container.getScreenWidth()/zoom()/2 - mouseAbsoluteX);
 				//setOffsetMapX(container.getScreenHeight()/zoom()/2 - mouseAbsoluteY);
