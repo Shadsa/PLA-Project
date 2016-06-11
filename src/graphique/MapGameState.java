@@ -29,10 +29,12 @@ import roles.States.Statut;
 import roles.action.Attaquer;
 import roles.action.Avancer;
 import roles.action.AvancerJoueur;
+import roles.action.AvancerVersArbre;
 import roles.action.Dupliquer;
 import roles.action.Joueur;
 import roles.action.Raser;
 import roles.action.World;
+import roles.conditions.ArbreProche;
 import roles.conditions.Ennemi;
 import roles.conditions.Libre;
 import roles.conditions.OrdreDonne;
@@ -157,6 +159,8 @@ public class MapGameState extends BasicGameState {
 			System.out.println("Erreur XML");
 		}
 		//autlist.add(aut1);
+		autlist.get(0).ajoute_transition(0, new AvancerVersArbre(), new ArbreProche(), 0, 2);
+		autlist.get(0).ajoute_transition(1, new AvancerVersArbre(), new ArbreProche(), 1, 2);
 		Classe generique = new Classe(10,5,0,"default class",Bonus.VIE);
 		ArrayList<Classe> classes = new ArrayList<Classe>();
 		classes.add(generique);
@@ -312,22 +316,6 @@ public class MapGameState extends BasicGameState {
 		_mouseMapY = (mouseAbsoluteY + offsetMapY()) / zoom();
 		mouse = "MouseAbsoluteX : " + mouseAbsoluteX + ", MouseAbsoluteY : " + mouseAbsoluteY;
 
-		//Gestion du scrolling de la map avec la souris
-		if (container.isFullscreen()) {
-			if (mouseAbsoluteY == container.getScreenHeight()) {
-				setOffsetMapY(offsetMapY() + _scrollingSpeed);
-			}
-			if (mouseAbsoluteX == 0) {
-				setOffsetMapX(offsetMapX() - _scrollingSpeed);
-			}
-			if (mouseAbsoluteX == container.getScreenWidth() - 1) {
-				setOffsetMapX(offsetMapX() + _scrollingSpeed);
-			}
-			if (mouseAbsoluteY == 1) {
-				setOffsetMapY(offsetMapY() - _scrollingSpeed);
-			}
-		}
-
 		//Activer ou non l'attente
 		if (_input.isKeyDown(Input.KEY_W)){
 			if (TickWait){
@@ -388,6 +376,22 @@ public class MapGameState extends BasicGameState {
 			else
 				AnimTick = Tick;
 			MoveSpeed = ((float)TileSize)/((float)AnimTick);
+		}
+		
+		//Gestion du scrolling de la map avec la souris
+		if (container.isFullscreen()) {
+			if (mouseAbsoluteY == container.getScreenHeight()) {
+				setOffsetMapY(offsetMapY() + _scrollingSpeed);
+			}
+			if (mouseAbsoluteX == 0) {
+				setOffsetMapX(offsetMapX() - _scrollingSpeed);
+			}
+			if (mouseAbsoluteX == container.getScreenWidth() - 1) {
+				setOffsetMapX(offsetMapX() + _scrollingSpeed);
+			}
+			if (mouseAbsoluteY == 1) {
+				setOffsetMapY(offsetMapY() - _scrollingSpeed);
+			}
 		}
 
 		//Gestion du scrolling de la map avec la manette
@@ -586,6 +590,19 @@ public class MapGameState extends BasicGameState {
 			}
 		//}
 
+	}
+	
+	//Gestion du zoom avec molette de souris
+	public void mouseWheelMoved(int n) {
+		if (n < 0) {
+			if (zoom() > 0) {
+				setZoom(zoom() - 0.05f);
+			} else {
+				setZoom(0);
+			}
+		} else if (n > 0) {
+			setZoom(zoom() + 0.05f);
+		}
 	}
 
 	public void mouseReleased(int arg0, int arg1, int arg2) {

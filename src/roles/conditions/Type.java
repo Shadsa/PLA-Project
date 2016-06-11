@@ -1,17 +1,19 @@
 package roles.conditions;
 
+import cases.CaseProperty;
 import cases.TypeCase;
+import cases.TypeCheck;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.action.World;
 
 public class Type extends Condition {
 
-	int _type;
+	TypeCase _type;
 	Cardinaux _direction;
 
 	public Type(TypeCase type, Cardinaux card) {
-		_type = type.value();
+		_type = type;
 		_direction = card;
 	}
 
@@ -19,6 +21,7 @@ public class Type extends Condition {
 	public boolean value(Personnage target) {
 		int destX = target.X() + ((_direction == Cardinaux.OUEST)? (-1) : ((_direction == Cardinaux.EST)? 1 : 0));
 		int destY = target.Y() + ((_direction == Cardinaux.NORD)? (-1) : ((_direction == Cardinaux.SUD)? 1 : 0));
-		return World.Case(destX, destY)!=null && World.Case(destX, destY).type().value()==_type;
+		CaseProperty p = new TypeCheck(_type);
+		return p.check(World.Case(destX, destY));
 	}
 }
