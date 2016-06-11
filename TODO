@@ -10,6 +10,7 @@ Les lacs fusionné  etc?
 ralentir le temps
 Optimiser l'affichage des perso en virant les statut etc en attribut et en mettant des variable
 (minimise les test durant les render)
+Fixer le zoom/dézoom fps dépendant
 Optionnel
 Save
 Replay
