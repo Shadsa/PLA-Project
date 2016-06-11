@@ -65,7 +65,7 @@ public class MapGameState extends BasicGameState {
 
 	public static Player _target = null;
 	public static Personnage _targetp = null;
-	
+
 	private int _tailleMapY = 45;
 	private int _tailleMapX = 75;
 
@@ -81,13 +81,22 @@ public class MapGameState extends BasicGameState {
 		return y * TileSize + Oy;
 	}
 
+	public static int fromX(float x)
+	{
+		return (int) (x - Ox) / TileSize;
+	}
+	public static int fromY(float y)
+	{
+		return (int) (y - Oy) / TileSize;
+	}
+
 	//Test
 	private MapTest map = new MapTest();
 	private Input _input;
 	private int _scrollingSpeed = 15;
 	private float _zoom = 1;
 	private StateGame game;
-	
+
 	//Boutons
 	private Bouton _bouton_fullScreen;
 	private Bouton _bouton_son;
@@ -110,11 +119,11 @@ public class MapGameState extends BasicGameState {
 		_input = container.getInput();
 		this.game = (StateGame) game;
 		_bouton_fullScreen = new Bouton(container, new Image("src/asset/buttons/bouton_NOfullscreen_off.png"), new Image("src/asset/buttons/bouton_NOfullscreen_on.png"), container.getWidth()/2-62, container.getHeight()/2, 126, 30);
-		_bouton_son = new Bouton(container, new Image("src/asset/buttons/bouton_son_active_off.png"), new Image("src/asset/buttons/bouton_son_active_on.png"), container.getWidth()/2-62, container.getHeight()/2-40, 126, 30); 
+		_bouton_son = new Bouton(container, new Image("src/asset/buttons/bouton_son_active_off.png"), new Image("src/asset/buttons/bouton_son_active_on.png"), container.getWidth()/2-62, container.getHeight()/2-40, 126, 30);
 		_bouton_quitter = new Bouton(container, new Image("src/asset/buttons/bouton_quitter_off.png"), new Image("src/asset/buttons/bouton_quitter_on.png"), container.getWidth()/2-62, container.getHeight()/2+80, 126, 30);
 		_bouton_menuPrincipal = new Bouton(container, new Image("src/asset/buttons/bouton_menu_principal_off.png"), new Image("src/asset/buttons/bouton_menu_principal_on.png"), container.getWidth()/2-62, container.getHeight()/2+40, 126, 30);
 		_bouton_reprendre = new Bouton(container, new Image("src/asset/buttons/bouton_reprendre_off.png"), new Image("src/asset/buttons/bouton_reprendre_on.png"), container.getWidth()/2-62, container.getHeight()/2-80, 126, 30);
-		
+
 		/*
 		Automate aut1 = new Automate(2);
 
@@ -162,7 +171,7 @@ public class MapGameState extends BasicGameState {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		j2.createPersonnage(0, 5, 5);
 		j2.createPersonnage(0, 6, 6);
 		j2.createPersonnage(0, 3, 6);
@@ -226,11 +235,14 @@ public class MapGameState extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 
 		//Affichage de la map
-		this.map.render(g, _offsetMapX, _offsetMapY, zoom());
+		this.map.render(g, _offsetMapX, _offsetMapY, zoom(), container.getWidth(), container.getHeight());
 		//Affichage des personnages
 		for(graphique.GJoueur j : _joueurs)
 			for(Player p : j.getPersonnage())
-				p.render(g);
+					if(p.getX()+TileSize > _offsetMapX/zoom() && p.getY()+TileSize > _offsetMapY/zoom())
+						if(p.getX()-TileSize < (_offsetMapX + container.getWidth())/zoom())
+						if(p.getY()-TileSize < (_offsetMapY + container.getHeight())/zoom())
+							p.render(g);
 
 		//Annule la translation pour l'affichage du string en dessous
 		g.resetTransform();
@@ -246,7 +258,7 @@ public class MapGameState extends BasicGameState {
 		if(showhud) {
 			this.hud.render(g);
 		}
-		
+
 		//Gestion de la pause
 		if (container.isPaused()) {
 		    Rectangle rect = new Rectangle (0, 0, container.getScreenWidth(), container.getScreenHeight());
@@ -299,7 +311,7 @@ public class MapGameState extends BasicGameState {
 		_mouseMapX = (mouseAbsoluteX + offsetMapX()) / zoom();
 		_mouseMapY = (mouseAbsoluteY + offsetMapY()) / zoom();
 		mouse = "MouseAbsoluteX : " + mouseAbsoluteX + ", MouseAbsoluteY : " + mouseAbsoluteY;
-		
+
 		//Activer ou non l'attente
 		if (_input.isKeyDown(Input.KEY_W)){
 			if (TickWait){
@@ -310,9 +322,9 @@ public class MapGameState extends BasicGameState {
 				TickWait=true;
 				AnimTick = Tick*6/10;
 			}
-			MoveSpeed = ((float)TileSize)/((float)AnimTick);			
+			MoveSpeed = ((float)TileSize)/((float)AnimTick);
 		}
-		
+
 		//Gestion de la vitesse du jeu
 		//Acc�l�rer
 		if (_input.isKeyDown(Input.KEY_N) && Tick > 250){
@@ -434,19 +446,19 @@ public class MapGameState extends BasicGameState {
 		if (_input.isKeyPressed(Input.KEY_ESCAPE)) {
 			 container.setPaused(!container.isPaused());
 		}
-		
+
 		//Configuration du bouton quitter
 		if (container.isPaused()) {
-			
+
 			//Configuration du bouton pause
 			 if (_bouton_reprendre.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
 				 container.setPaused(!container.isPaused());
 			}
-			
+
 			if (_bouton_quitter.isMouseButtonDownOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
 				container.exit();
 			}
-			
+
 			//Configuration du bouton plein écran
 			if (_bouton_fullScreen.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
 				_input.clearMousePressedRecord();
@@ -454,14 +466,14 @@ public class MapGameState extends BasicGameState {
 					_bouton_fullScreen.setNormalImage(new Image("src/asset/buttons/bouton_NOfullscreen_off.png"));
 					_bouton_fullScreen.setMouseOverImage(new Image("src/asset/buttons/bouton_NOfullscreen_on.png"));
 					((AppGameContainer) container).setDisplayMode(800,600, false);
-	
+
 				} else {
 					_bouton_fullScreen.setNormalImage(new Image("src/asset/buttons/bouton_fullscreen_off.png"));
 					_bouton_fullScreen.setMouseOverImage(new Image("src/asset/buttons/bouton_fullscreen_on.png"));
 					((AppGameContainer) container).setDisplayMode(container.getScreenWidth(),container.getScreenHeight(), true);
 				}
 			}
-			
+
 			//Configuration du bouton son
 			if (_bouton_son.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
 				if (container.getMusicVolume() > 0) {
@@ -476,15 +488,15 @@ public class MapGameState extends BasicGameState {
 					_bouton_son.setMouseOverImage(new Image("src/asset/buttons/bouton_son_active_on.png"));
 				}
 			}
-			
-			
+
+
 			//Configuration du bouton menu principal
 			if (_bouton_menuPrincipal.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
 				_input.clearMousePressedRecord();
 				this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
 			}
 		}
-		
+
 		//Configuration des boutons en plain écran
 		_bouton_fullScreen.setLocation(container.getWidth()/2-62, container.getHeight()/2);
 		_bouton_son.setLocation(container.getWidth()/2-62, container.getHeight()/2-40);
@@ -492,7 +504,7 @@ public class MapGameState extends BasicGameState {
 		_bouton_reprendre.setLocation(container.getWidth()/2-62, container.getHeight()/2-80);
 		_bouton_menuPrincipal.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
 	}
-	
+
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		_bouton_son.setNormalImage(container.getMusicVolume() > 0 ? new Image("src/asset/buttons/bouton_son_active_off.png") : new Image("src/asset/buttons/bouton_son_desactive_off.png"));
 		_bouton_son.setMouseOverImage(container.getMusicVolume() > 0 ? new Image("src/asset/buttons/bouton_son_active_on.png") : new Image("src/asset/buttons/bouton_son_desactive_on.png"));
