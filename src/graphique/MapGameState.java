@@ -427,10 +427,17 @@ public class MapGameState extends BasicGameState {
 
 		//Gestion du zoom
 		//Zoom avant
-		if (_input.isKeyDown(201)) {
-			//setOffsetMapX(mouseAbsoluteY/zoom());
+		if (_input.isKeyDown(201))
+		{
 			setZoom(zoom() + 0.01f);
-			//Marche pas
+			setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
+			setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
+			//Marche pas   _mouseMapX                                            x,y   ->   (50,100)
+			/*
+			 *
+		_mouseMapX = (mouseAbsoluteX + offsetMapX()) / zoom();
+		_mouseMapY = (mouseAbsoluteY + offsetMapY()) / zoom();
+			*/
 			//setOffsetMapY(container.getScreenWidth()/zoom()/2 - mouseAbsoluteX);
 		}
 		//Zoom arrière
@@ -443,6 +450,10 @@ public class MapGameState extends BasicGameState {
 				if (zoom() < 0) {
 					setZoom(0);
 				}
+
+
+				setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
+				setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
 			}
 		}
 
