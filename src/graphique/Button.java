@@ -34,8 +34,6 @@ public class Button extends AbstractComponent {
 	public Button(GUIContext container, String text, int x, int y) throws SlickException
 	{
 		super(container);
-	    setLocation(x, y);
-	    hitbox = new Rectangle(x, y, width, height);
 		//font = Rotunda.deriveFont(Font.TRUETYPE_FONT, 12);
 		//font = new Font("src/asset/fonts/Friedolin.ttf", Font.PLAIN, 12);
 	    ttf = new UnicodeFont("src/asset/fonts/Berry Rotunda.ttf", 12, false, false);
@@ -45,10 +43,9 @@ public class Button extends AbstractComponent {
 
 
 	    _text = text;
-	    this.x = x;
-	    this.y = y;
 	    width = ttf.getWidth(_text) + 20;
 	    height = ttf.getHeight(_text) + 16;
+	    setLocation(x, y);
 	}
 
 	@Override
@@ -75,44 +72,45 @@ public class Button extends AbstractComponent {
 	}
 
 
-@Override
-public int getHeight() {
-    return height;
-}
+	@Override
+	public int getHeight() {
+	    return height;
+	}
 
-@Override
-public int getWidth() {
-    return width;
-}
+	@Override
+	public int getWidth() {
+	    return width;
+	}
 
-@Override
-public int getX() {
-    return x;
-}
+	@Override
+	public int getX() {
+	    return x;
+	}
 
-@Override
-public int getY() {
-    return y;
-}
+	@Override
+	public int getY() {
+	    return y;
+	}
 
-public boolean isPressed() {
-    return pressed;
-}
-public void update(GUIContext container) {
-    float mouseX = container.getInput().getMouseX();
-    float mouseY = container.getInput().getMouseY();
-    boolean over = hitbox.contains(mouseX, mouseY);
+	public boolean isPressed() {
+	    return pressed;
+	}
+	public void update(GUIContext container) {
+	    float mouseX = container.getInput().getMouseX();
+	    float mouseY = container.getInput().getMouseY();
+	    boolean over = hitbox.contains(mouseX, mouseY);
 
-    if (over && container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-        pressed = true;
-    }else{
-        pressed = false;
-    }
-}
+	    if (over && container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+	        pressed = true;
+	    }else{
+	        pressed = false;
+	    }
+	}
 
-@Override
-public void setLocation(int x, int y) {
-    this.x = x;
-    this.y = y;
-}
+	@Override
+	public void setLocation(int x, int y) {
+	    this.x = x;
+	    this.y = y;
+	    hitbox = new Rectangle(x, y, width, height);
+	}
 }

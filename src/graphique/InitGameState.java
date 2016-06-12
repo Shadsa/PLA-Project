@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
@@ -41,6 +42,8 @@ public class InitGameState extends BasicGameState {
 
 	private Button my_button;
 
+	private ArrayList<Button> Personnages;
+
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		Button.init();
 		_input = container.getInput();
@@ -52,7 +55,7 @@ public class InitGameState extends BasicGameState {
 		_bouton_quitter = new Bouton(container, new Image("src/asset/buttons/bouton_quitter_off.png"), new Image("src/asset/buttons/bouton_quitter_on.png"), container.getWidth()/2-62, container.getHeight()/2+40, 126, 30);
 		my_button = new Button(container, "Jouer",150, 100);
 		sizeScreen = "Taille de l'écran : " + container.getScreenWidth() + "x" + container.getScreenHeight();
-
+		Personnages = new ArrayList<Button>();
 		/*// Chargement d'une nouvelle police de caractères
 		try {
 			InputStream inputStream	= ResourceLoader.getResourceAsStream("src/asset/fonts/Friedolin.ttf");
@@ -74,6 +77,8 @@ public class InitGameState extends BasicGameState {
 
 		background.draw(0, 0, container.getWidth(), container.getHeight());
 		renderMenu(container.getWidth()/2 - 100, container.getHeight()/2 - 100, 200, 200);
+		for(Button p : Personnages)
+			p.render(container, g);
 		my_button.render(container, g);
 		_bouton_jouer.render(container, g);
 		_bouton_fullScreen.render(container, g);
@@ -89,6 +94,11 @@ public class InitGameState extends BasicGameState {
 	 * Passer à l’écran de jeu à l'appui de n'importe quelle touche.
 	 */
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		my_button.update(container);
+		if(my_button.isPressed())
+		{
+			Personnages.add(new Button(container, "Test", 200, Personnages.size()*30+100));
+		}
 
 		//Configuration du bouton jouer
 		if (_bouton_jouer.isMouseButtonDownOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
