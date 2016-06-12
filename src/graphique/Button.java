@@ -39,7 +39,7 @@ public class Button {
 	    this.x = x;
 	    this.y = y;
 	    width = ttf.getWidth(_text) + 20;
-	    height = ttf.getHeight("A") + 16;
+	    height = ttf.getHeight(_text) + 16;
 	}
 
 	public void render(Graphics g)

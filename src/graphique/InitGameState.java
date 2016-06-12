@@ -74,7 +74,7 @@ public class InitGameState extends BasicGameState {
 
 		background.draw(0, 0, container.getWidth(), container.getHeight());
 		renderMenu(container.getWidth()/2 - 100, container.getHeight()/2 - 100, 200, 200);
-		my_button.render();
+		my_button.render(g);
 		_bouton_jouer.render(container, g);
 		_bouton_fullScreen.render(container, g);
 		_bouton_quitter.render(container, g);
