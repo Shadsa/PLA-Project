@@ -186,7 +186,8 @@ let createur (p : poids) (el : etat list) : automate =
 let errant (p : poids) (e1 : etat) (e2 : etat) : automate =
   List.map (fun d -> (e1,Libre(d),Avancer(d),e2,p)) [N;S;E;O]
 
-let aut1 = (List.concat(List.map2 (errant 1) [0;1;2] [1;2;0]))@(createur 4 [0;1;2])@(List.concat(List.map2 (recolteur 3) [0;1;2] [1;2;0]))
+(*let aut1 = (List.concat(List.map2 (errant 1) [0;1;2] [1;2;0]))@(createur 4 [0;1;2])@(List.concat(List.map2 (recolteur 3) [0;1;2] [1;2;0]))*)
+let aut1 = [(0,Et(OrdreDonne,Libre(E)),Avancer(E),1,1);(1,Et(Libre(O),OrdreDonne),Avancer(O),2,1);(2,Et(Et(OrdreDonne,Libre(N)),Et(Libre(N),OrdreDonne)),Avancer(N),3,1);(3,Et(OrdreDonne,Et(OrdreDonne,Et(OrdreDonne,Libre(S)))),Avancer(S),0,1)]
 
 let main =
   output_string output "<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n\n";
