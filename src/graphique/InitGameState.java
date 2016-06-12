@@ -4,7 +4,11 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
@@ -17,6 +21,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.w3c.dom.DOMException;
+
+import XML.XML_Reader;
+import roles.Automate;
 
 public class InitGameState extends BasicGameState {
 
@@ -41,11 +49,13 @@ public class InitGameState extends BasicGameState {
 	private Bouton _bouton_fullScreen;
 
 	private Button my_button;
+	ArrayList<Automate> autlist;
 
-	private ArrayList<Button> Personnages;
+	private ArrayList<CrossButton> Personnages;
 
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		Button.init();
+		autlist =  new ArrayList<Automate>();
 		_input = container.getInput();
 		UI = new Image("src/asset/sprites/ui_big_pieces.png");
 		background = new Image("src/asset/images/skeleton_army.jpg");
@@ -55,7 +65,7 @@ public class InitGameState extends BasicGameState {
 		_bouton_quitter = new Bouton(container, new Image("src/asset/buttons/bouton_quitter_off.png"), new Image("src/asset/buttons/bouton_quitter_on.png"), container.getWidth()/2-62, container.getHeight()/2+40, 126, 30);
 		my_button = new Button(container, "Jouer",150, 100);
 		sizeScreen = "Taille de l'écran : " + container.getScreenWidth() + "x" + container.getScreenHeight();
-		Personnages = new ArrayList<Button>();
+		Personnages = new ArrayList<CrossButton>();
 		/*// Chargement d'une nouvelle police de caractères
 		try {
 			InputStream inputStream	= ResourceLoader.getResourceAsStream("src/asset/fonts/Friedolin.ttf");
@@ -77,7 +87,7 @@ public class InitGameState extends BasicGameState {
 
 		background.draw(0, 0, container.getWidth(), container.getHeight());
 		renderMenu(container.getWidth()/2 - 100, container.getHeight()/2 - 100, 200, 200);
-		for(Button p : Personnages)
+		for(CrossButton p : Personnages)
 			p.render(container, g);
 		my_button.render(container, g);
 		_bouton_jouer.render(container, g);
@@ -97,8 +107,47 @@ public class InitGameState extends BasicGameState {
 		my_button.update(container);
 		if(my_button.isPressed())
 		{
-			Personnages.add(new Button(container, "Test", 200, Personnages.size()*30+100));
+			Personnages.add(new CrossButton(container, "Automate", 200, Personnages.size()*30+100));
 		}
+
+		for(int i = Personnages.size()-1; i>=0; i--)
+		{
+			Personnages.get(i).update(container);
+			if(Personnages.get(i).isXPressed())
+			{
+				Personnages.remove(i);
+				for(int j = Personnages.size()-1; j>=i; j--)
+				{
+					Personnages.get(j).setLocation(200, j*30+100);
+				}
+			}
+			else if(Personnages.get(i).isPressed())
+			{
+				JFileChooser jfc = new JFileChooser("./creation_automates");
+
+				if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+		            File file = jfc.getSelectedFile();System.out.println(file.getAbsolutePath());
+		            ArrayList<Automate> autlist2 = null;
+		            try {
+			            File f = new File(file.getAbsolutePath());
+		    			autlist2 = XML_Reader.readXML(f);
+		    		} catch (Exception e) {
+		    			e.printStackTrace();
+		    		}
+		    		if(autlist2 == null ){
+		    			//Boîte du message d'erreur
+		    			JOptionPane jop = new JOptionPane();
+		    			jop.showMessageDialog(null, "Fichier automate invalide.", "Erreur", JOptionPane.ERROR_MESSAGE);
+		    		}
+		    		else
+		    		{
+		    			Personnages.get(i).setText("Valide");
+		    			autlist.addAll(autlist2);
+		    		}
+		        }
+			}
+		}
+
 
 		//Configuration du bouton jouer
 		if (_bouton_jouer.isMouseButtonDownOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
