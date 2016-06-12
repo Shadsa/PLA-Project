@@ -159,8 +159,8 @@ public class MapGameState extends BasicGameState {
 			System.out.println("Erreur XML");
 		}
 		//autlist.add(aut1);
-		autlist.get(0).ajoute_transition(0, new AvancerVersArbre(), new ArbreProche(), 0, 2);
-		autlist.get(0).ajoute_transition(1, new AvancerVersArbre(), new ArbreProche(), 1, 2);
+		//autlist.get(0).ajoute_transition(0, new AvancerVersArbre(), new ArbreProche(), 0, 2);
+		//autlist.get(0).ajoute_transition(1, new AvancerVersArbre(), new ArbreProche(), 1, 2);
 		Classe generique = new Classe(10,5,0,"default class",Bonus.VIE);
 		ArrayList<Classe> classes = new ArrayList<Classe>();
 		classes.add(generique);
