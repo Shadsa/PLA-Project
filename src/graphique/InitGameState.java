@@ -25,6 +25,10 @@ import org.w3c.dom.DOMException;
 
 import XML.XML_Reader;
 import roles.Automate;
+import roles.Bonus;
+import roles.action.Joueur;
+import roles.action.World;
+import roles.classe.Classe;
 
 public class InitGameState extends BasicGameState {
 
@@ -49,13 +53,12 @@ public class InitGameState extends BasicGameState {
 	private Bouton _bouton_fullScreen;
 
 	private Button my_button;
-	ArrayList<Automate> autlist;
 
 	private ArrayList<CrossButton> Personnages;
+	private ArrayList<UnitInfo> UIFs;
 
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		Button.init();
-		autlist =  new ArrayList<Automate>();
 		_input = container.getInput();
 		UI = new Image("src/asset/sprites/ui_big_pieces.png");
 		background = new Image("src/asset/images/skeleton_army.jpg");
@@ -107,7 +110,12 @@ public class InitGameState extends BasicGameState {
 		my_button.update(container);
 		if(my_button.isPressed())
 		{
-			Personnages.add(new CrossButton(container, "Automate", 200, Personnages.size()*30+100));
+			UnitInfo uInfo = new UnitDialog(null, "Ajouter une unité", true).showZDialog();
+			if(uInfo != null)
+			{
+				Personnages.add(new CrossButton(container, uInfo.nom, 300, Personnages.size()*30+100));
+				UIFs.add(uInfo);
+			}
 		}
 
 		for(int i = Personnages.size()-1; i>=0; i--)
@@ -116,14 +124,15 @@ public class InitGameState extends BasicGameState {
 			if(Personnages.get(i).isXPressed())
 			{
 				Personnages.remove(i);
+				UIFs.remove(i);
 				for(int j = Personnages.size()-1; j>=i; j--)
 				{
-					Personnages.get(j).setLocation(200, j*30+100);
+					Personnages.get(j).setLocation(300, j*30+100);
 				}
 			}
 			else if(Personnages.get(i).isPressed())
 			{
-				JFileChooser jfc = new JFileChooser("./creation_automates");
+				/*JFileChooser jfc = new JFileChooser("./creation_automates");
 
 				if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 		            File file = jfc.getSelectedFile();System.out.println(file.getAbsolutePath());
@@ -144,7 +153,7 @@ public class InitGameState extends BasicGameState {
 		    			Personnages.get(i).setText("Valide");
 		    			autlist.addAll(autlist2);
 		    		}
-		        }
+		        }*/
 			}
 		}
 
@@ -152,6 +161,12 @@ public class InitGameState extends BasicGameState {
 		//Configuration du bouton jouer
 		if (_bouton_jouer.isMouseButtonDownOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
 				InitGameState.game.enterState(MapGameState.ID, "src/asset/musics/game_music.ogg");
+				/*World.addPlayer(new Joueur("Human", autlist, null));
+				World.addPlayer(new Joueur("Zombie", autlist, null));*/
+
+				/*Classe generique = new Classe(10,5,0,"default class",Bonus.VIE);
+				ArrayList<Classe> classes = new ArrayList<Classe>();
+				classes.add(generique);*/
 		}
 
 		//Configuration du bouton quitter
