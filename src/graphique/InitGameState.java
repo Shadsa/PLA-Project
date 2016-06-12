@@ -50,7 +50,7 @@ public class InitGameState extends BasicGameState {
 		_bouton_jouer = new Bouton(container, new Image("src/asset/buttons/bouton_jouer_off.png"), new Image("src/asset/buttons/bouton_jouer_on.png"), container.getWidth()/2-62, container.getHeight()/2-80, 126, 30);
 		_bouton_fullScreen = new Bouton(container, new Image("src/asset/buttons/bouton_NOfullscreen_off.png"), new Image("src/asset/buttons/bouton_NOfullscreen_on.png"), container.getWidth()/2-62, container.getHeight()/2, 126, 30);
 		_bouton_quitter = new Bouton(container, new Image("src/asset/buttons/bouton_quitter_off.png"), new Image("src/asset/buttons/bouton_quitter_on.png"), container.getWidth()/2-62, container.getHeight()/2+40, 126, 30);
-		my_button = new Button("Jouer",150, 100);
+		my_button = new Button(container, "Jouer",150, 100);
 		sizeScreen = "Taille de l'écran : " + container.getScreenWidth() + "x" + container.getScreenHeight();
 
 		/*// Chargement d'une nouvelle police de caractères
@@ -74,7 +74,7 @@ public class InitGameState extends BasicGameState {
 
 		background.draw(0, 0, container.getWidth(), container.getHeight());
 		renderMenu(container.getWidth()/2 - 100, container.getHeight()/2 - 100, 200, 200);
-		my_button.render(g);
+		my_button.render(container, g);
 		_bouton_jouer.render(container, g);
 		_bouton_fullScreen.render(container, g);
 		_bouton_quitter.render(container, g);
