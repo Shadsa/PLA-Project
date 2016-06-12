@@ -159,8 +159,8 @@ public class MapGameState extends BasicGameState {
 			System.out.println("Erreur XML");
 		}
 		//autlist.add(aut1);
-		autlist.get(0).ajoute_transition(0, new AvancerVersArbre(), new ArbreProche(), 0, 2);
-		autlist.get(0).ajoute_transition(1, new AvancerVersArbre(), new ArbreProche(), 1, 2);
+		//autlist.get(0).ajoute_transition(0, new AvancerVersArbre(), new ArbreProche(), 0, 2);
+		//autlist.get(0).ajoute_transition(1, new AvancerVersArbre(), new ArbreProche(), 1, 2);
 		Classe generique = new Classe(10,5,0,"default class",Bonus.VIE);
 		ArrayList<Classe> classes = new ArrayList<Classe>();
 		classes.add(generique);
@@ -378,50 +378,17 @@ public class MapGameState extends BasicGameState {
 			MoveSpeed = ((float)TileSize)/((float)AnimTick);
 		}
 
-		//Gestion du scrolling de la map avec la souris
-		if (container.isFullscreen()) {
-			if (mouseAbsoluteY == container.getScreenHeight()) {
-				setOffsetMapY(offsetMapY() + _scrollingSpeed);
-			}
-			if (mouseAbsoluteX == 0) {
-				setOffsetMapX(offsetMapX() - _scrollingSpeed);
-			}
-			if (mouseAbsoluteX == container.getScreenWidth() - 1) {
-				setOffsetMapX(offsetMapX() + _scrollingSpeed);
-			}
-			if (mouseAbsoluteY == 1) {
-				setOffsetMapY(offsetMapY() - _scrollingSpeed);
-			}
-		}
-
-		//Gestion du scrolling de la map avec la manette
-		if (_input.isControllerDown(0)) {
+		//Gestion du scrolling de la map avec la souris/manette/clavier
+		if (mouseAbsoluteY == container.getHeight() || _input.isControllerDown(0) || _input.isKeyDown(208)) {
 			setOffsetMapY(offsetMapY() + _scrollingSpeed);
 		}
-		if (_input.isControllerLeft(0)) {
+		if (mouseAbsoluteX == 0 || _input.isControllerLeft(0) || _input.isKeyDown(203)) {
 			setOffsetMapX(offsetMapX() - _scrollingSpeed);
 		}
-		if (_input.isControllerRight(0)) {
+		if (mouseAbsoluteX == container.getWidth() - 1 || _input.isControllerRight(0) || _input.isKeyDown(205)) {
 			setOffsetMapX(offsetMapX() + _scrollingSpeed);
 		}
-		if (_input.isControllerUp(0)) {
-			setOffsetMapY(offsetMapY() - _scrollingSpeed);
-		}
-		//Gestion du scrolling de la map avec le clavier
-		//Touche bas
-		if (_input.isKeyDown(208) && offsetMapY() + container.getHeight() < TileSize * _tailleMapY) {
-			setOffsetMapY(offsetMapY() + _scrollingSpeed);
-		}
-		//Touche gauche
-		if (_input.isKeyDown(203) && offsetMapX() > 0) {
-			setOffsetMapX(offsetMapX() - _scrollingSpeed);
-		}
-		//Touche droite
-		if (_input.isKeyDown(205) && offsetMapX() + container.getWidth() < TileSize * _tailleMapX) {
-			setOffsetMapX(offsetMapX() + _scrollingSpeed);
-		}
-		//Touche haut
-		if (_input.isKeyDown(200) && offsetMapY() > 0) {
+		if (mouseAbsoluteY == 1 || _input.isControllerUp(0) || _input.isKeyDown(200)) {
 			setOffsetMapY(offsetMapY() - _scrollingSpeed);
 		}
 
