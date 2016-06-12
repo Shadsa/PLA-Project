@@ -37,5 +37,12 @@ public class CaseAction extends Case {
 	public Action action(){
 		return _initial.action();
 	}
-
+	
+	public Joueur owner() {
+		return _owner;
+	}
+	
+	public Batiment etatInitial(){
+		return _initial;
+	}
 }
