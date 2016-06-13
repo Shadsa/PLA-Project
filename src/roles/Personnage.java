@@ -21,6 +21,7 @@ public class Personnage extends Observable{
 	private int _heal;
 	private int _armor;
 	private Cardinaux _directionJoueur = null;
+	private Case _cible;
 
 	protected int _id;
 	protected Joueur _owner;
@@ -78,7 +79,7 @@ public class Personnage extends Observable{
 	}
 
 	public void paralyse() {
-		//System.out.print("je n'ai rien à faire.\n");
+		System.out.println("je n'ai rien à faire."+this.etat());
 		_paralysie++;
 	}
 
@@ -115,6 +116,12 @@ public class Personnage extends Observable{
 		return _owner;
 	}
 	
+	public Case cible() {
+		return _cible;
+	}
+	public void setCible(Case c) {
+		_cible = c;
+	}
 	/**
 	 * 
 	 * @param c : la propriété de la case à trouver

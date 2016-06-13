@@ -13,6 +13,15 @@ public class Carte extends Vector<Vector<Case>>{
 	private int _hauteur;
 	private int _largeur;
 	
+	public int hauteur() {
+		return _hauteur;
+	}
+
+	public int largeur() {
+		return _largeur;
+	}
+
+
 	public Carte(int hauteur,int largeur){
 		super(hauteur);
 		_hauteur = hauteur;
@@ -45,6 +54,7 @@ public class Carte extends Vector<Vector<Case>>{
 	public Case Case(int x, int y) {
 		return (y < 0 || x < 0 || y >= size() || x >= get(y).size())? null : get(y).get(x);
 	}
+
 
 	public Boolean isfree(int x, int y) {
 		return Case(x, y) != null && Case(x, y).isfree();
