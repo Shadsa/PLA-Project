@@ -76,7 +76,7 @@ public class Personnage extends Observable{
 	}
 
 	public void parralyse() {
-		System.out.print("je n'ai rien à faire.\n");
+		//System.out.print("je n'ai rien à faire.\n");
 		_parralysie++;
 	}
 
