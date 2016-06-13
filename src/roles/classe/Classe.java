@@ -12,6 +12,7 @@ public class Classe {
 
 	private int _HP;
 	private int _damage;
+	private int _heal;
 	private int _armor;
 	private String _name;
 	private Bonus _bonus;
@@ -19,13 +20,13 @@ public class Classe {
 	private ArrayList<Condition> avaibleCondition;
 
 
-	public Classe(int HP, int damage, int armor, String name, Bonus bonus){
-		_HP = HP; _damage=damage; _armor=armor; _name= name; _bonus=bonus;
+	public Classe(int HP, int damage, int heal, int armor, String name, Bonus bonus){
+		_HP = HP; _damage=damage; _heal=heal; _armor=armor; _name= name; _bonus=bonus;
 		modifier(bonus);
 	}
 
-	public Classe(int HP, int damage, int armor, String name, Bonus bonus, ArrayList<Action> act , ArrayList<Condition> cond){
-		_HP = HP; _damage=damage; _armor=armor; _name= name; _bonus=bonus; avaibleAction = act; avaibleCondition = cond;
+	public Classe(int HP, int damage, int heal, int armor, String name, Bonus bonus, ArrayList<Action> act , ArrayList<Condition> cond){
+		_HP = HP; _damage=damage; _heal=heal; _armor=armor; _name= name; _bonus=bonus; avaibleAction = act; avaibleCondition = cond;
 		modifier(bonus);
 	}
 
@@ -59,7 +60,10 @@ public class Classe {
 	public int damage(){
 		return _damage;
 	}
-
+	
+	public int heal(){
+		return _heal;
+	}
 
 	public String name(){
 		return _name;
