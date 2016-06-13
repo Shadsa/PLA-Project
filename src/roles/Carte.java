@@ -91,14 +91,13 @@ public class Carte extends Vector<Vector<Case>>{
 	 */
 	public void putAutomate(Automate a, int x, int y, Joueur j) throws Exception {
 		int xdeb = x, dim=0;
-		ArrayList<CaseAction> action_list = new ArrayList();
-		for(ArrayList<CaseAction> ligne : a.get_action()){
+		ArrayList<CaseAction> action_list = new ArrayList<CaseAction>();
+		for(ArrayList<CaseAction> ligne : a.get_action())
 			for(CaseAction c : ligne){
 				action_list.add(c);
 				dim++;
 				
 			}
-		}
 		dim = x + (int) Math.sqrt(dim);
 		for(CaseAction c : action_list){
 			try {
@@ -110,7 +109,29 @@ public class Carte extends Vector<Vector<Case>>{
 				y++;
 				x=xdeb;
 			}
-				
+		}
+	}
+	
+	public void putAutomates(ArrayList<Automate> A, int x, int y, Joueur j) throws Exception {
+		int xdeb = x, dim=0;
+		ArrayList<CaseAction> action_list = new ArrayList<CaseAction>();
+		for(Automate a : A)
+			for(ArrayList<CaseAction> ligne : a.get_action())
+				for(CaseAction c : ligne){
+					action_list.add(c);
+					dim++;
+				}
+		dim = x + (int) Math.sqrt(dim);
+		for(CaseAction c : action_list){
+			try {
+				putCaseAction(c,x++,y,j);
+			} catch (Exception e) {
+				throw new Exception("Impossible de placer l'automate");
+			}
+			if(x>dim){
+				y++;
+				x=xdeb;
+			}
 		}
 	}
 
