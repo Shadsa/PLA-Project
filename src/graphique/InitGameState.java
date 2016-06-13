@@ -173,9 +173,8 @@ public class InitGameState extends BasicGameState {
 
 		//Configuration du bouton jouer
 		if (_bouton_jouer.isMouseButtonDownOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+			((MapGameState)InitGameState.game.getState(MapGameState.ID)).setGame(UIFs);
 				InitGameState.game.enterState(MapGameState.ID, "src/asset/musics/game_music.ogg");
-				World.addPlayer(new Joueur("Human", autlist, classes));
-				World.addPlayer(new Joueur("Zombie", autlist, classes));
 		}
 
 		//Configuration du bouton quitter
