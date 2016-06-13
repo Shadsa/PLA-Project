@@ -215,7 +215,7 @@ let rec supercombine (a : 'a list) (b : 'b list) (c : 'c list) : ('a*'b*'c) list
 let chercheur (p : poids) (ed : etat list) (e1 : etat list) (e2 : etat list) (er : etat) : automate =
   List.concat(List.map (fun (e1,e2,d) -> List.concat (List.map (fun e -> [(e,Et(Libre(d),ArbreProche(d)),Avancer(d),e1,p);(e1,Et(Libre(d),ArbreProche(d)),Avancer(d),e1,p+1);(e1,ArbreProche(d),Attendre,e2,p);(e1,Vide,Attendre,er,0);(e2,Et(Libre(d),ArbreProche(d)),Avancer(d),e1,p+1);(e2,Vide,Attendre,er,0)]) ed)) (supercombine e1 e2 [N;S;E;O]))
 
-let aut1 = List.concat ([errant 1 0 0; chercheur 3 [0] [1;3;5;7] [2;4;6;8] 0]@List.map (fun e -> (recolteur 5 e 0)@(createur 10 e 0)) [0;1;2;3;4;5;6;7;8])
+let aut1 = List.concat ([errant 1 0 0; chercheur 3 [0] [1;3;5;7] [2;4;6;8] 0; createur 10 0 0]@List.map (fun e -> (recolteur 5 e 0)) [0;1;2;3;4;5;6;7;8])
 
   
 
