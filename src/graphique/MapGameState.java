@@ -159,14 +159,15 @@ public class MapGameState extends BasicGameState {
 			System.out.println("Erreur XML");
 		}
 		//autlist.add(aut1);
-		autlist.get(0).ajoute_transition(0, new Avancer(Cardinaux.EST), new Et(new Libre(Cardinaux.EST),new ArbreProche(Cardinaux.EST)), 0, 2);
-		autlist.get(0).ajoute_transition(1, new Avancer(Cardinaux.EST), new Et(new Libre(Cardinaux.EST),new ArbreProche(Cardinaux.EST)), 1, 2);
-		autlist.get(0).ajoute_transition(0, new Avancer(Cardinaux.NORD), new Et(new Libre(Cardinaux.NORD),new ArbreProche(Cardinaux.NORD)), 0, 2);
-		autlist.get(0).ajoute_transition(1, new Avancer(Cardinaux.NORD), new Et(new Libre(Cardinaux.NORD),new ArbreProche(Cardinaux.NORD)), 1, 2);
-		autlist.get(0).ajoute_transition(0, new Avancer(Cardinaux.OUEST), new Et(new Libre(Cardinaux.OUEST),new ArbreProche(Cardinaux.OUEST)), 0, 2);
-		autlist.get(0).ajoute_transition(1, new Avancer(Cardinaux.OUEST), new Et(new Libre(Cardinaux.OUEST),new ArbreProche(Cardinaux.OUEST)), 1, 2);
-		autlist.get(0).ajoute_transition(0, new Avancer(Cardinaux.SUD), new Et(new Libre(Cardinaux.SUD),new ArbreProche(Cardinaux.SUD)), 0, 2);
-		autlist.get(0).ajoute_transition(1, new Avancer(Cardinaux.SUD), new Et(new Libre(Cardinaux.SUD),new ArbreProche(Cardinaux.SUD)), 1, 2);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.EST), new Et(new Libre(Cardinaux.EST),new ArbreProche(Cardinaux.EST)), 0, 2);
+		aut1.ajoute_transition(1, new Avancer(Cardinaux.EST), new Et(new Libre(Cardinaux.EST),new ArbreProche(Cardinaux.EST)), 1, 2);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD), new Et(new Libre(Cardinaux.NORD),new ArbreProche(Cardinaux.NORD)), 0, 2);
+		aut1.ajoute_transition(1, new Avancer(Cardinaux.NORD), new Et(new Libre(Cardinaux.NORD),new ArbreProche(Cardinaux.NORD)), 1, 2);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.OUEST), new Et(new Libre(Cardinaux.OUEST),new ArbreProche(Cardinaux.OUEST)), 0, 2);
+		aut1.ajoute_transition(1, new Avancer(Cardinaux.OUEST), new Et(new Libre(Cardinaux.OUEST),new ArbreProche(Cardinaux.OUEST)), 1, 2);
+		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD), new Et(new Libre(Cardinaux.SUD),new ArbreProche(Cardinaux.SUD)), 0, 2);
+		aut1.ajoute_transition(1, new Avancer(Cardinaux.SUD), new Et(new Libre(Cardinaux.SUD),new ArbreProche(Cardinaux.SUD)), 1, 2);
+	    ArrayList<Automate> autlist = new ArrayList<Automate>(); 
 		autlist.add(aut1);
 		Classe generique = new Classe(10,5,0,"default class",Bonus.VIE);
 		ArrayList<Classe> classes = new ArrayList<Classe>();
