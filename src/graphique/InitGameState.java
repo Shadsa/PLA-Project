@@ -48,7 +48,7 @@ public class InitGameState extends BasicGameState {
 	private Input _input;
 
 	//Bouton
-	private Bouton _bouton_jouer;
+	private Button _bouton_jouer;
 	private Bouton _bouton_quitter;
 	private Bouton _bouton_fullScreen;
 
@@ -72,7 +72,8 @@ public class InitGameState extends BasicGameState {
   		World.classes.add(boost);
 		background = new Image("src/asset/images/skeleton_army.jpg");
 		InitGameState.game = (StateGame) game;
-		_bouton_jouer = new Bouton(container, new Image("src/asset/buttons/bouton_jouer_off.png"), new Image("src/asset/buttons/bouton_jouer_on.png"), container.getWidth()/2-62, container.getHeight()/2-80, 126, 30);
+		//_bouton_jouer = new Bouton(container, new Image("src/asset/buttons/bouton_jouer_off.png"), new Image("src/asset/buttons/bouton_jouer_on.png"), container.getWidth()/2-62, container.getHeight()/2-80+200, 126, 30);
+		_bouton_jouer = new Button(container, "Jouer", container.getWidth()*3/4, container.getHeight()*3/4);
 		_bouton_fullScreen = new Bouton(container, new Image("src/asset/buttons/bouton_NOfullscreen_off.png"), new Image("src/asset/buttons/bouton_NOfullscreen_on.png"), container.getWidth()/2-62, container.getHeight()/2, 126, 30);
 		_bouton_quitter = new Bouton(container, new Image("src/asset/buttons/bouton_quitter_off.png"), new Image("src/asset/buttons/bouton_quitter_on.png"), container.getWidth()/2-62, container.getHeight()/2+40, 126, 30);
 		my_button = new Button(container, "Ajouter unité",container.getWidth()/4, container.getHeight()/4);
@@ -98,7 +99,7 @@ public class InitGameState extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 
 		background.draw(0, 0, container.getWidth(), container.getHeight());
-		renderMenu(container.getWidth()/2 - 100, container.getHeight()/2 - 100, 200, 200);
+		renderMenu(my_button.x - 10, my_button.y - 10, _bouton_jouer.x - my_button.x + _bouton_jouer.width + 20, _bouton_jouer.y - my_button.y + _bouton_jouer.height + 20);
 		my_button.render(container, g);
 		for(CrossButton p : Personnages)
 			p.render(container, g);
@@ -117,6 +118,10 @@ public class InitGameState extends BasicGameState {
 	 */
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		my_button.update(container);
+		_bouton_jouer.update(container);
+
+
+
 		if(my_button.isPressed())
 		{
 			UnitInfo uInfo = new UnitDialog(null, "Ajouter une unit�", true).showZDialog();
@@ -172,7 +177,7 @@ public class InitGameState extends BasicGameState {
 
 
 		//Configuration du bouton jouer
-		if (_bouton_jouer.isMouseButtonDownOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+		if (_bouton_jouer.isPressed()) {
 			((MapGameState)InitGameState.game.getState(MapGameState.ID)).setGame(UIFs);
 				InitGameState.game.enterState(MapGameState.ID, "src/asset/musics/game_music.ogg");
 		}
@@ -202,7 +207,6 @@ public class InitGameState extends BasicGameState {
 		}*/
 
 		//Gestion des boutons en plein écran
-		_bouton_jouer.setLocation(container.getWidth()/2-62, container.getHeight()/2-80);
 		_bouton_fullScreen.setLocation(container.getWidth()/2-62, container.getHeight()/2);
 		_bouton_quitter.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
 	}
