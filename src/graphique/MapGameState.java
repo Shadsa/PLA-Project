@@ -216,7 +216,6 @@ public class MapGameState extends BasicGameState {
 
 
 		this.container = container;
-		this.map.init();
 
 		Player.sinit();
 
@@ -666,6 +665,12 @@ public class MapGameState extends BasicGameState {
 			j.addObserver(_joueurs.get(_joueurs.size()-1));
 			for(Personnage pers : j.getPersonnages())
 				_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
+		}
+		try {
+			this.map.init();
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
