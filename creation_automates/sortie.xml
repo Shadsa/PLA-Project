@@ -1,52 +1,256 @@
 <?xml version = "1.0" encoding="UTF-8" standalone="no" ?>
 
-<automate nbEtats="4">
+<automate nbEtats="3">
 	<transition poids="1">
 		<etat>0</etat>
-		<condition compose="Et">
-			<condition1>OrdreDonne</condition1>
-			<condition2 direction="E">Libre</condition2>
-		</condition>
+		<condition direction="N">Libre</condition>
+		<action direction="N">Avancer</action>
+		<suivant>1</suivant>
+	</transition>
+	<transition poids="1">
+		<etat>0</etat>
+		<condition direction="S">Libre</condition>
+		<action direction="S">Avancer</action>
+		<suivant>1</suivant>
+	</transition>
+	<transition poids="1">
+		<etat>0</etat>
+		<condition direction="E">Libre</condition>
 		<action direction="E">Avancer</action>
 		<suivant>1</suivant>
 	</transition>
 	<transition poids="1">
+		<etat>0</etat>
+		<condition direction="O">Libre</condition>
+		<action direction="O">Avancer</action>
+		<suivant>1</suivant>
+	</transition>
+	<transition poids="1">
 		<etat>1</etat>
-		<condition compose="Et">
-			<condition1 direction="O">Libre</condition1>
-			<condition2>OrdreDonne</condition2>
-		</condition>
+		<condition direction="N">Libre</condition>
+		<action direction="N">Avancer</action>
+		<suivant>2</suivant>
+	</transition>
+	<transition poids="1">
+		<etat>1</etat>
+		<condition direction="S">Libre</condition>
+		<action direction="S">Avancer</action>
+		<suivant>2</suivant>
+	</transition>
+	<transition poids="1">
+		<etat>1</etat>
+		<condition direction="E">Libre</condition>
+		<action direction="E">Avancer</action>
+		<suivant>2</suivant>
+	</transition>
+	<transition poids="1">
+		<etat>1</etat>
+		<condition direction="O">Libre</condition>
 		<action direction="O">Avancer</action>
 		<suivant>2</suivant>
 	</transition>
 	<transition poids="1">
 		<etat>2</etat>
-		<condition compose="Et">
-			<condition1 compose="Et">
-				<condition1>OrdreDonne</condition1>
-				<condition2 direction="N">Libre</condition2>
-			</condition1>
-			<condition2 compose="Et">
-				<condition1 direction="N">Libre</condition1>
-				<condition2>OrdreDonne</condition2>
-			</condition2>
-		</condition>
+		<condition direction="N">Libre</condition>
 		<action direction="N">Avancer</action>
-		<suivant>3</suivant>
+		<suivant>0</suivant>
 	</transition>
 	<transition poids="1">
-		<etat>3</etat>
-		<condition compose="Et">
-			<condition1>OrdreDonne</condition1>
-			<condition2 compose="Et">
-				<condition1>OrdreDonne</condition1>
-				<condition2 compose="Et">
-					<condition1>OrdreDonne</condition1>
-					<condition2 direction="S">Libre</condition2>
-				</condition2>
-			</condition2>
-		</condition>
+		<etat>2</etat>
+		<condition direction="S">Libre</condition>
 		<action direction="S">Avancer</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="1">
+		<etat>2</etat>
+		<condition direction="E">Libre</condition>
+		<action direction="E">Avancer</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="1">
+		<etat>2</etat>
+		<condition direction="O">Libre</condition>
+		<action direction="O">Avancer</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="4">
+		<etat>0</etat>
+		<condition compose="Et">
+			<condition1 direction="N">Libre</condition1>
+			<condition2 quantite="30">RessourcesPossedees</condition2>
+		</condition>
+		<action direction="N">Dupliquer</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="4">
+		<etat>0</etat>
+		<condition compose="Et">
+			<condition1 direction="S">Libre</condition1>
+			<condition2 quantite="30">RessourcesPossedees</condition2>
+		</condition>
+		<action direction="S">Dupliquer</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="4">
+		<etat>0</etat>
+		<condition compose="Et">
+			<condition1 direction="E">Libre</condition1>
+			<condition2 quantite="30">RessourcesPossedees</condition2>
+		</condition>
+		<action direction="E">Dupliquer</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="4">
+		<etat>0</etat>
+		<condition compose="Et">
+			<condition1 direction="O">Libre</condition1>
+			<condition2 quantite="30">RessourcesPossedees</condition2>
+		</condition>
+		<action direction="O">Dupliquer</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="4">
+		<etat>1</etat>
+		<condition compose="Et">
+			<condition1 direction="N">Libre</condition1>
+			<condition2 quantite="30">RessourcesPossedees</condition2>
+		</condition>
+		<action direction="N">Dupliquer</action>
+		<suivant>1</suivant>
+	</transition>
+	<transition poids="4">
+		<etat>1</etat>
+		<condition compose="Et">
+			<condition1 direction="S">Libre</condition1>
+			<condition2 quantite="30">RessourcesPossedees</condition2>
+		</condition>
+		<action direction="S">Dupliquer</action>
+		<suivant>1</suivant>
+	</transition>
+	<transition poids="4">
+		<etat>1</etat>
+		<condition compose="Et">
+			<condition1 direction="E">Libre</condition1>
+			<condition2 quantite="30">RessourcesPossedees</condition2>
+		</condition>
+		<action direction="E">Dupliquer</action>
+		<suivant>1</suivant>
+	</transition>
+	<transition poids="4">
+		<etat>1</etat>
+		<condition compose="Et">
+			<condition1 direction="O">Libre</condition1>
+			<condition2 quantite="30">RessourcesPossedees</condition2>
+		</condition>
+		<action direction="O">Dupliquer</action>
+		<suivant>1</suivant>
+	</transition>
+	<transition poids="4">
+		<etat>2</etat>
+		<condition compose="Et">
+			<condition1 direction="N">Libre</condition1>
+			<condition2 quantite="30">RessourcesPossedees</condition2>
+		</condition>
+		<action direction="N">Dupliquer</action>
+		<suivant>2</suivant>
+	</transition>
+	<transition poids="4">
+		<etat>2</etat>
+		<condition compose="Et">
+			<condition1 direction="S">Libre</condition1>
+			<condition2 quantite="30">RessourcesPossedees</condition2>
+		</condition>
+		<action direction="S">Dupliquer</action>
+		<suivant>2</suivant>
+	</transition>
+	<transition poids="4">
+		<etat>2</etat>
+		<condition compose="Et">
+			<condition1 direction="E">Libre</condition1>
+			<condition2 quantite="30">RessourcesPossedees</condition2>
+		</condition>
+		<action direction="E">Dupliquer</action>
+		<suivant>2</suivant>
+	</transition>
+	<transition poids="4">
+		<etat>2</etat>
+		<condition compose="Et">
+			<condition1 direction="O">Libre</condition1>
+			<condition2 quantite="30">RessourcesPossedees</condition2>
+		</condition>
+		<action direction="O">Dupliquer</action>
+		<suivant>2</suivant>
+	</transition>
+	<transition poids="3">
+		<etat>0</etat>
+		<condition type="Arbre" direction="N">Type</condition>
+		<action direction="N">CouperBois</action>
+		<suivant>1</suivant>
+	</transition>
+	<transition poids="3">
+		<etat>0</etat>
+		<condition type="Arbre" direction="S">Type</condition>
+		<action direction="S">CouperBois</action>
+		<suivant>1</suivant>
+	</transition>
+	<transition poids="3">
+		<etat>0</etat>
+		<condition type="Arbre" direction="E">Type</condition>
+		<action direction="E">CouperBois</action>
+		<suivant>1</suivant>
+	</transition>
+	<transition poids="3">
+		<etat>0</etat>
+		<condition type="Arbre" direction="O">Type</condition>
+		<action direction="O">CouperBois</action>
+		<suivant>1</suivant>
+	</transition>
+	<transition poids="3">
+		<etat>1</etat>
+		<condition type="Arbre" direction="N">Type</condition>
+		<action direction="N">CouperBois</action>
+		<suivant>2</suivant>
+	</transition>
+	<transition poids="3">
+		<etat>1</etat>
+		<condition type="Arbre" direction="S">Type</condition>
+		<action direction="S">CouperBois</action>
+		<suivant>2</suivant>
+	</transition>
+	<transition poids="3">
+		<etat>1</etat>
+		<condition type="Arbre" direction="E">Type</condition>
+		<action direction="E">CouperBois</action>
+		<suivant>2</suivant>
+	</transition>
+	<transition poids="3">
+		<etat>1</etat>
+		<condition type="Arbre" direction="O">Type</condition>
+		<action direction="O">CouperBois</action>
+		<suivant>2</suivant>
+	</transition>
+	<transition poids="3">
+		<etat>2</etat>
+		<condition type="Arbre" direction="N">Type</condition>
+		<action direction="N">CouperBois</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="3">
+		<etat>2</etat>
+		<condition type="Arbre" direction="S">Type</condition>
+		<action direction="S">CouperBois</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="3">
+		<etat>2</etat>
+		<condition type="Arbre" direction="E">Type</condition>
+		<action direction="E">CouperBois</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="3">
+		<etat>2</etat>
+		<condition type="Arbre" direction="O">Type</condition>
+		<action direction="O">CouperBois</action>
 		<suivant>0</suivant>
 	</transition>
 </automate>
