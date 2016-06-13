@@ -18,7 +18,7 @@ public class Joueur extends Observable{
 
 
 
-	public Joueur(String nom, ArrayList<Automate> automates,ArrayList<Classe> classes)
+	public Joueur(String nom, ArrayList<Automate> automates, ArrayList<Classe> classes)
 	{
 		_nom = nom;
 		_automates = automates;

@@ -32,8 +32,7 @@ import roles.conditions.*;
 
 public class XML_Reader {
 	
-	public static ArrayList<Automate> readXML(File f) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException, DOMException{
-		ArrayList<Automate> liste = new ArrayList<Automate>();
+	public static Automate readXML(File f) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException, DOMException{
 		Automate automate = null;
 	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	    factory.setIgnoringComments(true);	
@@ -48,16 +47,8 @@ public class XML_Reader {
 	       try {
 	           xml = builder.parse(fileXML);
 	           Element n = xml.getDocumentElement();
-				if(n instanceof Element){
-	   				if(n.getNodeName()=="liste"){
-	   					int nbChild = n.getChildNodes().getLength();
-	   					NodeList list = n.getChildNodes();
-	   					for(int i = 1; i < nbChild; i+=2){
-	   						automate = ListeCreate(list.item(i));
-	   						liste.add(automate);
-	   					}
-	   				}
-	   			}
+	           if(n instanceof Element)
+	        	   automate = ListeCreate(n);
 	       } catch (SAXParseException e) {}    
 	    }catch (ParserConfigurationException e) {
 	        e.printStackTrace();
@@ -72,7 +63,7 @@ public class XML_Reader {
 	        System.out.println("Erreur XML");
 	        return null;
 	     }
-	    return liste;
+	    return automate;
 	}	
 
 

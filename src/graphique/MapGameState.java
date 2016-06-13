@@ -149,9 +149,9 @@ public class MapGameState extends BasicGameState {
 		aut1.ajoute_transition(1, new AvancerJoueur(), new OrdreDonne(), 1, 5);
 		*/
 		File f = new File("./creation_automates/sortie.xml");
-		ArrayList<Automate> autlist = null;
+		Automate aut1 = null;
 		try {
-			autlist = XML_Reader.readXML(f);
+			aut1 = XML_Reader.readXML(f);
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException | ClassNotFoundException | DOMException e) {
 			// TODO Auto-generated catch block
@@ -159,8 +159,10 @@ public class MapGameState extends BasicGameState {
 			System.out.println("Erreur XML");
 		}
 		//autlist.add(aut1);
-		autlist.get(0).ajoute_transition(0, new AvancerVersArbre(), new ArbreProche(), 0, 2);
-		autlist.get(0).ajoute_transition(1, new AvancerVersArbre(), new ArbreProche(), 1, 2);
+		aut1.ajoute_transition(0, new AvancerVersArbre(), new ArbreProche(), 0, 2);
+		aut1.ajoute_transition(1, new AvancerVersArbre(), new ArbreProche(), 1, 2);
+		ArrayList<Automate> autlist = new ArrayList<Automate>();
+		autlist.add(aut1);
 		Classe generique = new Classe(10,5,0,"default class",Bonus.VIE);
 		ArrayList<Classe> classes = new ArrayList<Classe>();
 		classes.add(generique);

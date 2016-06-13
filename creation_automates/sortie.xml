@@ -1,54 +1,52 @@
 <?xml version = "1.0" encoding="UTF-8" standalone="no" ?>
 
-<liste>
-	<automate nbEtats="4">
-		<transition poids="1">
-			<etat>0</etat>
-			<condition compose="Et">
+<automate nbEtats="4">
+	<transition poids="1">
+		<etat>0</etat>
+		<condition compose="Et">
+			<condition1>OrdreDonne</condition1>
+			<condition2 direction="E">Libre</condition2>
+		</condition>
+		<action direction="E">Avancer</action>
+		<suivant>1</suivant>
+	</transition>
+	<transition poids="1">
+		<etat>1</etat>
+		<condition compose="Et">
+			<condition1 direction="O">Libre</condition1>
+			<condition2>OrdreDonne</condition2>
+		</condition>
+		<action direction="O">Avancer</action>
+		<suivant>2</suivant>
+	</transition>
+	<transition poids="1">
+		<etat>2</etat>
+		<condition compose="Et">
+			<condition1 compose="Et">
 				<condition1>OrdreDonne</condition1>
-				<condition2 direction="E">Libre</condition2>
-			</condition>
-			<action direction="E">Avancer</action>
-			<suivant>1</suivant>
-		</transition>
-		<transition poids="1">
-			<etat>1</etat>
-			<condition compose="Et">
-				<condition1 direction="O">Libre</condition1>
+				<condition2 direction="N">Libre</condition2>
+			</condition1>
+			<condition2 compose="Et">
+				<condition1 direction="N">Libre</condition1>
 				<condition2>OrdreDonne</condition2>
-			</condition>
-			<action direction="O">Avancer</action>
-			<suivant>2</suivant>
-		</transition>
-		<transition poids="1">
-			<etat>2</etat>
-			<condition compose="Et">
-				<condition1 compose="Et">
-					<condition1>OrdreDonne</condition1>
-					<condition2 direction="N">Libre</condition2>
-				</condition1>
-				<condition2 compose="Et">
-					<condition1 direction="N">Libre</condition1>
-					<condition2>OrdreDonne</condition2>
-				</condition2>
-			</condition>
-			<action direction="N">Avancer</action>
-			<suivant>3</suivant>
-		</transition>
-		<transition poids="1">
-			<etat>3</etat>
-			<condition compose="Et">
+			</condition2>
+		</condition>
+		<action direction="N">Avancer</action>
+		<suivant>3</suivant>
+	</transition>
+	<transition poids="1">
+		<etat>3</etat>
+		<condition compose="Et">
+			<condition1>OrdreDonne</condition1>
+			<condition2 compose="Et">
 				<condition1>OrdreDonne</condition1>
 				<condition2 compose="Et">
 					<condition1>OrdreDonne</condition1>
-					<condition2 compose="Et">
-						<condition1>OrdreDonne</condition1>
-						<condition2 direction="S">Libre</condition2>
-					</condition2>
+					<condition2 direction="S">Libre</condition2>
 				</condition2>
-			</condition>
-			<action direction="S">Avancer</action>
-			<suivant>0</suivant>
-		</transition>
-	</automate>
-</liste>
+			</condition2>
+		</condition>
+		<action direction="S">Avancer</action>
+		<suivant>0</suivant>
+	</transition>
+</automate>
