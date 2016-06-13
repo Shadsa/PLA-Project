@@ -116,19 +116,33 @@ public class Personnage extends Observable{
 	 * @param maxRange : la distance à laquelle regarder
 	 * @return la direction vers laquelle se trouve la case la plus proche, ou null si aucune case n'a été trouvée
 	 */
-	public Cardinaux find(CaseProperty c, int maxRange){		
-		for(int range=1;range<=maxRange;range++)
-			for(int xy=-range;xy<=range;xy++){
-				if(World.Case(X()+range, Y()+xy)!=null && c.check(World.Case(X()+range, Y()+xy)))
-					return Cardinaux.EST;
-				if(World.Case(X()-range, Y()+xy)!=null && c.check(World.Case(X()-range, Y()+xy)))
-					return Cardinaux.OUEST;
-				if(World.Case(X()+xy, Y()+range)!=null && c.check(World.Case(X()+xy, Y()+range)))
-					return Cardinaux.SUD;
-				if(World.Case(X()+xy, Y()-range)!=null && c.check(World.Case(X()+xy, Y()-range)))
-					return Cardinaux.NORD;
-			}
-		return null;
+	public boolean find(CaseProperty c, Cardinaux direction, int maxRange){	
+		
+		if(direction==Cardinaux.EST){
+			for(int range=1;range<=maxRange;range++)
+				for(int xy=-range;xy<=range;xy++)
+					if(World.Case(X()+range, Y()+xy)!=null && c.check(World.Case(X()+range, Y()+xy)))
+						return true;
+		}
+		else if(direction==Cardinaux.OUEST){
+			for(int range=1;range<=maxRange;range++)
+				for(int xy=-range;xy<=range;xy++)
+					if(World.Case(X()-range, Y()+xy)!=null && c.check(World.Case(X()-range, Y()+xy)))
+						return true;
+		}
+		else if(direction==Cardinaux.SUD){
+			for(int range=1;range<=maxRange;range++)
+				for(int xy=-range;xy<=range;xy++)
+					if(World.Case(X()+xy, Y()+range)!=null && c.check(World.Case(X()+xy, Y()+range)))
+						return true;
+		}
+		else if(direction==Cardinaux.NORD){
+			for(int range=1;range<=maxRange;range++)
+				for(int xy=-range;xy<=range;xy++)
+					if(World.Case(X()+xy, Y()-range)!=null && c.check(World.Case(X()+xy, Y()-range)))
+						return true;
+		}
+		return false;
 	}
 
 	public void change_vie(int delta)
