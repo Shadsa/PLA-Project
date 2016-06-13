@@ -187,30 +187,6 @@
 		<action>Attendre</action>
 		<suivant>0</suivant>
 	</transition>
-	<transition poids="5">
-		<etat>0</etat>
-		<condition type="Arbre" direction="N">Type</condition>
-		<action direction="N">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>0</etat>
-		<condition type="Arbre" direction="S">Type</condition>
-		<action direction="S">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>0</etat>
-		<condition type="Arbre" direction="E">Type</condition>
-		<action direction="E">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>0</etat>
-		<condition type="Arbre" direction="O">Type</condition>
-		<action direction="O">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
 	<transition poids="10">
 		<etat>0</etat>
 		<condition compose="Et">
@@ -248,6 +224,30 @@
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="5">
+		<etat>0</etat>
+		<condition type="Arbre" direction="N">Type</condition>
+		<action direction="N">CouperBois</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="5">
+		<etat>0</etat>
+		<condition type="Arbre" direction="S">Type</condition>
+		<action direction="S">CouperBois</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="5">
+		<etat>0</etat>
+		<condition type="Arbre" direction="E">Type</condition>
+		<action direction="E">CouperBois</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="5">
+		<etat>0</etat>
+		<condition type="Arbre" direction="O">Type</condition>
+		<action direction="O">CouperBois</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="5">
 		<etat>1</etat>
 		<condition type="Arbre" direction="N">Type</condition>
 		<action direction="N">CouperBois</action>
@@ -269,42 +269,6 @@
 		<etat>1</etat>
 		<condition type="Arbre" direction="O">Type</condition>
 		<action direction="O">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>1</etat>
-		<condition compose="Et">
-			<condition1 direction="N">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="N">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>1</etat>
-		<condition compose="Et">
-			<condition1 direction="S">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="S">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>1</etat>
-		<condition compose="Et">
-			<condition1 direction="E">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="E">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>1</etat>
-		<condition compose="Et">
-			<condition1 direction="O">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="O">Dupliquer</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="5">
@@ -331,42 +295,6 @@
 		<action direction="O">CouperBois</action>
 		<suivant>0</suivant>
 	</transition>
-	<transition poids="10">
-		<etat>2</etat>
-		<condition compose="Et">
-			<condition1 direction="N">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="N">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>2</etat>
-		<condition compose="Et">
-			<condition1 direction="S">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="S">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>2</etat>
-		<condition compose="Et">
-			<condition1 direction="E">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="E">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>2</etat>
-		<condition compose="Et">
-			<condition1 direction="O">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="O">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
 	<transition poids="5">
 		<etat>3</etat>
 		<condition type="Arbre" direction="N">Type</condition>
@@ -389,42 +317,6 @@
 		<etat>3</etat>
 		<condition type="Arbre" direction="O">Type</condition>
 		<action direction="O">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>3</etat>
-		<condition compose="Et">
-			<condition1 direction="N">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="N">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>3</etat>
-		<condition compose="Et">
-			<condition1 direction="S">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="S">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>3</etat>
-		<condition compose="Et">
-			<condition1 direction="E">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="E">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>3</etat>
-		<condition compose="Et">
-			<condition1 direction="O">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="O">Dupliquer</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="5">
@@ -451,42 +343,6 @@
 		<action direction="O">CouperBois</action>
 		<suivant>0</suivant>
 	</transition>
-	<transition poids="10">
-		<etat>4</etat>
-		<condition compose="Et">
-			<condition1 direction="N">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="N">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>4</etat>
-		<condition compose="Et">
-			<condition1 direction="S">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="S">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>4</etat>
-		<condition compose="Et">
-			<condition1 direction="E">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="E">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>4</etat>
-		<condition compose="Et">
-			<condition1 direction="O">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="O">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
 	<transition poids="5">
 		<etat>5</etat>
 		<condition type="Arbre" direction="N">Type</condition>
@@ -509,42 +365,6 @@
 		<etat>5</etat>
 		<condition type="Arbre" direction="O">Type</condition>
 		<action direction="O">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>5</etat>
-		<condition compose="Et">
-			<condition1 direction="N">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="N">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>5</etat>
-		<condition compose="Et">
-			<condition1 direction="S">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="S">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>5</etat>
-		<condition compose="Et">
-			<condition1 direction="E">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="E">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>5</etat>
-		<condition compose="Et">
-			<condition1 direction="O">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="O">Dupliquer</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="5">
@@ -571,42 +391,6 @@
 		<action direction="O">CouperBois</action>
 		<suivant>0</suivant>
 	</transition>
-	<transition poids="10">
-		<etat>6</etat>
-		<condition compose="Et">
-			<condition1 direction="N">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="N">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>6</etat>
-		<condition compose="Et">
-			<condition1 direction="S">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="S">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>6</etat>
-		<condition compose="Et">
-			<condition1 direction="E">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="E">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>6</etat>
-		<condition compose="Et">
-			<condition1 direction="O">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="O">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
 	<transition poids="5">
 		<etat>7</etat>
 		<condition type="Arbre" direction="N">Type</condition>
@@ -631,42 +415,6 @@
 		<action direction="O">CouperBois</action>
 		<suivant>0</suivant>
 	</transition>
-	<transition poids="10">
-		<etat>7</etat>
-		<condition compose="Et">
-			<condition1 direction="N">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="N">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>7</etat>
-		<condition compose="Et">
-			<condition1 direction="S">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="S">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>7</etat>
-		<condition compose="Et">
-			<condition1 direction="E">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="E">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>7</etat>
-		<condition compose="Et">
-			<condition1 direction="O">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="O">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
 	<transition poids="5">
 		<etat>8</etat>
 		<condition type="Arbre" direction="N">Type</condition>
@@ -689,42 +437,6 @@
 		<etat>8</etat>
 		<condition type="Arbre" direction="O">Type</condition>
 		<action direction="O">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>8</etat>
-		<condition compose="Et">
-			<condition1 direction="N">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="N">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>8</etat>
-		<condition compose="Et">
-			<condition1 direction="S">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="S">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>8</etat>
-		<condition compose="Et">
-			<condition1 direction="E">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="E">Dupliquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="10">
-		<etat>8</etat>
-		<condition compose="Et">
-			<condition1 direction="O">Libre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
-		</condition>
-		<action direction="O">Dupliquer</action>
 		<suivant>0</suivant>
 	</transition>
 </automate>

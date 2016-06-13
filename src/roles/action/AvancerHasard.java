@@ -51,6 +51,10 @@ public final class AvancerHasard extends Action {
 				pers.setState(new States(Statut.AVANCE, direction));
 			}
 		}
+		else if(direction==Cardinaux.NORD || direction==Cardinaux.SUD)
+			pers.setCible(World.Case(pers.cible().X(), pers.Y()));
+		else
+			pers.setCible(World.Case(pers.X(), pers.cible().Y()));
 	}
 
 	@Override
