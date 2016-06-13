@@ -7,7 +7,7 @@ import roles.action.Attaquer;
 
 public class Mur extends TypeCase {
 	
-	public final int _vie = 10;
+	public final int _vie = 25;
 
 	protected static Action _action = new Attaquer(Cardinaux.EST);
 	
