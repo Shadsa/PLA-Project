@@ -74,6 +74,14 @@ public class Carte extends Vector<Vector<Case>>{
 		get(y).set(x, c);
 	}
 
+	public void putCase(Case c) throws Exception {
+		int x = c.X();
+		int y = c.Y();
+		if(x < 0 || y < 0 || x >= size() || y >= get(x).size())
+			throw new Exception("Dépassement de la carte");
+		get(y).set(x, c);
+	}
+	
 	/**
 	 *
 	 * @param a : automate à placer
