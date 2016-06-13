@@ -75,8 +75,8 @@ public class InitGameState extends BasicGameState {
 		_bouton_jouer = new Bouton(container, new Image("src/asset/buttons/bouton_jouer_off.png"), new Image("src/asset/buttons/bouton_jouer_on.png"), container.getWidth()/2-62, container.getHeight()/2-80, 126, 30);
 		_bouton_fullScreen = new Bouton(container, new Image("src/asset/buttons/bouton_NOfullscreen_off.png"), new Image("src/asset/buttons/bouton_NOfullscreen_on.png"), container.getWidth()/2-62, container.getHeight()/2, 126, 30);
 		_bouton_quitter = new Bouton(container, new Image("src/asset/buttons/bouton_quitter_off.png"), new Image("src/asset/buttons/bouton_quitter_on.png"), container.getWidth()/2-62, container.getHeight()/2+40, 126, 30);
-		my_button = new Button(container, "Jouer",150, 100);
-		sizeScreen = "Taille de l'écran : " + container.getScreenWidth() + "x" + container.getScreenHeight();
+		my_button = new Button(container, "Ajouter unitÃ©",container.getWidth()/4, container.getHeight()/4);
+		sizeScreen = "Taille de l'ï¿½cran : " + container.getScreenWidth() + "x" + container.getScreenHeight();
 		Personnages = new ArrayList<CrossButton>();
 		/*// Chargement d'une nouvelle police de caractÃ¨res
 		try {
@@ -99,9 +99,9 @@ public class InitGameState extends BasicGameState {
 
 		background.draw(0, 0, container.getWidth(), container.getHeight());
 		renderMenu(container.getWidth()/2 - 100, container.getHeight()/2 - 100, 200, 200);
+		my_button.render(container, g);
 		for(CrossButton p : Personnages)
 			p.render(container, g);
-		my_button.render(container, g);
 		_bouton_jouer.render(container, g);
 		_bouton_fullScreen.render(container, g);
 		_bouton_quitter.render(container, g);
@@ -119,10 +119,10 @@ public class InitGameState extends BasicGameState {
 		my_button.update(container);
 		if(my_button.isPressed())
 		{
-			UnitInfo uInfo = new UnitDialog(null, "Ajouter une unité", true).showZDialog();
+			UnitInfo uInfo = new UnitDialog(null, "Ajouter une unitï¿½", true).showZDialog();
 			if(uInfo != null)
 			{
-				Personnages.add(new CrossButton(container, uInfo.nom, 300, Personnages.size()*30+100));
+				Personnages.add(new CrossButton(container, uInfo.nom, my_button.x, (Personnages.size() == 0)? my_button.y+my_button.height+7 : Personnages.get(Personnages.size()-1).y + Personnages.get(Personnages.size()-1).height+7));
 				UIFs.add(uInfo);
 				autlist.add(uInfo.automate);
 				classes.add(uInfo.classe);
@@ -140,7 +140,7 @@ public class InitGameState extends BasicGameState {
 				classes.remove(i);
 				for(int j = Personnages.size()-1; j>=i; j--)
 				{
-					Personnages.get(j).setLocation(300, j*30+100);
+					Personnages.get(j).setLocation(my_button.x, (j == 0)? my_button.y+my_button.height+7 : Personnages.get(j).y + Personnages.get(j).height+7);
 				}
 			}
 			else if(Personnages.get(i).isPressed())
