@@ -66,8 +66,8 @@ public class InitGameState extends BasicGameState {
 		UIFs = new ArrayList<UnitInfo>();
 		autlist = new ArrayList<Automate>();
 		classes = new ArrayList<Classe>();
-		Classe generique = new Classe(10,5,0,"default class",null);
-		Classe boost = new Classe(10,5,0,"default class",Bonus.VIE);
+		Classe generique = new Classe(10,5,5,0,"default class",null);
+		Classe boost = new Classe(10,5,5,0,"default class",Bonus.VIE);
   		World.classes.add(generique);
   		World.classes.add(boost);
 		background = new Image("src/asset/images/skeleton_army.jpg");
