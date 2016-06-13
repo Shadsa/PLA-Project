@@ -94,13 +94,14 @@ public class MainScreenGameState extends BasicGameState {
 	 */
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 
-		if(_input.isKeyPressed(Input.KEY_J))
-			game.enterState(InitGameState.ID);
+		/*if(_input.isKeyPressed(Input.KEY_J))
+			game.enterState(InitGameState.ID);*/
 
 
 		//Configuration du bouton jouer
 		if (_bouton_jouer.isMouseButtonDownOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
-				this.game.enterState(MapGameState.ID, "src/asset/musics/game_music.ogg");
+				game.enterState(InitGameState.ID);
+				//this.game.enterState(MapGameState.ID, "src/asset/musics/game_music.ogg");
 		}
 
 		//Configuration du bouton quitter
