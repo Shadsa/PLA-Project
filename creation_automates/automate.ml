@@ -191,7 +191,7 @@ let aut1 = (List.concat(List.map2 (errant 1) [0;1;2] [1;2;0]))@(createur 4 [0;1;
 
 let main =
   output_string output "<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n\n";
-  output_stab (balise "liste" None) 0;
-  output_automate aut1 1;
-  output_stab (fbalise "liste") 0;
+  (*output_stab (balise "liste" None) 0;*)
+  output_automate aut1 0;
+  (*output_stab (fbalise "liste") 0;*)
   close_out output
