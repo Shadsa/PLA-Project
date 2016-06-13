@@ -353,8 +353,8 @@ public static void sinit() throws SlickException
 				if(_state.direction != null)
 				switch(_state.direction)
 				{
-				case NORD: dir = 2; break;
-				case SUD: dir = 0; break;
+				case NORD: dir = 0; break;
+				case SUD: dir = 2; break;
 				case EST: dir = 3; break;
 				case OUEST: dir = 1; break;
 				}
