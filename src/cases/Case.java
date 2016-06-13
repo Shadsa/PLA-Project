@@ -20,7 +20,10 @@ public abstract class Case extends Observable{
 		if(type instanceof Arbre)
 			_vie=((Arbre) type)._vie;
 		else
-			_vie=1;
+			if(type instanceof Mur)
+				_vie=((Mur) type)._vie;		
+			else
+				_vie=1;
 	}
 
 	public Boolean isfree() {
@@ -49,9 +52,12 @@ public abstract class Case extends Observable{
 	public void modifierCase(TypeCase type){
 		_type = type;
 		if(type instanceof Arbre)
-			_vie=((Arbre) type)._vie;
+			_vie=((Arbre) type)._vie;		
 		else
-			_vie=1;
+			if(type instanceof Mur)
+				_vie=((Mur) type)._vie;		
+			else
+				_vie=1;
 		setChanged();
 		notifyObservers(value());
 	}

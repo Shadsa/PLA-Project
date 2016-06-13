@@ -12,12 +12,13 @@ import roles.classe.Classe;
 public class Personnage extends Observable{
 
 	Automate _brain;
-	protected int _parralysie = 0;
+	protected int _paralysie = 0;
 	protected Case _location;
 	protected Classe _classe;
 	private int _etat;
 	private int _vie;
 	private int _damage;
+	private int _heal;
 	private int _armor;
 	private Cardinaux _directionJoueur = null;
 
@@ -49,11 +50,12 @@ public class Personnage extends Observable{
 		_vie = 10;
 		_id = nextID();
 		_brain = brain;
-		_parralysie = 0;
+		_paralysie = 0;
 		_owner = owner;
 		_classe = classe;
 		_vie = _classe.HP();
 		_damage = _classe.damage();
+		_heal = _classe.heal();		
 		_armor = _classe.armor();
 		World.Case(x, y).setPersonnage(this);
 	}
@@ -75,9 +77,9 @@ public class Personnage extends Observable{
 		return _etat;
 	}
 
-	public void parralyse() {
+	public void paralyse() {
 		//System.out.print("je n'ai rien à faire.\n");
-		_parralysie++;
+		_paralysie++;
 	}
 
 	public void setCase(Case loc) {
@@ -100,6 +102,9 @@ public class Personnage extends Observable{
 	public int damage(){
 		return _damage;
 	}
+	public int heal(){
+		return _heal;
+	}	
 	public int vie(){
 		return _vie;
 	}
@@ -161,5 +166,8 @@ public class Personnage extends Observable{
 			_owner.getPersonnages().remove(this);
 			_location.setPersonnage(null);;
 		}
+		else
+			if(_vie > _classe.HP())
+				_vie = _classe.HP();
 	}
 }

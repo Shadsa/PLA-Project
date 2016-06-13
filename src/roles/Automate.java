@@ -58,7 +58,7 @@ public class Automate {
 		//le personnage ne fait rien, penser à Attendre quand cela sera implémenté
 		if(choice.size() == 0)
 		{
-			pers.parralyse();
+			pers.paralyse();
 			pers.setState(new States(Statut.ATTENDS, Cardinaux.NORD));
 			return;
 		}
