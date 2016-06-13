@@ -61,6 +61,11 @@ public class InitGameState extends BasicGameState {
 		Button.init();
 		_input = container.getInput();
 		UI = new Image("src/asset/sprites/ui_big_pieces.png");
+		UIFs = new ArrayList<UnitInfo>();
+		Classe generique = new Classe(10,5,0,"default class",null);
+		Classe boost = new Classe(10,5,0,"default class",Bonus.VIE);
+  		World.classes.add(generique);
+  		World.classes.add(boost);
 		background = new Image("src/asset/images/skeleton_army.jpg");
 		InitGameState.game = (StateGame) game;
 		_bouton_jouer = new Bouton(container, new Image("src/asset/buttons/bouton_jouer_off.png"), new Image("src/asset/buttons/bouton_jouer_on.png"), container.getWidth()/2-62, container.getHeight()/2-80, 126, 30);

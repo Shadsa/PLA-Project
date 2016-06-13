@@ -12,11 +12,13 @@ import graphique.ObjetTest;
 import roles.Automate;
 import roles.Carte;
 import roles.Personnage;
+import roles.classe.Classe;
 
 public abstract class World {
 
 	static Carte _map;
 	static ArrayList<Joueur> _joueurs = new ArrayList<Joueur>();
+	public static ArrayList<Classe> classes = new ArrayList<Classe>();
 
 	public static void addPlayer(Joueur j)
 	{
@@ -65,7 +67,7 @@ public abstract class World {
 	public static int SizeY() {
 		return _map.size();
 	}
-	
+
 	public static void putAutomate(Automate a, int x, int y, Joueur j) throws Exception{
 		_map.putAutomate(a, x, y, j);
 	}

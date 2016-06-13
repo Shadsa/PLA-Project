@@ -30,13 +30,15 @@ import javax.swing.JTextField;
 import XML.XML_Reader;
 import roles.Automate;
 import roles.Bonus;
+import roles.action.World;
 import roles.classe.Classe;
 
 public class UnitDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private UnitInfo uInfo;
 
-	private Automate aut;
+	private Automate aut = null;
+	private Classe cla = null;
 
   public UnitDialog(JFrame parent, String title, boolean modal){
     super(parent, title, modal);
@@ -92,6 +94,13 @@ public class UnitDialog extends JDialog {
     	fichier.addItem(f);
     panFile.add(fichier);
 
+    JPanel panClasse = new JPanel();
+    panClasse.setBorder(BorderFactory.createTitledBorder("Classe"));
+    JComboBox<Classe> classe = new JComboBox<Classe>();
+    for(Classe cla : World.classes)
+    	classe.addItem(cla);
+    panClasse.add(classe);
+
     JPanel panSkin = new JPanel();
     panSkin.setBorder(BorderFactory.createTitledBorder("Couleur"));
     JComboBox<String> color = new JComboBox<String>();
@@ -100,46 +109,34 @@ public class UnitDialog extends JDialog {
     color.addItem("Vert");
     panSkin.add(color);
 
-    JPanel panClasse = new JPanel();
-    panClasse.setBorder(BorderFactory.createTitledBorder("Classe"));
-    JComboBox<String> classe = new JComboBox<String>();
-    classe.addItem("Blanc");
-    classe.addItem("Noir");
-    classe.addItem("Vert");
-    panClasse.add(classe);
-
 
     JPanel content = new JPanel();
     content.setLayout(new FlowLayout());
     content.add(panNom);
     content.add(panFile);
-    content.add(panSkin);
     content.add(panClasse);
+    content.add(panSkin);
 
     JPanel control = new JPanel();
     JButton okBouton = new JButton("OK");
 
     okBouton.addActionListener(new ActionListener(){
       public void actionPerformed(ActionEvent arg0) {
-    	  Classe generique = new Classe(10,5,0,"default class",Bonus.VIE);
-  		ArrayList<Classe> classes = new ArrayList<Classe>();
-  		classes.add(generique);
-
-
-
     	  if(aut == null)
     		  getAutomate((String)fichier.getSelectedItem());
     	  if(aut == null)
     		  return;
     	  if(nom.getText().equals(""))
     		  return;
-    	  if(!aut.match(classes.get(0)))
+    	  if(cla == null)
+    		  cla = (Classe)classe.getSelectedItem();//getClasse((String)classe.getSelectedItem());
+    	  if(!aut.match(World.classes.get(0)))
     	  {
     		  JOptionPane jop = new JOptionPane();
     		  jop.showMessageDialog(null, "Fichier automate ne convient pas à cette classe.", "Erreur", JOptionPane.ERROR_MESSAGE);
     		  return;
     	  }
-        uInfo = new UnitInfo(nom.getText(), (String)fichier.getSelectedItem(), "","");
+        uInfo = new UnitInfo(nom.getText(), aut, cla,"");
         setVisible(false);
       }
     });
@@ -147,6 +144,12 @@ public class UnitDialog extends JDialog {
     fichier.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent arg0) {
         	getAutomate((String)fichier.getSelectedItem());
+          }
+        });
+
+    classe.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent arg0) {
+        	cla = (Classe)classe.getSelectedItem();//getClasse((String)classe.getSelectedItem());
           }
         });
 
@@ -185,4 +188,19 @@ public class UnitDialog extends JDialog {
           aut = autlist2.get(0);
 		}
   }
+
+  /*void getClasse(String nom)
+  {
+	  cla = null;
+	  for(Classe cl : World.classes)
+		  if(nom.contentEquals(cl.toString()))
+			  cla = cl;
+	  if(aut != null && !aut.match(cla))
+		  cla = null;
+
+		if(cla == null){
+			JOptionPane jop = new JOptionPane();
+			jop.showMessageDialog(null, "La classe ne correspond pas à l'automate.", "Erreur", JOptionPane.ERROR_MESSAGE);
+		}
+  }*/
 }

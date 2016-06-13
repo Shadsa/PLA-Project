@@ -7,9 +7,9 @@ import roles.action.*;
 import roles.conditions.*;
 
 public class Classe {
-	
-	
-	
+
+
+
 	private int _HP;
 	private int _damage;
 	private int _armor;
@@ -17,22 +17,23 @@ public class Classe {
 	private Bonus _bonus;
 	private ArrayList<Action> avaibleAction;
 	private ArrayList<Condition> avaibleCondition;
-	
-	
+
+
 	public Classe(int HP, int damage, int armor, String name, Bonus bonus){
 		_HP = HP; _damage=damage; _armor=armor; _name= name; _bonus=bonus;
 		modifier(bonus);
 	}
-	
+
 	public Classe(int HP, int damage, int armor, String name, Bonus bonus, ArrayList<Action> act , ArrayList<Condition> cond){
 		_HP = HP; _damage=damage; _armor=armor; _name= name; _bonus=bonus; avaibleAction = act; avaibleCondition = cond;
 		modifier(bonus);
 	}
-	
+
 	public void modifier(Bonus x){
+		if(x != null)
 		switch(x){
-			case FORCE : 
-				_damage += 10; 
+			case FORCE :
+				_damage += 10;
 				break;
 			case VIE :
 				_HP+=10;
@@ -44,32 +45,37 @@ public class Classe {
 				_HP+=30;_damage+=30;_armor+=30;
 				break;
 		}
-		
+
 	}
-	
+
 	public int HP(){
 		return _HP;
 	}
-	
+
 	public int armor(){
 		return _armor;
 	}
-	
+
 	public int damage(){
 		return _damage;
 	}
-	
-	
+
+
 	public String name(){
 		return _name;
 	}
-	
+
 	public void addAction(Action act){
 		avaibleAction.add(act);
 	}
-	
+
 	public void addCondition(Condition cond){
 		avaibleCondition.add(cond);
 	}
 
+	@Override
+	public String toString()
+	{
+		return _name;
+	}
 }

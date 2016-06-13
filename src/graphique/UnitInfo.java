@@ -1,11 +1,16 @@
 package graphique;
 
-public class UnitInfo {
-  public String nom, file, color, classe;
+import roles.Automate;
+import roles.classe.Classe;
 
-  public UnitInfo(String nom, String file, String color, String classe){
+public class UnitInfo {
+  public String nom, color;
+  public Automate automate;
+  public Classe classe;
+
+  public UnitInfo(String nom, Automate aut, Classe classe, String color){
 	  this.nom = nom;
-	  this.file = file;
+	  automate = aut;
 	  this.color = color;
 	  this.classe = classe;
   }
