@@ -96,6 +96,21 @@ public class Automate {
 	}
 	
 	public boolean match(Classe classe){
+		for(int i=0;i<_action.size();i++){
+			for(int j=0;j<_action.get(i).size();j++){
+				if(!classe.isAction(_action.get(i).get(j).action().getClass())){
+					return false;
+				}
+			}			
+		}
+		for(int i=0;i<_condition.size();i++){
+			for(int j=0;j<_condition.get(i).size();j++){
+				if(!classe.isCondition(_condition.get(i).get(j).getClass())){
+					return false;
+				}
+			}			
+		}
+		
 		return true;
 	}
 }
