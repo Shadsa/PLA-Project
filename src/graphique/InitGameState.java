@@ -49,8 +49,7 @@ public class InitGameState extends BasicGameState {
 
 	//Bouton
 	private Button _bouton_jouer;
-	private Bouton _bouton_quitter;
-	private Bouton _bouton_fullScreen;
+	private Button _bouton_quitter;
 
 	private Button my_button;
 
@@ -73,10 +72,9 @@ public class InitGameState extends BasicGameState {
 		background = new Image("src/asset/images/skeleton_army.jpg");
 		InitGameState.game = (StateGame) game;
 		//_bouton_jouer = new Bouton(container, new Image("src/asset/buttons/bouton_jouer_off.png"), new Image("src/asset/buttons/bouton_jouer_on.png"), container.getWidth()/2-62, container.getHeight()/2-80+200, 126, 30);
-		_bouton_jouer = new Button(container, "Jouer", container.getWidth()*3/4, container.getHeight()*3/4);
-		_bouton_fullScreen = new Bouton(container, new Image("src/asset/buttons/bouton_NOfullscreen_off.png"), new Image("src/asset/buttons/bouton_NOfullscreen_on.png"), container.getWidth()/2-62, container.getHeight()/2, 126, 30);
-		_bouton_quitter = new Bouton(container, new Image("src/asset/buttons/bouton_quitter_off.png"), new Image("src/asset/buttons/bouton_quitter_on.png"), container.getWidth()/2-62, container.getHeight()/2+40, 126, 30);
 		my_button = new Button(container, "Ajouter unité",container.getWidth()/4, container.getHeight()/4);
+		_bouton_jouer = new Button(container, "Jouer", container.getWidth()*3/4, container.getHeight()*3/4);
+		_bouton_quitter = new Button(container, "Quitter", my_button.x, _bouton_jouer.y);
 		sizeScreen = "Taille de l'�cran : " + container.getScreenWidth() + "x" + container.getScreenHeight();
 		Personnages = new ArrayList<CrossButton>();
 		/*// Chargement d'une nouvelle police de caractères
@@ -104,7 +102,6 @@ public class InitGameState extends BasicGameState {
 		for(CrossButton p : Personnages)
 			p.render(container, g);
 		_bouton_jouer.render(container, g);
-		_bouton_fullScreen.render(container, g);
 		_bouton_quitter.render(container, g);
 		g.setColor(Color.white);
 		/*if (_input.getControllerCount() >= 1) {
@@ -119,6 +116,7 @@ public class InitGameState extends BasicGameState {
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		my_button.update(container);
 		_bouton_jouer.update(container);
+		_bouton_quitter.update(container);
 
 
 
@@ -127,7 +125,7 @@ public class InitGameState extends BasicGameState {
 			UnitInfo uInfo = new UnitDialog(null, "Ajouter une unit�", true).showZDialog();
 			if(uInfo != null)
 			{
-				Personnages.add(new CrossButton(container, uInfo.nom, my_button.x, (Personnages.size() == 0)? my_button.y+my_button.height+7 : Personnages.get(Personnages.size()-1).y + Personnages.get(Personnages.size()-1).height+7));
+				Personnages.add(new CrossButton(container, uInfo.nom, my_button.x+15, (Personnages.size() == 0)? my_button.y+my_button.height+7 : Personnages.get(Personnages.size()-1).y + Personnages.get(Personnages.size()-1).height+7));
 				UIFs.add(uInfo);
 				autlist.add(uInfo.automate);
 				classes.add(uInfo.classe);
@@ -145,7 +143,7 @@ public class InitGameState extends BasicGameState {
 				classes.remove(i);
 				for(int j = Personnages.size()-1; j>=i; j--)
 				{
-					Personnages.get(j).setLocation(my_button.x, (j == 0)? my_button.y+my_button.height+7 : Personnages.get(j).y + Personnages.get(j).height+7);
+					Personnages.get(j).setLocation(my_button.x+15, (j == 0)? my_button.y+my_button.height+7 : Personnages.get(j).y + Personnages.get(j).height+7);
 				}
 			}
 			else if(Personnages.get(i).isPressed())
@@ -183,22 +181,8 @@ public class InitGameState extends BasicGameState {
 		}
 
 		//Configuration du bouton quitter
-		if (_bouton_quitter.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+		if (_bouton_quitter.pressed) {
 			container.exit();
-		}
-
-		//Configuration du bouton plein écran
-		if (_bouton_fullScreen.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
-			_input.clearMousePressedRecord();
-			if (container.isFullscreen()) {
-				_bouton_fullScreen.setNormalImage(new Image("src/asset/buttons/bouton_NOfullscreen_off.png"));
-				_bouton_fullScreen.setMouseOverImage(new Image("src/asset/buttons/bouton_NOfullscreen_on.png"));
-				((AppGameContainer) container).setDisplayMode(800,600, false);
-			} else {
-				_bouton_fullScreen.setNormalImage(new Image("src/asset/buttons/bouton_fullscreen_off.png"));
-				_bouton_fullScreen.setMouseOverImage(new Image("src/asset/buttons/bouton_fullscreen_on.png"));
-				((AppGameContainer) container).setDisplayMode(container.getScreenWidth(),container.getScreenHeight(), true);
-			}
 		}
 
 
@@ -207,14 +191,9 @@ public class InitGameState extends BasicGameState {
 		}*/
 
 		//Gestion des boutons en plein écran
-		_bouton_fullScreen.setLocation(container.getWidth()/2-62, container.getHeight()/2);
-		_bouton_quitter.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-		_bouton_fullScreen.setNormalImage(container.isFullscreen() ? new Image("src/asset/buttons/bouton_fullscreen_off.png") : new Image("src/asset/buttons/bouton_NOfullscreen_off.png"));
-		_bouton_fullScreen.setMouseOverImage(container.isFullscreen() ? new Image("src/asset/buttons/bouton_fullscreen_on.png") : new Image("src/asset/buttons/bouton_NOfullscreen_on.png"));
-
 	}
 
 	public void keyPressed(int key, char c) {

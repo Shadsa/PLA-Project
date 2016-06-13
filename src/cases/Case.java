@@ -21,7 +21,7 @@ public abstract class Case extends Observable{
 			_vie=((Arbre) type)._vie;
 		else
 			if(type instanceof Mur)
-				_vie=((Mur) type)._vie;		
+				_vie=((Mur) type)._vie;
 			else
 				_vie=1;
 	}
@@ -40,7 +40,7 @@ public abstract class Case extends Observable{
 			personnage.setCase(this);
 		}
 	}
-	
+
 	public void attaquerCase(int force){
 		_vie-=force;
 		if(_vie<=0){
@@ -48,14 +48,14 @@ public abstract class Case extends Observable{
 			_vie=1;
 		}
 	}
-	
+
 	public void modifierCase(TypeCase type){
 		_type = type;
 		if(type instanceof Arbre)
-			_vie=((Arbre) type)._vie;		
+			_vie=((Arbre) type)._vie;
 		else
 			if(type instanceof Mur)
-				_vie=((Mur) type)._vie;		
+				_vie=((Mur) type)._vie;
 			else
 				_vie=1;
 		setChanged();
@@ -75,7 +75,7 @@ public abstract class Case extends Observable{
 	{
 		return _y;
 	}
-	
+
 
 	public TypeCase type() {
 		return _type;
