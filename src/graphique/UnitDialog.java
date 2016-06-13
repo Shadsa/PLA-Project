@@ -171,7 +171,6 @@ public class UnitDialog extends JDialog {
   void getAutomate(String nom)
   {
 	  File file = new File("./creation_automates/" + nom);
-      Automate aut = null;
       try {
           File f = new File(file.getAbsolutePath());
 			aut = XML_Reader.readXML(f);
