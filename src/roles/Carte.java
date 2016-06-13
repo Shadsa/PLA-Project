@@ -13,6 +13,15 @@ public class Carte extends Vector<Vector<Case>>{
 	private int _hauteur;
 	private int _largeur;
 	
+	public int hauteur() {
+		return _hauteur;
+	}
+
+	public int largeur() {
+		return _largeur;
+	}
+
+
 	public Carte(int hauteur,int largeur){
 		super(hauteur);
 		_hauteur = hauteur;
@@ -46,6 +55,7 @@ public class Carte extends Vector<Vector<Case>>{
 		return (y < 0 || x < 0 || y >= size() || x >= get(y).size())? null : get(y).get(x);
 	}
 
+
 	public Boolean isfree(int x, int y) {
 		return Case(x, y) != null && Case(x, y).isfree();
 	}
@@ -64,6 +74,14 @@ public class Carte extends Vector<Vector<Case>>{
 		get(y).set(x, c);
 	}
 
+	public void putCase(Case c) throws Exception {
+		int x = c.X();
+		int y = c.Y();
+		if(x < 0 || y < 0 || x >= size() || y >= get(x).size())
+			throw new Exception("Dépassement de la carte");
+		get(y).set(x, c);
+	}
+	
 	/**
 	 *
 	 * @param a : automate à placer

@@ -3,6 +3,7 @@ package roles.action;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Random;
 import java.util.Vector;
 
 import cases.Case;
@@ -38,7 +39,14 @@ public abstract class World {
 	public static Case Case(int x, int y) {
 		return _map.Case(x, y);
 	}
-
+	
+	public static Case randomCase(){
+		Random R = new Random();
+		int x = R.nextInt(_map.largeur());
+		int y = R.nextInt(_map.hauteur());
+		return Case(x,y);
+	}
+	
 	public static void nextTurn()
 	{
 		ArrayList<Personnage> activated = new ArrayList<Personnage>();
