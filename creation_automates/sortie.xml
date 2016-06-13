@@ -77,7 +77,7 @@
 		<etat>0</etat>
 		<condition compose="Et">
 			<condition1 direction="N">Libre</condition1>
-			<condition2 quantite="30">RessourcesPossedees</condition2>
+			<condition2 quantite="250">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="N">Dupliquer</action>
 		<suivant>0</suivant>
@@ -86,7 +86,7 @@
 		<etat>0</etat>
 		<condition compose="Et">
 			<condition1 direction="S">Libre</condition1>
-			<condition2 quantite="30">RessourcesPossedees</condition2>
+			<condition2 quantite="250">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="S">Dupliquer</action>
 		<suivant>0</suivant>
@@ -95,7 +95,7 @@
 		<etat>0</etat>
 		<condition compose="Et">
 			<condition1 direction="E">Libre</condition1>
-			<condition2 quantite="30">RessourcesPossedees</condition2>
+			<condition2 quantite="250">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="E">Dupliquer</action>
 		<suivant>0</suivant>
@@ -104,7 +104,7 @@
 		<etat>0</etat>
 		<condition compose="Et">
 			<condition1 direction="O">Libre</condition1>
-			<condition2 quantite="30">RessourcesPossedees</condition2>
+			<condition2 quantite="250">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="O">Dupliquer</action>
 		<suivant>0</suivant>
@@ -113,7 +113,7 @@
 		<etat>1</etat>
 		<condition compose="Et">
 			<condition1 direction="N">Libre</condition1>
-			<condition2 quantite="30">RessourcesPossedees</condition2>
+			<condition2 quantite="250">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="N">Dupliquer</action>
 		<suivant>1</suivant>
@@ -122,7 +122,7 @@
 		<etat>1</etat>
 		<condition compose="Et">
 			<condition1 direction="S">Libre</condition1>
-			<condition2 quantite="30">RessourcesPossedees</condition2>
+			<condition2 quantite="250">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="S">Dupliquer</action>
 		<suivant>1</suivant>
@@ -131,7 +131,7 @@
 		<etat>1</etat>
 		<condition compose="Et">
 			<condition1 direction="E">Libre</condition1>
-			<condition2 quantite="30">RessourcesPossedees</condition2>
+			<condition2 quantite="250">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="E">Dupliquer</action>
 		<suivant>1</suivant>
@@ -140,7 +140,7 @@
 		<etat>1</etat>
 		<condition compose="Et">
 			<condition1 direction="O">Libre</condition1>
-			<condition2 quantite="30">RessourcesPossedees</condition2>
+			<condition2 quantite="250">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="O">Dupliquer</action>
 		<suivant>1</suivant>
@@ -149,7 +149,7 @@
 		<etat>2</etat>
 		<condition compose="Et">
 			<condition1 direction="N">Libre</condition1>
-			<condition2 quantite="30">RessourcesPossedees</condition2>
+			<condition2 quantite="250">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="N">Dupliquer</action>
 		<suivant>2</suivant>
@@ -158,7 +158,7 @@
 		<etat>2</etat>
 		<condition compose="Et">
 			<condition1 direction="S">Libre</condition1>
-			<condition2 quantite="30">RessourcesPossedees</condition2>
+			<condition2 quantite="250">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="S">Dupliquer</action>
 		<suivant>2</suivant>
@@ -167,7 +167,7 @@
 		<etat>2</etat>
 		<condition compose="Et">
 			<condition1 direction="E">Libre</condition1>
-			<condition2 quantite="30">RessourcesPossedees</condition2>
+			<condition2 quantite="250">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="E">Dupliquer</action>
 		<suivant>2</suivant>
@@ -176,7 +176,7 @@
 		<etat>2</etat>
 		<condition compose="Et">
 			<condition1 direction="O">Libre</condition1>
-			<condition2 quantite="30">RessourcesPossedees</condition2>
+			<condition2 quantite="250">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="O">Dupliquer</action>
 		<suivant>2</suivant>
