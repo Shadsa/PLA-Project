@@ -56,12 +56,16 @@ public class InitGameState extends BasicGameState {
 
 	private ArrayList<CrossButton> Personnages;
 	private ArrayList<UnitInfo> UIFs;
+	private ArrayList<Automate> autlist;
+	private ArrayList<Classe> classes;
 
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		Button.init();
 		_input = container.getInput();
 		UI = new Image("src/asset/sprites/ui_big_pieces.png");
 		UIFs = new ArrayList<UnitInfo>();
+		autlist = new ArrayList<Automate>();
+		classes = new ArrayList<Classe>();
 		Classe generique = new Classe(10,5,0,"default class",null);
 		Classe boost = new Classe(10,5,0,"default class",Bonus.VIE);
   		World.classes.add(generique);
@@ -72,7 +76,7 @@ public class InitGameState extends BasicGameState {
 		_bouton_fullScreen = new Bouton(container, new Image("src/asset/buttons/bouton_NOfullscreen_off.png"), new Image("src/asset/buttons/bouton_NOfullscreen_on.png"), container.getWidth()/2-62, container.getHeight()/2, 126, 30);
 		_bouton_quitter = new Bouton(container, new Image("src/asset/buttons/bouton_quitter_off.png"), new Image("src/asset/buttons/bouton_quitter_on.png"), container.getWidth()/2-62, container.getHeight()/2+40, 126, 30);
 		my_button = new Button(container, "Jouer",150, 100);
-		sizeScreen = "Taille de l'Ã©cran : " + container.getScreenWidth() + "x" + container.getScreenHeight();
+		sizeScreen = "Taille de l'écran : " + container.getScreenWidth() + "x" + container.getScreenHeight();
 		Personnages = new ArrayList<CrossButton>();
 		/*// Chargement d'une nouvelle police de caractÃ¨res
 		try {
@@ -115,11 +119,13 @@ public class InitGameState extends BasicGameState {
 		my_button.update(container);
 		if(my_button.isPressed())
 		{
-			UnitInfo uInfo = new UnitDialog(null, "Ajouter une unitÃ©", true).showZDialog();
+			UnitInfo uInfo = new UnitDialog(null, "Ajouter une unité", true).showZDialog();
 			if(uInfo != null)
 			{
 				Personnages.add(new CrossButton(container, uInfo.nom, 300, Personnages.size()*30+100));
 				UIFs.add(uInfo);
+				autlist.add(uInfo.automate);
+				classes.add(uInfo.classe);
 			}
 		}
 
@@ -130,6 +136,8 @@ public class InitGameState extends BasicGameState {
 			{
 				Personnages.remove(i);
 				UIFs.remove(i);
+				autlist.remove(i);
+				classes.remove(i);
 				for(int j = Personnages.size()-1; j>=i; j--)
 				{
 					Personnages.get(j).setLocation(300, j*30+100);
@@ -166,12 +174,8 @@ public class InitGameState extends BasicGameState {
 		//Configuration du bouton jouer
 		if (_bouton_jouer.isMouseButtonDownOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
 				InitGameState.game.enterState(MapGameState.ID, "src/asset/musics/game_music.ogg");
-				/*World.addPlayer(new Joueur("Human", autlist, null));
-				World.addPlayer(new Joueur("Zombie", autlist, null));*/
-
-				/*Classe generique = new Classe(10,5,0,"default class",Bonus.VIE);
-				ArrayList<Classe> classes = new ArrayList<Classe>();
-				classes.add(generique);*/
+				World.addPlayer(new Joueur("Human", autlist, classes));
+				World.addPlayer(new Joueur("Zombie", autlist, classes));
 		}
 
 		//Configuration du bouton quitter
