@@ -75,7 +75,7 @@ public class InitGameState extends BasicGameState {
 		my_button = new Button(container, "Ajouter unité",container.getWidth()/4, container.getHeight()/4);
 		_bouton_jouer = new Button(container, "Jouer", container.getWidth()*3/4, container.getHeight()*3/4);
 		_bouton_quitter = new Button(container, "Quitter", my_button.x, _bouton_jouer.y);
-		sizeScreen = "Taille de l'�cran : " + container.getScreenWidth() + "x" + container.getScreenHeight();
+		sizeScreen = "Taille de l'ecran : " + container.getScreenWidth() + "x" + container.getScreenHeight();
 		Personnages = new ArrayList<CrossButton>();
 		/*// Chargement d'une nouvelle police de caractères
 		try {
@@ -122,7 +122,7 @@ public class InitGameState extends BasicGameState {
 
 		if(my_button.isPressed())
 		{
-			UnitInfo uInfo = new UnitDialog(null, "Ajouter une unit�", true).showZDialog();
+			UnitInfo uInfo = new UnitDialog(null, "Ajouter une unite", true).showZDialog();
 			if(uInfo != null)
 			{
 				Personnages.add(new CrossButton(container, uInfo.nom, my_button.x+15, (Personnages.size() == 0)? my_button.y+my_button.height+7 : Personnages.get(Personnages.size()-1).y + Personnages.get(Personnages.size()-1).height+7));
