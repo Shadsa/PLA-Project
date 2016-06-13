@@ -171,21 +171,16 @@ public class UnitDialog extends JDialog {
   void getAutomate(String nom)
   {
 	  File file = new File("./creation_automates/" + nom);
-      ArrayList<Automate> autlist2 = null;
+      Automate aut = null;
       try {
           File f = new File(file.getAbsolutePath());
-			autlist2 = XML_Reader.readXML(f);
+			aut = XML_Reader.readXML(f);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(autlist2 == null ){
-			aut = null;
+		if(aut == null ){
 			JOptionPane jop = new JOptionPane();
 			jop.showMessageDialog(null, "Fichier automate invalide.", "Erreur", JOptionPane.ERROR_MESSAGE);
-		}
-		else
-		{
-          aut = autlist2.get(0);
 		}
   }
 
