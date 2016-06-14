@@ -208,7 +208,7 @@
 			<condition1>UneCaseLibre</condition1>
 			<condition2 quantite="250">RessourcesPossedees</condition2>
 		</condition>
-		<action>Creer</action>
+		<action unite="1">Creer</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="5">
