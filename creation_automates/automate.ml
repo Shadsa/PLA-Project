@@ -104,6 +104,7 @@ let balise (s : String.t) (a : attribut) =
    | Direction(d) -> " direction=\""^(string_of_cellule d)^"\""
    | Type(t,d) -> " type=\""^(string_of_type t)^"\" direction=\""^(string_of_cellule d)^"\""
    | Quantite(i) -> " quantite=\""^(string_of_int i)^"\""
+   | Unite(i) -> " unite=\""^(string_of_int i)^"\""
    | Poids(i) -> " poids=\""^(string_of_int i)^"\""
    | Compose(s) -> " compose=\""^s^"\""
    | NbEtats(i) -> " nbEtats=\""^(string_of_int i)^"\""
