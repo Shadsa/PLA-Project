@@ -26,9 +26,10 @@ import org.w3c.dom.DOMException;
 import XML.XML_Reader;
 import roles.Automate;
 import roles.Bonus;
-import roles.action.Joueur;
-import roles.action.World;
+import roles.Joueur;
+import roles.World;
 import roles.classe.Classe;
+import workshop.WorkshopCreator;
 
 public class InitGameState extends BasicGameState {
 
@@ -58,15 +59,23 @@ public class InitGameState extends BasicGameState {
 	private ArrayList<Automate> autlist;
 	private ArrayList<Classe> classes;
 
+	public WorkshopCreator woks;
+
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+
+		woks = new WorkshopCreator();
+		woks.createClasse("Ouvrier", null, "Ouvrier", "Ouvrier");
+		woks.createClasse("Default", null, "RandomNoIdea", "ClassTest");
+
+
 		Button.init();
 		_input = container.getInput();
 		UI = new Image("src/asset/sprites/ui_big_pieces.png");
 		UIFs = new ArrayList<UnitInfo>();
 		autlist = new ArrayList<Automate>();
 		classes = new ArrayList<Classe>();
-		Classe generique = new Classe(10,5,5,0,"default class",null);
-		Classe boost = new Classe(10,5,5,0,"default class",Bonus.VIE);
+		Classe generique = woks.getDeckClasse("Ouvrier");//= new Classe(10,5,5,0,"default class",null);
+		Classe boost = woks.getDeckClasse("Default");//new Classe(10,5,5,0,"default class",Bonus.VIE);
   		World.classes.add(generique);
   		World.classes.add(boost);
 		background = new Image("src/asset/images/skeleton_army.jpg");

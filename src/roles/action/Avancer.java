@@ -4,6 +4,7 @@ import cases.Arbre;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;
+import roles.World;
 import roles.States.Statut;
 
 public final class Avancer extends Action {
@@ -24,7 +25,7 @@ public final class Avancer extends Action {
 		{
 			if(World.Case(destX, destY).type() instanceof Arbre)
 			{
-				System.out.print(pers.ID() + "j'avance vers l'arbre " + _direction + destX + " " + destY + ".\n");
+				//System.out.print(pers.ID() + "j'avance vers l'arbre " + _direction + destX + " " + destY + ".\n");
 				World.Case(destX, destY).setPersonnage(pers);
 				pers.setState(new States(Statut.HIDING, _direction));
 			}
@@ -36,7 +37,7 @@ public final class Avancer extends Action {
 			}
 			else
 			{
-				System.out.print(pers.ID() + "j'avance vers le " + _direction + destX + " " + destY + ".\n");
+				//System.out.print(pers.ID() + "j'avance vers le " + _direction + destX + " " + destY + ".\n");
 				World.Case(destX, destY).setPersonnage(pers);
 				pers.setState(new States(Statut.AVANCE, _direction));
 			}

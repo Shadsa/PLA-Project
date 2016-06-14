@@ -14,93 +14,110 @@ import java.lang.reflect.InvocationTargetException;
 
 public class WorkshopCreator {
 
-	private String filepath = "../../Workshop/";
+	private String filepath = "WorkShop/";//"../../WorkShop/";
 	private ArrayList<String> deckActionName;
-	private ArrayList<String> deckConditionName;	
+	private ArrayList<String> deckConditionName;
 	private ArrayList<String> deckClasseName;
 	private ArrayList<ArrayList<Class<Action>>> deckAction;
 	private ArrayList<ArrayList<Class<Condition>>> deckCondition;
 	private ArrayList<Classe> deckClasse;
-	
+
 	public WorkshopCreator(){
 		deckAction = new ArrayList<ArrayList<Class<Action>>>();
 		deckCondition = new ArrayList<ArrayList<Class<Condition>>>();
 		deckActionName = new ArrayList<String>();
 		deckConditionName = new ArrayList<String>();
-		load();
+		deckClasse = new ArrayList<Classe>();
+		deckClasseName = new ArrayList<String>();
+		try {
+			load();
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public void load(){
-		// WorkShop Action
-		File f = new File(filepath+"/action.deck/");
-		ArrayList<File> files=new ArrayList<File>();
-		for (File file : f.listFiles()){
-			files.add(file);
-		}
-		int taille = files.size(); // Nombre de fichiers total dans le dossier
-		for (int i=0;i< taille;i++){
-			files.get(i); // me donne le fichier
-			deckActionName.add(files.get(i).getName());
-			deckAction.add(new ArrayList<Class<Action>>()); //initialisation d'un arraylist
-			files.get(i).list();
-			FileInputStream fis = null;
-			      try {
-			         fis = new FileInputStream(new File(files.get(i).getName()));
-			         byte[] buf = new byte[8];
-			         int n = 0;
-			       /*  while ((n = fis.read(buf)) >= 0) {
-			            // On écrit dans notre deuxième fichier avec l'objet adéquat
-			        	Class.forName()
-			            // On affiche ce qu'a lu notre boucle au format byte et au
-			            // format char
-			            for (byte bit : buf) {
-			               System.out.print("\t" + bit + "(" + (char) bit + ")");
-			               System.out.println("");
-			            }
-			            buf = new byte[8];
+	public void load() throws IOException, ClassNotFoundException{
+		ArrayList<File> files = new ArrayList<File>();
+		FileInputStream fis = null;
+	    FileOutputStream fos = null;
+		int res = 0;
+		String buf = "";
 
-			         }
-
-			      } catch (FileNotFoundException e) {
-			         e.printStackTrace();
-			      } catch (IOException e) {
-			         e.printStackTrace();
-			      } finally {
-			         try {
-			            if (fis != null)
-			               fis.close();
-			         } catch (IOException e) {
-			            e.printStackTrace();
-			         }
-			         }
-			      }
-			   }
-			}*/
-				//Class.forName(ligne lue)
-
-
-			      }
-
-			deckAction.get(i);
+		//LOAD OF ACTION DECK
+		File f = new File(filepath+"action.deck/");
+		for(File name : f.listFiles()){
+			if(name.isFile()){
+				files.add(name);
+			}
 		}
 
-		// WorkShop Condition
+		for(int i=0;i<files.size();i++){
+			ArrayList<Class<Action>> newdeck = new ArrayList<Class<Action>>();
+			fis = new FileInputStream(files.get(i));
+			while((res = fis.read()) != -1){
+				if(res == '\n'){
+					Class<Action> newAction = (Class<Action>) Class.forName("roles.action." + buf);
+					newdeck.add(newAction);
+					buf="";
+				}else{
+					buf+= (char)res;
+				}
+			}
+			if(buf != ""){
+				Class<Action> newAction = (Class<Action>) Class.forName("roles.action." + buf);
+				newdeck.add(newAction);
+				buf="";
+			}
+			deckAction.add(newdeck);
+		}
+
+		//LOAD OF COND DECK
+		files.clear();
+		buf = "";
+
+		f = new File(filepath+"condition.deck/");
+		for(File name : f.listFiles()){
+			if(name.isFile()){
+				files.add(name);
+			}
+		}
+
+		for(int i=0;i<files.size();i++){
+			ArrayList<Class<Condition>> newdeck = new ArrayList<Class<Condition>>();
+			fis = new FileInputStream(files.get(i));
+			while((res = fis.read()) != -1){
+				if(res == '\n'){
+					Class newAction = Class.forName("roles.conditions." + buf);
+					newdeck.add(newAction);
+					buf="";
+				}else{
+					buf+= (char)res;
+				}
+			}
+			if(buf != ""){
+				Class newAction = Class.forName("roles.conditions." + buf);
+				newdeck.add(newAction);
+				buf="";
+			}
+			deckCondition.add(newdeck);
+		}
+
+
+
+
 	}
 
 
-	public ArrayList<Action> getDeckAction(String name){
-		
-	}
-	
 //STRUCTURE
-	
+
 	public void createClasse(String name, Bonus bonus, String deckActName, String deckCondName){
-			Classe newclass = new Classe(10,5,2,name,bonus);
+			Classe newclass = new Classe(10,5,2,2,name,bonus,getDeckAction(deckActName),getDeckCondition(deckCondName));
 			deckClasse.add(newclass);
 			deckClasseName.add(name);
 	}
-	
-	
+
+
 	public ArrayList<Class<Action>> getDeckAction(String name){
 		for(int i=0;i<deckActionName.size();i++){
 			if(deckActionName.get(i)==name){
@@ -109,7 +126,7 @@ public class WorkshopCreator {
 		}
 		return null;
 	}
-	
+
 	public ArrayList<Class<Condition>> getDeckCondition(String name){
 		for(int i=0;i<deckConditionName.size();i++){
 			if(deckConditionName.get(i)==name){
@@ -118,7 +135,7 @@ public class WorkshopCreator {
 		}
 		return null;
 	}
-	
+
 	public Classe getDeckClasse(String name){
 		for(int i=0;i<deckClasseName.size();i++){
 			if(deckClasseName.get(i)==name){
@@ -127,27 +144,27 @@ public class WorkshopCreator {
 		}
 		return null;
 	}
-	
+
 	public ArrayList<Classe> classeList(){
 		return deckClasse;
 	}
-	
+
 	public ArrayList<ArrayList<Class<Action>>> actionList(){
 		return deckAction;
 	}
-	
+
 	public ArrayList<ArrayList<Class<Condition>>> conditionList(){
 		return deckCondition;
 	}
 
 
 
-//BUILDER 
+//BUILDER
 
 	public Action getAction(String name, Object[] parameter) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException{
 		return (Action) Class.forName(name).getDeclaredConstructor(Cardinaux.class).newInstance(parameter);
 	}
-	
+
 	public Condition getCondition(String name, Object parameter) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException{
 		return (Condition) Class.forName(name).getDeclaredConstructor(Cardinaux.class).newInstance(parameter);
 	}

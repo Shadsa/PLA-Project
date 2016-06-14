@@ -16,18 +16,22 @@ public class Classe {
 	private int _armor;
 	private String _name;
 	private Bonus _bonus;
-	private ArrayList<Action> avaibleAction;
-	private ArrayList<Condition> avaibleCondition;
+	private ArrayList<Class<Action>> avaibleAction;
+	private ArrayList<Class<Condition>> avaibleCondition;
 
 
 	public Classe(int HP, int damage, int heal, int armor, String name, Bonus bonus){
 		_HP = HP; _damage=damage; _heal=heal; _armor=armor; _name= name; _bonus=bonus;
 		modifier(bonus);
+		avaibleAction = new ArrayList<Class<Action>>();
+		avaibleCondition = new ArrayList<Class<Condition>>();
 	}
 
-	public Classe(int HP, int damage, int heal, int armor, String name, Bonus bonus, ArrayList<Action> act , ArrayList<Condition> cond){
+	public Classe(int HP, int damage, int heal, int armor, String name, Bonus bonus, ArrayList<Class<Action>> act , ArrayList<Class<Condition>> cond){
 		_HP = HP; _damage=damage; _heal=heal; _armor=armor; _name= name; _bonus=bonus; avaibleAction = act; avaibleCondition = cond;
 		modifier(bonus);
+		avaibleAction = new ArrayList<Class<Action>>();
+		avaibleCondition = new ArrayList<Class<Condition>>();
 	}
 
 	public void modifier(Bonus x){
@@ -60,7 +64,7 @@ public class Classe {
 	public int damage(){
 		return _damage;
 	}
-	
+
 	public int heal(){
 		return _heal;
 	}
@@ -69,12 +73,26 @@ public class Classe {
 		return _name;
 	}
 
-	public void addAction(Action act){
+	public void addAction(Class act){
 		avaibleAction.add(act);
 	}
 
-	public void addCondition(Condition cond){
+	public void addCondition(Class cond){
 		avaibleCondition.add(cond);
+	}
+
+	public boolean isAction(Class act){
+		for(int i=0;i<avaibleAction.size();i++){
+			if(act == avaibleAction.get(i)){return true;}
+		}
+		return false;
+	}
+
+	public boolean isCondition(Class act){
+		for(int i=0;i<avaibleCondition.size();i++){
+			if(act == avaibleCondition.get(i)){return true;}
+		}
+		return false;
 	}
 
 	@Override

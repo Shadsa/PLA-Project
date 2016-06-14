@@ -7,7 +7,7 @@ import roles.action.Attaquer;
 
 public final class Arbre extends TypeCase {
 	
-	public final int _vie = 10;
+	public final int _vie = 150;
 	
 	protected static Action _action = new Attaquer(Cardinaux.SUD);
 	

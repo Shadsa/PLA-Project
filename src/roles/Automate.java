@@ -91,11 +91,27 @@ public class Automate {
 		}
 
 		Collections.shuffle(choice);
+		System.out.println("Je vais " + _action.get(pers.etat()).get(choice.get(0)).action().getClass().getName());
 		_action.get(pers.etat()).get(choice.get(0)).Act(pers);
 		pers.setetat(_next.get(pers.etat()).get(choice.get(0)));
 	}
 	
 	public boolean match(Classe classe){
+		for(int i=0;i<_action.size();i++){
+			for(int j=0;j<_action.get(i).size();j++){
+				if(!classe.isAction(_action.get(i).get(j).action().getClass())){
+					return false;
+				}
+			}			
+		}
+		for(int i=0;i<_condition.size();i++){
+			for(int j=0;j<_condition.get(i).size();j++){
+				if(!classe.isCondition(_condition.get(i).get(j).getClass())){
+					return false;
+				}
+			}			
+		}
+		
 		return true;
 	}
 }
