@@ -1,6 +1,66 @@
 <?xml version = "1.0" encoding="UTF-8" standalone="no" ?>
 
 <automate nbEtats="9">
+  	<transition poids="10"> 
+    	<etat>0</etat> 
+    	<condition direction="N">Mur</condition> 
+    	<action direction="N">Attaquer</action> 
+    	<suivant>0</suivant> 
+  	</transition> 
+	<transition poids="10"> 
+    	<etat>0</etat> 
+    	<condition direction="O">Mur</condition> 
+    	<action direction="O">Attaquer</action> 
+    	<suivant>0</suivant> 
+  	</transition> 
+  	<transition poids="10"> 
+    	<etat>0</etat> 
+    	<condition direction="S">Mur</condition> 
+    	<action direction="S">Attaquer</action> 
+    	<suivant>0</suivant> 
+  	</transition> 
+  	<transition poids="10"> 
+    	<etat>0</etat> 
+    	<condition direction="E">Mur</condition> 
+    	<action direction="E">Attaquer</action> 
+    	<suivant>0</suivant> 
+  	</transition> 
+  	<transition poids="10"> 
+    	<etat>3</etat> 
+    	<condition compose="Et"> 
+      		<condition1 direction="N">Libre</condition1> 
+      		<condition2 quantite="250">RessourcesPossedees</condition2> 
+    	</condition> 
+    	<action direction="N">ConstruireMur</action> 
+    	<suivant>0</suivant> 
+  	</transition> 
+  	<transition poids="10"> 
+    	<etat>3</etat> 
+    	<condition compose="Et"> 
+      		<condition1 direction="S">Libre</condition1> 
+      		<condition2 quantite="250">RessourcesPossedees</condition2> 
+    	</condition> 
+    	<action direction="S">ConstruireMur</action> 
+    	<suivant>0</suivant> 
+  	</transition> 
+    <transition poids="10"> 
+    	<etat>3</etat> 
+    	<condition compose="Et"> 
+      		<condition1 direction="O">Libre</condition1> 
+      		<condition2 quantite="250">RessourcesPossedees</condition2> 
+    	</condition> 
+    	<action direction="O">ConstruireMur</action> 
+    	<suivant>0</suivant> 
+  	</transition> 
+    <transition poids="10"> 
+    	<etat>3</etat> 
+    	<condition compose="Et"> 
+      		<condition1 direction="E">Libre</condition1> 
+      		<condition2 quantite="250">RessourcesPossedees</condition2> 
+    	</condition> 
+    	<action direction="E">ConstruireMur</action> 
+    	<suivant>0</suivant> 
+  	</transition> 
 	<transition poids="1">
 		<etat>0</etat>
 		<condition>Vide</condition>

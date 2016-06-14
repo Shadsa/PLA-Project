@@ -32,6 +32,7 @@ public final class Attaquer extends Action {
 		else
 			if(World.Case(destX, destY) != null && World.Case(destX, destY).type().value() == Mur.getInstance().value())
 			{
+				System.out.println("THIS IS SPARTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 				World.Case(destX, destY).attaquerCase(pers.damage());
 				pers.setState(new States(Statut.ATTAQUE, _direction));
 			}

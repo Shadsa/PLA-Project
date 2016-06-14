@@ -130,12 +130,12 @@ public class UnitDialog extends JDialog {
     		  return;
     	  if(cla == null)
     		  cla = (Classe)classe.getSelectedItem();//getClasse((String)classe.getSelectedItem());
-    	  if(!aut.match(World.classes.get(0)))
+    	  /*if(!aut.match(World.classes.get(0)))
     	  {
     		  JOptionPane jop = new JOptionPane();
     		  jop.showMessageDialog(null, "Fichier automate ne convient pas à cette classe.", "Erreur", JOptionPane.ERROR_MESSAGE);
     		  return;
-    	  }
+    	  }*/
         uInfo = new UnitInfo(nom.getText(), aut, cla,"");
         setVisible(false);
       }
