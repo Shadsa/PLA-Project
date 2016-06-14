@@ -133,12 +133,17 @@ public class XML_Reader {
 					if(att.item(0).getNodeName()=="quantite")
 						cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(int.class).newInstance(Integer.parseInt(att.item(0).getNodeValue()));
 					else{
-						Method meth = null;
-						meth = Class.forName("cases."+att.item(1).getNodeValue()).getMethod("getInstance",  (Class<?>[]) null);
-						if(meth != null)
-							cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(TypeCase.class,Cardinaux.class).newInstance(meth.invoke(null, null),CardOfString(att.item(0).getNodeValue()));
-						else
-							cond = (Condition) Class.forName("roles.conditions."+s1).newInstance();
+						if(att.item(1).getNodeValue()=="Mur"){
+							cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(TypeCase.class,Cardinaux.class).newInstance(Class.forName("cases."+att.item(1).getNodeValue()).getClass(),C);
+						}
+						else{
+							Method meth = null;
+							meth = Class.forName("cases."+att.item(1).getNodeValue()).getMethod("getInstance",  (Class<?>[]) null);
+							if(meth != null)
+								cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(TypeCase.class,Cardinaux.class).newInstance(meth.invoke(null, null),C);
+							else
+								cond = (Condition) Class.forName("roles.conditions."+s1).newInstance();
+						}
 					}
 			}
 		}
@@ -179,7 +184,10 @@ public class XML_Reader {
 				if(node3 instanceof Element && node3.getAttributes() != null && node3.getAttributes().getLength() == 1){
 					final Element e3 = (Element) ((Element) trans).getElementsByTagName("action").item(0);
 					String s2 = e3.getTextContent();
-					action = (Action) Class.forName("roles.action."+s2).getDeclaredConstructor(Cardinaux.class).newInstance(CardOfString(node3.getAttributes().item(0).getNodeValue()));
+					if(node3.getAttributes().item(0).getNodeName()=="direction")
+						action = (Action) Class.forName("roles.action."+s2).getDeclaredConstructor(Cardinaux.class).newInstance(CardOfString(node3.getAttributes().item(0).getNodeValue()));
+					else
+						action = (Action) Class.forName("roles.action."+s2).getDeclaredConstructor(int.class).newInstance(Integer.parseInt(node3.getAttributes().item(0).getNodeValue()));
 				}
 				else{
 					if(node3 instanceof Element){
