@@ -18,18 +18,19 @@ import roles.classe.Classe;
 public abstract class World {
 
 	static Carte _map;
-	static ArrayList<Joueur> _joueurs = new ArrayList<Joueur>();
+	private static ArrayList<Joueur> _joueurs = new ArrayList<Joueur>();
 	public static ArrayList<Classe> classes = new ArrayList<Classe>();
+	public static boolean fini = false;
 
 	public static void addPlayer(Joueur j)
 	{
-		_joueurs.add(j);
+		joueurs().add(j);
 	}
 
 	// final return...
 	public static ArrayList<Joueur> getPlayers()
 	{
-		return _joueurs;
+		return joueurs();
 	}
 
 	public static Boolean isfree(int x, int y) {
@@ -51,17 +52,21 @@ public abstract class World {
 	{
 		ArrayList<Joueur> vaincus = new ArrayList<Joueur>();
 		ArrayList<Personnage> activated = new ArrayList<Personnage>();
-		for(Joueur j : _joueurs){
+		for(Joueur j : joueurs()){
 			if(j.getPersonnages().isEmpty()){
 				vaincus.add(j);
-				System.out.print(j._nom+" a perdu!");
+				System.out.print(j.nom()+" a perdu!");
 			}
 			else
 				for(Personnage p : j.getPersonnages() )
 					activated.add(p);
 		}
+		
 		for(Joueur j : vaincus){
-			_joueurs.remove(j);
+			joueurs().remove(j);
+		}
+		if(joueurs().size()==1){
+			fini = true;
 		}
 
 		Collections.shuffle(activated);
@@ -89,4 +94,9 @@ public abstract class World {
 	public static void putAutomate(Automate a, int x, int y, Joueur j) throws Exception{
 		_map.putAutomate(a, x, y, j);
 	}
+
+	public static ArrayList<Joueur> joueurs() {
+		return _joueurs;
+	}
+
 }

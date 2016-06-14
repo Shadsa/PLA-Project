@@ -1,28 +1,15 @@
 package graphique;
 
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.ControllerListener;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.TrueTypeFont;
-import org.newdawn.slick.gui.GUIContext;
-import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.util.ResourceLoader;
 
 public class MainScreenGameState extends BasicGameState {
 
@@ -30,12 +17,6 @@ public class MainScreenGameState extends BasicGameState {
 	public static final int ID = 1;
 	//Image de fond
 	private Image background;
-	//Le contrôleur des phases de jeu
-	private static StateGame game;
-	private TrueTypeFont font;
-	private int size;
-	private String sizeScreen;
-	private GameContainer container;
 	private Input _input;
 
 	//Musique
@@ -50,7 +31,6 @@ public class MainScreenGameState extends BasicGameState {
 
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		_input = container.getInput();
-		this.game = (StateGame) game;
 		this.background = new Image("src/asset/images/skeleton_army.jpg");
 		
 		Image img = new Image("src/asset/sprites/ui_big_pieces.png");
@@ -63,19 +43,7 @@ public class MainScreenGameState extends BasicGameState {
 		_bouton_quitter = new Button(container, "Quitter", container.getWidth()/2-62, container.getHeight()/2+40, normalImage, overImage, downImage);
 		//music = new Music("src/asset/musics/menu_music.ogg");
 	   // music.loop();
-	    sizeScreen = "Taille de l'écran : " + container.getScreenWidth() + "x" + container.getScreenHeight();
 
-		/*// Chargement d'une nouvelle police de caractères
-		try {
-			InputStream inputStream	= ResourceLoader.getResourceAsStream("src/asset/fonts/Friedolin.ttf");
-
-			Font awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
-			awtFont = awtFont.deriveFont(50f); // set font size
-			font = new TrueTypeFont(awtFont, false);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
 	}
 
 	/**
@@ -84,7 +52,6 @@ public class MainScreenGameState extends BasicGameState {
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		background.draw(0, 0, container.getWidth(), container.getHeight());
-		//_bouton_jouer.render(container, g);
 		_bouton_jouer.render(container, g);
 		_bouton_fullScreen.render(container, g);
 		_bouton_quitter.render(container, g);
@@ -108,7 +75,6 @@ public class MainScreenGameState extends BasicGameState {
 		//Configuration du bouton jouer
 		if (_bouton_jouer.isDown()) {
 				game.enterState(InitGameState.ID);
-				//this.game.enterState(MapGameState.ID, "src/asset/musics/game_music.ogg");
 		}
 
 		//Configuration du bouton quitter
@@ -156,7 +122,6 @@ public class MainScreenGameState extends BasicGameState {
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		_bouton_son.setText(container.getMusicVolume() > 0 ? "Désactiver son" : "activer son");
 		_bouton_fullScreen.setText(container.isFullscreen() ? "Fenêtré" : "Plein écran");
-
 	}
 
 	@Override

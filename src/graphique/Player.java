@@ -19,6 +19,11 @@ import roles.States.Statut;
 
 public class Player implements Observer{
 
+	private Animation[] _Body;
+	private int _Abody;
+	private int _Aweapon;
+	private int _Awear;
+
 	private float _destX, _destY;
 	private boolean _hide;
 
@@ -31,6 +36,7 @@ public class Player implements Observer{
 	//Tableau des modèles d'animation
 	public static Animation[] animations = new Animation[21];
 	public static Animation[] Hanimations = new Animation[21];
+	public static Animation[] Habits = new Animation[21];
 	public static Animation[] Danimations = new Animation[4];
 	//
 	private int AnimDuration;
@@ -73,6 +79,11 @@ public class Player implements Observer{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		_Body = (_human != TypeUnit.Zombie)? Hanimations : animations ;
+		_Abody = 0;
+		_Aweapon = -1;
+		_Awear = -1;
 	}
 
 public static void sinit() throws SlickException
@@ -204,6 +215,9 @@ public static void sinit() throws SlickException
 	    SpriteSheet HspriteSheet = new SpriteSheet("src/asset/sprites/BODY_male.png", 64, 64);
 		SpriteSheet HspriteSheet2 = new SpriteSheet("src/asset/sprites/Human_Slash.png", 64, 64);
 		SpriteSheet HspriteSheet3 = new SpriteSheet("src/asset/sprites/Human_Die.png", 64, 64);
+		SpriteSheet Habitsprite = new SpriteSheet("src/asset/sprites/villager_vest.png", 64, 64);
+		SpriteSheet Habitsprite2 = new SpriteSheet("src/asset/sprites/villager_vest_slash.png", 64, 64);
+		SpriteSheet Habitsprite3 = new SpriteSheet("src/asset/sprites/villager_vest_hurt.png", 64, 64);
 	    Hanimations[0] = loadAnimation(HspriteSheet, 0, 1, 0);
 	    Hanimations[1] = loadAnimation(HspriteSheet, 0, 1, 1);
 	    Hanimations[2] = loadAnimation(HspriteSheet, 0, 1, 2);
@@ -213,17 +227,38 @@ public static void sinit() throws SlickException
 	    Hanimations[6] = loadAnimation(HspriteSheet, 1, 9, 2);
 	    Hanimations[7] = loadAnimation(HspriteSheet, 1, 9, 3);
 
+	    Habits[0] = loadAnimation(Habitsprite, 0, 1, 0);
+	    Habits[1] = loadAnimation(Habitsprite, 0, 1, 1);
+	    Habits[2] = loadAnimation(Habitsprite, 0, 1, 2);
+	    Habits[3] = loadAnimation(Habitsprite, 0, 1, 3);
+	    Habits[4] = loadAnimation(Habitsprite, 1, 9, 0);
+	    Habits[5] = loadAnimation(Habitsprite, 1, 9, 1);
+	    Habits[6] = loadAnimation(Habitsprite, 1, 9, 2);
+	    Habits[7] = loadAnimation(Habitsprite, 1, 9, 3);
+
 
 	    Hanimations[8] = loadAnimation(HspriteSheet2, 0, 5, 0);
 	    Hanimations[9] = loadAnimation(HspriteSheet2, 0, 5, 1);
 	    Hanimations[10] = loadAnimation(HspriteSheet2, 0, 5, 2);
 	    Hanimations[11] = loadAnimation(HspriteSheet2, 0, 5, 3);
 
+
+	    Habits[8] = loadAnimation(Habitsprite2, 0, 5, 0);
+	    Habits[9] = loadAnimation(Habitsprite2, 0, 5, 1);
+	    Habits[10] = loadAnimation(Habitsprite2, 0, 5, 2);
+	    Habits[11] = loadAnimation(Habitsprite2, 0, 5, 3);
+
 	    Hanimations[12] = new Animation();
 	    for (int x = 0; x < 6; x++) {
 	    	Hanimations[12].addFrame(HspriteSheet3.getSprite(x, 0), 40);
 	    }
 	    Hanimations[12].setLooping(false);
+
+	    Habits[12] = new Animation();
+	    for (int x = 0; x < 6; x++) {
+	    	Habits[12].addFrame(Habitsprite3.getSprite(x, 0), 40);
+	    }
+	    Habits[12].setLooping(false);
 	    /*for (int x = 0; x < 30; x++) {
 	    	Hanimations[12].addFrame(HspriteSheet3.getSprite(5, 0), 40);
 	    }*/
@@ -346,9 +381,10 @@ public static void sinit() throws SlickException
 	}
 
 	public void render(Graphics g) throws SlickException {
-		int anim = 0;
+		/*int anim = 0;
 		int dir = 0;
 		int danim = -1;
+		int vanim = -1;
 		//Affichage du personnage avec l'ombre et modification des coordonnées des pieds du personnage
 				if(_state.direction != null)
 				switch(_state.direction)
@@ -363,12 +399,15 @@ public static void sinit() throws SlickException
 			    {
 			    case AVANCE:
 			    	anim = 4;
+			    	vanim = anim;
 			    break;
 			    case ATTENDS:
 			    	anim = 0;
+			    	vanim = anim;
 			    break;
 				case ATTAQUE:
 					anim = 8;
+			    	vanim = anim;
 					danim = dir;
 				break;
 				case HIDING:
@@ -395,8 +434,19 @@ public static void sinit() throws SlickException
 			    else
 			    	g.drawAnimation(animations[anim], x-32, y-60);
 
+			    if(_human != TypeUnit.Zombie && vanim != -1)
+			    	g.drawImage(Habits[anim].getImage(Hanimations[anim].getFrame()), x-32, y-60);
+
 			    if(danim != -1 && anim != 12)
-			    	g.drawAnimation(Danimations[danim], x-32, y-60);
+			    	g.drawAnimation(Danimations[danim], x-32, y-60);*/
+
+	    		g.drawAnimation(_Body[_Abody], x-32, y-60);
+
+	    if(_Awear != -1)
+	    	g.drawImage(Habits[_Abody].getImage(Hanimations[_Abody].getFrame()), x-32, y-60);
+
+	    if(_Aweapon != -1)
+	    	g.drawAnimation(Danimations[_Aweapon], x-32, y-60);
 	}
 
 	/**
@@ -448,6 +498,7 @@ public static void sinit() throws SlickException
 	    		_state.statut = Statut.HIDE;
 	    	else
 	    		_state.statut = Statut.ATTENDS;
+			refreshAnimation();
 	    }
 	}
 
@@ -516,6 +567,7 @@ public static void sinit() throws SlickException
 					_state = (States)obj;
 					AnimDuration += MapGameState.Tick;
 				}
+				refreshAnimation();
 			}
 		}
 		private void setDirection(Cardinaux dir) {
@@ -540,4 +592,56 @@ public static void sinit() throws SlickException
 			return AnimDuration;
 		}
 
+		private void refreshAnimation()
+		{
+			int anim = 0;
+			int dir = 0;
+			int danim = -1;
+			_Awear = -1;
+			//Affichage du personnage avec l'ombre et modification des coordonnées des pieds du personnage
+					if(_state.direction != null)
+					switch(_state.direction)
+					{
+					case NORD: dir = 0; break;
+					case SUD: dir = 2; break;
+					case EST: dir = 3; break;
+					case OUEST: dir = 1; break;
+					}
+
+				    switch(_state.statut)
+				    {
+				    case AVANCE:
+				    	anim = 4;
+				    	_Awear = anim;
+				    break;
+				    case ATTENDS:
+				    	anim = 0;
+				    	_Awear = anim;
+				    break;
+					case ATTAQUE:
+						anim = 8;
+						_Awear = anim;
+						danim = dir;
+					break;
+					case HIDING:
+						anim = 13;
+					break;
+					case HIDE:
+						return;
+					case REVEAL:
+						anim = 17;
+					break;
+				    }
+
+				    anim += dir;
+
+				    if(_isDead && AnimDuration <= 0) {
+				    	anim = 12;
+				    }
+
+				    _Abody = anim;
+				    if(_human == TypeUnit.Zombie)
+				    	_Awear = -1;
+				    _Aweapon = danim;
+		}
 }
