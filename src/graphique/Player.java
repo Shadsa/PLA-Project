@@ -432,7 +432,8 @@ public static void sinit() throws SlickException
 
 			    if(danim != -1 && anim != 12)
 			    	g.drawAnimation(Danimations[danim], x-32, y-60);*/
-
+			    g.setColor(new Color(0, 0, 0, .5f));
+			    g.fillOval(x - 16, y - 8, 32, 16);
 	    		g.drawAnimation(_Body[_Abody], x-32, y-60);
 
 	    if(_Awear != -1)

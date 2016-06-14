@@ -1,8 +1,7 @@
 package graphique;
 
 import java.util.ArrayList;
-import java.io.File;
-import java.lang.reflect.InvocationTargetException;
+import jus.util.assertion.Require;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Animation;
@@ -11,58 +10,37 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.MouseListener;
-import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.w3c.dom.DOMException;
-
-import XML.XML_Reader;
-import roles.Bonus;
 import roles.classe.*;
 import roles.Automate;
 import roles.Cardinaux;
 import roles.Personnage;
-import roles.States.Statut;
-import roles.action.Attaquer;
-import roles.action.Avancer;
-import roles.action.AvancerJoueur;
-import roles.action.Dupliquer;
 import roles.action.Joueur;
-import roles.action.Raser;
 import roles.action.World;
-import roles.conditions.ArbreProche;
-import roles.conditions.Ennemi;
-import roles.conditions.Et;
-import roles.conditions.Libre;
-import roles.conditions.OrdreDonne;
-import roles.conditions.Vide;
 
 public class MapGameState extends BasicGameState {
 
 	static int Tick = 1000;
 	static boolean TickWait = true;
 	static int AnimTick = Tick*6/10;
-	static final int TileSize = 96;
-	static float MoveSpeed = ((float)TileSize)/((float)AnimTick);
+	protected long _time = 0;
+	static final int TILESIZE = 96;
+	static float MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
 	static final float Ox = 48;
 	static final float Oy = 48;
 
-	private GameContainer container;
 	private ArrayList<graphique.GJoueur> _joueurs = new ArrayList<graphique.GJoueur>();
-	//private Personnage personnage;
 	private Hud hud = new Hud();
 	public static final int ID = 2;
-	private String playerData;
 	private String mouse;
 	private float mouseAbsoluteX;
 	private float mouseAbsoluteY;
 	private float _mouseMapX;
 	private float _mouseMapY;
 	private boolean showhud = false;
-	private Player _selected = null;
 	private float alpha = 0;
 
 	public static Player _target = null;
@@ -73,24 +51,6 @@ public class MapGameState extends BasicGameState {
 
 	private float _offsetMapX = 0;
 	private float _offsetMapY = 0;
-
-	public static float toX(int x)
-	{
-		return x * TileSize + Ox;
-	}
-	public static float toY(int y)
-	{
-		return y * TileSize + Oy;
-	}
-
-	public static int fromX(float x)
-	{
-		return (int) (x - Ox) / TileSize;
-	}
-	public static int fromY(float y)
-	{
-		return (int) (y - Oy) / TileSize;
-	}
 
 	//Test
 	private MapTest map = new MapTest();
@@ -114,143 +74,68 @@ public class MapGameState extends BasicGameState {
 		this._zoom = _zoom;
 	}
 
+	public static float toX(int x)
+	{
+		return x * TILESIZE + Ox;
+	}
+	public static float toY(int y)
+	{
+		return y * TILESIZE + Oy;
+	}
+
+	public static int fromX(float x)
+	{
+		return (int) (x - Ox) / TILESIZE;
+	}
+	public static int fromY(float y)
+	{
+		return (int) (y - Oy) / TILESIZE;
+	}
+	
 	/**
-	 * Initialise le contenu du jeu, charge les animations
+	 * Initialise la boucle de jeu. Cette méthode est appelée avant que la boucle démarre.
+	 * @param container Le conteneur du jeu dans lequels les composants sont crées et affichés.
+	 * @param game Le contrôleur des différentes boucles de jeu.
 	 */
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		_input = container.getInput();
 		this.game = (StateGame) game;
+		//Initialisation des images boutons
 		Image img = new Image("src/asset/sprites/ui_big_pieces.png");
 		Image normalImage = img.getSubImage(633, 23, 123, 27);
 		Image overImage = img.getSubImage(633, 53, 123, 27);
 		Image downImage = img.getSubImage(633, 83, 123, 27);
+		//Instanciation des boutons
 		_bouton_fullScreen = new Button(container, "Plein écran", container.getWidth()/2-62, container.getHeight()/2, normalImage, overImage, downImage);
 		_bouton_son = new Button(container, "Désactiver son", container.getWidth()/2-62, container.getHeight()/2-40, normalImage, overImage, downImage);
 		_bouton_quitter = new Button(container, "Quitter", container.getWidth()/2-62, container.getHeight()/2+80, normalImage, overImage, downImage);
 		_bouton_menuPrincipal = new Button(container, "Menu principal", container.getWidth()/2-62, container.getHeight()/2+40, normalImage, overImage, downImage);
 		_bouton_reprendre = new Button(container, "Reprendre", container.getWidth()/2-62, container.getHeight()/2-80, normalImage, overImage, downImage);
-
+		//Initialisation du monde
 		World.BuildMap(_tailleMapY,_tailleMapX);
-		/*
-		Automate aut1 = new Automate(2);
-
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD), new Libre(Cardinaux.NORD), 0, 1);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.EST), new Libre(Cardinaux.EST), 0, 1);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD), new Libre(Cardinaux.SUD), 1, 0);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.OUEST), new Libre(Cardinaux.OUEST), 1, 0);
-		// décommenter pour tester attaque
-		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.SUD), new Libre(Cardinaux.SUD), 0, 1);
-		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.NORD), new Libre(Cardinaux.NORD), 0, 1);
-		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.EST), new Libre(Cardinaux.EST), 0, 1);
-		aut1.ajoute_transition(0, new Dupliquer(Cardinaux.OUEST), new Libre(Cardinaux.OUEST), 0, 1);
-
-		aut1.ajoute_transition(0, new AvancerJoueur(), new OrdreDonne(), 0, 5);
-		//aut1.ajoute_transition(0, new Raser(), new Vide(), 1, 1);
-
-		aut1.ajoute_transition(1, new Avancer(Cardinaux.NORD), new Libre(Cardinaux.NORD), 0, 0);
-		aut1.ajoute_transition(1, new Avancer(Cardinaux.EST), new Libre(Cardinaux.EST), 0, 0);
-		aut1.ajoute_transition(1, new Avancer(Cardinaux.SUD), new Libre(Cardinaux.SUD), 1, 1);
-		aut1.ajoute_transition(1, new Avancer(Cardinaux.OUEST), new Libre(Cardinaux.OUEST), 1, 1);
-		aut1.ajoute_transition(1, new AvancerJoueur(), new OrdreDonne(), 1, 5);
-		*//*
-		File f = new File("./creation_automates/sortie.xml");
-		Automate aut1 = null;
-		try {
-			aut1 = XML_Reader.readXML(f);
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException | ClassNotFoundException | DOMException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("Erreur XML");
-		}
-		//autlist.add(aut1);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.EST), new Et(new Libre(Cardinaux.EST),new ArbreProche(Cardinaux.EST)), 0, 2);
-		aut1.ajoute_transition(1, new Avancer(Cardinaux.EST), new Et(new Libre(Cardinaux.EST),new ArbreProche(Cardinaux.EST)), 1, 2);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.NORD), new Et(new Libre(Cardinaux.NORD),new ArbreProche(Cardinaux.NORD)), 0, 2);
-		aut1.ajoute_transition(1, new Avancer(Cardinaux.NORD), new Et(new Libre(Cardinaux.NORD),new ArbreProche(Cardinaux.NORD)), 1, 2);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.OUEST), new Et(new Libre(Cardinaux.OUEST),new ArbreProche(Cardinaux.OUEST)), 0, 2);
-		aut1.ajoute_transition(1, new Avancer(Cardinaux.OUEST), new Et(new Libre(Cardinaux.OUEST),new ArbreProche(Cardinaux.OUEST)), 1, 2);
-		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD), new Et(new Libre(Cardinaux.SUD),new ArbreProche(Cardinaux.SUD)), 0, 2);
-		aut1.ajoute_transition(1, new Avancer(Cardinaux.SUD), new Et(new Libre(Cardinaux.SUD),new ArbreProche(Cardinaux.SUD)), 1, 2);
-	    ArrayList<Automate> autlist = new ArrayList<Automate>();
-		autlist.add(aut1);
-		Classe generique = new Classe(10,5,0,"default class",Bonus.VIE);
-		ArrayList<Classe> classes = new ArrayList<Classe>();
-		classes.add(generique);
-		Joueur j2 = new Joueur("Moi", autlist,classes);
-		Joueur jZ = new Joueur("Zombie", autlist,classes);
-		World.addPlayer(j2);
-		World.addPlayer(jZ);*//*
-		World.BuildMap(_tailleMapY,_tailleMapX);
-		try {
-			World.putAutomate(j2.automate(0), 1, 1, j2);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		j2.createPersonnage(0, 5, 5);
-		j2.createPersonnage(0, 6, 6);
-		j2.createPersonnage(0, 3, 6);
-		j2.createPersonnage(0, 6, 2);
-		j2.createPersonnage(0, 0, 0);
-		j2.createPersonnage(0, 2, 1);
-		j2.createPersonnage(0, 4, 7);
-
-		j2.createPersonnage(0, 0, 1);
-		j2.createPersonnage(0, 0, 2);
-		j2.createPersonnage(0, 0, 3);
-		j2.createPersonnage(0, 0, 4);
-		j2.createPersonnage(0, 0, 5);
-		j2.createPersonnage(0, 0, 6);
-		j2.createPersonnage(0, 0, 7);
-		j2.createPersonnage(0, 0, 8);
-		j2.createPersonnage(0, 0, 9);
-
-		jZ.createPersonnage(0, 1, 1);
-		jZ.createPersonnage(0, 1, 2);
-		jZ.createPersonnage(0, 1, 3);
-		jZ.createPersonnage(0, 1, 4);
-		jZ.createPersonnage(0, 1, 5);
-		jZ.createPersonnage(0, 1, 6);
-		jZ.createPersonnage(0, 1, 7);
-		jZ.createPersonnage(0, 1, 8);
-		jZ.createPersonnage(0, 1, 9);*/
-		//personnage = j2.getPersonnages().get(0);
-
-
-		this.container = container;
-
+		//Initialisation des animations des personnages
 		Player.sinit();
-
-
-		//System.out.print(_players.size());
-
-
-		/*_players.add(new Player());
-		_players.get(0).init();
-		_players.get(0).setX(100+300);
-		_players.get(0).setDestX(100+300);
-		_players.get(0).setY(100+300);
-		_players.get(0).setDestY(100+300);*/
-		//PlayerController controller = new PlayerController(_players.get(0));
-		//container.getInput().addKeyListener(controller);
+		//Initialisation de l'hud
 		this.hud.init();
 	}
 
 	/**
-	 * Affichage des différents éléments du jeu
+	 * Affichage des éléments du jeu dans le conteneur.
+	 * @param container Le conteneur du jeu dans lequels les composants sont crées et affichés.
+	 * @param game Le contrôleur des différentes boucles de jeu.
+	 * @param g Le contexte graphique qui peut être utilisé pour afficher les éléments.
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 
 		//Affichage de la map
 		this.map.render(g, _offsetMapX, _offsetMapY, zoom(), container.getWidth(), container.getHeight());
+		
 		//Affichage des personnages
 		for(graphique.GJoueur j : _joueurs)
 			for(Player p : j.getPersonnage())
-					if(p.getX()+TileSize > _offsetMapX/zoom() && p.getY()+TileSize > _offsetMapY/zoom())
-						if(p.getX()-TileSize < (_offsetMapX + container.getWidth())/zoom())
-						if(p.getY()-TileSize < (_offsetMapY + container.getHeight())/zoom())
+					if(p.getX()+TILESIZE > _offsetMapX/zoom() && p.getY()+TILESIZE > _offsetMapY/zoom())
+						if(p.getX()-TILESIZE < (_offsetMapX + container.getWidth())/zoom())
+						if(p.getY()-TILESIZE < (_offsetMapY + container.getHeight())/zoom())
 							p.render(g);
 
 		//Annule la translation pour l'affichage du string en dessous
@@ -267,7 +152,7 @@ public class MapGameState extends BasicGameState {
 			this.hud.render(g);
 		}
 		
-		//Affichage fin
+		//Affichage message de fin
 		if (World.fini) {
 			if(World.joueurs().size()==1){
 				g.drawString(World.joueurs().get(0).nom()+" a gagné! Félicitations à lui, vraiment.", container.getWidth()/2-175, container.getHeight()/2);
@@ -275,7 +160,7 @@ public class MapGameState extends BasicGameState {
 			}
 		}
 		
-		//Gestion de la pause
+		//Gestion de la pause (affichage d'un fond noir-transparent progressif)
 		if (container.isPaused()) {
 		    Rectangle rect = new Rectangle (0, 0, container.getScreenWidth(), container.getScreenHeight());
 		    g.setColor(new Color (0, 0, 0, alpha));
@@ -298,8 +183,13 @@ public class MapGameState extends BasicGameState {
 	    }
 	}
 
-	protected long _time = 0;
 
+	/**
+	 * Mise à jour des attributs et des éléments du conteneur.
+	 * @param container Le conteneur du jeu dans lequels les composants sont crées et affichés.
+	 * @param game Le contrôleur des différentes boucles de jeu.
+	 * @param delta Le temps mis entre chaque mise à jour en millisecondes.
+	 */
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		//Mise à jour des boutons
 		_bouton_fullScreen.update(container);
@@ -326,9 +216,11 @@ public class MapGameState extends BasicGameState {
 			for(Animation anim : Player.Danimations)
 				anim.restart();
 		}
-		//playerData = "Coord X :" + this.player.getX() + ", Coord Y : " + this.player.getY() + ", action_finie : " + this.player.getAction_finie();
-		mouseAbsoluteX = _input.getAbsoluteMouseX();// + offsetMapX();
-		mouseAbsoluteY = _input.getAbsoluteMouseY();// + offsetMapY();
+
+		//Position de la souris par rapport au conteneur
+		mouseAbsoluteX = _input.getAbsoluteMouseX();
+		mouseAbsoluteY = _input.getAbsoluteMouseY();
+		//Position de la souris sur la map
 		_mouseMapX = (mouseAbsoluteX + offsetMapX()) / zoom();
 		_mouseMapY = (mouseAbsoluteY + offsetMapY()) / zoom();
 		mouse = "MouseAbsoluteX : " + mouseAbsoluteX + ", MouseAbsoluteY : " + mouseAbsoluteY;
@@ -343,7 +235,7 @@ public class MapGameState extends BasicGameState {
 				TickWait=true;
 				AnimTick = Tick*6/10;
 			}
-			MoveSpeed = ((float)TileSize)/((float)AnimTick);
+			MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
 		}
 
 		//Gestion de la vitesse du jeu
@@ -355,7 +247,7 @@ public class MapGameState extends BasicGameState {
 					AnimTick = Tick*6/10;
 				else
 					AnimTick = Tick;
-				MoveSpeed = ((float)TileSize)/((float)AnimTick);
+				MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
 			}
 			else{
 				if (Tick > 250 ){
@@ -364,7 +256,7 @@ public class MapGameState extends BasicGameState {
 						AnimTick = Tick*6/10;
 					else
 						AnimTick = Tick;
-					MoveSpeed = ((float)TileSize)/((float)AnimTick);
+					MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
 				}
 				else{
 					Tick=Tick-25;
@@ -372,7 +264,7 @@ public class MapGameState extends BasicGameState {
 						AnimTick = Tick*6/10;
 					else
 						AnimTick = Tick;
-					MoveSpeed = ((float)TileSize)/((float)AnimTick);
+					MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
 				}
 			}
 		}
@@ -384,7 +276,7 @@ public class MapGameState extends BasicGameState {
 					AnimTick = Tick*6/10;
 				else
 					AnimTick = Tick;
-				MoveSpeed = ((float)TileSize)/((float)AnimTick);
+				MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
 			}
 			else{
 				Tick = Tick+100;
@@ -392,7 +284,7 @@ public class MapGameState extends BasicGameState {
 					AnimTick = Tick*6/10;
 				else
 					AnimTick = Tick;
-				MoveSpeed = ((float)TileSize)/((float)AnimTick);
+				MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
 			}
 		}
 		//R�-initialiser
@@ -402,7 +294,7 @@ public class MapGameState extends BasicGameState {
 				AnimTick = Tick*6/10;
 			else
 				AnimTick = Tick;
-			MoveSpeed = ((float)TileSize)/((float)AnimTick);
+			MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
 		}
 
 		//Gestion du scrolling de la map avec la souris/manette/clavier
@@ -429,7 +321,7 @@ public class MapGameState extends BasicGameState {
 		}
 		
 		//Zoom arrière
-		if (_tailleMapX * TileSize * zoom() > container.getWidth() && _tailleMapX * TileSize * zoom() > container.getHeight()) {
+		if (_tailleMapX * TILESIZE * zoom() > container.getWidth() && _tailleMapX * TILESIZE * zoom() > container.getHeight()) {
 			if (_input.isKeyDown(209) && zoom() > 0) {
 				setZoom(zoom() / 1.03f);
 				if (zoom() < 0) {
@@ -498,11 +390,21 @@ public class MapGameState extends BasicGameState {
 		_bouton_menuPrincipal.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
 	}
 
+	/**
+	 * Notification que l'on entre dans cette boucle de jeu.
+	 * @param container Le contexte dans lequels les composants sont crées et affichés.
+	 * @param game Le contrôleur des différentes boucles de jeu.
+	 */
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		_bouton_son.setText(container.getMusicVolume() > 0 ? "Désactiver son" : "Activer son");
 		_bouton_fullScreen.setText(container.isFullscreen() ? "Fenêtré" : "Plein écran");
 	}
 
+	/**
+	 * Notification qu'une touche du clavier a été relâchée (la méthode est appelée à ce moment là).
+	 * @param key Le numéro de la touche de clavier.
+	 * @param c le caractère de la touche relâchée.
+	 */
 	public void keyReleased(int key, char c) {
 		if(showhud == false) return;
 		switch(key)
@@ -539,19 +441,28 @@ public class MapGameState extends BasicGameState {
 			this.game.enterState(3);
 		}
 	}*/
-
-	public void mousePressed(int arg0, int arg1, int arg2) {
+	
+	/**
+	 * Notification qu'un bouton de la souris a été pressée (la méthode est appelée à ce moment là).
+	 * @param button L'identifiant du bouton.
+	 * @param x La coordonnée x (abcisse) lors de la pression sur le bouton.
+	 * @param x La coordonnée y (ordonnée) lors de la pression sur le bouton.
+	 */
+	public void mousePressed(int button, int x, int y) {
 		for(graphique.GJoueur j : _joueurs)
 			for(Player p : j.getPersonnage())
-				if (Input.MOUSE_LEFT_BUTTON == arg0 && curseurSurPerso(p, mouseMapX(), mouseMapY())) {
+				if (Input.MOUSE_LEFT_BUTTON == button && curseurSurPerso(p, mouseMapX(), mouseMapY())) {
 				_target = p;
-				_targetp = World.Case((int)(MapGameState._target.DestX()-Ox)/TileSize, (int)(MapGameState._target.DestY()-Oy)/TileSize).Personnage();
+				_targetp = World.Case((int)(MapGameState._target.DestX()-Ox)/TILESIZE, (int)(MapGameState._target.DestY()-Oy)/TILESIZE).Personnage();
 				this.showhud = true;
 				return;
 			}
 	}
 
-	//Gestion du zoom avec molette de souris
+	/**
+	 * Notification que la roulette de la souris a été bougée (la méthode est appelée à ce moment là).
+	 * @param n Sens du mouvement de la roulette.
+	 */
 	public void mouseWheelMoved(int n) {
 		if (n < 0) {
 			if (zoom() > 0) {
@@ -568,8 +479,18 @@ public class MapGameState extends BasicGameState {
 		}
 	}
 
-	//Méthode permettant de savoir si le curseur de la souris est sur le personnage
+	/**
+	 * Vérification que le curseur de la souris est sur le personnage.
+	 * @param p 
+	 * @param mouseX La position de la souris en abcisse X.
+	 * @param mouseY La position de la souris en ordonnée Y.
+	 * @return Un booléen qui indique si la position du curseur est sur un personnage.
+	 * @require p != null
+	 */
 	public boolean curseurSurPerso(Player p, float mouseX, float mouseY) {
+		if (!(p!= null)) {
+			throw new Require("p == null)");
+		}
 		return (mouseX >= p.getX()-32 && mouseX <= p.getX()+32 && mouseY >= p.getY()-60 && mouseY <= p.getY()+4);
 	}
 
