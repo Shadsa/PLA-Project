@@ -31,6 +31,7 @@ public class Player implements Observer{
 	//Tableau des modèles d'animation
 	public static Animation[] animations = new Animation[21];
 	public static Animation[] Hanimations = new Animation[21];
+	public static Animation[] Habits = new Animation[21];
 	public static Animation[] Danimations = new Animation[4];
 	//
 	private int AnimDuration;
@@ -204,6 +205,8 @@ public static void sinit() throws SlickException
 	    SpriteSheet HspriteSheet = new SpriteSheet("src/asset/sprites/BODY_male.png", 64, 64);
 		SpriteSheet HspriteSheet2 = new SpriteSheet("src/asset/sprites/Human_Slash.png", 64, 64);
 		SpriteSheet HspriteSheet3 = new SpriteSheet("src/asset/sprites/Human_Die.png", 64, 64);
+		SpriteSheet Habitsprite = new SpriteSheet("src/asset/sprites/villager_vest.png", 64, 64);
+		SpriteSheet Habitsprite2 = new SpriteSheet("src/asset/sprites/villager_vest_slash.png", 64, 64);
 	    Hanimations[0] = loadAnimation(HspriteSheet, 0, 1, 0);
 	    Hanimations[1] = loadAnimation(HspriteSheet, 0, 1, 1);
 	    Hanimations[2] = loadAnimation(HspriteSheet, 0, 1, 2);
@@ -213,11 +216,26 @@ public static void sinit() throws SlickException
 	    Hanimations[6] = loadAnimation(HspriteSheet, 1, 9, 2);
 	    Hanimations[7] = loadAnimation(HspriteSheet, 1, 9, 3);
 
+	    Habits[0] = loadAnimation(Habitsprite, 0, 1, 0);
+	    Habits[1] = loadAnimation(Habitsprite, 0, 1, 1);
+	    Habits[2] = loadAnimation(Habitsprite, 0, 1, 2);
+	    Habits[3] = loadAnimation(Habitsprite, 0, 1, 3);
+	    Habits[4] = loadAnimation(Habitsprite, 1, 9, 0);
+	    Habits[5] = loadAnimation(Habitsprite, 1, 9, 1);
+	    Habits[6] = loadAnimation(Habitsprite, 1, 9, 2);
+	    Habits[7] = loadAnimation(Habitsprite, 1, 9, 3);
+
 
 	    Hanimations[8] = loadAnimation(HspriteSheet2, 0, 5, 0);
 	    Hanimations[9] = loadAnimation(HspriteSheet2, 0, 5, 1);
 	    Hanimations[10] = loadAnimation(HspriteSheet2, 0, 5, 2);
 	    Hanimations[11] = loadAnimation(HspriteSheet2, 0, 5, 3);
+
+
+	    Habits[8] = loadAnimation(Habitsprite2, 0, 5, 0);
+	    Habits[9] = loadAnimation(Habitsprite2, 0, 5, 1);
+	    Habits[10] = loadAnimation(Habitsprite2, 0, 5, 2);
+	    Habits[11] = loadAnimation(Habitsprite2, 0, 5, 3);
 
 	    Hanimations[12] = new Animation();
 	    for (int x = 0; x < 6; x++) {
@@ -349,6 +367,7 @@ public static void sinit() throws SlickException
 		int anim = 0;
 		int dir = 0;
 		int danim = -1;
+		int vanim = -1;
 		//Affichage du personnage avec l'ombre et modification des coordonnées des pieds du personnage
 				if(_state.direction != null)
 				switch(_state.direction)
@@ -363,12 +382,15 @@ public static void sinit() throws SlickException
 			    {
 			    case AVANCE:
 			    	anim = 4;
+			    	vanim = anim;
 			    break;
 			    case ATTENDS:
 			    	anim = 0;
+			    	vanim = anim;
 			    break;
 				case ATTAQUE:
 					anim = 8;
+			    	vanim = anim;
 					danim = dir;
 				break;
 				case HIDING:
@@ -394,6 +416,9 @@ public static void sinit() throws SlickException
 			    	g.drawAnimation(Hanimations[anim], x-32, y-60);
 			    else
 			    	g.drawAnimation(animations[anim], x-32, y-60);
+
+			    if(_human != TypeUnit.Zombie && vanim != -1)
+			    	g.drawAnimation(Habits[anim], x-32, y-60);
 
 			    if(danim != -1 && anim != 12)
 			    	g.drawAnimation(Danimations[danim], x-32, y-60);
