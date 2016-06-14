@@ -68,8 +68,8 @@ public class MapGameState extends BasicGameState {
 	public static Player _target = null;
 	public static Personnage _targetp = null;
 
-	private int _tailleMapY = 45;
-	private int _tailleMapX = 75;
+	private int _tailleMapY = 20;
+	private int _tailleMapX = 35;
 
 	private float _offsetMapX = 0;
 	private float _offsetMapY = 0;
@@ -332,7 +332,7 @@ public class MapGameState extends BasicGameState {
 
 		//Gestion de la vitesse du jeu
 		//Acc�l�rer
-		if (_input.isKeyDown(Input.KEY_N) && Tick > 250){
+		if (_input.isKeyDown(Input.KEY_N) && Tick > 125){
 			if (Tick > 1050 ){
 				Tick=Tick-100;
 				if(TickWait)
@@ -342,12 +342,22 @@ public class MapGameState extends BasicGameState {
 				MoveSpeed = ((float)TileSize)/((float)AnimTick);
 			}
 			else{
-			Tick=Tick-50;
-			if(TickWait)
-				AnimTick = Tick*6/10;
-			else
-				AnimTick = Tick;
-			MoveSpeed = ((float)TileSize)/((float)AnimTick);
+				if (Tick > 250 ){
+					Tick=Tick-50;
+					if(TickWait)
+						AnimTick = Tick*6/10;
+					else
+						AnimTick = Tick;
+					MoveSpeed = ((float)TileSize)/((float)AnimTick);
+				}
+				else{
+					Tick=Tick-25;
+					if(TickWait)
+						AnimTick = Tick*6/10;
+					else
+						AnimTick = Tick;
+					MoveSpeed = ((float)TileSize)/((float)AnimTick);
+				}
 			}
 		}
 		//Ralentir
