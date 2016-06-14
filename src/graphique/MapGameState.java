@@ -650,7 +650,6 @@ public class MapGameState extends BasicGameState {
 		try {
 			World.putAutomate(World.getPlayers().get(0).automate(0), 1, 1, World.getPlayers().get(0));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		for(int i = 0; i < nb; i++)
@@ -669,7 +668,6 @@ public class MapGameState extends BasicGameState {
 		try {
 			this.map.init();
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
