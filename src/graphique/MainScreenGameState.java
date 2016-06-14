@@ -42,19 +42,25 @@ public class MainScreenGameState extends BasicGameState {
 	private Music music;
 
 	//Bouton
-	private Bouton _bouton_jouer;
-	private Bouton _bouton_quitter;
-	private Bouton _bouton_fullScreen;
-	private Bouton _bouton_son;
+	//private Bouton _bouton_jouer;
+	private Button _bouton_jouer;
+	private Button _bouton_quitter;
+	private Button _bouton_fullScreen;
+	private Button _bouton_son;
 
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		_input = container.getInput();
 		this.game = (StateGame) game;
 		this.background = new Image("src/asset/images/skeleton_army.jpg");
-		_bouton_jouer = new Bouton(container, new Image("src/asset/buttons/bouton_jouer_off.png"), new Image("src/asset/buttons/bouton_jouer_on.png"), container.getWidth()/2-62, container.getHeight()/2-80, 126, 30);
-		_bouton_fullScreen = new Bouton(container, new Image("src/asset/buttons/bouton_NOfullscreen_off.png"), new Image("src/asset/buttons/bouton_NOfullscreen_on.png"), container.getWidth()/2-62, container.getHeight()/2, 126, 30);
-		_bouton_son = new Bouton(container, new Image("src/asset/buttons/bouton_son_active_off.png"), new Image("src/asset/buttons/bouton_son_active_on.png"), container.getWidth()/2-62, container.getHeight()/2-40, 126, 30);
-		_bouton_quitter = new Bouton(container, new Image("src/asset/buttons/bouton_quitter_off.png"), new Image("src/asset/buttons/bouton_quitter_on.png"), container.getWidth()/2-62, container.getHeight()/2+40, 126, 30);
+		
+		Image img = new Image("src/asset/sprites/ui_big_pieces.png");
+		Image normalImage = img.getSubImage(633, 23, 123, 27);
+		Image overImage = img.getSubImage(633, 53, 123, 27);
+		Image downImage = img.getSubImage(633, 83, 123, 27);
+		_bouton_jouer = new Button(container, "Jouer", container.getWidth()/2-62, container.getHeight()/2-80, normalImage, overImage, downImage);
+		_bouton_fullScreen = new Button(container, "Plein écran", container.getWidth()/2-62, container.getHeight()/2, normalImage, overImage, downImage);
+		_bouton_son = new Button(container, "Désactiver son", container.getWidth()/2-62, container.getHeight()/2-40, normalImage, overImage, downImage);
+		_bouton_quitter = new Button(container, "Quitter", container.getWidth()/2-62, container.getHeight()/2+40, normalImage, overImage, downImage);
 		music = new Music("src/asset/musics/menu_music.ogg");
 	    music.loop();
 	    sizeScreen = "Taille de l'écran : " + container.getScreenWidth() + "x" + container.getScreenHeight();
@@ -78,6 +84,7 @@ public class MainScreenGameState extends BasicGameState {
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		background.draw(0, 0, container.getWidth(), container.getHeight());
+		//_bouton_jouer.render(container, g);
 		_bouton_jouer.render(container, g);
 		_bouton_fullScreen.render(container, g);
 		_bouton_quitter.render(container, g);
@@ -92,49 +99,45 @@ public class MainScreenGameState extends BasicGameState {
 	/**
 	 * Passer à l’écran de jeu à l'appui de n'importe quelle touche.
 	 */
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-
-		/*if(_input.isKeyPressed(Input.KEY_J))
-			game.enterState(InitGameState.ID);*/
-
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {	
+		_bouton_jouer.update(container);
+		_bouton_fullScreen.update(container);
+		_bouton_quitter.update(container);
+		_bouton_son.update(container);
 
 		//Configuration du bouton jouer
-		if (_bouton_jouer.isMouseButtonDownOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+		if (_bouton_jouer.isDown()) {
 				game.enterState(InitGameState.ID);
 				//this.game.enterState(MapGameState.ID, "src/asset/musics/game_music.ogg");
 		}
 
 		//Configuration du bouton quitter
-		if (_bouton_quitter.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+		if (_bouton_quitter.isPressed()) {
 			container.exit();
 		}
 
 		//Configuration du bouton plein écran
-		if (_bouton_fullScreen.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+		if (_bouton_fullScreen.isPressed()) {
 			_input.clearMousePressedRecord();
 			if (container.isFullscreen()) {
-				_bouton_fullScreen.setNormalImage(new Image("src/asset/buttons/bouton_NOfullscreen_off.png"));
-				_bouton_fullScreen.setMouseOverImage(new Image("src/asset/buttons/bouton_NOfullscreen_on.png"));
+				_bouton_fullScreen.setText("Plein écran");
 				((AppGameContainer) container).setDisplayMode(800,600, false);
 			} else {
-				_bouton_fullScreen.setNormalImage(new Image("src/asset/buttons/bouton_fullscreen_off.png"));
-				_bouton_fullScreen.setMouseOverImage(new Image("src/asset/buttons/bouton_fullscreen_on.png"));
+				_bouton_fullScreen.setText("Fenêtré");
 				((AppGameContainer) container).setDisplayMode(container.getScreenWidth(),container.getScreenHeight(), true);
 			}
 		}
 
 		//Configuration du bouton son
-		if (_bouton_son.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+		if (_bouton_son.isPressed()) {
 			if (container.getMusicVolume() > 0) {
 				container.setMusicVolume(0);
 				container.setSoundVolume(0);
-				_bouton_son.setNormalImage(new Image("src/asset/buttons/bouton_son_desactive_off.png"));
-				_bouton_son.setMouseOverImage(new Image("src/asset/buttons/bouton_son_desactive_on.png"));
+				_bouton_son.setText("Activer son");
 			} else {
 				container.setMusicVolume(100);
 				container.setSoundVolume(100);
-				_bouton_son.setNormalImage(new Image("src/asset/buttons/bouton_son_active_off.png"));
-				_bouton_son.setMouseOverImage(new Image("src/asset/buttons/bouton_son_active_on.png"));
+				_bouton_son.setText("Désactiver son");
 			}
 		}
 
@@ -151,10 +154,9 @@ public class MainScreenGameState extends BasicGameState {
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-		_bouton_son.setNormalImage(container.getMusicVolume() > 0 ? new Image("src/asset/buttons/bouton_son_active_off.png") : new Image("src/asset/buttons/bouton_son_desactive_off.png"));
-		_bouton_son.setMouseOverImage(container.getMusicVolume() > 0 ? new Image("src/asset/buttons/bouton_son_active_on.png") : new Image("src/asset/buttons/bouton_son_desactive_on.png"));
-		_bouton_fullScreen.setNormalImage(container.isFullscreen() ? new Image("src/asset/buttons/bouton_fullscreen_off.png") : new Image("src/asset/buttons/bouton_NOfullscreen_off.png"));
-		_bouton_fullScreen.setMouseOverImage(container.isFullscreen() ? new Image("src/asset/buttons/bouton_fullscreen_on.png") : new Image("src/asset/buttons/bouton_NOfullscreen_on.png"));
+		_bouton_son.setText(container.getMusicVolume() > 0 ? "Désactiver son" : "activer son");
+		_bouton_fullScreen.setText(container.isFullscreen() ? "Fenêtré" : "Plein écran");
+
 	}
 
 	@Override
