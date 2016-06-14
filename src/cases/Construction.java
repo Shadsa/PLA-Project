@@ -1,7 +1,10 @@
 package cases;
 
-public interface Construction {
+import roles.Joueur;
 
-	public boolean check(Case c);
+public interface Construction {
 	
+	public void setOwner(Joueur owner);
+	
+	public Joueur getOwner();
 }

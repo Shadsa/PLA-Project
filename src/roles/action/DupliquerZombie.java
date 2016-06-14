@@ -1,12 +1,14 @@
 package roles.action;
 
+import java.util.Random;
+
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;
 import roles.World;
 import roles.States.Statut;
 
-public final class Dupliquer extends Action {
+public final class DupliquerZombie extends Action {
 
 	//Cardinaux _direction;
 	private static int _Id = Action.getId(1);
@@ -37,7 +39,8 @@ public final class Dupliquer extends Action {
 		
 		if(World.isfree(destX, destY))
 		{
-			if(pers.owner().changerRessource(-250))
+			Random R = new Random();
+			if(R.nextInt(pers.owner().getPersonnages().size()*2)<1)
 				pers.owner().createPersonnage(pers.classe(), destX, destY);
 			pers.setState(new States(Statut.ATTAQUE, direction));
 		}

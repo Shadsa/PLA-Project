@@ -1,8 +1,8 @@
 package cases;
 
+import roles.Joueur;
 import roles.Personnage;
 import roles.action.Action;
-import roles.action.Joueur;
 
 public class CaseAction extends Case {
 

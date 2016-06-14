@@ -26,8 +26,8 @@ import org.w3c.dom.DOMException;
 import XML.XML_Reader;
 import roles.Automate;
 import roles.Bonus;
-import roles.action.Joueur;
-import roles.action.World;
+import roles.Joueur;
+import roles.World;
 import roles.classe.Classe;
 import workshop.WorkshopCreator;
 

@@ -187,12 +187,6 @@
 		<action>Attendre</action>
 		<suivant>0</suivant>
 	</transition>
-	<transition poids="1">
-		<etat>0</etat>
-		<condition>UneCaseLibre</condition>
-		<action>DupliquerZombie</action>
-		<suivant>0</suivant>
-	</transition>
 	<transition poids="6">
 		<etat>0</etat>
 		<condition direction="N">Ennemi</condition>

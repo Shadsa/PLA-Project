@@ -5,8 +5,6 @@ import java.util.Observable;
 import cases.Case;
 import cases.CaseProperty;
 import roles.States.Statut;
-import roles.action.Joueur;
-import roles.action.World;
 import roles.classe.Classe;
 
 public class Personnage extends Observable{
@@ -132,24 +130,35 @@ public class Personnage extends Observable{
 		switch(direction){
 		case EST:
 			for(int range=1;range<=maxRange;range++)
-				for(int xy=-range;xy<=range;xy++)
-					if(World.Case(X()+range, Y()+xy)!=null && c.check(World.Case(X()+range, Y()+xy)))
+				for(int y=-range;y<=range;y++)
+					if(World.Case(X()+range, Y()+y)!=null && c.check(World.Case(X()+range, Y()+y))){
+						System.out.println("Arbre à l'est :"+range+" "+y);
 						return true;
+					}
+			break;
 		case OUEST:
 			for(int range=1;range<=maxRange;range++)
-				for(int xy=-range;xy<=range;xy++)
-					if(World.Case(X()-range, Y()+xy)!=null && c.check(World.Case(X()-range, Y()+xy)))
+				for(int y=-range;y<=range;y++)
+					if(World.Case(X()-range, Y()+y)!=null && c.check(World.Case(X()-range, Y()+y))){
+						System.out.println("Arbre à l'ouest :"+(-range)+" "+y);
 						return true;
+					}
+			break;
 		case SUD:
 			for(int range=1;range<=maxRange;range++)
-				for(int xy=-range;xy<=range;xy++)
-					if(World.Case(X()+xy, Y()+range)!=null && c.check(World.Case(X()+xy, Y()+range)))
+				for(int x=-range;x<=range;x++)
+					if(World.Case(X()+x, Y()+range)!=null && c.check(World.Case(X()+x, Y()+range))){
+						System.out.println("Arbre au sud :"+x+" "+range);
 						return true;
+					}
+			break;
 		case NORD:
 			for(int range=1;range<=maxRange;range++)
-				for(int xy=-range;xy<=range;xy++)
-					if(World.Case(X()+xy, Y()-range)!=null && c.check(World.Case(X()+xy, Y()-range)))
+				for(int x=-range;x<=range;x++)
+					if(World.Case(X()+x, Y()-range)!=null && c.check(World.Case(X()+x, Y()-range))){
+						System.out.println("Arbre au nord :"+x+" "+(-range));
 						return true;
+					}
 		}
 		return false;
 	}

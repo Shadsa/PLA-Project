@@ -54,17 +54,6 @@ public class CrossButton extends AbstractComponent {
 	    setLocation(x, y);
 	}
 
-	/*@Override
-	public void render(GUIContext container, Graphics g) throws SlickException
-	{
-		g.setFont(ttf);
-		InitGameState.UI.draw(x, y, x+23, y+height, 634, 118, 657, 141);
-		InitGameState.UI.draw(x+23, y, x+width-23, y+height, 659, 118, 681, 141);
-		InitGameState.UI.draw(x+width-23, y, x+width, y+height, 683, 118, 707, 141);
-
-		ttf.drawString(x + 12, y + 13, _text, Color.black);
-	}*/
-
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException
 	{
