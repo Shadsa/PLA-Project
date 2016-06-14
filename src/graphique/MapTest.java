@@ -72,7 +72,7 @@ public class MapTest {
 						spriteSheet.renderInUse(j*96-48, i*96-12, 0, 6);
 					continue;
 				}
-		        else if(vj.getNum() == Mur._id) 
+		        else if(vj.getNum() == Mur._id)
 		            img = 12;
 				else if (vj.getNum() == Plaine._id)
 					img = 2;
@@ -103,7 +103,7 @@ public class MapTest {
 							spriteSheet.renderInUse(j*96, i*96, 0, 9);
 						if(!((img&1) > 0 || (img&8) > 0) && j<map.get(0).size()-1 && i<map.size()-1 &&  map.get(i+1).get(j+1).getNum() != Eau._id)
 							spriteSheet.renderInUse(j*96, i*96, 0, 11);
-						if(!((img&1) > 0 || (img&4) > 0) && j<map.get(0).size()-10 && i>0 &&  map.get(i-1).get(j+1).getNum() != Eau._id)
+						if(!((img&1) > 0 || (img&4) > 0) && j<map.get(0).size()-1 && i>0 &&  map.get(i-1).get(j+1).getNum() != Eau._id)
 							spriteSheet.renderInUse(j*96, i*96, 0, 10);
 					continue;
 				}
