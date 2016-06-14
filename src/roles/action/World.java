@@ -60,8 +60,12 @@ public abstract class World {
 				for(Personnage p : j.getPersonnages() )
 					activated.add(p);
 		}
+		
 		for(Joueur j : vaincus){
 			_joueurs.remove(j);
+		}
+		if(_joueurs.size()==1){
+			System.out.println(_joueurs.get(0)._nom+" a gagné! Félicitations à lui, vraiment.");
 		}
 
 		Collections.shuffle(activated);
