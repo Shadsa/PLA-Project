@@ -435,7 +435,7 @@ public static void sinit() throws SlickException
 
 	    		g.drawAnimation(_Body[_Abody], x-32, y-60);
 
-	    if(_Awear != -1)
+	    if(_Awear != -1 && Habits[_Abody]!=null)
 	    	g.drawImage(Habits[_Abody].getImage(Hanimations[_Abody].getFrame()), x-32, y-60);
 
 	    if(_Aweapon != -1)
