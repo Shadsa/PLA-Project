@@ -129,26 +129,23 @@ public class Personnage extends Observable{
 	 * @return la direction vers laquelle se trouve la case la plus proche, ou null si aucune case n'a été trouvée
 	 */
 	public boolean find(CaseProperty c, Cardinaux direction, int maxRange){	
-		
-		if(direction==Cardinaux.EST){
+		switch(direction){
+		case EST:
 			for(int range=1;range<=maxRange;range++)
 				for(int xy=-range;xy<=range;xy++)
 					if(World.Case(X()+range, Y()+xy)!=null && c.check(World.Case(X()+range, Y()+xy)))
 						return true;
-		}
-		else if(direction==Cardinaux.OUEST){
+		case OUEST:
 			for(int range=1;range<=maxRange;range++)
 				for(int xy=-range;xy<=range;xy++)
 					if(World.Case(X()-range, Y()+xy)!=null && c.check(World.Case(X()-range, Y()+xy)))
 						return true;
-		}
-		else if(direction==Cardinaux.SUD){
+		case SUD:
 			for(int range=1;range<=maxRange;range++)
 				for(int xy=-range;xy<=range;xy++)
 					if(World.Case(X()+xy, Y()+range)!=null && c.check(World.Case(X()+xy, Y()+range)))
 						return true;
-		}
-		else if(direction==Cardinaux.NORD){
+		case NORD:
 			for(int range=1;range<=maxRange;range++)
 				for(int xy=-range;xy<=range;xy++)
 					if(World.Case(X()+xy, Y()-range)!=null && c.check(World.Case(X()+xy, Y()-range)))

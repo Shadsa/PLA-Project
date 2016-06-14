@@ -49,10 +49,20 @@ public abstract class World {
 	
 	public static void nextTurn()
 	{
+		ArrayList<Joueur> vaincus = new ArrayList<Joueur>();
 		ArrayList<Personnage> activated = new ArrayList<Personnage>();
-		for(Joueur j : _joueurs)
-			for(Personnage p : j.getPersonnages() )
-				activated.add(p);
+		for(Joueur j : _joueurs){
+			if(j.getPersonnages().isEmpty()){
+				vaincus.add(j);
+				System.out.print(j._nom+" a perdu!");
+			}
+			else
+				for(Personnage p : j.getPersonnages() )
+					activated.add(p);
+		}
+		for(Joueur j : vaincus){
+			_joueurs.remove(j);
+		}
 
 		Collections.shuffle(activated);
 		for(Personnage p : activated)

@@ -34,7 +34,7 @@ public final class AvancerHasard extends Action {
 		{
 			if(World.Case(destX, destY).type() instanceof Arbre)
 			{
-				System.out.print(pers.ID() + "j'avance vers l'arbre " + direction + destX + " " + destY + ".\n");
+				//System.out.print(pers.ID() + "j'avance vers l'arbre " + direction + destX + " " + destY + ".\n");
 				World.Case(destX, destY).setPersonnage(pers);
 				pers.setState(new States(Statut.HIDING, direction));
 			}
@@ -46,7 +46,7 @@ public final class AvancerHasard extends Action {
 			}
 			else
 			{
-				System.out.print(pers.ID() + "j'avance vers le " + direction + destX + " " + destY + ".\n");
+				//System.out.print(pers.ID() + "j'avance vers le " + direction + destX + " " + destY + ".\n");
 				World.Case(destX, destY).setPersonnage(pers);
 				pers.setState(new States(Statut.AVANCE, direction));
 			}

@@ -29,13 +29,15 @@ public final class Attaquer extends Action {
 			pers.setState(new States(Statut.ATTAQUE, _direction));
 			target.change_vie(- pers.damage());
 		}
-		else
+		else{				System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
 			if(World.Case(destX, destY) != null && World.Case(destX, destY).type().value() == Mur.getInstance().value())
 			{
 				System.out.println("THIS IS SPARTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 				World.Case(destX, destY).attaquerCase(pers.damage());
 				pers.setState(new States(Statut.ATTAQUE, _direction));
 			}
+		}
 	}
 
 	@Override

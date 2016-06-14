@@ -214,7 +214,7 @@ public class Carte extends Vector<Vector<Case>>{
 	}
 	
 	private void putLac(int x, int y, int facteur){
-		if(Case(x,y)!=null && Case(x,y).type().franchissable() && Case(x,y).type().value() != Eau.getInstance().value()){
+		if(Case(x,y)!=null && x>2 && x<_largeur-2 && Case(x,y).type().franchissable() && Case(x,y).type().value() != Eau.getInstance().value()){
 			Random R = new Random();
 			this.modifierCase(Eau.getInstance(), x, y);
 			if(facteur==1){
