@@ -25,7 +25,20 @@ public class Type extends Condition {
 		int destX = target.X() + ((_direction == Cardinaux.OUEST)? (-1) : ((_direction == Cardinaux.EST)? 1 : 0));
 		int destY = target.Y() + ((_direction == Cardinaux.NORD)? (-1) : ((_direction == Cardinaux.SUD)? 1 : 0));
 		Case c = World.Case(destX, destY);
-		if(c!=null && c instanceof Construction && target.owner() != ((Construction) c.type()).getOwner()){
+/*		System.out.println(c!=null);
+		System.out.println(c.type() instanceof Construction);
+		if(c!=null && c.type() instanceof Construction){
+		System.out.println(c!=null && target.owner() != ((Construction) c.type()).getOwner());
+		System.out.println(target.owner());
+		System.out.println(((Construction) c.type()).getOwner());
+		}
+		System.out.println("=============================");
+*/
+
+
+		if(c!=null && c.type() instanceof Construction && target.owner() != ((Construction) c.type()).getOwner()){
+			System.out.println(target.owner());
+			System.out.println(((Construction) c.type()).getOwner());
 			CaseProperty p = new TypeCheck(_type);
 			return p.check(c);
 		}

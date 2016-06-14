@@ -12,7 +12,6 @@ public class Mur extends TypeCase implements Construction {
 
 	protected static Action _action = new Attaquer(Cardinaux.EST);
 	
-	private static Mur _instance = new Mur();
 	
 	protected Joueur _owner;
 	
@@ -22,14 +21,8 @@ public class Mur extends TypeCase implements Construction {
 		return _id;
 	}
 
-	@Override
-	protected void Act(Personnage pers) {
-		_action.Act(pers);
+	public Mur(Personnage pers) {
 		setOwner(pers.owner());
-	}
-
-	public static TypeCase getInstance() {
-		return _instance;
 	}
 
 	@Override
@@ -43,6 +36,11 @@ public class Mur extends TypeCase implements Construction {
 	
 	public Joueur getOwner(){
 		return _owner;
+	}
+
+	@Override
+	protected void Act(Personnage pers) {
+		_action.Act(pers);
 	}
 
 }

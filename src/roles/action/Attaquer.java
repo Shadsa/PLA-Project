@@ -1,6 +1,7 @@
 package roles.action;
 
 import cases.Arbre;
+import cases.Construction;
 import cases.Mur;
 import cases.TypeCase;
 import roles.Cardinaux;
@@ -29,9 +30,11 @@ public final class Attaquer extends Action {
 			pers.setState(new States(Statut.ATTAQUE, _direction));
 			target.change_vie(- pers.damage());
 		}
-		else{
-			if(World.Case(destX, destY) != null && World.Case(destX, destY).type().value() == Mur.getInstance().value())
+		else{				System.out.println("sldfuvherdjcemdfcjremj");
+
+			if(World.Case(destX, destY) != null && World.Case(destX, destY).type() instanceof Construction)
 			{
+				System.out.println("Hi");
 				World.Case(destX, destY).attaquerCase(pers.damage());
 				pers.setState(new States(Statut.ATTAQUE, _direction));
 			}

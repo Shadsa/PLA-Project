@@ -253,7 +253,7 @@
 			<condition1 direction="N">Libre</condition1>
 			<condition2 quantite="250">RessourcesPossedees</condition2>
 		</condition>
-		<action direction="N">Dupliquer</action>
+		<action>Dupliquer</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="10">
@@ -262,7 +262,7 @@
 			<condition1 direction="S">Libre</condition1>
 			<condition2 quantite="250">RessourcesPossedees</condition2>
 		</condition>
-		<action direction="S">Dupliquer</action>
+		<action>Dupliquer</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="10">
@@ -271,7 +271,7 @@
 			<condition1 direction="E">Libre</condition1>
 			<condition2 quantite="250">RessourcesPossedees</condition2>
 		</condition>
-		<action direction="E">Dupliquer</action>
+		<action>Dupliquer</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="10">
@@ -280,7 +280,7 @@
 			<condition1 direction="O">Libre</condition1>
 			<condition2 quantite="250">RessourcesPossedees</condition2>
 		</condition>
-		<action direction="O">Dupliquer</action>
+		<action>Dupliquer</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="5">
