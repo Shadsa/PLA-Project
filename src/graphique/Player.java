@@ -418,7 +418,7 @@ public static void sinit() throws SlickException
 			    	g.drawAnimation(animations[anim], x-32, y-60);
 
 			    if(_human != TypeUnit.Zombie && vanim != -1)
-			    	g.drawAnimation(Habits[anim], x-32, y-60);
+			    	g.drawImage(Habits[anim].getImage(Hanimations[anim].getFrame()), x-32, y-60);
 
 			    if(danim != -1 && anim != 12)
 			    	g.drawAnimation(Danimations[danim], x-32, y-60);
