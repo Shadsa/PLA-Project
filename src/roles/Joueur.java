@@ -47,6 +47,18 @@ public class Joueur extends Observable{
 		notifyObservers(newPers);
 		return newPers;
 	}
+	
+	public int nbUnit(Classe c){
+		int count=0;
+		for(Personnage p : _personnages)
+			if(p.classe()==c)
+				count++;
+		return count;
+	}
+	
+	public int ratioUnit(Classe c){
+		return 100*(nbUnit(c)/_personnages.size());
+	}
 
 	public int ressources(){
 		return _ressources;
