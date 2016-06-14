@@ -266,7 +266,15 @@ public class MapGameState extends BasicGameState {
 		if(showhud) {
 			this.hud.render(g);
 		}
-
+		
+		//Affichage fin
+		if (World.fini) {
+			if(World.joueurs().size()==1){
+				g.drawString(World.joueurs().get(0).nom()+" a gagné! Félicitations à lui, vraiment.", container.getWidth()/2-175, container.getHeight()/2);
+				g.resetTransform();
+			}
+		}
+		
 		//Gestion de la pause
 		if (container.isPaused()) {
 		    Rectangle rect = new Rectangle (0, 0, container.getScreenWidth(), container.getScreenHeight());
@@ -418,26 +426,15 @@ public class MapGameState extends BasicGameState {
 			setZoom(zoom() * 1.03f);
 			setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
 			setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
-			//Marche pas   _mouseMapX                                            x,y   ->   (50,100)
-			/*
-			 *
-		_mouseMapX = (mouseAbsoluteX + offsetMapX()) / zoom();
-		_mouseMapY = (mouseAbsoluteY + offsetMapY()) / zoom();
-			*/
-			//setOffsetMapY(container.getScreenWidth()/zoom()/2 - mouseAbsoluteX);
 		}
+		
 		//Zoom arrière
 		if (_tailleMapX * TileSize * zoom() > container.getWidth() && _tailleMapX * TileSize * zoom() > container.getHeight()) {
 			if (_input.isKeyDown(209) && zoom() > 0) {
 				setZoom(zoom() / 1.03f);
-				//Marche pas
-				//setOffsetMapY(container.getScreenWidth()/zoom()/2 - mouseAbsoluteX);
-				//setOffsetMapX(container.getScreenHeight()/zoom()/2 - mouseAbsoluteY);
 				if (zoom() < 0) {
 					setZoom(0);
 				}
-
-
 				setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
 				setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
 			}
@@ -558,12 +555,16 @@ public class MapGameState extends BasicGameState {
 	public void mouseWheelMoved(int n) {
 		if (n < 0) {
 			if (zoom() > 0) {
-				setZoom(zoom() - 0.05f);
+				setZoom(zoom() / 1.10f);
 			} else {
 				setZoom(0);
 			}
+			setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
+			setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
 		} else if (n > 0) {
-			setZoom(zoom() + 0.05f);
+			setZoom(zoom() * 1.10f);
+			setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
+			setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
 		}
 	}
 

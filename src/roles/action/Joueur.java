@@ -10,7 +10,7 @@ import roles.Cardinaux;
 
 public class Joueur extends Observable{
 
-	String _nom;
+	private String _nom;
 	ArrayList<Personnage> _personnages;
 	ArrayList<Automate> _automates;
 	ArrayList<Classe> _classes; //indicage sur celui de Automate pour la cores'
@@ -55,5 +55,9 @@ public class Joueur extends Observable{
 			return true;
 		}
 		return false;
+	}
+
+	public String nom() {
+		return _nom;
 	}
 }
