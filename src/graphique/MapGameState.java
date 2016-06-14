@@ -126,6 +126,7 @@ public class MapGameState extends BasicGameState {
 		_bouton_menuPrincipal = new Bouton(container, new Image("src/asset/buttons/bouton_menu_principal_off.png"), new Image("src/asset/buttons/bouton_menu_principal_on.png"), container.getWidth()/2-62, container.getHeight()/2+40, 126, 30);
 		_bouton_reprendre = new Bouton(container, new Image("src/asset/buttons/bouton_reprendre_off.png"), new Image("src/asset/buttons/bouton_reprendre_on.png"), container.getWidth()/2-62, container.getHeight()/2-80, 126, 30);
 
+		World.BuildMap(_tailleMapY,_tailleMapX);
 		/*
 		Automate aut1 = new Automate(2);
 
@@ -147,7 +148,7 @@ public class MapGameState extends BasicGameState {
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.SUD), new Libre(Cardinaux.SUD), 1, 1);
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.OUEST), new Libre(Cardinaux.OUEST), 1, 1);
 		aut1.ajoute_transition(1, new AvancerJoueur(), new OrdreDonne(), 1, 5);
-		*/
+		*//*
 		File f = new File("./creation_automates/sortie.xml");
 		Automate aut1 = null;
 		try {
@@ -167,7 +168,7 @@ public class MapGameState extends BasicGameState {
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.OUEST), new Et(new Libre(Cardinaux.OUEST),new ArbreProche(Cardinaux.OUEST)), 1, 2);
 		aut1.ajoute_transition(0, new Avancer(Cardinaux.SUD), new Et(new Libre(Cardinaux.SUD),new ArbreProche(Cardinaux.SUD)), 0, 2);
 		aut1.ajoute_transition(1, new Avancer(Cardinaux.SUD), new Et(new Libre(Cardinaux.SUD),new ArbreProche(Cardinaux.SUD)), 1, 2);
-	    ArrayList<Automate> autlist = new ArrayList<Automate>(); 
+	    ArrayList<Automate> autlist = new ArrayList<Automate>();
 		autlist.add(aut1);
 		Classe generique = new Classe(10,5,0,"default class",Bonus.VIE);
 		ArrayList<Classe> classes = new ArrayList<Classe>();
@@ -175,7 +176,7 @@ public class MapGameState extends BasicGameState {
 		Joueur j2 = new Joueur("Moi", autlist,classes);
 		Joueur jZ = new Joueur("Zombie", autlist,classes);
 		World.addPlayer(j2);
-		World.addPlayer(jZ);
+		World.addPlayer(jZ);*//*
 		World.BuildMap(_tailleMapY,_tailleMapX);
 		try {
 			World.putAutomate(j2.automate(0), 1, 1, j2);
@@ -210,22 +211,14 @@ public class MapGameState extends BasicGameState {
 		jZ.createPersonnage(0, 1, 6);
 		jZ.createPersonnage(0, 1, 7);
 		jZ.createPersonnage(0, 1, 8);
-		jZ.createPersonnage(0, 1, 9);
+		jZ.createPersonnage(0, 1, 9);*/
 		//personnage = j2.getPersonnages().get(0);
 
 
 		this.container = container;
-		this.map.init();
 
 		Player.sinit();
-		Player pla;
-		for(Joueur j : World.getPlayers())
-		{
-			_joueurs.add(new graphique.GJoueur((j == World.getPlayers().get(0))?TypeUnit.Human:TypeUnit.Zombie));
-			j.addObserver(_joueurs.get(_joueurs.size()-1));
-			for(Personnage pers : j.getPersonnages())
-				_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
-		}
+
 
 		//System.out.print(_players.size());
 
@@ -640,4 +633,71 @@ public class MapGameState extends BasicGameState {
 		this._offsetMapY = y;
 
 	}
+	public void setGame(ArrayList<UnitInfo> uIFs) {
+
+		int nb = 0;
+		ArrayList<Automate> autlist = new ArrayList<Automate>();
+		ArrayList<Classe> classes = new ArrayList<Classe>();
+		for(UnitInfo ui : uIFs)
+		{
+			nb++;
+			autlist.add(ui.automate);
+			classes.add(ui.classe);
+		}
+		World.addPlayer(new Joueur("Human", autlist, classes));
+		World.addPlayer(new Joueur("Zombie", autlist, classes));
+
+		try {
+			World.putAutomate(World.getPlayers().get(0).automate(0), 1, 1, World.getPlayers().get(0));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(int i = 0; i < nb; i++)
+			World.getPlayers().get(0).createPersonnage(i, i, 0);
+		for(int i = 0; i < nb; i++)
+			World.getPlayers().get(1).createPersonnage(i, i, _tailleMapY-1);
+
+		Player pla;
+		for(Joueur j : World.getPlayers())
+		{
+			_joueurs.add(new graphique.GJoueur((j == World.getPlayers().get(0))?TypeUnit.Human:TypeUnit.Zombie));
+			j.addObserver(_joueurs.get(_joueurs.size()-1));
+			for(Personnage pers : j.getPersonnages())
+				_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
+		}
+		try {
+			this.map.init();
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

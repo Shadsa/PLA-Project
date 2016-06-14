@@ -14,7 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class WorkshopCreator {
 
-	private String filepath = "../../Workshop/";
+	private String filepath = "../../WorkShop/";
 	private ArrayList<String> deckActionName;
 	private ArrayList<String> deckConditionName;	
 	private ArrayList<String> deckClasseName;
@@ -27,75 +27,80 @@ public class WorkshopCreator {
 		deckCondition = new ArrayList<ArrayList<Class<Condition>>>();
 		deckActionName = new ArrayList<String>();
 		deckConditionName = new ArrayList<String>();
-		load();
+		try {
+			load();
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public void load(){
-		// WorkShop Action
-		File f = new File(filepath+"/action.deck/");
-		ArrayList<File> files=new ArrayList<File>();
-		for (File file : f.listFiles()){
-			files.add(file);
+	public void load() throws IOException, ClassNotFoundException{
+		ArrayList<File> files = new ArrayList<File>();
+		FileInputStream fis = null;
+	    FileOutputStream fos = null;
+		int res = 0;
+		String buf = "";
+		
+		//LOAD OF ACTION DECK
+		File f = new File(filepath+"action.deck/");
+		for(File name : f.listFiles()){
+			if(name.isFile()){
+				files.add(name);
+			}			
 		}
-		int taille = files.size(); // Nombre de fichiers total dans le dossier
-		for (int i=0;i< taille;i++){
-			files.get(i); // me donne le fichier
-			deckActionName.add(files.get(i).getName());
-			deckAction.add(new ArrayList<Class<Action>>()); //initialisation d'un arraylist
-			files.get(i).list();
-			FileInputStream fis = null;
-			      try {
-			         fis = new FileInputStream(new File(files.get(i).getName()));
-			         byte[] buf = new byte[8];
-			         int n = 0;
-			       /*  while ((n = fis.read(buf)) >= 0) {
-			            // On écrit dans notre deuxième fichier avec l'objet adéquat
-			        	Class.forName()
-			            // On affiche ce qu'a lu notre boucle au format byte et au
-			            // format char
-			            for (byte bit : buf) {
-			               System.out.print("\t" + bit + "(" + (char) bit + ")");
-			               System.out.println("");
-			            }
-			            buf = new byte[8];
-
-			         }
-
-			      } catch (FileNotFoundException e) {
-			         e.printStackTrace();
-			      } catch (IOException e) {
-			         e.printStackTrace();
-			      } finally {
-			         try {
-			            if (fis != null)
-			               fis.close();
-			         } catch (IOException e) {
-			            e.printStackTrace();
-			         }
-			         }
-			      }
-			   }
-			}*/
-				//Class.forName(ligne lue)
-
-
-			      }
-
-			deckAction.get(i);
+		
+		for(int i=0;i<files.size();i++){
+			ArrayList<Class<Action>> newdeck = new ArrayList<Class<Action>>();
+			fis = new FileInputStream(files.get(i));
+			while((res = fis.read()) != -1){
+				if(res == '\n' || res == -1){
+					Class newAction = Class.forName(buf);
+					newdeck.add(newAction);
+					buf="";
+				}else{
+					buf+= (char)res;
+				}				
+			}
+			deckAction.add(newdeck);
 		}
-
-		// WorkShop Condition
-	}
-
-
-	public ArrayList<Action> getDeckAction(String name){
+		
+		//LOAD OF COND DECK
+		files.clear();
+		buf = "";
+		
+		f = new File(filepath+"condition.deck/");
+		for(File name : f.listFiles()){
+			if(name.isFile()){
+				files.add(name);
+			}			
+		}
+		
+		for(int i=0;i<files.size();i++){
+			ArrayList<Class<Condition>> newdeck = new ArrayList<Class<Condition>>();
+			fis = new FileInputStream(files.get(i));
+			while((res = fis.read()) != -1){
+				if(res == '\n' || res == -1){
+					Class newAction = Class.forName(buf);
+					newdeck.add(newAction);
+					buf="";
+				}else{
+					buf+= (char)res;
+				}				
+			}
+			deckCondition.add(newdeck);
+		}
+		
+		
+		
 		
 	}
-	
+
+
 //STRUCTURE
 	
 	public void createClasse(String name, Bonus bonus, String deckActName, String deckCondName){
-			Classe newclass = new Classe(10,5,2,name,bonus);
+			Classe newclass = new Classe(10,5,2,2,name,bonus,getDeckAction(deckActName),getDeckCondition(deckCondName));
 			deckClasse.add(newclass);
 			deckClasseName.add(name);
 	}

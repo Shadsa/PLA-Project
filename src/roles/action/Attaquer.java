@@ -1,5 +1,8 @@
 package roles.action;
 
+import cases.Arbre;
+import cases.Mur;
+import cases.TypeCase;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;
@@ -26,6 +29,12 @@ public final class Attaquer extends Action {
 			pers.setState(new States(Statut.ATTAQUE, _direction));
 			target.change_vie(- pers.damage());
 		}
+		else
+			if(World.Case(destX, destY) != null && World.Case(destX, destY).type().value() == Mur.getInstance().value())
+			{
+				World.Case(destX, destY).attaquerCase(pers.damage());
+				pers.setState(new States(Statut.ATTAQUE, _direction));
+			}
 	}
 
 	@Override

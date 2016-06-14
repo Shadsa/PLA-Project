@@ -13,6 +13,15 @@ public class Carte extends Vector<Vector<Case>>{
 	private int _hauteur;
 	private int _largeur;
 	
+	public int hauteur() {
+		return _hauteur;
+	}
+
+	public int largeur() {
+		return _largeur;
+	}
+
+
 	public Carte(int hauteur,int largeur){
 		super(hauteur);
 		_hauteur = hauteur;
@@ -46,6 +55,7 @@ public class Carte extends Vector<Vector<Case>>{
 		return (y < 0 || x < 0 || y >= size() || x >= get(y).size())? null : get(y).get(x);
 	}
 
+
 	public Boolean isfree(int x, int y) {
 		return Case(x, y) != null && Case(x, y).isfree();
 	}
@@ -64,6 +74,14 @@ public class Carte extends Vector<Vector<Case>>{
 		get(y).set(x, c);
 	}
 
+	public void putCase(Case c) throws Exception {
+		int x = c.X();
+		int y = c.Y();
+		if(x < 0 || y < 0 || x >= size() || y >= get(x).size())
+			throw new Exception("Dépassement de la carte");
+		get(y).set(x, c);
+	}
+	
 	/**
 	 *
 	 * @param a : automate à placer
@@ -73,14 +91,13 @@ public class Carte extends Vector<Vector<Case>>{
 	 */
 	public void putAutomate(Automate a, int x, int y, Joueur j) throws Exception {
 		int xdeb = x, dim=0;
-		ArrayList<CaseAction> action_list = new ArrayList();
-		for(ArrayList<CaseAction> ligne : a.get_action()){
+		ArrayList<CaseAction> action_list = new ArrayList<CaseAction>();
+		for(ArrayList<CaseAction> ligne : a.get_action())
 			for(CaseAction c : ligne){
 				action_list.add(c);
 				dim++;
 				
 			}
-		}
 		dim = x + (int) Math.sqrt(dim);
 		for(CaseAction c : action_list){
 			try {
@@ -92,7 +109,29 @@ public class Carte extends Vector<Vector<Case>>{
 				y++;
 				x=xdeb;
 			}
-				
+		}
+	}
+	
+	public void putAutomates(ArrayList<Automate> A, int x, int y, Joueur j) throws Exception {
+		int xdeb = x, dim=0;
+		ArrayList<CaseAction> action_list = new ArrayList<CaseAction>();
+		for(Automate a : A)
+			for(ArrayList<CaseAction> ligne : a.get_action())
+				for(CaseAction c : ligne){
+					action_list.add(c);
+					dim++;
+				}
+		dim = x + (int) Math.sqrt(dim);
+		for(CaseAction c : action_list){
+			try {
+				putCaseAction(c,x++,y,j);
+			} catch (Exception e) {
+				throw new Exception("Impossible de placer l'automate");
+			}
+			if(x>dim){
+				y++;
+				x=xdeb;
+			}
 		}
 	}
 

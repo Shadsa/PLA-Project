@@ -18,7 +18,7 @@ type attribut =
   | Poids of int
   | Compose of String.t
   | NbEtats of int
-  | None
+  | Rien
 
 type action =
   | Attendre
@@ -28,6 +28,7 @@ type action =
   | Dupliquer of cellule
   | Raser
   | CouperBois of cellule
+  | AvancerHasard
 (*
   | ...
 *)
@@ -40,6 +41,8 @@ type condition =
   | OrdreDonne
   | Type of typeCellule*cellule
   | RessourcesPossedees of int
+  | ArbreProche of cellule
+  | EnnemiProche of cellule
 (*
   | ...
 *)
@@ -50,27 +53,35 @@ type poids = int
 type transition = etat * condition * action * etat * poids
 type automate = transition list
 
-let output = open_out "sortie.xml"
+let output : (out_channel option) ref = ref(None)
 
 let rec output_tab (n : int) =
-  if n>0 then
-    begin
-    output_string output "\t";
-    output_tab (n-1)
-    end
+  match !output with
+   | Some(o) ->
+    if n>0 then
+      begin
+      output_string o "\t";
+      output_tab (n-1)
+      end
+   | None -> ()
 
 let output_stab (s : String.t) (p : int) =
-  output_tab p;
-  output_string output s;
-  output_char output '\n'
+  match !output with
+   | Some(o) ->
+    begin
+    output_tab p;
+    output_string o s;
+    output_char o '\n'
+    end
+   | None -> ()
 
 let string_of_cellule (c : cellule) =
   match c with
-   |N -> "N"
-   |O -> "O"
-   |S -> "S"
-   |E -> "E"
-   |C -> "C"
+   | N -> "N"
+   | O -> "O"
+   | S -> "S"
+   | E -> "E"
+   | C -> "C"
 
 let string_of_type (t : typeCellule) =
   match t with
@@ -99,16 +110,16 @@ let fbalise(s : String.t) =
   
   
 let output_cour (e : etat) (p : int) =
-  output_stab ((balise "etat" None)^(string_of_int e)^(fbalise "etat")) p
+  output_stab ((balise "etat" Rien)^(string_of_int e)^(fbalise "etat")) p
 
 let output_suiv (e : etat) (p : int) =
-  output_stab ((balise "suivant" None)^(string_of_int e)^(fbalise "suivant")) p
+  output_stab ((balise "suivant" Rien)^(string_of_int e)^(fbalise "suivant")) p
 
 
 let rec output_cond (c : condition) (p : int) (suff : String.t) =
   let b = "condition"^suff in
   match c with
-   | Vide -> output_stab ((balise b None)^"Vide"^(fbalise b)) p
+   | Vide -> output_stab ((balise b Rien)^"Vide"^(fbalise b)) p
    | Et(c1,c2) ->
     begin
     output_stab (balise b (Compose("Et"))) p;
@@ -118,21 +129,23 @@ let rec output_cond (c : condition) (p : int) (suff : String.t) =
     end
    | Ennemi(cellule) -> output_stab ((balise b (Direction(cellule)))^"Ennemi"^(fbalise b)) p
    | Libre(cellule) -> output_stab ((balise b (Direction(cellule)))^"Libre"^(fbalise b)) p
-   | OrdreDonne -> output_stab ((balise b None)^"OrdreDonne"^(fbalise b)) p
+   | OrdreDonne -> output_stab ((balise b Rien)^"OrdreDonne"^(fbalise b)) p
    | Type(typeCellule,cellule) -> output_stab ((balise b (Type(typeCellule,cellule)))^"Type"^(fbalise b)) p
    | RessourcesPossedees(quantite) -> output_stab ((balise b (Quantite(quantite)))^"RessourcesPossedees"^(fbalise b)) p
-   |_ -> ()
+   | ArbreProche(cellule) -> output_stab ((balise b (Direction(cellule)))^"ArbreProche"^(fbalise b)) p
+   | EnnemiProche(cellule) -> output_stab ((balise b (Direction(cellule)))^"EnnemiProche"^(fbalise b)) p 
 
 let output_act (a : action) (p : int) =
   let b = "action" in
   match a with
-   | Attendre -> output_stab ((balise b None)^"Attendre"^(fbalise b)) p
+   | Attendre -> output_stab ((balise b Rien)^"Attendre"^(fbalise b)) p
    | Avancer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Avancer"^(fbalise b)) p
    | Attaquer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Attaquer"^(fbalise b)) p
-   | AvancerJoueur -> output_stab ((balise b None)^"AvancerJoueur"^(fbalise b)) p
+   | AvancerJoueur -> output_stab ((balise b Rien)^"AvancerJoueur"^(fbalise b)) p
    | Dupliquer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Dupliquer"^(fbalise b)) p
-   | Raser -> output_stab ((balise b None)^"Raser"^(fbalise b)) p
+   | Raser -> output_stab ((balise b Rien)^"Raser"^(fbalise b)) p
    | CouperBois(cellule) -> output_stab ((balise b (Direction(cellule)))^"CouperBois"^(fbalise b)) p
+   | AvancerHasard -> output_stab ((balise b Rien)^"AvancerHasard"^(fbalise b)) p
   
   
 let output_transition ((ec,c,a,es,pds) : transition) (p : int) =
@@ -179,19 +192,57 @@ let hostile (p : poids) (e1 : etat) (e2 : etat) : automate =
 
 let recolteur (p : poids) (e1 : etat) (e2 : etat) : automate =
   List.map (fun d -> (e1,Type(Arbre,d),CouperBois(d),e2,p)) [N;S;E;O]
-
+  
+let createur (p : poids) (e1 : etat) (e2 : etat) : automate =
+  List.map (fun d -> (e1,Et(Libre(d),RessourcesPossedees(250)),Dupliquer(d),e2,p)) [N;S;E;O]
+(*
 let createur (p : poids) (el : etat list) : automate =
-  List.concat (List.map (fun e -> List.map (fun d -> (e,Et(Libre(d),RessourcesPossedees(30)),Dupliquer(d),e,p)) [N;S;E;O]) el)
-
+  List.concat (List.map (fun e -> List.map (fun d -> (e,Et(Libre(d),RessourcesPossedees(250)),Dupliquer(d),e,p)) [N;S;E;O]) el)
+*)
 let errant (p : poids) (e1 : etat) (e2 : etat) : automate =
-  List.map (fun d -> (e1,Libre(d),Avancer(d),e2,p)) [N;S;E;O]
+  [(e1,Vide,AvancerHasard,e2,p)]
+(*
+let fonceur (p : poids) (e1 : etat) (eL : etat list) : automate =
+  List.concat (List.map (fun ed -> List.map2 (fun e d -> (ed,Libre(d),Avancer(d),e,p+
+  begin
+  match d with
+   | N when ed=List.nth eL 0 -> 1
+   | S when ed=List.nth eL 1 -> 1
+   | E when ed=List.nth eL 2 -> 1
+   | O when ed=List.nth eL 3 -> 1
+   | _ -> 0
+  end
+  )) eL [N;S;E;O]) (e1::eL))
+*)
+let fonceur (p : poids) (e1 : etat) (eL : etat list) : automate =
+  List.concat (List.map2 (fun e d -> [(e1,Libre(d),Avancer(d),e,p); (e,Libre(d),Avancer(d),e,p); (e,Vide,Attendre,e1,0)]) eL [N;S;E;O])
+  
+let rec supercombine (a : 'a list) (b : 'b list) (c : 'c list) : ('a*'b*'c) list =
+  match a,b,c with
+   | (ahd::atl,bhd::btl,chd::ctl) -> (ahd,bhd,chd)::(supercombine atl btl ctl)
+   | _ -> []
 
-let aut1 = (List.concat(List.map2 (errant 1) [0;1;2] [1;2;0]))@(createur 4 [0;1;2])@(List.concat(List.map2 (recolteur 3) [0;1;2] [1;2;0]))
+let chercheur (p : poids) (ed : etat list) (e1 : etat list) (e2 : etat list) (er : etat) : automate =
+  List.concat(List.map (fun (e1,e2,d) -> List.concat (List.map (fun e -> [(e,Et(Libre(d),ArbreProche(d)),Avancer(d),e1,p);(e1,Et(Libre(d),ArbreProche(d)),Avancer(d),e1,p+1);(e1,ArbreProche(d),Attendre,e2,p);(e1,Vide,Attendre,er,0);(e2,Et(Libre(d),ArbreProche(d)),Avancer(d),e1,p+1);(e2,Vide,Attendre,er,0)]) ed)) (supercombine e1 e2 [N;S;E;O]))
+
+let chasseur (p : poids) (ed : etat list) (e1 : etat list) (e2 : etat list) (er : etat) : automate =
+  List.concat(List.map (fun (e1,e2,d) -> List.concat (List.map (fun e -> [(e,Et(Libre(d),EnnemiProche(d)),Avancer(d),e1,p);(e1,Et(Libre(d),EnnemiProche(d)),Avancer(d),e1,p+1);(e1,EnnemiProche(d),Attendre,e2,p);(e1,Vide,Attendre,er,0);(e2,Et(Libre(d),EnnemiProche(d)),Avancer(d),e1,p+1);(e2,Vide,Attendre,er,0)]) ed)) (supercombine e1 e2 [N;S;E;O]))
+
+let aut1 = List.concat ([errant 1 0 0; chercheur 3 [0] [1;3;5;7] [2;4;6;8] 0; createur 10 0 0]@List.map (fun e -> (recolteur 5 e 0)) [0;1;2;3;4;5;6;7;8])
+let aut2 = List.concat ([errant 1 0 0; chasseur 3 [0] [1;3;5;7] [2;4;6;8] 0; createur 10 0 0]@List.map (fun e -> (recolteur 5 e 0)) [0;1;2;3;4;5;6;7;8])
+  
+
+(*let aut1 = (List.concat(List.map2 (errant 1) [0;1;2] [1;2;0]))@(createur 4 [0;1;2])@(List.concat(List.map2 (recolteur 3) [0;1;2] [1;2;0]))*)
 (*let aut1 = [(0,Et(OrdreDonne,Libre(E)),Avancer(E),1,1);(1,Et(Libre(O),OrdreDonne),Avancer(O),2,1);(2,Et(Et(OrdreDonne,Libre(N)),Et(Libre(N),OrdreDonne)),Avancer(N),3,1);(3,Et(OrdreDonne,Et(OrdreDonne,Et(OrdreDonne,Libre(S)))),Avancer(S),0,1)]*)
 
 let main =
-  output_string output "<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n\n";
-  (*output_stab (balise "liste" None) 0;*)
+  let o = ref(open_out "Ouvrier.xml") in
+  output := Some(!o);
+  output_string !o "<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n\n";
   output_automate aut1 0;
-  (*output_stab (fbalise "liste") 0;*)
-  close_out output
+  close_out !o;
+  o := open_out "Zombie.xml";
+  output := Some(!o);
+  output_string !o "<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n\n";
+  output_automate aut1 0;
+  close_out !o;

@@ -10,12 +10,20 @@ public abstract class Case extends Observable{
 	protected int _x;
 	protected int _y;
 	protected TypeCase _type;
+	protected int _vie;
 
 	Case(int x, int y, TypeCase type)
 	{
 		_x = x;
 		_y = y;
 		_type = type;
+		if(type instanceof Arbre)
+			_vie=((Arbre) type)._vie;
+		else
+			if(type instanceof Mur)
+				_vie=((Mur) type)._vie;
+			else
+				_vie=1;
 	}
 
 	public Boolean isfree() {
@@ -32,9 +40,24 @@ public abstract class Case extends Observable{
 			personnage.setCase(this);
 		}
 	}
-	
+
+	public void attaquerCase(int force){
+		_vie-=force;
+		if(_vie<=0){
+			modifierCase(Plaine.getInstance());
+			_vie=1;
+		}
+	}
+
 	public void modifierCase(TypeCase type){
 		_type = type;
+		if(type instanceof Arbre)
+			_vie=((Arbre) type)._vie;
+		else
+			if(type instanceof Mur)
+				_vie=((Mur) type)._vie;
+			else
+				_vie=1;
 		setChanged();
 		notifyObservers(value());
 	}
@@ -52,7 +75,7 @@ public abstract class Case extends Observable{
 	{
 		return _y;
 	}
-	
+
 
 	public TypeCase type() {
 		return _type;
