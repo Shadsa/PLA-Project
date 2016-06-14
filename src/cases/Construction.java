@@ -1,6 +1,6 @@
 package cases;
 
-import roles.action.Joueur;
+import roles.Joueur;
 
 public interface Construction {
 	

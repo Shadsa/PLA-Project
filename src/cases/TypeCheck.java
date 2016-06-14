@@ -2,14 +2,14 @@ package cases;
 
 public class TypeCheck implements CaseProperty {
 
-	int _type;
+	Class<? extends TypeCase> _type;
 	
-	public TypeCheck(TypeCase t){
-		_type=t.value();
+	public TypeCheck(Class<? extends TypeCase> t){
+		_type=t;
 	}
 	@Override
 	public boolean check(Case c) {
-		return c!=null && c.type().value()==_type;
+		return c!=null && _type.isInstance(c);
 	}
 
 }

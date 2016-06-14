@@ -12,10 +12,10 @@ import roles.World;
 
 public class Type extends Condition {
 
-	TypeCase _type;
+	Class<? extends TypeCase> _type;
 	Cardinaux _direction;
 
-	public Type(TypeCase type, Cardinaux card) {
+	public Type(Class<? extends TypeCase> type, Cardinaux card) {
 		_type = type;
 		_direction = card;
 	}

@@ -17,6 +17,6 @@ public class ArbreProche extends Condition {
 	@Override
 	public boolean value(Personnage target) {
 		if(_direction==null) return false;
-		return target.find(new TypeCheck(Arbre.getInstance()), _direction, 5);
+		return target.find(new TypeCheck(Arbre.class), _direction, 5);
 	}
 }

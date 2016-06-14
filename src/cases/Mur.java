@@ -4,7 +4,7 @@ import roles.Cardinaux;
 import roles.Personnage;
 import roles.action.Action;
 import roles.action.Attaquer;
-import roles.action.Joueur;
+import roles.Joueur;
 
 public class Mur extends TypeCase implements Construction {
 	

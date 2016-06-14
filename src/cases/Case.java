@@ -3,7 +3,7 @@ package cases;
 import java.util.Observable;
 
 import roles.Personnage;
-import roles.action.Joueur;
+import roles.Joueur;
 
 public abstract class Case extends Observable{
 
