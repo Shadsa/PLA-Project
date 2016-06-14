@@ -12,7 +12,7 @@ public final class Attendre extends Action {
 
 	@Override
 	public void Act(Personnage pers) {
-		pers.setState(new States(Statut.ATTENDS, Cardinaux.NORD));
+		pers.setState(new States(Statut.ATTENDS, Cardinaux.SUD));
 	}
 
 	@Override

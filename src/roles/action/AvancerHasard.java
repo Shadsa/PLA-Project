@@ -5,6 +5,7 @@ import cases.Case;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;
+import roles.World;
 import roles.States.Statut;
 
 public final class AvancerHasard extends Action {
@@ -32,21 +33,19 @@ public final class AvancerHasard extends Action {
 		int destY = pers.Y() + ((direction == Cardinaux.NORD)? (-1) : ((direction == Cardinaux.SUD)? 1 : 0));
 		if(World.isfree(destX, destY))
 		{
+			//System.out.println(pers.ID() + " j'avance vers le " + direction +" "+ destX +" "+ destY + " etat="+pers.etat());
 			if(World.Case(destX, destY).type() instanceof Arbre)
 			{
-				//System.out.print(pers.ID() + "j'avance vers l'arbre " + direction + destX + " " + destY + ".\n");
 				World.Case(destX, destY).setPersonnage(pers);
 				pers.setState(new States(Statut.HIDING, direction));
 			}
 			else if(World.Case(pers.X(), pers.Y()).type() instanceof Arbre)
 			{
-				//System.out.print(pers.ID() + "j'avance vers le " + _direction + destX + destY + ".\n");
 				World.Case(destX, destY).setPersonnage(pers);
 				pers.setState(new States(Statut.REVEAL, direction));
 			}
 			else
 			{
-				//System.out.print(pers.ID() + "j'avance vers le " + direction + destX + " " + destY + ".\n");
 				World.Case(destX, destY).setPersonnage(pers);
 				pers.setState(new States(Statut.AVANCE, direction));
 			}

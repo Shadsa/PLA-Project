@@ -1,4 +1,4 @@
-package roles.action;
+package roles;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,9 +10,6 @@ import cases.Case;
 import cases.Plaine;
 import cases.TypeCase;
 import graphique.ObjetTest;
-import roles.Automate;
-import roles.Carte;
-import roles.Personnage;
 import roles.classe.Classe;
 
 public abstract class World {

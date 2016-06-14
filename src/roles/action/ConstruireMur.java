@@ -3,7 +3,8 @@ package roles.action;
 import cases.Mur;  
 import roles.Cardinaux;  
 import roles.Personnage;  
-import roles.States;  
+import roles.States;
+import roles.World;
 import roles.States.Statut;  
  
 public class ConstruireMur extends Action {  

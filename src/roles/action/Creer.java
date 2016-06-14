@@ -6,15 +6,15 @@ import roles.States;
 import roles.World;
 import roles.States.Statut;
 
-public final class Dupliquer extends Action {
+public final class Creer extends Action {
 
-	//Cardinaux _direction;
+	int _type;
 	private static int _Id = Action.getId(1);
 
-	/*public Dupliquer(Cardinaux card) {
+	public Creer(int type) {
 		super();
-		_direction = card;
-	}*/
+		_type = type;
+	}
 
 	@Override
 	public void Act(Personnage pers) {
@@ -38,7 +38,7 @@ public final class Dupliquer extends Action {
 		if(World.isfree(destX, destY))
 		{
 			if(pers.owner().changerRessource(-250))
-				pers.owner().createPersonnage(pers.classe(), destX, destY);
+				pers.owner().createPersonnage(_type, destX, destY);
 			pers.setState(new States(Statut.ATTAQUE, direction));
 		}
 	}

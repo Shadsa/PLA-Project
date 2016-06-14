@@ -24,15 +24,15 @@ import roles.Bonus;
 import roles.classe.*;
 import roles.Automate;
 import roles.Cardinaux;
+import roles.Joueur;
 import roles.Personnage;
+import roles.World;
 import roles.States.Statut;
 import roles.action.Attaquer;
 import roles.action.Avancer;
 import roles.action.AvancerJoueur;
 import roles.action.Dupliquer;
-import roles.action.Joueur;
 import roles.action.Raser;
-import roles.action.World;
 import roles.conditions.ArbreProche;
 import roles.conditions.Ennemi;
 import roles.conditions.Et;
@@ -68,8 +68,8 @@ public class MapGameState extends BasicGameState {
 	public static Player _target = null;
 	public static Personnage _targetp = null;
 
-	private int _tailleMapY = 20;
-	private int _tailleMapX = 35;
+	private int _tailleMapY = 45;
+	private int _tailleMapX = 75;
 
 	private float _offsetMapX = 0;
 	private float _offsetMapY = 0;
@@ -629,10 +629,12 @@ public class MapGameState extends BasicGameState {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		for(int i = 0; i < nb; i++)
-			World.getPlayers().get(0).createPersonnage(i, i, 0);
-		for(int i = 0; i < nb; i++)
-			World.getPlayers().get(1).createPersonnage(i, i, _tailleMapY-1);
+		//for(int i = 0; i < nb; i++)
+			World.getPlayers().get(0).createPersonnage(classes.get(0), 1, 1);
+		//for(int i = 0; i < nb; i++)
+			World.getPlayers().get(1).createPersonnage(classes.get(classes.size()-1), _tailleMapX-1, _tailleMapY-1);
+
+		Player pla;
 		for(Joueur j : World.getPlayers())
 		{
 			_joueurs.add(new graphique.GJoueur((j == World.getPlayers().get(0))?TypeUnit.Human:TypeUnit.Zombie));

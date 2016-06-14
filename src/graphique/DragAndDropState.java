@@ -8,7 +8,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import cases.Case;
-import roles.action.World;
+import roles.World;
 
 public class DragAndDropState extends BasicGameState {
 	private Bouton _bouton_drag;
