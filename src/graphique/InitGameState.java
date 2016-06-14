@@ -65,6 +65,7 @@ public class InitGameState extends BasicGameState {
 
 		woks = new WorkshopCreator();
 		woks.createClasse("Ouvrier", null, "Ouvrier", "Ouvrier");
+		woks.createClasse("Default", null, "RandomNoIdea", "ClassTest");
 
 
 		Button.init();
@@ -74,7 +75,7 @@ public class InitGameState extends BasicGameState {
 		autlist = new ArrayList<Automate>();
 		classes = new ArrayList<Classe>();
 		Classe generique = woks.getDeckClasse("Ouvrier");//= new Classe(10,5,5,0,"default class",null);
-		Classe boost = new Classe(10,5,5,0,"default class",Bonus.VIE);
+		Classe boost = woks.getDeckClasse("Default");//new Classe(10,5,5,0,"default class",Bonus.VIE);
   		World.classes.add(generique);
   		World.classes.add(boost);
 		background = new Image("src/asset/images/skeleton_army.jpg");
