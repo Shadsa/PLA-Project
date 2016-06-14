@@ -1,54 +1,30 @@
 <?xml version = "1.0" encoding="UTF-8" standalone="no" ?>
 
 <automate nbEtats="9">
-  	<transition poids="20"> 
-    	<etat>0</etat> 
-    	<condition direction="N">Mur</condition> 
-    	<action direction="N">Attaquer</action> 
-    	<suivant>0</suivant> 
-  	</transition> 
-	<transition poids="20"> 
-    	<etat>0</etat> 
-    	<condition direction="O">Mur</condition> 
-    	<action direction="O">Attaquer</action> 
-    	<suivant>0</suivant> 
-  	</transition> 
-  	<transition poids="20"> 
-    	<etat>0</etat> 
-    	<condition direction="S">Mur</condition> 
-    	<action direction="S">Attaquer</action> 
-    	<suivant>0</suivant> 
-  	</transition> 
-  	<transition poids="20"> 
-    	<etat>0</etat> 
-    	<condition direction="E">Mur</condition> 
-    	<action direction="E">Attaquer</action> 
-    	<suivant>0</suivant> 
-  	</transition> 
-  	  	<transition poids="20"> 
-    	<etat>1</etat> 
-    	<condition direction="N">Mur</condition> 
-    	<action direction="N">Attaquer</action> 
-    	<suivant>1</suivant> 
-  	</transition> 
-	<transition poids="20"> 
-    	<etat>1</etat> 
-    	<condition direction="O">Mur</condition> 
-    	<action direction="O">Attaquer</action> 
-    	<suivant>1</suivant> 
-  	</transition> 
-  	<transition poids="20"> 
-    	<etat>1</etat> 
-    	<condition direction="S">Mur</condition> 
-    	<action direction="S">Attaquer</action> 
-    	<suivant>1</suivant> 
-  	</transition> 
-  	<transition poids="20"> 
-    	<etat>1</etat> 
-    	<condition direction="E">Mur</condition> 
-    	<action direction="E">Attaquer</action> 
-    	<suivant>1</suivant> 
-  	</transition> 
+	<transition poids="5">
+		<etat>0</etat>
+		<condition type="Mur" direction="N">Type</condition>
+		<action direction="N">Attaquer</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="5">
+		<etat>0</etat>
+		<condition type="Mur" direction="S">Type</condition>
+		<action direction="S">Attaquer</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="5">
+		<etat>0</etat>
+		<condition type="Mur" direction="E">Type</condition>
+		<action direction="E">Attaquer</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="5">
+		<etat>0</etat>
+		<condition type="Mur" direction="O">Type</condition>
+		<action direction="O">Attaquer</action>
+		<suivant>0</suivant>
+	</transition>
   	<transition poids="10"> 
     	<etat>3</etat> 
     	<condition compose="Et"> 

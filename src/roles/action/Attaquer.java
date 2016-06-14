@@ -25,15 +25,13 @@ public final class Attaquer extends Action {
 		if(World.Case(destX, destY) != null && World.Case(destX, destY).Personnage() != null)
 		{
 			Personnage target = World.Case(destX, destY).Personnage();
-			System.out.print(pers.ID() + " attaque " + target.ID() + ".\n");
+			//System.out.print(pers.ID() + " attaque " + target.ID() + ".\n");
 			pers.setState(new States(Statut.ATTAQUE, _direction));
 			target.change_vie(- pers.damage());
 		}
-		else{				System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-
+		else{
 			if(World.Case(destX, destY) != null && World.Case(destX, destY).type().value() == Mur.getInstance().value())
 			{
-				System.out.println("THIS IS SPARTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 				World.Case(destX, destY).attaquerCase(pers.damage());
 				pers.setState(new States(Statut.ATTAQUE, _direction));
 			}

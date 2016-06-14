@@ -2,6 +2,7 @@ package cases;
 
 import roles.Personnage;
 import roles.action.Action;
+import roles.action.Joueur;
 
 public abstract class TypeCase {
 
@@ -11,6 +12,7 @@ public abstract class TypeCase {
 	private static int _nextId = 1;
 	
 	protected Action _action;
+	
 	
 	protected abstract void Act(Personnage pers);
 	

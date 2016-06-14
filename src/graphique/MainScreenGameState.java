@@ -61,8 +61,8 @@ public class MainScreenGameState extends BasicGameState {
 		_bouton_fullScreen = new Button(container, "Plein écran", container.getWidth()/2-62, container.getHeight()/2, normalImage, overImage, downImage);
 		_bouton_son = new Button(container, "Désactiver son", container.getWidth()/2-62, container.getHeight()/2-40, normalImage, overImage, downImage);
 		_bouton_quitter = new Button(container, "Quitter", container.getWidth()/2-62, container.getHeight()/2+40, normalImage, overImage, downImage);
-		music = new Music("src/asset/musics/menu_music.ogg");
-	    music.loop();
+		//music = new Music("src/asset/musics/menu_music.ogg");
+	   // music.loop();
 	    sizeScreen = "Taille de l'écran : " + container.getScreenWidth() + "x" + container.getScreenHeight();
 
 		/*// Chargement d'une nouvelle police de caractères
