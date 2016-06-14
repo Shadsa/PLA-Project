@@ -14,6 +14,7 @@ type typeCellule =
 type attribut =
   | Direction of cellule
   | Type of typeCellule*cellule
+  | TypeG of typeCellule
   | Quantite of int
   | Poids of int
   | Compose of String.t
@@ -28,9 +29,9 @@ type action =
   | DupliquerZombie
   | Raser
   | AvancerHasard
+  | CouperBois
   | Avancer of cellule
   | Attaquer of cellule
-  | CouperBois of cellule
   | Creer of int
 (*
   | ...
@@ -47,6 +48,7 @@ type condition =
   | Et of condition*condition
   | Ou of condition*condition
   | Type of typeCellule*cellule
+  | UneCaseType of typeCellule
   | RessourcesPossedees of int
   | RatioInf of int
   | NbInf of int
@@ -103,6 +105,7 @@ let balise (s : String.t) (a : attribut) =
   match a with
    | Direction(d) -> " direction=\""^(string_of_cellule d)^"\""
    | Type(t,d) -> " type=\""^(string_of_type t)^"\" direction=\""^(string_of_cellule d)^"\""
+   | TypeG(t) -> " type=\""^(string_of_type t)^"\""
    | Quantite(i) -> " quantite=\""^(string_of_int i)^"\""
    | Unite(i) -> " unite=\""^(string_of_int i)^"\""
    | Poids(i) -> " poids=\""^(string_of_int i)^"\""
@@ -149,6 +152,7 @@ let rec output_cond (c : condition) (p : int) (suff : String.t) =
    | Ennemi(cellule) -> output_stab ((balise b (Direction(cellule)))^"Ennemi"^(fbalise b)) p
    | Libre(cellule) -> output_stab ((balise b (Direction(cellule)))^"Libre"^(fbalise b)) p
    | Type(typeCellule,cellule) -> output_stab ((balise b (Type(typeCellule,cellule)))^"Type"^(fbalise b)) p
+   | UneCaseType(typeCellule) -> output_stab ((balise b (TypeG(typeCellule)))^"UneCaseType"^(fbalise b)) p
    | RessourcesPossedees(quantite) -> output_stab ((balise b (Quantite(quantite)))^"RessourcesPossedees"^(fbalise b)) p
    | NbInf(quantite) -> output_stab ((balise b (Quantite(quantite)))^"NbInf"^(fbalise b)) p
    | RatioInf(quantite) -> output_stab ((balise b (Quantite(quantite)))^"RatioInf"^(fbalise b)) p    
@@ -162,9 +166,9 @@ let output_act (a : action) (p : int) =
    | Dupliquer -> output_stab ((balise b Rien)^"Dupliquer"^(fbalise b)) p
    | DupliquerZombie -> output_stab ((balise b Rien)^"DupliquerZombie"^(fbalise b)) p
    | Raser -> output_stab ((balise b Rien)^"Raser"^(fbalise b)) p
+   | CouperBois -> output_stab ((balise b Rien)^"CouperBois"^(fbalise b)) p
    | Avancer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Avancer"^(fbalise b)) p
    | Attaquer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Attaquer"^(fbalise b)) p
-   | CouperBois(cellule) -> output_stab ((balise b (Direction(cellule)))^"CouperBois"^(fbalise b)) p
    | Creer(t) -> output_stab ((balise b (Unite(t)))^"Creer"^(fbalise b)) p
   
   
@@ -211,7 +215,7 @@ let hostile (p : poids) (e1 : etat) (e2 : etat) : automate =
   List.map (fun e -> (e,Type(Batiment),Raser,e,p)) el*)
 
 let recolteur (p : poids) (e1 : etat) (e2 : etat) : automate =
-  List.map (fun d -> (e1,Type(Arbre,d),CouperBois(d),e2,p)) [N;S;E;O]
+  [(e1,UneCaseType(Arbre),CouperBois,e2,p)]
   
 let createur (p : poids) (e1 : etat) (e2 : etat) (r : int) (nb : int) : automate =
   [(e1,Et(Et(UneCaseLibre,RessourcesPossedees(250)),Ou(NbInf(nb),RatioInf(r))),Dupliquer,e2,p)]
