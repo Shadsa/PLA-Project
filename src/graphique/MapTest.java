@@ -72,6 +72,8 @@ public class MapTest {
 						spriteSheet.renderInUse(j*96-48, i*96-12, 0, 6);
 					continue;
 				}
+		        else if(vj.getNum() == Mur._id) 
+		            img = 12;
 				else if (vj.getNum() == Plaine._id)
 					img = 2;
 				else if (vj.getNum() == Caillou._id)
