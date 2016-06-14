@@ -4,6 +4,7 @@ import cases.Arbre;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;
+import roles.World;
 import roles.States.Statut;
 
 public final class AvancerJoueur extends Action {

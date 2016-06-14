@@ -11,7 +11,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 import cases.*;
-import roles.action.World;
+import roles.World;
 
 public class MapTest {
 

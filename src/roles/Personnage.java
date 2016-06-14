@@ -5,8 +5,6 @@ import java.util.Observable;
 import cases.Case;
 import cases.CaseProperty;
 import roles.States.Statut;
-import roles.action.Joueur;
-import roles.action.World;
 import roles.classe.Classe;
 
 public class Personnage extends Observable{

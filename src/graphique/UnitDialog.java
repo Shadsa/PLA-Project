@@ -30,7 +30,7 @@ import javax.swing.JTextField;
 import XML.XML_Reader;
 import roles.Automate;
 import roles.Bonus;
-import roles.action.World;
+import roles.World;
 import roles.classe.Classe;
 
 public class UnitDialog extends JDialog {

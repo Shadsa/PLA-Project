@@ -4,7 +4,7 @@ import cases.CaseProperty;
 import cases.EnnemiCheck;
 import roles.Cardinaux;
 import roles.Personnage;
-import roles.action.World;
+import roles.World;
 
 public class Ennemi extends Condition {
 

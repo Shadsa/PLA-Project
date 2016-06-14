@@ -4,7 +4,7 @@ import cases.Arbre;
 import cases.EnnemiCheck;
 import roles.Cardinaux;
 import roles.Personnage;
-import roles.action.World;
+import roles.World;
 
 public class EnnemiProche extends Condition {
 

@@ -4,8 +4,8 @@ import cases.CaseProperty;
 import cases.EnnemiCheck;  
 import cases.LibreCheck;  
 import roles.Cardinaux;  
-import roles.Personnage;  
-import roles.action.World;  
+import roles.Personnage;
+import roles.World;  
  
 public class Mur extends Condition {  
  

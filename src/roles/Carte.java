@@ -5,8 +5,6 @@ import java.util.Random;
 import java.util.Vector;
 
 import cases.*;
-import roles.action.Joueur;
-import roles.action.World;
 
 public class Carte extends Vector<Vector<Case>>{
 

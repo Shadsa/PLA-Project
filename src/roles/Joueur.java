@@ -1,12 +1,9 @@
-package roles.action;
+package roles;
 
 import java.util.ArrayList;
 import java.util.Observable;
 
-import roles.Automate;
-import roles.Personnage;
 import roles.classe.Classe;
-import roles.Cardinaux;
 
 public class Joueur extends Observable{
 

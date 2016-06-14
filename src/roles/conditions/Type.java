@@ -5,7 +5,7 @@ import cases.TypeCase;
 import cases.TypeCheck;
 import roles.Cardinaux;
 import roles.Personnage;
-import roles.action.World;
+import roles.World;
 
 public class Type extends Condition {
 
