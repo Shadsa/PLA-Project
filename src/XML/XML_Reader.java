@@ -133,17 +133,17 @@ public class XML_Reader {
 					if(att.item(0).getNodeName()=="quantite")
 						cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(int.class).newInstance(Integer.parseInt(att.item(0).getNodeValue()));
 					else{
-						if(att.item(1).getNodeValue()=="Mur"){
+						/*if(att.item(1).getNodeValue()=="Mur"){
 							cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(TypeCase.class,Cardinaux.class).newInstance(Class.forName("cases."+att.item(1).getNodeValue()).getClass(),C);
 						}
-						else{
-							Method meth = null;
-							meth = Class.forName("cases."+att.item(1).getNodeValue()).getMethod("getInstance",  (Class<?>[]) null);
-							if(meth != null)
-								cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(TypeCase.class,Cardinaux.class).newInstance(meth.invoke(null, null),C);
-							else
-								cond = (Condition) Class.forName("roles.conditions."+s1).newInstance();
-						}
+						else{*/
+							//Method meth = null;
+							//meth = Class.forName("cases."+att.item(1).getNodeValue()).getMethod("getInstance",  (Class<?>[]) null);
+							//if(meth != null)
+								cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(Class.class,Cardinaux.class).newInstance(Class.forName("cases."+att.item(1).getNodeValue()),C);
+							//else
+							//	cond = (Condition) Class.forName("roles.conditions."+s1).newInstance();
+						//}
 					}
 			}
 		}
