@@ -100,11 +100,11 @@ public class MapGameState extends BasicGameState {
 	private StateGame game;
 
 	//Boutons
-	private Bouton _bouton_fullScreen;
-	private Bouton _bouton_son;
-	private Bouton _bouton_quitter;
-	private Bouton _bouton_reprendre;
-	private Bouton _bouton_menuPrincipal;
+	private Button _bouton_fullScreen;
+	private Button _bouton_son;
+	private Button _bouton_quitter;
+	private Button _bouton_reprendre;
+	private Button _bouton_menuPrincipal;
 
 	public float zoom() {
 		return _zoom;
@@ -120,11 +120,15 @@ public class MapGameState extends BasicGameState {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		_input = container.getInput();
 		this.game = (StateGame) game;
-		_bouton_fullScreen = new Bouton(container, new Image("src/asset/buttons/bouton_NOfullscreen_off.png"), new Image("src/asset/buttons/bouton_NOfullscreen_on.png"), container.getWidth()/2-62, container.getHeight()/2, 126, 30);
-		_bouton_son = new Bouton(container, new Image("src/asset/buttons/bouton_son_active_off.png"), new Image("src/asset/buttons/bouton_son_active_on.png"), container.getWidth()/2-62, container.getHeight()/2-40, 126, 30);
-		_bouton_quitter = new Bouton(container, new Image("src/asset/buttons/bouton_quitter_off.png"), new Image("src/asset/buttons/bouton_quitter_on.png"), container.getWidth()/2-62, container.getHeight()/2+80, 126, 30);
-		_bouton_menuPrincipal = new Bouton(container, new Image("src/asset/buttons/bouton_menu_principal_off.png"), new Image("src/asset/buttons/bouton_menu_principal_on.png"), container.getWidth()/2-62, container.getHeight()/2+40, 126, 30);
-		_bouton_reprendre = new Bouton(container, new Image("src/asset/buttons/bouton_reprendre_off.png"), new Image("src/asset/buttons/bouton_reprendre_on.png"), container.getWidth()/2-62, container.getHeight()/2-80, 126, 30);
+		Image img = new Image("src/asset/sprites/ui_big_pieces.png");
+		Image normalImage = img.getSubImage(633, 23, 123, 27);
+		Image overImage = img.getSubImage(633, 53, 123, 27);
+		Image downImage = img.getSubImage(633, 83, 123, 27);
+		_bouton_fullScreen = new Button(container, "Plein écran", container.getWidth()/2-62, container.getHeight()/2, normalImage, overImage, downImage);
+		_bouton_son = new Button(container, "Désactiver son", container.getWidth()/2-62, container.getHeight()/2-40, normalImage, overImage, downImage);
+		_bouton_quitter = new Button(container, "Quitter", container.getWidth()/2-62, container.getHeight()/2+80, normalImage, overImage, downImage);
+		_bouton_menuPrincipal = new Button(container, "Menu principal", container.getWidth()/2-62, container.getHeight()/2+40, normalImage, overImage, downImage);
+		_bouton_reprendre = new Button(container, "Reprendre", container.getWidth()/2-62, container.getHeight()/2-80, normalImage, overImage, downImage);
 
 		World.BuildMap(_tailleMapY,_tailleMapX);
 		/*
@@ -257,7 +261,6 @@ public class MapGameState extends BasicGameState {
 		g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
 		g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 90);
 		g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 110);
-		//g.drawString("Direction joueur : " + World.getPlayers().get(0).directionJoueur(), 10, 130);
 
 		//Affichage des huds
 		if(showhud) {
@@ -270,7 +273,6 @@ public class MapGameState extends BasicGameState {
 		    g.setColor(new Color (0, 0, 0, alpha));
 		    g.fill(rect);
 		    g.setColor(Color.white);
-		    //g.drawString("PAUSE", container.getScreenWidth()/2-5, container.getScreenHeight()/2);
 		    _bouton_fullScreen.render(container, g);
 		    _bouton_son.render(container, g);
 		    _bouton_quitter.render(container, g);
@@ -291,6 +293,12 @@ public class MapGameState extends BasicGameState {
 	protected long _time = 0;
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		//Mise à jour des boutons
+		_bouton_fullScreen.update(container);
+		_bouton_son.update(container);
+		_bouton_quitter.update(container);
+		_bouton_reprendre.update(container);
+		_bouton_menuPrincipal.update(container);
 		for(graphique.GJoueur j : _joueurs)
 			for(int i = j.getPersonnage().size()-1; i>=0; i--)
 				if(j.getPersonnage().get(i).AnimDead>0)
@@ -434,47 +442,42 @@ public class MapGameState extends BasicGameState {
 		if (container.isPaused()) {
 
 			//Configuration du bouton pause
-			 if (_bouton_reprendre.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+			 if (_bouton_reprendre.isPressed()) {
 				 container.setPaused(!container.isPaused());
 			}
 
-			if (_bouton_quitter.isMouseButtonDownOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+			if (_bouton_quitter.isPressed()) {
 				container.exit();
 			}
 
 			//Configuration du bouton plein écran
-			if (_bouton_fullScreen.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+			if (_bouton_fullScreen.isPressed()) {
 				_input.clearMousePressedRecord();
 				if (container.isFullscreen()) {
-					_bouton_fullScreen.setNormalImage(new Image("src/asset/buttons/bouton_NOfullscreen_off.png"));
-					_bouton_fullScreen.setMouseOverImage(new Image("src/asset/buttons/bouton_NOfullscreen_on.png"));
+					_bouton_fullScreen.setText("Plein écran");
 					((AppGameContainer) container).setDisplayMode(800,600, false);
 
 				} else {
-					_bouton_fullScreen.setNormalImage(new Image("src/asset/buttons/bouton_fullscreen_off.png"));
-					_bouton_fullScreen.setMouseOverImage(new Image("src/asset/buttons/bouton_fullscreen_on.png"));
+					_bouton_fullScreen.setText("Fenêtré");
 					((AppGameContainer) container).setDisplayMode(container.getScreenWidth(),container.getScreenHeight(), true);
 				}
 			}
 
 			//Configuration du bouton son
-			if (_bouton_son.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+			if (_bouton_son.isPressed()) {
 				if (container.getMusicVolume() > 0) {
 					container.setMusicVolume(0);
 					container.setSoundVolume(0);
-					_bouton_son.setNormalImage(new Image("src/asset/buttons/bouton_son_desactive_off.png"));
-					_bouton_son.setMouseOverImage(new Image("src/asset/buttons/bouton_son_desactive_on.png"));
+					_bouton_son.setText("Activer son");
 				} else {
 					container.setMusicVolume(100);
 					container.setSoundVolume(100);
-					_bouton_son.setNormalImage(new Image("src/asset/buttons/bouton_son_active_off.png"));
-					_bouton_son.setMouseOverImage(new Image("src/asset/buttons/bouton_son_active_on.png"));
+					_bouton_son.setText("Désactiver son");
 				}
 			}
 
-
 			//Configuration du bouton menu principal
-			if (_bouton_menuPrincipal.isMouseButtonPressedOnArea(_input, Input.MOUSE_LEFT_BUTTON)) {
+			if (_bouton_menuPrincipal.isPressed()) {
 				_input.clearMousePressedRecord();
 				this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
 			}
@@ -489,10 +492,8 @@ public class MapGameState extends BasicGameState {
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-		_bouton_son.setNormalImage(container.getMusicVolume() > 0 ? new Image("src/asset/buttons/bouton_son_active_off.png") : new Image("src/asset/buttons/bouton_son_desactive_off.png"));
-		_bouton_son.setMouseOverImage(container.getMusicVolume() > 0 ? new Image("src/asset/buttons/bouton_son_active_on.png") : new Image("src/asset/buttons/bouton_son_desactive_on.png"));
-		_bouton_fullScreen.setNormalImage(container.isFullscreen() ? new Image("src/asset/buttons/bouton_fullscreen_off.png") : new Image("src/asset/buttons/bouton_NOfullscreen_off.png"));
-		_bouton_fullScreen.setMouseOverImage(container.isFullscreen() ? new Image("src/asset/buttons/bouton_fullscreen_on.png") : new Image("src/asset/buttons/bouton_NOfullscreen_on.png"));
+		_bouton_son.setText(container.getMusicVolume() > 0 ? "Désactiver son" : "Activer son");
+		_bouton_fullScreen.setText(container.isFullscreen() ? "Fenêtré" : "Plein écran");
 	}
 
 	public void keyReleased(int key, char c) {
@@ -523,31 +524,6 @@ public class MapGameState extends BasicGameState {
 			else
 				_targetp.setDirection(null);
 		break;
-		/*
-			case Input.KEY_DOWN:
-				if(World.getPlayers().get(0).directionJoueur() == null)
-					World.getPlayers().get(0).setDirection(Cardinaux.SUD);
-				else
-					World.getPlayers().get(0).setDirection(null);
-			break;
-			case Input.KEY_UP:
-				if(World.getPlayers().get(0).directionJoueur() == null)
-					World.getPlayers().get(0).setDirection(Cardinaux.SUD);
-				else
-					World.getPlayers().get(0).setDirection(null);
-			break;
-			case Input.KEY_LEFT:
-				if(World.getPlayers().get(0).directionJoueur() == null)
-					World.getPlayers().get(0).setDirection(Cardinaux.EST);
-				else
-					World.getPlayers().get(0).setDirection(null);
-			break;
-			case Input.KEY_RIGHT:
-				if(World.getPlayers().get(0).directionJoueur() == null)
-					World.getPlayers().get(0).setDirection(Cardinaux.OUEST);
-				else
-					World.getPlayers().get(0).setDirection(null);
-			break;*/
 		}
 	}
 
@@ -558,7 +534,6 @@ public class MapGameState extends BasicGameState {
 	}*/
 
 	public void mousePressed(int arg0, int arg1, int arg2) {
-		//if (Input.MOUSE_LEFT_BUTTON == arg0) {//&& mouseMapX() >= this.player.getX()-32 && mouseMapX() <= this.player.getX()+32 && mouseMapY() >= this.player.getY()-60 && mouseMapY() <= this.player.getY()+4) {
 		for(graphique.GJoueur j : _joueurs)
 			for(Player p : j.getPersonnage())
 				if (Input.MOUSE_LEFT_BUTTON == arg0 && curseurSurPerso(p, mouseMapX(), mouseMapY())) {
@@ -567,8 +542,6 @@ public class MapGameState extends BasicGameState {
 				this.showhud = true;
 				return;
 			}
-		//}
-
 	}
 
 	//Gestion du zoom avec molette de souris
@@ -582,13 +555,6 @@ public class MapGameState extends BasicGameState {
 		} else if (n > 0) {
 			setZoom(zoom() + 0.05f);
 		}
-	}
-
-	public void mouseReleased(int arg0, int arg1, int arg2) {
-		/*if (Input.MOUSE_LEFT_BUTTON == arg0) {
-			this.showhud = false;
-		}*/
-
 	}
 
 	//Méthode permettant de savoir si le curseur de la souris est sur le personnage
@@ -656,8 +622,6 @@ public class MapGameState extends BasicGameState {
 			World.getPlayers().get(0).createPersonnage(i, i, 0);
 		for(int i = 0; i < nb; i++)
 			World.getPlayers().get(1).createPersonnage(i, i, _tailleMapY-1);
-
-		Player pla;
 		for(Joueur j : World.getPlayers())
 		{
 			_joueurs.add(new graphique.GJoueur((j == World.getPlayers().get(0))?TypeUnit.Human:TypeUnit.Zombie));
@@ -672,30 +636,3 @@ public class MapGameState extends BasicGameState {
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
