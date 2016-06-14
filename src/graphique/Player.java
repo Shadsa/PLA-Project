@@ -19,6 +19,11 @@ import roles.States.Statut;
 
 public class Player implements Observer{
 
+	private Animation[] _Body;
+	private int _Abody;
+	private int _Aweapon;
+	private int _Awear;
+
 	private float _destX, _destY;
 	private boolean _hide;
 
@@ -74,6 +79,11 @@ public class Player implements Observer{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		_Body = (_human != TypeUnit.Zombie)? Hanimations : animations ;
+		_Abody = 0;
+		_Aweapon = -1;
+		_Awear = -1;
 	}
 
 public static void sinit() throws SlickException
@@ -364,7 +374,7 @@ public static void sinit() throws SlickException
 	}
 
 	public void render(Graphics g) throws SlickException {
-		int anim = 0;
+		/*int anim = 0;
 		int dir = 0;
 		int danim = -1;
 		int vanim = -1;
@@ -421,7 +431,15 @@ public static void sinit() throws SlickException
 			    	g.drawImage(Habits[anim].getImage(Hanimations[anim].getFrame()), x-32, y-60);
 
 			    if(danim != -1 && anim != 12)
-			    	g.drawAnimation(Danimations[danim], x-32, y-60);
+			    	g.drawAnimation(Danimations[danim], x-32, y-60);*/
+
+	    		g.drawAnimation(_Body[_Abody], x-32, y-60);
+
+	    if(_Awear != -1)
+	    	g.drawImage(Habits[_Abody].getImage(Hanimations[_Abody].getFrame()), x-32, y-60);
+
+	    if(_Aweapon != -1)
+	    	g.drawAnimation(Danimations[_Aweapon], x-32, y-60);
 	}
 
 	/**
@@ -473,6 +491,7 @@ public static void sinit() throws SlickException
 	    		_state.statut = Statut.HIDE;
 	    	else
 	    		_state.statut = Statut.ATTENDS;
+			refreshAnimation();
 	    }
 	}
 
@@ -541,6 +560,7 @@ public static void sinit() throws SlickException
 					_state = (States)obj;
 					AnimDuration += MapGameState.Tick;
 				}
+				refreshAnimation();
 			}
 		}
 		private void setDirection(Cardinaux dir) {
@@ -565,4 +585,56 @@ public static void sinit() throws SlickException
 			return AnimDuration;
 		}
 
+		private void refreshAnimation()
+		{
+			int anim = 0;
+			int dir = 0;
+			int danim = -1;
+			_Awear = -1;
+			//Affichage du personnage avec l'ombre et modification des coordonnées des pieds du personnage
+					if(_state.direction != null)
+					switch(_state.direction)
+					{
+					case NORD: dir = 0; break;
+					case SUD: dir = 2; break;
+					case EST: dir = 3; break;
+					case OUEST: dir = 1; break;
+					}
+
+				    switch(_state.statut)
+				    {
+				    case AVANCE:
+				    	anim = 4;
+				    	_Awear = anim;
+				    break;
+				    case ATTENDS:
+				    	anim = 0;
+				    	_Awear = anim;
+				    break;
+					case ATTAQUE:
+						anim = 8;
+						_Awear = anim;
+						danim = dir;
+					break;
+					case HIDING:
+						anim = 13;
+					break;
+					case HIDE:
+						return;
+					case REVEAL:
+						anim = 17;
+					break;
+				    }
+
+				    anim += dir;
+
+				    if(_isDead && AnimDuration <= 0) {
+				    	anim = 12;
+				    }
+
+				    _Abody = anim;
+				    if(_human == TypeUnit.Zombie)
+				    	_Awear = -1;
+				    _Aweapon = danim;
+		}
 }
