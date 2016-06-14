@@ -25,7 +25,7 @@ type action =
   | Avancer of cellule
   | Attaquer of cellule
   | AvancerJoueur
-  | Dupliquer of cellule
+  | Dupliquer
   | Raser
   | CouperBois of cellule
   | AvancerHasard
@@ -43,6 +43,7 @@ type condition =
   | RessourcesPossedees of int
   | ArbreProche of cellule
   | EnnemiProche of cellule
+  | UneCaseLibre
 (*
   | ...
 *)
@@ -133,7 +134,8 @@ let rec output_cond (c : condition) (p : int) (suff : String.t) =
    | Type(typeCellule,cellule) -> output_stab ((balise b (Type(typeCellule,cellule)))^"Type"^(fbalise b)) p
    | RessourcesPossedees(quantite) -> output_stab ((balise b (Quantite(quantite)))^"RessourcesPossedees"^(fbalise b)) p
    | ArbreProche(cellule) -> output_stab ((balise b (Direction(cellule)))^"ArbreProche"^(fbalise b)) p
-   | EnnemiProche(cellule) -> output_stab ((balise b (Direction(cellule)))^"EnnemiProche"^(fbalise b)) p 
+   | EnnemiProche(cellule) -> output_stab ((balise b (Direction(cellule)))^"EnnemiProche"^(fbalise b)) p
+   | UneCaseLibre -> output_stab ((balise b Rien)^"UneCaseLibre"^(fbalise b)) p
 
 let output_act (a : action) (p : int) =
   let b = "action" in
@@ -142,7 +144,7 @@ let output_act (a : action) (p : int) =
    | Avancer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Avancer"^(fbalise b)) p
    | Attaquer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Attaquer"^(fbalise b)) p
    | AvancerJoueur -> output_stab ((balise b Rien)^"AvancerJoueur"^(fbalise b)) p
-   | Dupliquer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Dupliquer"^(fbalise b)) p
+   | Dupliquer -> output_stab ((balise b Rien)^"Dupliquer"^(fbalise b)) p
    | Raser -> output_stab ((balise b Rien)^"Raser"^(fbalise b)) p
    | CouperBois(cellule) -> output_stab ((balise b (Direction(cellule)))^"CouperBois"^(fbalise b)) p
    | AvancerHasard -> output_stab ((balise b Rien)^"AvancerHasard"^(fbalise b)) p
@@ -194,7 +196,7 @@ let recolteur (p : poids) (e1 : etat) (e2 : etat) : automate =
   List.map (fun d -> (e1,Type(Arbre,d),CouperBois(d),e2,p)) [N;S;E;O]
   
 let createur (p : poids) (e1 : etat) (e2 : etat) : automate =
-  List.map (fun d -> (e1,Et(Libre(d),RessourcesPossedees(250)),Dupliquer(d),e2,p)) [N;S;E;O]
+  [(e1,Et(UneCaseLibre,RessourcesPossedees(250)),Dupliquer,e2,p)]
 (*
 let createur (p : poids) (el : etat list) : automate =
   List.concat (List.map (fun e -> List.map (fun d -> (e,Et(Libre(d),RessourcesPossedees(250)),Dupliquer(d),e,p)) [N;S;E;O]) el)
