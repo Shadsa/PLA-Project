@@ -217,6 +217,7 @@ public static void sinit() throws SlickException
 		SpriteSheet HspriteSheet3 = new SpriteSheet("src/asset/sprites/Human_Die.png", 64, 64);
 		SpriteSheet Habitsprite = new SpriteSheet("src/asset/sprites/villager_vest.png", 64, 64);
 		SpriteSheet Habitsprite2 = new SpriteSheet("src/asset/sprites/villager_vest_slash.png", 64, 64);
+		SpriteSheet Habitsprite3 = new SpriteSheet("src/asset/sprites/villager_vest_hurt.png", 64, 64);
 	    Hanimations[0] = loadAnimation(HspriteSheet, 0, 1, 0);
 	    Hanimations[1] = loadAnimation(HspriteSheet, 0, 1, 1);
 	    Hanimations[2] = loadAnimation(HspriteSheet, 0, 1, 2);
@@ -252,6 +253,12 @@ public static void sinit() throws SlickException
 	    	Hanimations[12].addFrame(HspriteSheet3.getSprite(x, 0), 40);
 	    }
 	    Hanimations[12].setLooping(false);
+
+	    Habits[12] = new Animation();
+	    for (int x = 0; x < 6; x++) {
+	    	Habits[12].addFrame(Habitsprite3.getSprite(x, 0), 40);
+	    }
+	    Habits[12].setLooping(false);
 	    /*for (int x = 0; x < 30; x++) {
 	    	Hanimations[12].addFrame(HspriteSheet3.getSprite(5, 0), 40);
 	    }*/
