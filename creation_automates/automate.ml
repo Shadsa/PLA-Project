@@ -229,7 +229,7 @@ let chasseur (p : poids) (ed : etat list) (e1 : etat list) (e2 : etat list) (er 
   List.concat(List.map (fun (e1,e2,d) -> List.concat (List.map (fun e -> [(e,Et(Libre(d),EnnemiProche(d)),Avancer(d),e1,p);(e1,Et(Libre(d),EnnemiProche(d)),Avancer(d),e1,p+1);(e1,EnnemiProche(d),Attendre,e2,p);(e1,Vide,Attendre,er,0);(e2,Et(Libre(d),EnnemiProche(d)),Avancer(d),e1,p+1);(e2,Vide,Attendre,er,0)]) ed)) (supercombine e1 e2 [N;S;E;O]))
 
 let aut1 = List.concat ([errant 1 0 0; chercheur 3 [0] [1;3;5;7] [2;4;6;8] 0; createur 10 0 0]@List.map (fun e -> (recolteur 5 e 0)) [0;1;2;3;4;5;6;7;8])
-let aut2 = List.concat ([errant 1 0 0; chasseur 3 [0] [1;3;5;7] [2;4;6;8] 0; createur 10 0 0]@List.map (fun e -> (recolteur 5 e 0)) [0;1;2;3;4;5;6;7;8])
+let aut2 = List.concat ([errant 1 0 0; chasseur 3 [0] [1;3;5;7] [2;4;6;8] 0; createur 10 0 0]@(List.map (fun e -> (recolteur 5 e 0)) [0;1;2;3;4;5;6;7;8])@(List.map (fun e -> (hostile 6 e 0)) [0;1;2;3;4;5;6;7;8]))
   
 
 (*let aut1 = (List.concat(List.map2 (errant 1) [0;1;2] [1;2;0]))@(createur 4 [0;1;2])@(List.concat(List.map2 (recolteur 3) [0;1;2] [1;2;0]))*)
@@ -244,5 +244,5 @@ let main =
   o := open_out "Zombie.xml";
   output := Some(!o);
   output_string !o "<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n\n";
-  output_automate aut1 0;
+  output_automate aut2 0;
   close_out !o;
