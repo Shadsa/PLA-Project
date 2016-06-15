@@ -121,7 +121,7 @@ public class XML_Reader {
 			else if(att.getLength() > 1){
 				Cardinaux C = CardOfString(att.item(0).getNodeValue());
 				String s1 = e.getTextContent();
-				cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(Class.class,Cardinaux.class).newInstance(Class.forName("cases."+att.item(0).getNodeValue()),C);
+				cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(Class.class,Cardinaux.class).newInstance(Class.forName("cases."+att.item(1).getNodeValue()),C);
 				
 			}
 			else{
