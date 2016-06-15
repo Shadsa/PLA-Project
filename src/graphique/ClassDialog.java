@@ -105,7 +105,7 @@ public class ClassDialog extends JDialog {
 	    panBonus.add(bonus);
 
 	    JPanel panCost = new JPanel();
-	    panArmor.setBorder(BorderFactory.createTitledBorder("Unit Cost"));
+	    panCost.setBorder(BorderFactory.createTitledBorder("Unit Cost"));
 	    Cost = new JTextField();
 	    Cost.setPreferredSize(new Dimension(50, 25));
 	    Cost.setEditable(false);
