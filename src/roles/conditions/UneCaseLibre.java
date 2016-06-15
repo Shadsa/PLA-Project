@@ -2,7 +2,6 @@ package roles.conditions;
 
 import cases.CaseProperty;
 import cases.LibreCheck;
-import roles.Cardinaux;
 import roles.Personnage;
 import roles.World;
 
