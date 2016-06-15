@@ -1,15 +1,11 @@
 package roles;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
-import java.util.Vector;
 
 import cases.Case;
-import cases.Plaine;
 import cases.TypeCase;
-import graphique.ObjetTest;
 import roles.classe.Classe;
 
 public abstract class World {

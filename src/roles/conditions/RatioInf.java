@@ -1,6 +1,5 @@
 package roles.conditions;
 
-import roles.Cardinaux;
 import roles.Personnage;
 
 public class RatioInf extends Condition {

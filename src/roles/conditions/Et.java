@@ -1,8 +1,6 @@
 package roles.conditions;
 
-import roles.Cardinaux;
 import roles.Personnage;
-import roles.World;
 
 public class Et extends Condition {
 

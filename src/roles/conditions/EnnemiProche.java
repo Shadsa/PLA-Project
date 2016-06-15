@@ -1,10 +1,8 @@
 package roles.conditions;
 
-import cases.Arbre;
 import cases.EnnemiCheck;
 import roles.Cardinaux;
 import roles.Personnage;
-import roles.World;
 
 public class EnnemiProche extends Condition {
 
