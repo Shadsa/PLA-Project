@@ -9,7 +9,7 @@ public class TypeCheck implements CaseProperty {
 	}
 	@Override
 	public boolean check(Case c) {
-		return c!=null && _type.isInstance(c);
+		return c!=null && _type.isInstance(c.type());
 	}
 
 }

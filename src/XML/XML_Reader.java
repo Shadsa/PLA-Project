@@ -3,7 +3,7 @@ package XML;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,19 +15,14 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.ErrorHandler;
-import org.xml.sax.helpers.DefaultHandler;
-
-import java.lang.reflect.Method;
-
-import cases.TypeCase;
-
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+import org.xml.sax.helpers.DefaultHandler;
 
 import roles.Automate;
 import roles.Cardinaux;
-import roles.action.*;
-import roles.conditions.*;
+import roles.action.Action;
+import roles.conditions.Condition;
 
 
 public class XML_Reader {
@@ -117,34 +112,33 @@ public class XML_Reader {
 		Condition cond = null, c1, c2;
 		NamedNodeMap att = n.getAttributes();
 		if(n instanceof Element && att != null && att.getLength() >= 1){
-
-			Cardinaux C = CardOfString(att.item(0).getNodeValue());
-
+			
 			if(att.item(0).getNodeName()=="compose") {
 				c1 = getCondition(n.getChildNodes().item(1),(Element) ((Element) n).getElementsByTagName("condition1").item(0));
 				c2 = getCondition(n.getChildNodes().item(3),(Element) ((Element) n).getElementsByTagName("condition2").item(0));
 				cond = (Condition) Class.forName("roles.conditions."+att.item(0).getNodeValue()).getDeclaredConstructor(Condition.class,Condition.class).newInstance(c1,c2);
 			}
+			else if(att.getLength() > 1){
+				Cardinaux C = CardOfString(att.item(0).getNodeValue());
+				String s1 = e.getTextContent();
+				cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(Class.class,Cardinaux.class).newInstance(Class.forName("cases."+att.item(0).getNodeValue()),C);
+				
+			}
 			else{
 				String s1 = e.getTextContent();
-				if(att.item(0).getNodeName()=="direction" && att.getLength()!=2 && C!=null)
-					cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(Cardinaux.class).newInstance(C);
-				else
-					if(att.item(0).getNodeName()=="quantite")
-						cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(int.class).newInstance(Integer.parseInt(att.item(0).getNodeValue()));
-					else{
-						/*if(att.item(1).getNodeValue()=="Mur"){
-							cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(TypeCase.class,Cardinaux.class).newInstance(Class.forName("cases."+att.item(1).getNodeValue()).getClass(),C);
-						}
-						else{*/
-							//Method meth = null;
-							//meth = Class.forName("cases."+att.item(1).getNodeValue()).getMethod("getInstance",  (Class<?>[]) null);
-							//if(meth != null)
-								cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(Class.class,Cardinaux.class).newInstance(Class.forName("cases."+att.item(1).getNodeValue()),C);
-							//else
-							//	cond = (Condition) Class.forName("roles.conditions."+s1).newInstance();
-						//}
-					}
+				switch(att.item(0).getNodeName()){
+				case "type" :
+					cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(Class.class).newInstance(Class.forName("cases."+att.item(0).getNodeValue()));
+					break;
+				case "direction" :
+					Cardinaux C = CardOfString(att.item(0).getNodeValue());
+					if(C!=null)
+						cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(Cardinaux.class).newInstance(C);
+					break;
+				case "quantite" :
+					cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(int.class).newInstance(Integer.parseInt(att.item(0).getNodeValue()));
+					break;
+				}
 			}
 		}
 		else{

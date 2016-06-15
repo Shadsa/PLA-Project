@@ -8,6 +8,7 @@ import cases.*;
 
 public class Carte extends Vector<Vector<Case>>{
 
+	private static final long serialVersionUID = -8840331548046134782L;
 	private int _hauteur;
 	private int _largeur;
 	

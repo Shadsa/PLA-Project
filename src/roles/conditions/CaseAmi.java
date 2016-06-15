@@ -2,8 +2,6 @@ package roles.conditions;
 
 import cases.AutomateAmiCheck;
 import cases.CaseProperty;
-import cases.TypeCase;
-import cases.TypeCheck;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.World;

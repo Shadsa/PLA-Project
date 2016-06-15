@@ -1,7 +1,6 @@
 package roles.action;
 
 import cases.CaseAction;
-import cases.Plaine;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;

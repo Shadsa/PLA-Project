@@ -107,21 +107,6 @@ public class MapTest {
 							spriteSheet.renderInUse(j*96, i*96, 0, 10);
 					continue;
 				}
-
-				/*if (vj.getNum() == 0) {
-					//Affiche la cellule demandée dans la table des sprites : renderInUse(coordX du container, coordY du container, indiceX de la cellule, indiceY de la cellule).
-					spriteSheet.renderInUse(i*96, j*96, 0, 0);
-				} else if (vj.getNum() == 1) {
-					spriteSheet.renderInUse(i*96, j*96, 0, 2);
-				} else if (vj.getNum() == 2) {
-					spriteSheet.renderInUse(i*96, j*96, 0, 1);
-				} else if (vj.getNum() == 3) {
-					spriteSheet.renderInUse(i*96, j*96, 0, 4);
-				} else if (vj.getNum() == 4) {
-					spriteSheet.renderInUse(i*96, j*96, 0, 3);
-				} else if (vj.getNum() == 5) {
-					spriteSheet.renderInUse(i*96, j*96, 0, 5);
-				}*/
 				spriteSheet.renderInUse(j*96, i*96, img2, img);
 
 			}
