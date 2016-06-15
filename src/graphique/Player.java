@@ -34,8 +34,9 @@ public class Player implements Observer{
 	//Boolean pour savoir si le personnage bouge
 	private boolean moving = false;
 	//Tableau des modèles d'animation
-	public static Animation[] animations = new Animation[21];
-	public static Animation[] Hanimations = new Animation[21];
+	public static Animation[][] _Bodys = new Animation[2][21];
+	public static Animation[] animations = _Bodys[0];
+	public static Animation[] Hanimations = _Bodys[1];
 	public static Animation[] Habits = new Animation[21];
 	public static Animation[] Danimations = new Animation[4];
 	//
