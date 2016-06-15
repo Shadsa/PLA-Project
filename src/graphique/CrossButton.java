@@ -42,7 +42,7 @@ public class CrossButton extends AbstractComponent {
 	public CrossButton(GUIContext container, String text, int x, int y) throws SlickException
 	{
 		super(container);
-	    ttf = new UnicodeFont("src/asset/fonts/Berry Rotunda.ttf", 16, false, false);
+	    ttf = new UnicodeFont("src/asset/fonts/Berry Rotunda.ttf", 10, false, false);
 	    ttf.addAsciiGlyphs();
 	    ttf.getEffects().add(new ColorEffect());
 	    ttf.loadGlyphs();

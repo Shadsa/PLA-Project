@@ -51,7 +51,7 @@ public class InitGameState extends BasicGameState {
 	//Bouton
 	private Button _bouton_jouer;
 	private Button _bouton_quitter;
-
+	private Button _bouton_retour;
 	private Button my_button;
 
 	private ArrayList<CrossButton> Personnages;
@@ -84,6 +84,7 @@ public class InitGameState extends BasicGameState {
 		my_button = new Button(container, "Ajouter unité",container.getWidth()/4, container.getHeight()/4);
 		_bouton_jouer = new Button(container, "Jouer", container.getWidth()*3/4, container.getHeight()*3/4);
 		_bouton_quitter = new Button(container, "Quitter", my_button.x, _bouton_jouer.y);
+		_bouton_retour = new Button(container, "Retour", my_button.x + 70, _bouton_jouer.y);
 		sizeScreen = "Taille de l'ecran : " + container.getScreenWidth() + "x" + container.getScreenHeight();
 		Personnages = new ArrayList<CrossButton>();
 		/*// Chargement d'une nouvelle police de caractères
@@ -112,6 +113,7 @@ public class InitGameState extends BasicGameState {
 			p.render(container, g);
 		_bouton_jouer.render(container, g);
 		_bouton_quitter.render(container, g);
+		_bouton_retour.render(container, g);
 		g.setColor(Color.white);
 		/*if (_input.getControllerCount() >= 1) {
 			g.drawString("Appuyez sur START pour commencer.", 240, 300);
@@ -126,8 +128,11 @@ public class InitGameState extends BasicGameState {
 		my_button.update(container);
 		_bouton_jouer.update(container);
 		_bouton_quitter.update(container);
+		_bouton_retour.update(container);
 
-
+		if(_bouton_retour.isPressed()) {
+			game.enterState(MainScreenGameState.ID);
+		}
 
 		if(my_button.isPressed())
 		{
@@ -218,7 +223,6 @@ public class InitGameState extends BasicGameState {
 
 	public static void renderMenu(int x, int y, int width, int height)
 	{
-		//UI.startUse();
 		//Corner tl
 		UI.draw(x, y, 32+x, 32+y, 15, 40, 47, 71);
 		// center
@@ -240,7 +244,6 @@ public class InitGameState extends BasicGameState {
 		//corner br
 		UI.draw(x+width-32, y+height-32, x+width, y+height, 544, 80, 575, 111);
 
-		//UI.endUse();
 	}
 }
 

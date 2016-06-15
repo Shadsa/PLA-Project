@@ -47,7 +47,7 @@ public class Button extends AbstractComponent {
 	public Button(GUIContext container, String text, int x, int y) throws SlickException
 	{
 		super(container);
-		setTrueTypeFont("src/asset/fonts/Berry Rotunda.ttf", 14);
+		setTrueTypeFont("src/asset/fonts/Berry Rotunda.ttf", 10);
 	    _text = text;
 	    width = ttf.getWidth(_text) + 22;
 	    height = ttf.getHeight(_text) + 20;
