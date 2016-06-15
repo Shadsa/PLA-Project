@@ -63,7 +63,7 @@ public class WorkshopCreator {
 					Class<Action> newAction = (Class<Action>) Class.forName("roles.action." + buf);
 					newdeck.add(newAction);
 					buf="";
-				}else{
+				}else if(res != '\r'){
 					buf+= (char)res;
 				}
 			}
@@ -91,11 +91,13 @@ public class WorkshopCreator {
 			ArrayList<Class<Condition>> newdeck = new ArrayList<Class<Condition>>();
 			fis = new FileInputStream(files.get(i));
 			while((res = fis.read()) != -1){
-				if(res == '\n'){
+				if(res == '\r'){
+					//do nothing
+				}else if(res == '\n'){
 					Class<Condition> newAction = (Class<Condition>)Class.forName("roles.conditions." + buf);
 					newdeck.add(newAction);
 					buf="";
-				}else{
+				}else if(res != '\r'){
 					buf+= (char)res;
 				}
 			}
