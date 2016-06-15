@@ -37,16 +37,8 @@ public final class Attaquer extends Action {
 			pers.setState(new States(Statut.ATTAQUE, _direction));
 			target.change_vie(-pers.damage());
 		} else if (_propCons.check(c)) {
-			System.out.println("Hi");
 			World.Case(destX, destY).attaquerCase(pers.damage());
 			pers.setState(new States(Statut.ATTAQUE, _direction));
-		}
-		else{
-			if(World.Case(destX, destY) != null && (World.Case(destX, destY).type() instanceof Construction || World.Case(destX, destY).type() instanceof Batiment))
-			{
-				World.Case(destX, destY).attaquerCase(pers.damage());
-				pers.setState(new States(Statut.ATTAQUE, _direction));
-			}
 		}
 	}
 
