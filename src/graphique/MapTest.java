@@ -74,6 +74,8 @@ public class MapTest {
 				}
 		        else if(vj.getNum() == Mur._id)
 		            img = 12;
+		        else if(vj.getNum() == Piege._id)
+		            img = 13;				
 				else if (vj.getNum() == Plaine._id)
 					img = 2;
 				else if (vj.getNum() == Caillou._id)
