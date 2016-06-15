@@ -24,7 +24,7 @@ public class Classe implements Serializable {
 	private boolean _hard_walker;
 
 
-	public Classe(int HP, int damage, int heal, int armor, String name, Bonus bonus){
+	public Classe(int HP, int damage, int heal, int armor, String name, boolean hard_walker, Bonus bonus){
 		_HP = HP; _damage=damage; _heal=heal; _armor=armor; _name= name; _bonus=bonus;
 		_hard_walker = hard_walker;
 		modifier(bonus);
@@ -33,7 +33,7 @@ public class Classe implements Serializable {
 		costSet();
 	}
 
-	public Classe(int HP, int damage, int heal, int armor, String name, Bonus bonus, ArrayList<Class<Action>> act , ArrayList<Class<Condition>> cond){
+	public Classe(int HP, int damage, int heal, int armor, String name, boolean hard_walker, Bonus bonus, ArrayList<Class<Action>> act , ArrayList<Class<Condition>> cond){
 		_HP = HP; _damage=damage; _heal=heal; _armor=armor; _name= name; _bonus=bonus; avaibleAction = act; avaibleCondition = cond;
 		_hard_walker = hard_walker;
 		modifier(bonus);
