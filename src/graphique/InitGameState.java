@@ -65,7 +65,7 @@ public class InitGameState extends BasicGameState {
 
 		woks = new WorkshopCreator();
 		woks.createClasse("Ouvrier", null, "Ouvrier", "Ouvrier");
-		woks.createClasse("Default", null, "RandomNoIdea", "ClassTest");
+		woks.createClasse("Default", null, "RandomNoIdea", "ClasseTest");
 
 
 		Button.init();
