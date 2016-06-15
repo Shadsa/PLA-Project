@@ -265,6 +265,98 @@ public static void sinit() throws SlickException
 
 	    for(int j=0; j<4; j++)
 	    {
+	    	Habits[13+j] = new Animation();
+	    	Habits[13+j].addFrame(Habitsprite.getSprite(0, j), 100);
+	    	Habits[13+j].addFrame(Habitsprite.getSprite(1, j), 100);
+
+		    Image iii = Habitsprite.getSprite(2, j);
+		    iii.setAlpha(0.95f);
+		    Habits[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+		    iii = Habitsprite.getSprite(3, j);
+		    iii.setAlpha(0.9f);
+		    Habits[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = Habitsprite.getSprite(4, j);
+		    iii.setAlpha(0.8f);
+		    Habits[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = Habitsprite.getSprite(5, j);
+		    iii.setAlpha(0.7f);
+		    Habits[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = Habitsprite.getSprite(6, j);
+		    iii.setAlpha(0.6f);
+		    Habits[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = Habitsprite.getSprite(7, j);
+		    iii.setAlpha(0.3f);
+		    Habits[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = Habitsprite.getSprite(8, j);
+		    iii.setAlpha(0f);
+		    Habits[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+		    Habits[13+j].setLooping(false);
+	    }
+
+
+
+	    for(int j=0; j<4; j++)
+	    {
+		    Habits[17+j] = new Animation();
+
+		    Image iii = Habitsprite.getSprite(2, j);
+		    iii.setAlpha(0);
+		    Habits[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+		    iii = Habitsprite.getSprite(3, j);
+		    iii.setAlpha(0.3f);
+		    Habits[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+		    iii = Habitsprite.getSprite(3, j);
+		    iii.setAlpha(0.6f);
+		    Habits[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+		    iii = Habitsprite.getSprite(3, j);
+		    iii.setAlpha(0.7f);
+		    Habits[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = Habitsprite.getSprite(4, j);
+		    iii.setAlpha(0.8f);
+		    Habits[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = Habitsprite.getSprite(5, j);
+		    iii.setAlpha(0.9f);
+		    Habits[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = Habitsprite.getSprite(6, j);
+		    iii.setAlpha(0.95f);
+		    Habits[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = Habitsprite.getSprite(7, j);
+		    iii.setAlpha(1);
+		    Habits[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+		    iii = Habitsprite.getSprite(8, j);
+		    iii.setAlpha(1);
+		    Habits[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+		    Habits[17+j].setLooping(false);
+	    }
+
+	    for(int j=0; j<4; j++)
+	    {
 		    Hanimations[13+j] = new Animation();
 		    Hanimations[13+j].addFrame(HspriteSheet.getSprite(0, j), 100);
 		    Hanimations[13+j].addFrame(HspriteSheet.getSprite(1, j), 100);
@@ -439,7 +531,7 @@ public static void sinit() throws SlickException
 
 			    if(danim != -1 && anim != 12)
 			    	g.drawAnimation(Danimations[danim], x-32, y-60);*/
-
+		if(_Abody != -1)
 	    		g.drawAnimation(_Body[_Abody], x-32, y-60);
 
 	    if(_Awear != -1)
@@ -494,7 +586,7 @@ public static void sinit() throws SlickException
 
 	    if(_destX == x && _destY == y)
 	    {
-	    	if(_hide)
+	    	if(_state.statut == Statut.HIDE || _state.statut == Statut.HIDING)
 	    		_state.statut = Statut.HIDE;
 	    	else
 	    		_state.statut = Statut.ATTENDS;
@@ -549,21 +641,14 @@ public static void sinit() throws SlickException
 					else
 						soundEffect.dead_skeleton().play();
 				}
-				else if(((States)obj).statut == Statut.HIDING) {
-					if(_hide)
-					{
-						_state = new States(Statut.HIDE);
-					}
+				if(_state.statut == Statut.HIDE || _state.statut == Statut.HIDING) {
+					if(((States)obj).statut != Statut.REVEAL)
+						_state.statut = Statut.HIDE;
 					else
-					{
 						_state = (States)obj;
-						_hide = true;
-					}
 				}
 				else
 				{
-					if(((States)obj).statut == Statut.REVEAL)
-						_hide = false;
 					_state = (States)obj;
 					AnimDuration += MapGameState.Tick;
 				}
@@ -612,32 +697,30 @@ public static void sinit() throws SlickException
 				    {
 				    case AVANCE:
 				    	anim = 4;
-				    	_Awear = anim;
 				    break;
 				    case ATTENDS:
 				    	anim = 0;
-				    	_Awear = anim;
 				    break;
 					case ATTAQUE:
 						anim = 8;
-						_Awear = anim;
 						danim = dir;
 					break;
 					case HIDING:
 						anim = 13;
 					break;
-					case HIDE:
-						return;
 					case REVEAL:
 						anim = 17;
 					break;
 				    }
 
 				    anim += dir;
+				    if(_state.statut == Statut.HIDE)
+				    	anim = -1;
 
 				    if(_isDead && AnimDuration <= 0) {
 				    	anim = 12;
 				    }
+					_Awear = anim;
 
 				    _Abody = anim;
 				    if(_human == TypeUnit.Zombie)
