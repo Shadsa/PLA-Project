@@ -91,7 +91,7 @@ public class MapGameState extends BasicGameState {
 	{
 		return (int) (y - Oy) / TILESIZE;
 	}
-	
+
 	/**
 	 * Initialise la boucle de jeu. Cette méthode est appelée avant que la boucle démarre.
 	 * @param container Le conteneur du jeu dans lequels les composants sont crées et affichés.
@@ -129,7 +129,7 @@ public class MapGameState extends BasicGameState {
 
 		//Affichage de la map
 		this.map.render(g, _offsetMapX, _offsetMapY, zoom(), container.getWidth(), container.getHeight());
-		
+
 		//Affichage des personnages
 		for(graphique.GJoueur j : _joueurs)
 			for(Player p : j.getPersonnage())
@@ -151,7 +151,7 @@ public class MapGameState extends BasicGameState {
 		if(showhud) {
 			this.hud.render(g);
 		}
-		
+
 		//Affichage message de fin
 		if (World.fini) {
 			if(World.joueurs().size()==1){
@@ -159,7 +159,7 @@ public class MapGameState extends BasicGameState {
 				g.resetTransform();
 			}
 		}
-		
+
 		//Gestion de la pause (affichage d'un fond noir-transparent progressif)
 		if (container.isPaused()) {
 		    Rectangle rect = new Rectangle (0, 0, container.getScreenWidth(), container.getScreenHeight());
@@ -319,7 +319,7 @@ public class MapGameState extends BasicGameState {
 			setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
 			setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
 		}
-		
+
 		//Zoom arrière
 		if (_tailleMapX * TILESIZE * zoom() > container.getWidth() && _tailleMapX * TILESIZE * zoom() > container.getHeight()) {
 			if (_input.isKeyDown(209) && zoom() > 0) {
@@ -441,7 +441,7 @@ public class MapGameState extends BasicGameState {
 			this.game.enterState(3);
 		}
 	}*/
-	
+
 	/**
 	 * Notification qu'un bouton de la souris a été pressée (la méthode est appelée à ce moment là).
 	 * @param button L'identifiant du bouton.
@@ -453,7 +453,7 @@ public class MapGameState extends BasicGameState {
 			for(Player p : j.getPersonnage())
 				if (Input.MOUSE_LEFT_BUTTON == button && curseurSurPerso(p, mouseMapX(), mouseMapY())) {
 				_target = p;
-				_targetp = World.Case((int)(MapGameState._target.DestX()-Ox)/TILESIZE, (int)(MapGameState._target.DestY()-Oy)/TILESIZE).Personnage();
+				_targetp = World.Case(0, (int)(MapGameState._target.DestX()-Ox)/TILESIZE, (int)(MapGameState._target.DestY()-Oy)/TILESIZE).Personnage();
 				this.showhud = true;
 				return;
 			}
@@ -481,7 +481,7 @@ public class MapGameState extends BasicGameState {
 
 	/**
 	 * Vérification que le curseur de la souris est sur le personnage.
-	 * @param p 
+	 * @param p
 	 * @param mouseX La position de la souris en abcisse X.
 	 * @param mouseY La position de la souris en ordonnée Y.
 	 * @return Un booléen qui indique si la position du curseur est sur un personnage.
@@ -546,7 +546,7 @@ public class MapGameState extends BasicGameState {
 		World.addPlayer(new Joueur("Zombie", autlist, classes));
 
 		try {
-			World.putAutomate(World.getPlayers().get(0).automate(0), 1, 1, World.getPlayers().get(0));
+			World.putAutomate(0,World.getPlayers().get(0).automate(0), 1, 1, World.getPlayers().get(0));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

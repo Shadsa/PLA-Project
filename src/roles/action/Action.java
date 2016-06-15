@@ -13,7 +13,7 @@ public abstract class Action {
 		return _nextId - range;
 	}
 
-	public abstract void Act(Personnage pers);
+	public abstract void Act(int world, Personnage pers);
 
 	public abstract int toInt() ;
 }

@@ -10,12 +10,12 @@ import roles.States.Statut;
 public final class Raser extends Action {
 
 	Cardinaux _direction;
-	
+
 	private static int _Id = Action.getId(1);
 
 	@Override
-	public void Act(Personnage pers) {
-		World.modifierCase(Plaine.getInstance(), pers.X(), pers.Y());
+	public void Act(int world, Personnage pers) {
+		World.modifierCase(world, Plaine.getInstance(), pers.X(), pers.Y());
 		pers.setState(new States(Statut.ATTAQUE, Cardinaux.NORD));
 	}
 

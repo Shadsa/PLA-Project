@@ -17,25 +17,25 @@ public final class Creer extends Action {
 	}
 
 	@Override
-	public void Act(Personnage pers) {
+	public void Act(int world, Personnage pers) {
 		int destX=pers.X();
 		int destY=pers.Y();
 		Cardinaux direction;
-		if(World.isfree(destX-1, destY)){
+		if(World.isfree(world, destX-1, destY)){
 			destX--; direction = Cardinaux.OUEST;
 		}
-		else if(World.isfree(destX+1, destY)){
+		else if(World.isfree(world, destX+1, destY)){
 			destX++; direction = Cardinaux.EST;
 		}
-		else if(World.isfree(destX, destY-1)){
+		else if(World.isfree(world, destX, destY-1)){
 			destY--; direction = Cardinaux.NORD;
 		}
-		else if(World.isfree(destX, destY+1)){
+		else if(World.isfree(world, destX, destY+1)){
 			destY++; direction = Cardinaux.SUD;
 		}
 		else return;
-		
-		if(World.isfree(destX, destY))
+
+		if(World.isfree(world, destX, destY))
 		{
 			if(pers.owner().changerRessource(-250))
 				pers.owner().createPersonnage(_type, destX, destY);

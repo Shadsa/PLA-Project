@@ -7,11 +7,11 @@ import roles.States.Statut;
 
 public final class Attendre extends Action {
 
-	
+
 	private static int _Id = Action.getId(1);
 
 	@Override
-	public void Act(Personnage pers) {
+	public void Act(int world, Personnage pers) {
 		pers.setState(new States(Statut.ATTENDS, Cardinaux.SUD));
 	}
 

@@ -18,27 +18,27 @@ public final class Avancer extends Action {
 	}
 
 	@Override
-	public void Act(Personnage pers) {
+	public void Act(int world, Personnage pers) {
 		int destX = pers.X() + ((_direction == Cardinaux.OUEST)? (-1) : ((_direction == Cardinaux.EST)? 1 : 0));
 		int destY = pers.Y() + ((_direction == Cardinaux.NORD)? (-1) : ((_direction == Cardinaux.SUD)? 1 : 0));
-		if(World.isfree(destX, destY))
+		if(World.isfree(world, destX, destY))
 		{
-			if(World.Case(destX, destY).type() instanceof Arbre)
+			if(World.Case(world, destX, destY).type() instanceof Arbre)
 			{
 				//System.out.print(pers.ID() + "j'avance vers l'arbre " + _direction + destX + " " + destY + ".\n");
-				World.Case(destX, destY).setPersonnage(pers);
+				World.Case(world, destX, destY).setPersonnage(pers);
 				pers.setState(new States(Statut.HIDING, _direction));
 			}
-			else if(World.Case(pers.X(), pers.Y()).type() instanceof Arbre)
+			else if(World.Case(world, pers.X(), pers.Y()).type() instanceof Arbre)
 			{
 				//System.out.print(pers.ID() + "j'avance vers le " + _direction + destX + destY + ".\n");
-				World.Case(destX, destY).setPersonnage(pers);
+				World.Case(world, destX, destY).setPersonnage(pers);
 				pers.setState(new States(Statut.REVEAL, _direction));
 			}
 			else
 			{
 				//System.out.print(pers.ID() + "j'avance vers le " + _direction + destX + " " + destY + ".\n");
-				World.Case(destX, destY).setPersonnage(pers);
+				World.Case(world, destX, destY).setPersonnage(pers);
 				pers.setState(new States(Statut.AVANCE, _direction));
 			}
 		}
