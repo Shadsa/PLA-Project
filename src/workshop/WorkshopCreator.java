@@ -91,9 +91,7 @@ public class WorkshopCreator {
 			ArrayList<Class<Condition>> newdeck = new ArrayList<Class<Condition>>();
 			fis = new FileInputStream(files.get(i));
 			while((res = fis.read()) != -1){
-				if(res == '\r'){
-					//do nothing
-				}else if(res == '\n'){
+				if(res == '\n'){
 					Class<Condition> newAction = (Class<Condition>)Class.forName("roles.conditions." + buf);
 					newdeck.add(newAction);
 					buf="";
@@ -139,7 +137,7 @@ public class WorkshopCreator {
 
 	public ArrayList<Class<Action>> getDeckAction(String name){
 		for(int i=0;i<deckActionName.size();i++){
-			if(deckActionName.get(i)==name){
+			if(deckActionName.get(i).equalsIgnoreCase(name)){
 				return deckAction.get(deckActionName.indexOf(deckActionName.get(i)));
 			}
 		}
@@ -148,7 +146,7 @@ public class WorkshopCreator {
 
 	public ArrayList<Class<Condition>> getDeckCondition(String name){
 		for(int i=0;i<deckConditionName.size();i++){
-			if(deckConditionName.get(i)==name){
+			if(deckConditionName.get(i).equalsIgnoreCase(name)){
 				return deckCondition.get(deckConditionName.indexOf(deckConditionName.get(i)));
 			}
 		}
@@ -157,7 +155,7 @@ public class WorkshopCreator {
 
 	public Classe getDeckClasse(String name){
 		for(int i=0;i<deckClasseName.size();i++){
-			if(deckClasseName.get(i)==name){
+			if(deckClasseName.get(i).equalsIgnoreCase(name)){
 				return deckClasse.get(deckClasseName.indexOf(deckClasseName.get(i)));
 			}
 		}

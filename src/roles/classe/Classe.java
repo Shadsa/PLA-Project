@@ -1,3 +1,4 @@
+
 package roles.classe;
 
 import java.io.Serializable;
@@ -37,8 +38,6 @@ public class Classe implements Serializable {
 		_HP = HP; _damage=damage; _heal=heal; _armor=armor; _name= name; _bonus=bonus; avaibleAction = act; avaibleCondition = cond;
 		_hard_walker = hard_walker;
 		modifier(bonus);
-		avaibleAction = new ArrayList<Class<Action>>();
-		avaibleCondition = new ArrayList<Class<Condition>>();
 		costSet();
 	}
 
