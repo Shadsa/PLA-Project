@@ -32,10 +32,10 @@ public class Joueur extends Observable{
 		return _automates.indexOf(pers._brain);
 	}
 
-	public Personnage createPersonnage(int type, int x, int y)
+	public Personnage createPersonnage(int type, int x, int y, int world)
 	{
 		// WARNING faire plutot un get automate avec gestion d'erreur
-		Personnage newPers = new Personnage(_automates.get(type), x, y, this,_classes.get(type));
+		Personnage newPers = new Personnage(_automates.get(type), x, y, this, world,_classes.get(type));
 		_personnages.add(newPers);
 		setChanged();
 		notifyObservers(newPers);

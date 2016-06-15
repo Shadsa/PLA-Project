@@ -6,13 +6,13 @@ import roles.action.Action;
 import roles.action.Attaquer;
 
 public final class Arbre extends TypeCase {
-	
+
 	public final int _vie = 150;
-	
+
 	protected static Action _action = new Attaquer(Cardinaux.SUD);
-	
+
 	private static Arbre _instance = new Arbre();
-	
+
 	public final static int _id = getId(1);
 
 	public int value() {
@@ -21,7 +21,7 @@ public final class Arbre extends TypeCase {
 
 	@Override
 	protected void Act(Personnage pers) {
-		_action.Act(pers);		
+		_action.Act(pers.world(), pers);
 	}
 
 	public static TypeCase getInstance() {
@@ -32,5 +32,5 @@ public final class Arbre extends TypeCase {
 	public boolean franchissable() {
 		return true;
 	}
-	
+
 }

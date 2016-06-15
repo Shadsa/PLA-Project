@@ -7,9 +7,9 @@ import roles.action.Attendre;
 public final class Plaine extends TypeCase {
 
 	protected static Action _action = new Attendre();
-	
+
 	private static Plaine _instance = new Plaine();
-	
+
 	public final static int _id = getId(1);
 
 	public int value() {
@@ -18,7 +18,7 @@ public final class Plaine extends TypeCase {
 
 	@Override
 	protected void Act(Personnage pers) {
-		_action.Act(pers);		
+		_action.Act(pers.world(), pers);
 	}
 
 	public static TypeCase getInstance() {

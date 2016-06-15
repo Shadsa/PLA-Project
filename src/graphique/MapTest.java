@@ -19,6 +19,7 @@ public class MapTest {
 	private Vector<Vector<ObjetTest>> map;
 	private SpriteSheet spriteSheet;
 	private Image Tree;
+	private int world = 0;
 
 	public void init() throws SlickException {
 		//Dans ce sprite -> cellule 0 : buisson, cellule 1 : arbre, cellule 2 : herbe, cellule 3 : tonneaux, cellule 4 : rochers. (format des cases : 96x96).
@@ -27,13 +28,13 @@ public class MapTest {
 		//Tree = new Image("src/asset/sprites/SimpleTree.png");
 		//J'initialise ma map test.
 		map = new Vector<Vector<ObjetTest>> ();
-		for (int j = 0; j < World.SizeY(); j++) {
+		for (int j = 0; j < World.SizeY(world) ; j++) {
 			map.add(new Vector<ObjetTest> ());
 		}
-		for (int j = 0; j < World.SizeY(); j++) {
-			for (int i = 0; i < World.SizeX(); i++) {
-				map.get(j).add(new ObjetTest(World.Case(i, j).value()));
-				World.Case(i, j).addObserver(map.get(j).get(i));
+		for (int j = 0; j < World.SizeY(world) ; j++) {
+			for (int i = 0; i < World.SizeX(world) ; i++) {
+				map.get(j).add(new ObjetTest(World.Case(world, i, j).value()));
+				World.Case(world, i, j).addObserver(map.get(j).get(i));
 			}
 		}
 	}
@@ -56,8 +57,8 @@ public class MapTest {
 			xi = 0;
 		spriteSheet.startUse();
 		//Parcours de la map test
-		for (int i = yi; i < World.SizeY() && i<yf; i++) {
-			for (int j = xi; j < World.SizeX() && j<xf; j++) {
+		for (int i = yi; i < World.SizeY(world)  && i<yf; i++) {
+			for (int j = xi; j < World.SizeX(world)  && j<xf; j++) {
 				ObjetTest vj = map.get(i).get(j);
 				int img = 0;
 				int img2 = 0;
@@ -75,7 +76,7 @@ public class MapTest {
 		        else if(vj.getNum() == Mur._id)
 		            img = 12;
 		        else if(vj.getNum() == Piege._id)
-		            img = 13;				
+		            img = 13;
 				else if (vj.getNum() == Plaine._id)
 					img = 2;
 				else if (vj.getNum() == Caillou._id)

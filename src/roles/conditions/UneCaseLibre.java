@@ -11,6 +11,6 @@ public class UneCaseLibre extends Condition {
 
 	@Override
 	public boolean value(Personnage target) {
-		return p.check(World.Case(target.X()-1, target.Y())) || p.check(World.Case(target.X()+1, target.Y())) || p.check(World.Case(target.X(), target.Y()-1)) || p.check(World.Case(target.X(), target.Y()+1));
+		return p.check(World.Case(target.world(), target.X()-1, target.Y())) || p.check(World.Case(target.world(), target.X()+1, target.Y())) || p.check(World.Case(target.world(), target.X(), target.Y()-1)) || p.check(World.Case(target.world(), target.X(), target.Y()+1));
 	}
 }

@@ -8,9 +8,9 @@ public final class Batiment extends TypeCase {
 	public final int _vie = 5;
 
 	protected Action _action;
-		
+
 	public final static int _id = getId(20);
-	
+
 	public Batiment(Action a){
 		_action = a;
 	}
@@ -21,14 +21,14 @@ public final class Batiment extends TypeCase {
 
 	@Override
 	protected void Act(Personnage pers) {
-		_action.Act(pers);		
+		_action.Act(pers.world(), pers);
 	}
 
 	@Override
 	public boolean franchissable() {
 		return true;
 	}
-	
+
 	public Action action(){
 		return _action;
 	}
