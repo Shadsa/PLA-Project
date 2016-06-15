@@ -35,5 +35,8 @@ public abstract class TypeCase {
 		default : return null;
 		}
 	}
+
+	public void Evenement(Personnage pers){
+	}
 	
 }
