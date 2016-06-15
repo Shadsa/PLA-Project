@@ -15,6 +15,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import roles.classe.*;
+import roles.Army;
 import roles.Automate;
 import roles.Cardinaux;
 import roles.Joueur;
@@ -33,6 +34,9 @@ public class MapGameState extends BasicGameState {
 	static final float Oy = 48;
 
 	private ArrayList<graphique.GJoueur> _joueurs = new ArrayList<graphique.GJoueur>();
+	private ArrayList<Joueur> jjj = new ArrayList<Joueur>();
+	private World world0;
+	private World world1;
 	private Hud hud = new Hud();
 	public static final int ID = 2;
 	private String mouse;
@@ -53,7 +57,8 @@ public class MapGameState extends BasicGameState {
 	private float _offsetMapY = 0;
 
 	//Test
-	private MapTest map = new MapTest();
+	private MapTest map;
+	private MapTest map2;
 	private Input _input;
 	private int _scrollingSpeed = 15;
 	private float _zoom = 1;
@@ -112,7 +117,6 @@ public class MapGameState extends BasicGameState {
 		_bouton_menuPrincipal = new Button(container, "Menu principal", container.getWidth()/2-62, container.getHeight()/2+40, normalImage, overImage, downImage);
 		_bouton_reprendre = new Button(container, "Reprendre", container.getWidth()/2-62, container.getHeight()/2-80, normalImage, overImage, downImage);
 		//Initialisation du monde
-		World.BuildMap(_tailleMapY,_tailleMapX);
 		//Initialisation des animations des personnages
 		Player.sinit();
 		//Initialisation de l'hud
@@ -126,7 +130,6 @@ public class MapGameState extends BasicGameState {
 	 * @param g Le contexte graphique qui peut être utilisé pour afficher les éléments.
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-
 		//Affichage de la map
 		this.map.render(g, _offsetMapX, _offsetMapY, zoom(), container.getWidth(), container.getHeight());
 
@@ -140,6 +143,13 @@ public class MapGameState extends BasicGameState {
 
 		//Annule la translation pour l'affichage du string en dessous
 		g.resetTransform();
+
+
+		this.map2.render2(g, container.getWidth()/2, 0, zoom(), container.getWidth()/2, container.getHeight()/2);
+		g.resetTransform();
+
+
+
 		g.setColor(Color.white);
 		//Affichage de la position de la souris sur la map
 		g.drawString(mouse, 10, 50);
@@ -153,9 +163,9 @@ public class MapGameState extends BasicGameState {
 		}
 
 		//Affichage message de fin
-		if (World.fini) {
-			if(World.joueurs().size()==1){
-				g.drawString(World.joueurs().get(0).nom()+" a gagné! Félicitations à lui, vraiment.", container.getWidth()/2-175, container.getHeight()/2);
+		if (world0.fini) {
+			if(world0.army().size()==1){
+				g.drawString(world0.army().get(0).joueur().nom()+" a gagné! Félicitations à lui, vraiment.", container.getWidth()/2-175, container.getHeight()/2);
 				g.resetTransform();
 			}
 		}
@@ -208,7 +218,7 @@ public class MapGameState extends BasicGameState {
 		if(_time > Tick)
 		{
 			_time -= Tick;
-			World.nextTurn();
+			world0.nextTurn();
 			for(Animation anim : Player.animations)
 				anim.restart();
 			for(Animation anim : Player.Hanimations)
@@ -453,7 +463,7 @@ public class MapGameState extends BasicGameState {
 			for(Player p : j.getPersonnage())
 				if (Input.MOUSE_LEFT_BUTTON == button && curseurSurPerso(p, mouseMapX(), mouseMapY())) {
 				_target = p;
-				_targetp = World.Case(0, (int)(MapGameState._target.DestX()-Ox)/TILESIZE, (int)(MapGameState._target.DestY()-Oy)/TILESIZE).Personnage();
+				_targetp = world0.Case((int)(MapGameState._target.DestX()-Ox)/TILESIZE, (int)(MapGameState._target.DestY()-Oy)/TILESIZE).Personnage();
 				this.showhud = true;
 				return;
 			}
@@ -532,40 +542,43 @@ public class MapGameState extends BasicGameState {
 
 	}
 	public void setGame(ArrayList<UnitInfo> uIFs) {
-
-		int nb = 0;
+		try {
+			MapTest.init();
+		} catch (SlickException e1) {
+			e1.printStackTrace();
+		}
+		world0 = new World(_tailleMapY,_tailleMapX);
+		map = new MapTest(world0);
+		world1 = new World(5, 5);
+		map2 = new MapTest(world1);
 		ArrayList<Automate> autlist = new ArrayList<Automate>();
 		ArrayList<Classe> classes = new ArrayList<Classe>();
 		for(UnitInfo ui : uIFs)
 		{
-			nb++;
 			autlist.add(ui.automate);
 			classes.add(ui.classe);
 		}
-		World.addPlayer(new Joueur("Human", autlist, classes));
-		World.addPlayer(new Joueur("Zombie", autlist, classes));
+		jjj.add(new Joueur("Human", autlist, classes));
+		jjj.add(new Joueur("Zombie", autlist, classes));
+		new Army(world0, jjj.get(0));
+		new Army(world0, jjj.get(1));
 
 		try {
-			World.putAutomate(0,World.getPlayers().get(0).automate(0), 1, 1, World.getPlayers().get(0));
+			world0.putAutomate(jjj.get(0).automate(0), 1, 1, jjj.get(0));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		//for(int i = 0; i < nb; i++)
-			World.getPlayers().get(0).createPersonnage(0, 1, 1, 0);
+			world0.army().get(0).createPersonnage(0, 1, 1, 0);
 		//for(int i = 0; i < nb; i++)
-			World.getPlayers().get(1).createPersonnage(classes.size()-1, _tailleMapX-1, _tailleMapY-1, 0);
+			world0.army().get(1).createPersonnage(classes.size()-1, _tailleMapX-1, _tailleMapY-1, 0);
 
-		for(Joueur j : World.getPlayers())
+		for(Army a : world0.army())
 		{
-			_joueurs.add(new graphique.GJoueur((j == World.getPlayers().get(0))?TypeUnit.Human:TypeUnit.Zombie));
-			j.addObserver(_joueurs.get(_joueurs.size()-1));
-			for(Personnage pers : j.getPersonnages())
+			_joueurs.add(new graphique.GJoueur((a == world0.army().get(0))?TypeUnit.Human:TypeUnit.Zombie));
+			a.addObserver(_joueurs.get(_joueurs.size()-1));
+			for(Personnage pers : a.getPersonnages())
 				_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
-		}
-		try {
-			this.map.init();
-		} catch (SlickException e) {
-			e.printStackTrace();
 		}
 	}
 }

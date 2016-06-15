@@ -8,58 +8,62 @@ import cases.Case;
 import cases.TypeCase;
 import roles.classe.Classe;
 
-public abstract class World {
-
-	//static Carte _map;
-	static ArrayList<Carte> _maps = new ArrayList<Carte>();
-	private static ArrayList<Joueur> _joueurs = new ArrayList<Joueur>();
+public class World {
 	public static ArrayList<Classe> classes = new ArrayList<Classe>();
-	public static boolean fini = false;
 
-	public static void addPlayer(Joueur j)
+	Carte _map;
+	private ArrayList<Army> _army = new ArrayList<Army>();
+	public boolean fini = false;
+
+	public World(int hauteur, int largeur)
 	{
-		joueurs().add(j);
+		_map = new Carte(hauteur,largeur);
+	}
+
+	public void addArmy(Army a)
+	{
+		_army.add(a);
 	}
 
 	// final return...
-	public static ArrayList<Joueur> getPlayers()
+	public ArrayList<Army> getArmys()
 	{
-		return joueurs();
+		return _army;
 	}
 
-	public static Boolean isfree(int w, int x, int y) {
-		return _maps.get(w).isfree(x, y);
+	public Boolean isfree(int x, int y) {
+		return _map.isfree(x, y);
 	}
 
-	public static Case Case(int w, int x, int y) {
-		return _maps.get(w).Case(x, y);
+	public Case Case(int x, int y) {
+		return _map.Case(x, y);
 	}
 
-	public static Case randomCase(int w){
+	public Case randomCase(){
 		Random R = new Random();
-		int x = R.nextInt(_maps.get(w).largeur());
-		int y = R.nextInt(_maps.get(w).hauteur());
-		return Case(w,x,y);
+		int x = R.nextInt(_map.largeur());
+		int y = R.nextInt(_map.hauteur());
+		return Case(x,y);
 	}
 
-	public static void nextTurn()
+	public void nextTurn()
 	{
-		ArrayList<Joueur> vaincus = new ArrayList<Joueur>();
+		ArrayList<Army> vaincus = new ArrayList<Army>();
 		ArrayList<Personnage> activated = new ArrayList<Personnage>();
-		for(Joueur j : joueurs()){
-			if(j.getPersonnages().isEmpty()){
-				vaincus.add(j);
-				System.out.print(j.nom()+" a perdu!");
+		for(Army a : _army){
+			if(a.getPersonnages().isEmpty()){
+				vaincus.add(a);
+				System.out.print(a.joueur().nom()+" a perdu!");
 			}
 			else
-				for(Personnage p : j.getPersonnages() )
+				for(Personnage p : a.getPersonnages() )
 					activated.add(p);
 		}
 
-		for(Joueur j : vaincus){
-			joueurs().remove(j);
+		for(Army a : vaincus){
+			_army.remove(a);
 		}
-		if(joueurs().size()==1){
+		if(_army.size()<2){
 			fini = true;
 		}
 
@@ -69,28 +73,24 @@ public abstract class World {
 				p.agir();
 	}
 
-	public static void BuildMap(int hauteur, int largeur) {
-		_maps.add(new Carte(hauteur,largeur));
+	public int SizeX() {
+		return _map.get(0).size();
 	}
 
-	public static int SizeX(int w) {
-		return _maps.get(w).get(0).size();
+	public void modifierCase(TypeCase type, int x, int y){
+		_map.modifierCase(type, x, y);
 	}
 
-	public static void modifierCase(int w, TypeCase type, int x, int y){
-		_maps.get(w).modifierCase(type, x, y);
+	public int SizeY() {
+		return _map.size();
 	}
 
-	public static int SizeY(int w) {
-		return _maps.get(w).size();
+	public void putAutomate(Automate a, int x, int y, Joueur j) throws Exception{
+		_map.putAutomate(a, x, y, j);
 	}
 
-	public static void putAutomate(int w, Automate a, int x, int y, Joueur j) throws Exception{
-		_maps.get(w).putAutomate(a, x, y, j);
-	}
-
-	public static ArrayList<Joueur> joueurs() {
-		return _joueurs;
+	public ArrayList<Army> army() {
+		return _army;
 	}
 
 }

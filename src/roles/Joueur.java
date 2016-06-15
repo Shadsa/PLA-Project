@@ -8,7 +8,6 @@ import roles.classe.Classe;
 public class Joueur extends Observable{
 
 	private String _nom;
-	ArrayList<Personnage> _personnages;
 	ArrayList<Automate> _automates;
 	ArrayList<Classe> _classes; //indicage sur celui de Automate pour la cores'
 	private int _ressources;
@@ -21,37 +20,10 @@ public class Joueur extends Observable{
 		_automates = automates;
 		_classes = classes;
 		_ressources = 0;
-		_personnages = new ArrayList<Personnage>();
-	}
-
-	public ArrayList<Personnage> getPersonnages() {
-		return _personnages;
 	}
 
 	public int getUnite(Personnage pers){
 		return _automates.indexOf(pers._brain);
-	}
-
-	public Personnage createPersonnage(int type, int x, int y, int world)
-	{
-		// WARNING faire plutot un get automate avec gestion d'erreur
-		Personnage newPers = new Personnage(_automates.get(type), x, y, this, world,_classes.get(type));
-		_personnages.add(newPers);
-		setChanged();
-		notifyObservers(newPers);
-		return newPers;
-	}
-
-	public int nbUnit(Classe c){
-		int count=0;
-		for(Personnage p : _personnages)
-			if(p.classe()==c)
-				count++;
-		return count;
-	}
-
-	public int ratioUnit(Classe c){
-		return 100*(nbUnit(c)/_personnages.size());
 	}
 
 	public int ressources(){
@@ -59,7 +31,7 @@ public class Joueur extends Observable{
 	}
 
 	public Automate automate(int i){
-		return _automates.get(0);
+		return _automates.get(i);
 	}
 
 	public boolean changerRessource(int modificateur) {
@@ -72,5 +44,9 @@ public class Joueur extends Observable{
 
 	public String nom() {
 		return _nom;
+	}
+
+	public Classe classe(int type) {
+		return _classes.get(type);
 	}
 }

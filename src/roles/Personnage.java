@@ -10,7 +10,6 @@ import roles.classe.Classe;
 public class Personnage extends Observable{
 
 	Automate _brain;
-	protected int _world;
 	protected int _paralysie = 0;
 	protected Case _location;
 	protected Classe _classe;
@@ -23,7 +22,7 @@ public class Personnage extends Observable{
 	private Case _cible;
 
 	protected int _id;
-	protected Joueur _owner;
+	protected Army _owner;
 
 	private static int _nextID = 0;
 	protected static int nextID()
@@ -44,9 +43,8 @@ public class Personnage extends Observable{
 		this._directionJoueur = direction;
 	}
 
-	public Personnage(Automate brain, int x, int y, Joueur owner, int world,Classe classe)
+	public Personnage(Automate brain, int x, int y, Army owner,Classe classe)
 	{
-		_world = world;
 		_etat = 0;
 		_vie = 10;
 		_id = nextID();
@@ -58,7 +56,7 @@ public class Personnage extends Observable{
 		_damage = _classe.damage();
 		_heal = _classe.heal();
 		_armor = _classe.armor();
-		World.Case(_world, x, y).setPersonnage(this);
+		owner.world().Case(x, y).setPersonnage(this);
 	}
 
 	public int X() {
@@ -113,7 +111,7 @@ public class Personnage extends Observable{
 	public int armor(){
 		return _armor;
 	}
-	public Joueur owner() {
+	public Army owner() {
 		return _owner;
 	}
 
@@ -134,7 +132,7 @@ public class Personnage extends Observable{
 		case EST:
 			for(int range=1;range<=maxRange;range++)
 				for(int y=-range;y<=range;y++)
-					if(World.Case(_world, X()+range, Y()+y)!=null && c.check(World.Case(_world, X()+range, Y()+y))){
+					if(_owner.world().Case(X()+range, Y()+y)!=null && c.check(_owner.world().Case(X()+range, Y()+y))){
 						System.out.println("Arbre à l'est :"+range+" "+y);
 						return true;
 					}
@@ -142,7 +140,7 @@ public class Personnage extends Observable{
 		case OUEST:
 			for(int range=1;range<=maxRange;range++)
 				for(int y=-range;y<=range;y++)
-					if(World.Case(_world, X()-range, Y()+y)!=null && c.check(World.Case(_world, X()-range, Y()+y))){
+					if(_owner.world().Case(X()-range, Y()+y)!=null && c.check(_owner.world().Case(X()-range, Y()+y))){
 						System.out.println("Arbre à l'ouest :"+(-range)+" "+y);
 						return true;
 					}
@@ -150,7 +148,7 @@ public class Personnage extends Observable{
 		case SUD:
 			for(int range=1;range<=maxRange;range++)
 				for(int x=-range;x<=range;x++)
-					if(World.Case(_world, X()+x, Y()+range)!=null && c.check(World.Case(_world, X()+x, Y()+range))){
+					if(_owner.world().Case(X()+x, Y()+range)!=null && c.check(_owner.world().Case(X()+x, Y()+range))){
 						System.out.println("Arbre au sud :"+x+" "+range);
 						return true;
 					}
@@ -158,7 +156,7 @@ public class Personnage extends Observable{
 		case NORD:
 			for(int range=1;range<=maxRange;range++)
 				for(int x=-range;x<=range;x++)
-					if(World.Case(_world, X()+x, Y()-range)!=null && c.check(World.Case(_world, X()+x, Y()-range))){
+					if(_owner.world().Case(X()+x, Y()-range)!=null && c.check(_owner.world().Case(X()+x, Y()-range))){
 						System.out.println("Arbre au nord :"+x+" "+(-range));
 						return true;
 					}
@@ -185,8 +183,5 @@ public class Personnage extends Observable{
 		else
 			if(_vie > _classe.HP())
 				_vie = _classe.HP();
-	}
-	public int world() {
-		return _world;
 	}
 }
