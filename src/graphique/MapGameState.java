@@ -24,7 +24,7 @@ import roles.World;
 public class MapGameState extends BasicGameState {
 
 	static int Tick = 1000;
-	static boolean TickWait = true;
+	static boolean TickWait = false;
 	static int AnimTick = Tick*6/10;
 	protected long _time = 0;
 	static final int TILESIZE = 96;
