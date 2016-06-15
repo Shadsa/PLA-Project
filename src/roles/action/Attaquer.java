@@ -1,9 +1,6 @@
 package roles.action;
 
-import cases.Arbre;
 import cases.Construction;
-import cases.Mur;
-import cases.TypeCase;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;

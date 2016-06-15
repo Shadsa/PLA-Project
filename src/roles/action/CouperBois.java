@@ -2,7 +2,6 @@ package roles.action;
 
 import cases.Arbre;
 import cases.CaseProperty;
-import cases.Plaine;
 import cases.TypeCheck;
 import roles.Cardinaux;
 import roles.Personnage;
