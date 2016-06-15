@@ -33,14 +33,14 @@ public abstract class World {
 	public static Case Case(int x, int y) {
 		return _map.Case(x, y);
 	}
-	
+
 	public static Case randomCase(){
 		Random R = new Random();
 		int x = R.nextInt(_map.largeur());
 		int y = R.nextInt(_map.hauteur());
 		return Case(x,y);
 	}
-	
+
 	public static void nextTurn()
 	{
 		ArrayList<Joueur> vaincus = new ArrayList<Joueur>();
@@ -54,7 +54,7 @@ public abstract class World {
 				for(Personnage p : j.getPersonnages() )
 					activated.add(p);
 		}
-		
+
 		for(Joueur j : vaincus){
 			joueurs().remove(j);
 		}

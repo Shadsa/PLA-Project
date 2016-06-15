@@ -54,7 +54,7 @@ public class Personnage extends Observable{
 		_classe = classe;
 		_vie = _classe.HP();
 		_damage = _classe.damage();
-		_heal = _classe.heal();		
+		_heal = _classe.heal();
 		_armor = _classe.armor();
 		World.Case(x, y).setPersonnage(this);
 	}
@@ -104,7 +104,7 @@ public class Personnage extends Observable{
 	}
 	public int heal(){
 		return _heal;
-	}	
+	}
 	public int vie(){
 		return _vie;
 	}
@@ -114,7 +114,7 @@ public class Personnage extends Observable{
 	public Joueur owner() {
 		return _owner;
 	}
-	
+
 	public Case cible() {
 		return _cible;
 	}
@@ -122,12 +122,12 @@ public class Personnage extends Observable{
 		_cible = c;
 	}
 	/**
-	 * 
+	 *
 	 * @param c : la propriété de la case à trouver
 	 * @param maxRange : la distance à laquelle regarder
 	 * @return la direction vers laquelle se trouve la case la plus proche, ou null si aucune case n'a été trouvée
 	 */
-	public boolean find(CaseProperty c, Cardinaux direction, int maxRange){	
+	public boolean find(CaseProperty c, Cardinaux direction, int maxRange){
 		switch(direction){
 		case EST:
 			for(int range=1;range<=maxRange;range++)
