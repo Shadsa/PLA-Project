@@ -26,6 +26,7 @@ public class Classe implements Serializable {
 
 	public Classe(int HP, int damage, int heal, int armor, String name, Bonus bonus){
 		_HP = HP; _damage=damage; _heal=heal; _armor=armor; _name= name; _bonus=bonus;
+		_hard_walker = hard_walker;
 		modifier(bonus);
 		avaibleAction = new ArrayList<Class<Action>>();
 		avaibleCondition = new ArrayList<Class<Condition>>();
@@ -34,6 +35,7 @@ public class Classe implements Serializable {
 
 	public Classe(int HP, int damage, int heal, int armor, String name, Bonus bonus, ArrayList<Class<Action>> act , ArrayList<Class<Condition>> cond){
 		_HP = HP; _damage=damage; _heal=heal; _armor=armor; _name= name; _bonus=bonus; avaibleAction = act; avaibleCondition = cond;
+		_hard_walker = hard_walker;
 		modifier(bonus);
 		avaibleAction = new ArrayList<Class<Action>>();
 		avaibleCondition = new ArrayList<Class<Condition>>();
