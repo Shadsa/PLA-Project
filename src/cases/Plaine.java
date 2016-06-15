@@ -30,4 +30,9 @@ public final class Plaine extends TypeCase {
 		return true;
 	}
 
+	@Override
+	public Action action() {
+		return _action;
+	}
+
 }

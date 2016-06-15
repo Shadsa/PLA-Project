@@ -10,8 +10,6 @@ public abstract class TypeCase {
 	//Réserver 0 pour les bâtiments de la ville ?
 	private static int _nextId = 1;
 	
-	protected Action _action;
-	
 	
 	protected abstract void Act(Personnage pers);
 	
@@ -36,7 +34,9 @@ public abstract class TypeCase {
 		}
 	}
 
-	public void Evenement(Personnage pers){
-	}
+	public void Evenement(Personnage pers){}
+
+	public abstract Action action() ;
+	
 	
 }

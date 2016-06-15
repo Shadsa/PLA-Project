@@ -3,13 +3,15 @@ package cases;
 import roles.Personnage;
 import roles.action.Action;
 import roles.action.Attendre;
+import roles.action.ConstruireMur;
+import roles.Cardinaux;
 import roles.Joueur;
 
 public class Mur extends TypeCase implements Construction {
 	
 	public final int _vie = 10;
 
-	protected static Action _action = new Attendre();
+	protected static Action _action = new ConstruireMur(Cardinaux.NORD);
 	
 	protected Joueur _owner;
 	
@@ -41,4 +43,8 @@ public class Mur extends TypeCase implements Construction {
 		_action.Act(pers);
 	}
 
+	public Action action() {
+		return _action;
+	}
+	
 }

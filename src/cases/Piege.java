@@ -4,11 +4,13 @@ import roles.Personnage;
 import roles.World;
 import roles.action.Action;
 import roles.action.Attendre;
+import roles.action.PoserPiege;
+import roles.Cardinaux;
 import roles.Joueur;
 
 public class Piege extends TypeCase implements Construction {
 	
-	protected static Action _action = new Attendre();
+	protected static Action _action = new PoserPiege(Cardinaux.SUD);
 	
 	protected Joueur _owner;
 	
@@ -46,6 +48,11 @@ public class Piege extends TypeCase implements Construction {
 			pers.change_vie(-1000);
 			World.modifierCase(Plaine.getInstance(), pers.X(), pers.Y());
 		}
+	}
+
+	@Override
+	public Action action() {
+		return _action;
 	}
 
 }
