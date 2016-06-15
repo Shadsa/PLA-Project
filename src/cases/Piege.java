@@ -8,8 +8,6 @@ import roles.Joueur;
 
 public class Piege extends TypeCase implements Construction {
 	
-	public final int _vie = 1;
-
 	protected static Action _action = new Attendre();
 	
 	protected Joueur _owner;

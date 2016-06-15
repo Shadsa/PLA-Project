@@ -3,7 +3,6 @@ package cases;
 import java.util.Observable;
 
 import roles.Personnage;
-import roles.Joueur;
 
 public abstract class Case extends Observable{
 
@@ -77,11 +76,9 @@ public abstract class Case extends Observable{
 		return _y;
 	}
 
-
 	public TypeCase type() {
 		return _type;
 	}
-
 
 	public Personnage Personnage() {
 		return _personnage;
