@@ -31,8 +31,12 @@ type action =
   | AvancerHasard
   | CouperBois
   | Soigner
+  | Combattre
   | Avancer of cellule
   | Attaquer of cellule
+  | ConstruireMur of cellule
+  | PoserPiege of cellule
+  | Reparer of cellule
   | Creer of int
 (*
   | ...
@@ -42,6 +46,8 @@ type condition =
   | Vide
   | OrdreDonne
   | UneCaseLibre
+  | UnAmi
+  | UnEnnemi
   | ArbreProche of cellule
   | EnnemiProche of cellule
   | Ennemi of cellule
@@ -134,6 +140,8 @@ let rec output_cond (c : condition) (p : int) (suff : String.t) =
    | Vide -> output_stab ((balise b Rien)^"Vide"^(fbalise b)) p
    | OrdreDonne -> output_stab ((balise b Rien)^"OrdreDonne"^(fbalise b)) p
    | UneCaseLibre -> output_stab ((balise b Rien)^"UneCaseLibre"^(fbalise b)) p
+   | UnAmi -> output_stab ((balise b Rien)^"UnAmi"^(fbalise b)) p
+   | UnEnnemi -> output_stab ((balise b Rien)^"UnEnnemi"^(fbalise b)) p
    | Et(c1,c2) ->
     begin
     output_stab (balise b (Compose("Et"))) p;
@@ -169,8 +177,12 @@ let output_act (a : action) (p : int) =
    | Raser -> output_stab ((balise b Rien)^"Raser"^(fbalise b)) p
    | CouperBois -> output_stab ((balise b Rien)^"CouperBois"^(fbalise b)) p
    | Soigner -> output_stab ((balise b Rien)^"Soigner"^(fbalise b)) p
+   | Combattre -> output_stab ((balise b Rien)^"Combattre"^(fbalise b)) p
    | Avancer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Avancer"^(fbalise b)) p
    | Attaquer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Attaquer"^(fbalise b)) p
+   | ConstruireMur(cellule) -> output_stab ((balise b (Direction(cellule)))^"ConstruireMur"^(fbalise b)) p
+   | PoserPiege(cellule) -> output_stab ((balise b (Direction(cellule)))^"PoserPiege"^(fbalise b)) p
+   | Reparer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Reparer"^(fbalise b)) p
    | Creer(t) -> output_stab ((balise b (Unite(t)))^"Creer"^(fbalise b)) p
   
   
@@ -211,7 +223,7 @@ let output_automate (a : automate) (p : int) =
   ]*)
 
 let hostile (p : poids) (e1 : etat) (e2 : etat) : automate =
-  List.map (fun d -> (e1,Ennemi(d),Attaquer(d),e2,p)) [N;S;E;O]
+  [(e1,UnEnnemi,Combattre,e2,p)]
 
 (*let destructeur (p : poids) (el : etat list) : automate =
   List.map (fun e -> (e,Type(Batiment),Raser,e,p)) el*)
@@ -231,6 +243,9 @@ let createurZ (p : poids) (e1 : etat) (e2 : etat) : automate =
 let errant (p : poids) (e1 : etat) (e2 : etat) : automate =
   [(e1,Vide,AvancerHasard,e2,p)]
   
+let soigneur (p : poids) (e1 : etat) (e2 : etat) : automate =
+  [(e1,UnAmi,Soigner,e2,p)]
+
 let fonceur (p : poids) (e1 : etat) (eL : etat list) : automate =
   List.concat (List.map2 (fun e d -> [(e1,Libre(d),Avancer(d),e,p); (e,Libre(d),Avancer(d),e,p); (e,Vide,Attendre,e1,0)]) eL [N;S;E;O])
   

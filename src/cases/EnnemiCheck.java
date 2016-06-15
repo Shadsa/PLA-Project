@@ -11,7 +11,8 @@ public class EnnemiCheck implements CaseProperty {
 	}
 	@Override
 	public boolean check(Case c) {
-		return c!=null && c.Personnage() != null && c.Personnage().owner() != _comparateur.owner();
+		return c != null && ((c.Personnage() != null && c.Personnage().owner() != _comparateur.owner())
+				|| (c.type() instanceof Construction && ((Construction) c.type()).getOwner() != _comparateur.owner()));
 	}
 
 }

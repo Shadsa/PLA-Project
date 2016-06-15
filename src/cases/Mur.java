@@ -1,17 +1,15 @@
 package cases;
 
-import roles.Cardinaux;
 import roles.Personnage;
 import roles.action.Action;
-import roles.action.Attaquer;
+import roles.action.Attendre;
 import roles.Joueur;
 
 public class Mur extends TypeCase implements Construction {
 	
-	public final int _vie = 1;
+	public final int _vie = 10;
 
-	protected static Action _action = new Attaquer(Cardinaux.EST);
-	
+	protected static Action _action = new Attendre();
 	
 	protected Joueur _owner;
 	

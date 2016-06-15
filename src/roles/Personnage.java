@@ -69,6 +69,7 @@ public class Personnage extends Observable{
 
 	public void agir() {
 		_brain.agir(this);
+		_location.Evenement(this);
 	}
 
 	public int etat()

@@ -29,9 +29,9 @@ public class Joueur extends Observable{
 	}
 
 	public int getUnite(Personnage pers){
-		return _classes.indexOf(pers.classe());
+		return _automates.indexOf(pers._brain);
 	}
-	
+
 	public Personnage createPersonnage(int type, int x, int y)
 	{
 		// WARNING faire plutot un get automate avec gestion d'erreur
@@ -41,7 +41,7 @@ public class Joueur extends Observable{
 		notifyObservers(newPers);
 		return newPers;
 	}
-	
+
 	public int nbUnit(Classe c){
 		int count=0;
 		for(Personnage p : _personnages)
@@ -49,7 +49,7 @@ public class Joueur extends Observable{
 				count++;
 		return count;
 	}
-	
+
 	public int ratioUnit(Classe c){
 		return 100*(nbUnit(c)/_personnages.size());
 	}
@@ -57,7 +57,7 @@ public class Joueur extends Observable{
 	public int ressources(){
 		return _ressources;
 	}
-	
+
 	public Automate automate(int i){
 		return _automates.get(0);
 	}
