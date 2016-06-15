@@ -34,8 +34,9 @@ public class Player implements Observer{
 	//Boolean pour savoir si le personnage bouge
 	private boolean moving = false;
 	//Tableau des modèles d'animation
-	public static Animation[] animations = new Animation[21];
-	public static Animation[] Hanimations = new Animation[21];
+	public static Animation[][] _Bodys = new Animation[2][21];
+	public static Animation[] animations = _Bodys[0];
+	public static Animation[] Hanimations = _Bodys[1];
 	public static Animation[] Habits = new Animation[21];
 	public static Animation[] Danimations = new Animation[4];
 	//
@@ -91,361 +92,18 @@ public static void sinit() throws SlickException
 		SpriteSheet spriteSheet = new SpriteSheet("src/asset/sprites/BODY_skeleton.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("src/asset/sprites/slash_skeleton.png", 64, 64);
 		SpriteSheet spriteSheet3 = new SpriteSheet("src/asset/sprites/Die_skeleton.png", 64, 64);
-	    animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
-	    animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
-	    animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
-	    animations[3] = loadAnimation(spriteSheet, 0, 1, 3);
-	    animations[4] = loadAnimation(spriteSheet, 1, 9, 0);
-	    animations[5] = loadAnimation(spriteSheet, 1, 9, 1);
-	    animations[6] = loadAnimation(spriteSheet, 1, 9, 2);
-	    animations[7] = loadAnimation(spriteSheet, 1, 9, 3);
-
-
-	    animations[8] = loadAnimation(spriteSheet2, 0, 5, 0);
-	    animations[9] = loadAnimation(spriteSheet2, 0, 5, 1);
-	    animations[10] = loadAnimation(spriteSheet2, 0, 5, 2);
-	    animations[11] = loadAnimation(spriteSheet2, 0, 5, 3);
-
-	    animations[12] = new Animation();
-	    for (int x = 0; x < 6; x++) {
-	    	animations[12].addFrame(spriteSheet3.getSprite(x, 0), 40);
-	    }
-	    animations[12].setLooping(false);
-
-
-	    for(int j=0; j<4; j++)
-	    {
-		    animations[13+j] = new Animation();
-		    animations[13+j].addFrame(spriteSheet.getSprite(0, j), 100);
-		    animations[13+j].addFrame(spriteSheet.getSprite(1, j), 100);
-
-		    Image iii = spriteSheet.getSprite(2, j);
-		    iii.setAlpha(0.95f);
-		    animations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-		    iii = spriteSheet.getSprite(3, j);
-		    iii.setAlpha(0.9f);
-		    animations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = spriteSheet.getSprite(4, j);
-		    iii.setAlpha(0.8f);
-		    animations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = spriteSheet.getSprite(5, j);
-		    iii.setAlpha(0.7f);
-		    animations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = spriteSheet.getSprite(6, j);
-		    iii.setAlpha(0.6f);
-		    animations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = spriteSheet.getSprite(7, j);
-		    iii.setAlpha(0.3f);
-		    animations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = spriteSheet.getSprite(8, j);
-		    iii.setAlpha(0f);
-		    animations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-		    animations[13+j].setLooping(false);
-	    }
-	    /*for (int x = 0; x < 30; x++) {
-	    	animations[12].addFrame(spriteSheet3.getSprite(5, 0), 40);
-	    }*/
-
-
-	    for(int j=0; j<4; j++)
-	    {
-		    animations[17+j] = new Animation();
-
-		    Image iii = spriteSheet.getSprite(2, j);
-		    iii.setAlpha(0);
-		    animations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-		    iii = spriteSheet.getSprite(3, j);
-		    iii.setAlpha(0.3f);
-		    animations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-		    iii = spriteSheet.getSprite(3, j);
-		    iii.setAlpha(0.6f);
-		    animations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-		    iii = spriteSheet.getSprite(3, j);
-		    iii.setAlpha(0.7f);
-		    animations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = spriteSheet.getSprite(4, j);
-		    iii.setAlpha(0.8f);
-		    animations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = spriteSheet.getSprite(5, j);
-		    iii.setAlpha(0.9f);
-		    animations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = spriteSheet.getSprite(6, j);
-		    iii.setAlpha(0.95f);
-		    animations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = spriteSheet.getSprite(7, j);
-		    iii.setAlpha(1);
-		    animations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = spriteSheet.getSprite(8, j);
-		    iii.setAlpha(1);
-		    animations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-		    animations[17+j].setLooping(false);
-	    }
-
-
-
-
-
+		initAnimation(animations, spriteSheet, spriteSheet2, spriteSheet3);
 
 	    SpriteSheet HspriteSheet = new SpriteSheet("src/asset/sprites/BODY_male.png", 64, 64);
 		SpriteSheet HspriteSheet2 = new SpriteSheet("src/asset/sprites/Human_Slash.png", 64, 64);
 		SpriteSheet HspriteSheet3 = new SpriteSheet("src/asset/sprites/Human_Die.png", 64, 64);
+		initAnimation(Hanimations, HspriteSheet, HspriteSheet2, HspriteSheet3);
+
 		SpriteSheet Habitsprite = new SpriteSheet("src/asset/sprites/villager_vest.png", 64, 64);
 		SpriteSheet Habitsprite2 = new SpriteSheet("src/asset/sprites/villager_vest_slash.png", 64, 64);
 		SpriteSheet Habitsprite3 = new SpriteSheet("src/asset/sprites/villager_vest_hurt.png", 64, 64);
-	    Hanimations[0] = loadAnimation(HspriteSheet, 0, 1, 0);
-	    Hanimations[1] = loadAnimation(HspriteSheet, 0, 1, 1);
-	    Hanimations[2] = loadAnimation(HspriteSheet, 0, 1, 2);
-	    Hanimations[3] = loadAnimation(HspriteSheet, 0, 1, 3);
-	    Hanimations[4] = loadAnimation(HspriteSheet, 1, 9, 0);
-	    Hanimations[5] = loadAnimation(HspriteSheet, 1, 9, 1);
-	    Hanimations[6] = loadAnimation(HspriteSheet, 1, 9, 2);
-	    Hanimations[7] = loadAnimation(HspriteSheet, 1, 9, 3);
+		initAnimation(Habits, Habitsprite, Habitsprite2, Habitsprite3);
 
-	    Habits[0] = loadAnimation(Habitsprite, 0, 1, 0);
-	    Habits[1] = loadAnimation(Habitsprite, 0, 1, 1);
-	    Habits[2] = loadAnimation(Habitsprite, 0, 1, 2);
-	    Habits[3] = loadAnimation(Habitsprite, 0, 1, 3);
-	    Habits[4] = loadAnimation(Habitsprite, 1, 9, 0);
-	    Habits[5] = loadAnimation(Habitsprite, 1, 9, 1);
-	    Habits[6] = loadAnimation(Habitsprite, 1, 9, 2);
-	    Habits[7] = loadAnimation(Habitsprite, 1, 9, 3);
-
-
-	    Hanimations[8] = loadAnimation(HspriteSheet2, 0, 5, 0);
-	    Hanimations[9] = loadAnimation(HspriteSheet2, 0, 5, 1);
-	    Hanimations[10] = loadAnimation(HspriteSheet2, 0, 5, 2);
-	    Hanimations[11] = loadAnimation(HspriteSheet2, 0, 5, 3);
-
-
-	    Habits[8] = loadAnimation(Habitsprite2, 0, 5, 0);
-	    Habits[9] = loadAnimation(Habitsprite2, 0, 5, 1);
-	    Habits[10] = loadAnimation(Habitsprite2, 0, 5, 2);
-	    Habits[11] = loadAnimation(Habitsprite2, 0, 5, 3);
-
-	    Hanimations[12] = new Animation();
-	    for (int x = 0; x < 6; x++) {
-	    	Hanimations[12].addFrame(HspriteSheet3.getSprite(x, 0), 40);
-	    }
-	    Hanimations[12].setLooping(false);
-
-	    Habits[12] = new Animation();
-	    for (int x = 0; x < 6; x++) {
-	    	Habits[12].addFrame(Habitsprite3.getSprite(x, 0), 40);
-	    }
-	    Habits[12].setLooping(false);
-	    /*for (int x = 0; x < 30; x++) {
-	    	Hanimations[12].addFrame(HspriteSheet3.getSprite(5, 0), 40);
-	    }*/
-
-	    for(int j=0; j<4; j++)
-	    {
-	    	Habits[13+j] = new Animation();
-	    	Habits[13+j].addFrame(Habitsprite.getSprite(0, j), 100);
-	    	Habits[13+j].addFrame(Habitsprite.getSprite(1, j), 100);
-
-		    Image iii = Habitsprite.getSprite(2, j);
-		    iii.setAlpha(0.95f);
-		    Habits[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-		    iii = Habitsprite.getSprite(3, j);
-		    iii.setAlpha(0.9f);
-		    Habits[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = Habitsprite.getSprite(4, j);
-		    iii.setAlpha(0.8f);
-		    Habits[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = Habitsprite.getSprite(5, j);
-		    iii.setAlpha(0.7f);
-		    Habits[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = Habitsprite.getSprite(6, j);
-		    iii.setAlpha(0.6f);
-		    Habits[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = Habitsprite.getSprite(7, j);
-		    iii.setAlpha(0.3f);
-		    Habits[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = Habitsprite.getSprite(8, j);
-		    iii.setAlpha(0f);
-		    Habits[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-		    Habits[13+j].setLooping(false);
-	    }
-
-
-
-	    for(int j=0; j<4; j++)
-	    {
-		    Habits[17+j] = new Animation();
-
-		    Image iii = Habitsprite.getSprite(2, j);
-		    iii.setAlpha(0);
-		    Habits[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-		    iii = Habitsprite.getSprite(3, j);
-		    iii.setAlpha(0.3f);
-		    Habits[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-		    iii = Habitsprite.getSprite(3, j);
-		    iii.setAlpha(0.6f);
-		    Habits[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-		    iii = Habitsprite.getSprite(3, j);
-		    iii.setAlpha(0.7f);
-		    Habits[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = Habitsprite.getSprite(4, j);
-		    iii.setAlpha(0.8f);
-		    Habits[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = Habitsprite.getSprite(5, j);
-		    iii.setAlpha(0.9f);
-		    Habits[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = Habitsprite.getSprite(6, j);
-		    iii.setAlpha(0.95f);
-		    Habits[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = Habitsprite.getSprite(7, j);
-		    iii.setAlpha(1);
-		    Habits[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = Habitsprite.getSprite(8, j);
-		    iii.setAlpha(1);
-		    Habits[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-		    Habits[17+j].setLooping(false);
-	    }
-
-	    for(int j=0; j<4; j++)
-	    {
-		    Hanimations[13+j] = new Animation();
-		    Hanimations[13+j].addFrame(HspriteSheet.getSprite(0, j), 100);
-		    Hanimations[13+j].addFrame(HspriteSheet.getSprite(1, j), 100);
-
-		    Image iii = HspriteSheet.getSprite(2, j);
-		    iii.setAlpha(0.95f);
-		    Hanimations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-		    iii = HspriteSheet.getSprite(3, j);
-		    iii.setAlpha(0.9f);
-		    Hanimations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = HspriteSheet.getSprite(4, j);
-		    iii.setAlpha(0.8f);
-		    Hanimations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = HspriteSheet.getSprite(5, j);
-		    iii.setAlpha(0.7f);
-		    Hanimations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = HspriteSheet.getSprite(6, j);
-		    iii.setAlpha(0.6f);
-		    Hanimations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = HspriteSheet.getSprite(7, j);
-		    iii.setAlpha(0.3f);
-		    Hanimations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = HspriteSheet.getSprite(8, j);
-		    iii.setAlpha(0f);
-		    Hanimations[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-		    Hanimations[13+j].setLooping(false);
-	    }
-
-
-
-	    for(int j=0; j<4; j++)
-	    {
-		    Hanimations[17+j] = new Animation();
-
-		    Image iii = HspriteSheet.getSprite(2, j);
-		    iii.setAlpha(0);
-		    Hanimations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-		    iii = HspriteSheet.getSprite(3, j);
-		    iii.setAlpha(0.3f);
-		    Hanimations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-		    iii = HspriteSheet.getSprite(3, j);
-		    iii.setAlpha(0.6f);
-		    Hanimations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-		    iii = HspriteSheet.getSprite(3, j);
-		    iii.setAlpha(0.7f);
-		    Hanimations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = HspriteSheet.getSprite(4, j);
-		    iii.setAlpha(0.8f);
-		    Hanimations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = HspriteSheet.getSprite(5, j);
-		    iii.setAlpha(0.9f);
-		    Hanimations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = HspriteSheet.getSprite(6, j);
-		    iii.setAlpha(0.95f);
-		    Hanimations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = HspriteSheet.getSprite(7, j);
-		    iii.setAlpha(1);
-		    Hanimations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-
-		    iii = HspriteSheet.getSprite(8, j);
-		    iii.setAlpha(1);
-		    Hanimations[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
-
-		    Hanimations[17+j].setLooping(false);
-	    }
 
 
 	    SpriteSheet spriteSheetW = new SpriteSheet("src/asset/sprites/WEAPON_dagger.png", 64, 64);
@@ -731,5 +389,124 @@ public static void sinit() throws SlickException
 				    if(_human == TypeUnit.Zombie)
 				    	_Awear = -1;
 				    _Aweapon = danim;
+		}
+
+		private static void initAnimation(Animation[] anim, SpriteSheet moveS, SpriteSheet slashS, SpriteSheet dieS)
+		{
+			anim[0] = loadAnimation(moveS, 0, 1, 0);
+		    anim[1] = loadAnimation(moveS, 0, 1, 1);
+		    anim[2] = loadAnimation(moveS, 0, 1, 2);
+		    anim[3] = loadAnimation(moveS, 0, 1, 3);
+		    anim[4] = loadAnimation(moveS, 1, 9, 0);
+		    anim[5] = loadAnimation(moveS, 1, 9, 1);
+		    anim[6] = loadAnimation(moveS, 1, 9, 2);
+		    anim[7] = loadAnimation(moveS, 1, 9, 3);
+
+
+		    anim[8] = loadAnimation(slashS, 0, 5, 0);
+		    anim[9] = loadAnimation(slashS, 0, 5, 1);
+		    anim[10] = loadAnimation(slashS, 0, 5, 2);
+		    anim[11] = loadAnimation(slashS, 0, 5, 3);
+
+		    anim[12] = new Animation();
+		    for (int x = 0; x < 6; x++) {
+		    	anim[12].addFrame(dieS.getSprite(x, 0), 40);
+		    }
+		    anim[12].setLooping(false);
+
+
+		    for(int j=0; j<4; j++)
+		    {
+			    anim[13+j] = new Animation();
+			    anim[13+j].addFrame(moveS.getSprite(0, j), 100);
+			    anim[13+j].addFrame(moveS.getSprite(1, j), 100);
+
+			    Image iii = moveS.getSprite(2, j);
+			    iii.setAlpha(0.95f);
+			    anim[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+			    iii = moveS.getSprite(3, j);
+			    iii.setAlpha(0.9f);
+			    anim[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+			    iii = moveS.getSprite(4, j);
+			    iii.setAlpha(0.8f);
+			    anim[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+			    iii = moveS.getSprite(5, j);
+			    iii.setAlpha(0.7f);
+			    anim[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+			    iii = moveS.getSprite(6, j);
+			    iii.setAlpha(0.6f);
+			    anim[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+			    iii = moveS.getSprite(7, j);
+			    iii.setAlpha(0.3f);
+			    anim[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+			    iii = moveS.getSprite(8, j);
+			    iii.setAlpha(0f);
+			    anim[13+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+			    anim[13+j].setLooping(false);
+		    }
+		    /*for (int x = 0; x < 30; x++) {
+		    	anim[12].addFrame(dieS.getSprite(5, 0), 40);
+		    }*/
+
+
+		    for(int j=0; j<4; j++)
+		    {
+			    anim[17+j] = new Animation();
+
+			    Image iii = moveS.getSprite(2, j);
+			    iii.setAlpha(0);
+			    anim[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+			    iii = moveS.getSprite(3, j);
+			    iii.setAlpha(0.3f);
+			    anim[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+			    iii = moveS.getSprite(3, j);
+			    iii.setAlpha(0.6f);
+			    anim[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+			    iii = moveS.getSprite(3, j);
+			    iii.setAlpha(0.7f);
+			    anim[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+			    iii = moveS.getSprite(4, j);
+			    iii.setAlpha(0.8f);
+			    anim[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+			    iii = moveS.getSprite(5, j);
+			    iii.setAlpha(0.9f);
+			    anim[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+			    iii = moveS.getSprite(6, j);
+			    iii.setAlpha(0.95f);
+			    anim[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+			    iii = moveS.getSprite(7, j);
+			    iii.setAlpha(1);
+			    anim[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+
+			    iii = moveS.getSprite(8, j);
+			    iii.setAlpha(1);
+			    anim[17+j].addFrame(iii, (int) (MapGameState.AnimTick/9));
+
+			    anim[17+j].setLooping(false);
+		    }
 		}
 }
