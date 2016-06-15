@@ -1,14 +1,13 @@
 package roles.action;
 
-import cases.Arbre;
+import cases.AmiCheck;
 import cases.CaseProperty;
 import cases.PersoCheck;
-import cases.TypeCheck;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;
-import roles.World;
 import roles.States.Statut;
+import roles.World;
 
 public class Soigner extends Action {
 
@@ -21,7 +20,20 @@ public class Soigner extends Action {
 		int destX=pers.X();
 		int destY=pers.Y();
 		Cardinaux direction;
-		if(_prop.check(World.Case(destX-1, destY))){
+		CaseProperty p = new AmiCheck(pers);
+		if(p.check(World.Case(destX-1, destY))){
+			destX--; direction = Cardinaux.OUEST;
+		}
+		else if(p.check(World.Case(destX+1, destY))){
+			destX++; direction = Cardinaux.EST;
+		}
+		else if(p.check(World.Case(destX, destY-1))){
+			destY--; direction = Cardinaux.NORD;
+		}
+		else if(p.check(World.Case(destX, destY+1))){
+			destY++; direction = Cardinaux.SUD;
+		}
+		else if(_prop.check(World.Case(destX-1, destY))){
 			destX--; direction = Cardinaux.OUEST;
 		}
 		else if(_prop.check(World.Case(destX+1, destY))){
