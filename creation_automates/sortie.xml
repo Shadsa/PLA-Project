@@ -285,218 +285,56 @@
 	</transition>
 	<transition poids="5">
 		<etat>0</etat>
-		<condition type="Arbre" direction="N">Type</condition>
-		<action direction="N">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>0</etat>
-		<condition type="Arbre" direction="S">Type</condition>
-		<action direction="S">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>0</etat>
-		<condition type="Arbre" direction="E">Type</condition>
-		<action direction="E">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>0</etat>
-		<condition type="Arbre" direction="O">Type</condition>
-		<action direction="O">CouperBois</action>
+		<condition type="Arbre">UneCaseType</condition>
+		<action>CouperBois</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="5">
 		<etat>1</etat>
-		<condition type="Arbre" direction="N">Type</condition>
-		<action direction="N">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>1</etat>
-		<condition type="Arbre" direction="S">Type</condition>
-		<action direction="S">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>1</etat>
-		<condition type="Arbre" direction="E">Type</condition>
-		<action direction="E">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>1</etat>
-		<condition type="Arbre" direction="O">Type</condition>
-		<action direction="O">CouperBois</action>
+		<condition type="Arbre">UneCaseType</condition>
+		<action>CouperBois</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="5">
 		<etat>2</etat>
-		<condition type="Arbre" direction="N">Type</condition>
-		<action direction="N">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>2</etat>
-		<condition type="Arbre" direction="S">Type</condition>
-		<action direction="S">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>2</etat>
-		<condition type="Arbre" direction="E">Type</condition>
-		<action direction="E">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>2</etat>
-		<condition type="Arbre" direction="O">Type</condition>
-		<action direction="O">CouperBois</action>
+		<condition type="Arbre">UneCaseType</condition>
+		<action>CouperBois</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="5">
 		<etat>3</etat>
-		<condition type="Arbre" direction="N">Type</condition>
-		<action direction="N">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>3</etat>
-		<condition type="Arbre" direction="S">Type</condition>
-		<action direction="S">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>3</etat>
-		<condition type="Arbre" direction="E">Type</condition>
-		<action direction="E">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>3</etat>
-		<condition type="Arbre" direction="O">Type</condition>
-		<action direction="O">CouperBois</action>
+		<condition type="Arbre">UneCaseType</condition>
+		<action>CouperBois</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="5">
 		<etat>4</etat>
-		<condition type="Arbre" direction="N">Type</condition>
-		<action direction="N">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>4</etat>
-		<condition type="Arbre" direction="S">Type</condition>
-		<action direction="S">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>4</etat>
-		<condition type="Arbre" direction="E">Type</condition>
-		<action direction="E">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>4</etat>
-		<condition type="Arbre" direction="O">Type</condition>
-		<action direction="O">CouperBois</action>
+		<condition type="Arbre">UneCaseType</condition>
+		<action>CouperBois</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="5">
 		<etat>5</etat>
-		<condition type="Arbre" direction="N">Type</condition>
-		<action direction="N">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>5</etat>
-		<condition type="Arbre" direction="S">Type</condition>
-		<action direction="S">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>5</etat>
-		<condition type="Arbre" direction="E">Type</condition>
-		<action direction="E">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>5</etat>
-		<condition type="Arbre" direction="O">Type</condition>
-		<action direction="O">CouperBois</action>
+		<condition type="Arbre">UneCaseType</condition>
+		<action>CouperBois</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="5">
 		<etat>6</etat>
-		<condition type="Arbre" direction="N">Type</condition>
-		<action direction="N">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>6</etat>
-		<condition type="Arbre" direction="S">Type</condition>
-		<action direction="S">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>6</etat>
-		<condition type="Arbre" direction="E">Type</condition>
-		<action direction="E">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>6</etat>
-		<condition type="Arbre" direction="O">Type</condition>
-		<action direction="O">CouperBois</action>
+		<condition type="Arbre">UneCaseType</condition>
+		<action>CouperBois</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="5">
 		<etat>7</etat>
-		<condition type="Arbre" direction="N">Type</condition>
-		<action direction="N">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>7</etat>
-		<condition type="Arbre" direction="S">Type</condition>
-		<action direction="S">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>7</etat>
-		<condition type="Arbre" direction="E">Type</condition>
-		<action direction="E">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>7</etat>
-		<condition type="Arbre" direction="O">Type</condition>
-		<action direction="O">CouperBois</action>
+		<condition type="Arbre">UneCaseType</condition>
+		<action>CouperBois</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="5">
 		<etat>8</etat>
-		<condition type="Arbre" direction="N">Type</condition>
-		<action direction="N">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>8</etat>
-		<condition type="Arbre" direction="S">Type</condition>
-		<action direction="S">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>8</etat>
-		<condition type="Arbre" direction="E">Type</condition>
-		<action direction="E">CouperBois</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="5">
-		<etat>8</etat>
-		<condition type="Arbre" direction="O">Type</condition>
-		<action direction="O">CouperBois</action>
+		<condition type="Arbre">UneCaseType</condition>
+		<action>CouperBois</action>
 		<suivant>0</suivant>
 	</transition>
 </automate>

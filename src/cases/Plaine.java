@@ -1,8 +1,8 @@
 package cases;
 
-import roles.Cardinaux;
 import roles.Personnage;
-import roles.action.*;
+import roles.action.Action;
+import roles.action.Attendre;
 
 public final class Plaine extends TypeCase {
 

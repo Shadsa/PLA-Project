@@ -2,7 +2,6 @@ package cases;
 
 import roles.Personnage;
 import roles.action.Action;
-import roles.Joueur;
 
 public abstract class TypeCase {
 

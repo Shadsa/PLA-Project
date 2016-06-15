@@ -1,8 +1,7 @@
 package cases;
 
-import roles.Cardinaux;
 import roles.Personnage;
-import roles.action.*;
+import roles.action.Action;
 
 public final class Batiment extends TypeCase {
 

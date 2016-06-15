@@ -1,7 +1,5 @@
 package cases;
 
-import java.lang.reflect.InvocationTargetException;
-
 public class Terrain extends Case {
 
 	public Terrain(int x, int y, TypeCase type) {

@@ -1,6 +1,5 @@
 package cases;
 
-import roles.Joueur;
 import roles.Personnage;
 
 public class BatimentCheck implements CaseProperty{

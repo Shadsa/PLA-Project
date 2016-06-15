@@ -30,6 +30,7 @@ type action =
   | Raser
   | AvancerHasard
   | CouperBois
+  | Soigner
   | Avancer of cellule
   | Attaquer of cellule
   | Creer of int
@@ -167,6 +168,7 @@ let output_act (a : action) (p : int) =
    | DupliquerZombie -> output_stab ((balise b Rien)^"DupliquerZombie"^(fbalise b)) p
    | Raser -> output_stab ((balise b Rien)^"Raser"^(fbalise b)) p
    | CouperBois -> output_stab ((balise b Rien)^"CouperBois"^(fbalise b)) p
+   | Soigner -> output_stab ((balise b Rien)^"Soigner"^(fbalise b)) p
    | Avancer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Avancer"^(fbalise b)) p
    | Attaquer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Attaquer"^(fbalise b)) p
    | Creer(t) -> output_stab ((balise b (Unite(t)))^"Creer"^(fbalise b)) p
