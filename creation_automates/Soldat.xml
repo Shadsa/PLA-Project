@@ -189,218 +189,56 @@
 	</transition>
 	<transition poids="6">
 		<etat>0</etat>
-		<condition direction="N">Ennemi</condition>
-		<action direction="N">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>0</etat>
-		<condition direction="S">Ennemi</condition>
-		<action direction="S">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>0</etat>
-		<condition direction="E">Ennemi</condition>
-		<action direction="E">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>0</etat>
-		<condition direction="O">Ennemi</condition>
-		<action direction="O">Attaquer</action>
+		<condition>UnEnnemi</condition>
+		<action>Combattre</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="6">
 		<etat>1</etat>
-		<condition direction="N">Ennemi</condition>
-		<action direction="N">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>1</etat>
-		<condition direction="S">Ennemi</condition>
-		<action direction="S">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>1</etat>
-		<condition direction="E">Ennemi</condition>
-		<action direction="E">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>1</etat>
-		<condition direction="O">Ennemi</condition>
-		<action direction="O">Attaquer</action>
+		<condition>UnEnnemi</condition>
+		<action>Combattre</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="6">
 		<etat>2</etat>
-		<condition direction="N">Ennemi</condition>
-		<action direction="N">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>2</etat>
-		<condition direction="S">Ennemi</condition>
-		<action direction="S">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>2</etat>
-		<condition direction="E">Ennemi</condition>
-		<action direction="E">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>2</etat>
-		<condition direction="O">Ennemi</condition>
-		<action direction="O">Attaquer</action>
+		<condition>UnEnnemi</condition>
+		<action>Combattre</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="6">
 		<etat>3</etat>
-		<condition direction="N">Ennemi</condition>
-		<action direction="N">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>3</etat>
-		<condition direction="S">Ennemi</condition>
-		<action direction="S">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>3</etat>
-		<condition direction="E">Ennemi</condition>
-		<action direction="E">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>3</etat>
-		<condition direction="O">Ennemi</condition>
-		<action direction="O">Attaquer</action>
+		<condition>UnEnnemi</condition>
+		<action>Combattre</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="6">
 		<etat>4</etat>
-		<condition direction="N">Ennemi</condition>
-		<action direction="N">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>4</etat>
-		<condition direction="S">Ennemi</condition>
-		<action direction="S">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>4</etat>
-		<condition direction="E">Ennemi</condition>
-		<action direction="E">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>4</etat>
-		<condition direction="O">Ennemi</condition>
-		<action direction="O">Attaquer</action>
+		<condition>UnEnnemi</condition>
+		<action>Combattre</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="6">
 		<etat>5</etat>
-		<condition direction="N">Ennemi</condition>
-		<action direction="N">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>5</etat>
-		<condition direction="S">Ennemi</condition>
-		<action direction="S">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>5</etat>
-		<condition direction="E">Ennemi</condition>
-		<action direction="E">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>5</etat>
-		<condition direction="O">Ennemi</condition>
-		<action direction="O">Attaquer</action>
+		<condition>UnEnnemi</condition>
+		<action>Combattre</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="6">
 		<etat>6</etat>
-		<condition direction="N">Ennemi</condition>
-		<action direction="N">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>6</etat>
-		<condition direction="S">Ennemi</condition>
-		<action direction="S">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>6</etat>
-		<condition direction="E">Ennemi</condition>
-		<action direction="E">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>6</etat>
-		<condition direction="O">Ennemi</condition>
-		<action direction="O">Attaquer</action>
+		<condition>UnEnnemi</condition>
+		<action>Combattre</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="6">
 		<etat>7</etat>
-		<condition direction="N">Ennemi</condition>
-		<action direction="N">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>7</etat>
-		<condition direction="S">Ennemi</condition>
-		<action direction="S">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>7</etat>
-		<condition direction="E">Ennemi</condition>
-		<action direction="E">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>7</etat>
-		<condition direction="O">Ennemi</condition>
-		<action direction="O">Attaquer</action>
+		<condition>UnEnnemi</condition>
+		<action>Combattre</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="6">
 		<etat>8</etat>
-		<condition direction="N">Ennemi</condition>
-		<action direction="N">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>8</etat>
-		<condition direction="S">Ennemi</condition>
-		<action direction="S">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>8</etat>
-		<condition direction="E">Ennemi</condition>
-		<action direction="E">Attaquer</action>
-		<suivant>0</suivant>
-	</transition>
-	<transition poids="6">
-		<etat>8</etat>
-		<condition direction="O">Ennemi</condition>
-		<action direction="O">Attaquer</action>
+		<condition>UnEnnemi</condition>
+		<action>Combattre</action>
 		<suivant>0</suivant>
 	</transition>
 </automate>
