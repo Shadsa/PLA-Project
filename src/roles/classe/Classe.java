@@ -1,21 +1,23 @@
 package roles.classe;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import roles.Bonus;
 import roles.action.*;
 import roles.conditions.*;
 
-public class Classe {
+public class Classe implements Serializable {
 
-
-
+	private static final long serialVersionUID = 1L;
+	
 	private int _HP;
 	private int _damage;
 	private int _heal;
 	private int _armor;
 	private String _name;
 	private Bonus _bonus;
+	private int _cost;
 	private ArrayList<Class<Action>> avaibleAction;
 	private ArrayList<Class<Condition>> avaibleCondition;
 
@@ -25,6 +27,7 @@ public class Classe {
 		modifier(bonus);
 		avaibleAction = new ArrayList<Class<Action>>();
 		avaibleCondition = new ArrayList<Class<Condition>>();
+		costSet();
 	}
 
 	public Classe(int HP, int damage, int heal, int armor, String name, Bonus bonus, ArrayList<Class<Action>> act , ArrayList<Class<Condition>> cond){
@@ -32,6 +35,7 @@ public class Classe {
 		modifier(bonus);
 		avaibleAction = new ArrayList<Class<Action>>();
 		avaibleCondition = new ArrayList<Class<Condition>>();
+		costSet();
 	}
 
 	public void modifier(Bonus x){
@@ -53,8 +57,14 @@ public class Classe {
 
 	}
 
+	//Getter
 	public int HP(){
 		return _HP;
+	}
+	
+	public int cost(){
+		costSet();
+		return _cost;
 	}
 
 	public int armor(){
@@ -71,6 +81,36 @@ public class Classe {
 
 	public String name(){
 		return _name;
+	}
+	
+	public Bonus bonus(){
+		return _bonus;
+	}
+	
+	
+	//Setter
+	public void HP(int i){
+		_HP=i;
+	}
+
+	public void armor(int i){
+		_armor = i;
+	}
+
+	public void damage(int i){
+		_damage = i;
+	}
+
+	public void heal(int i){
+		_heal=i;
+	}
+
+	public void name(String n){
+		_name=n;
+	}
+	
+	public void bonus(Bonus b){
+		_bonus = b;
 	}
 
 	public void addAction(Class act){
@@ -93,6 +133,10 @@ public class Classe {
 			if(act == avaibleCondition.get(i)){return true;}
 		}
 		return false;
+	}
+	
+	public void costSet(){
+		_cost = 5*_HP + 8*_damage + 8*_heal + 10*_armor;
 	}
 
 	@Override

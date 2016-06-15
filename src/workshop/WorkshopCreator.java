@@ -10,6 +10,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
 
 public class WorkshopCreator {
@@ -53,6 +55,7 @@ public class WorkshopCreator {
 		}
 
 		for(int i=0;i<files.size();i++){
+			deckActionName.add(files.get(i).getName());
 			ArrayList<Class<Action>> newdeck = new ArrayList<Class<Action>>();
 			fis = new FileInputStream(files.get(i));
 			while((res = fis.read()) != -1){
@@ -84,6 +87,7 @@ public class WorkshopCreator {
 		}
 
 		for(int i=0;i<files.size();i++){
+			deckConditionName.add(files.get(i).getName());
 			ArrayList<Class<Condition>> newdeck = new ArrayList<Class<Condition>>();
 			fis = new FileInputStream(files.get(i));
 			while((res = fis.read()) != -1){
@@ -108,6 +112,19 @@ public class WorkshopCreator {
 
 	}
 
+// API FUNCTION
+	
+	public void loadClass(){ //désérialisation
+		ObjectInputStream ois;
+	    ObjectOutputStream oos;
+	    
+	}
+	
+	public void saveClass(Classe c){//sérialisation
+		ObjectInputStream ois;
+	    ObjectOutputStream oos;
+	    
+	}
 
 //STRUCTURE
 
