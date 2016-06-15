@@ -10,14 +10,18 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import workshop.WorkshopCreator;
+
 public class StateGame extends StateBasedGame {
 
 	static Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 	private static int height = (int)screenSize.getHeight();
 	private static int width = (int)screenSize.getWidth();
+	public static WorkshopCreator workshop ;
 
 	public StateGame() {
 		super("Chateautomate");
+		workshop = new WorkshopCreator();
 	}
 
     public void initStatesList(GameContainer container) throws SlickException {

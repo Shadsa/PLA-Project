@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -32,6 +33,7 @@ import roles.Automate;
 import roles.Bonus;
 import roles.World;
 import roles.classe.Classe;
+import workshop.WorkshopCreator;
 
 
 public class ClassDialog extends JDialog {
@@ -130,12 +132,19 @@ public class ClassDialog extends JDialog {
 	    okBouton.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent arg0) {
 	    	  	cost.doClick();
+	    	  	try {
+					StateGame.workshop.saveClass(classinfo);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	    	  	
 	      }
 	    });
 
 	    cost.addActionListener(new ActionListener(){
 		      public void actionPerformed(ActionEvent arg0) {
+		    	  classinfo.name(nom.getText());
 		    	  classinfo.armor(Integer.parseInt(Armor.getText()));
 		    	  classinfo.heal(Integer.parseInt(Heal.getText()));
 		    	  classinfo.HP(Integer.parseInt(HP.getText()));
