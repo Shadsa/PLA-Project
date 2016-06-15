@@ -87,4 +87,8 @@ public abstract class Case extends Observable{
 		return _personnage;
 	}
 	
+	public void Evenement(Personnage pers) {
+		_type.Evenement(pers);
+	}
+	
 }
