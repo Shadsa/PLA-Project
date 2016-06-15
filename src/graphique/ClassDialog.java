@@ -35,19 +35,19 @@ import roles.classe.Classe;
 
 
 public class ClassDialog extends JDialog {
-	
+
 	private Classe classinfo;
-	
+
 	public ClassDialog(JFrame parent, String title, boolean modal){
 	    super(parent, title, modal);
 	    this.setSize(850, 120);
 	    this.setLocationRelativeTo(null);
 	    this.setResizable(false);
 	    this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-	    classinfo = new Classe(0,0,0,0,"default",Bonus.NONE);
+	    classinfo = new Classe(0,0,0,0,"default", true,Bonus.NONE);
 		initComponent();
 	  }
-	
+
 
 	  private void initComponent(){
 			JLabel icon;
@@ -70,40 +70,40 @@ public class ClassDialog extends JDialog {
 	    panNom.setBorder(BorderFactory.createTitledBorder("Nom Classe"));
 	    panNom.add(nom);
 
-	    
+
 	    //AJOUT DES ATTRIBUTS
 	    JPanel panHP = new JPanel();
 	    panHP.setBorder(BorderFactory.createTitledBorder("HP"));
 	    HP = new JTextField();
 	    HP.setPreferredSize(new Dimension(50, 25));
 	    panHP.add(HP);
-	    
+
 	    JPanel panDamage = new JPanel();
 	    panDamage.setBorder(BorderFactory.createTitledBorder("Damage"));
 	    Damage = new JTextField();
 	    Damage.setPreferredSize(new Dimension(50, 25));
 	    panDamage.add(Damage);
-	    
+
 	    JPanel panHeal = new JPanel();
 	    panHeal.setBorder(BorderFactory.createTitledBorder("Heal Power"));
 	    Heal = new JTextField();
 	    Heal.setPreferredSize(new Dimension(50, 25));
 	    panHeal.add(Heal);
-	    
+
 	    JPanel panArmor = new JPanel();
 	    panArmor.setBorder(BorderFactory.createTitledBorder("Armor"));
 	    Armor = new JTextField();
 	    Armor.setPreferredSize(new Dimension(50, 25));
 	    panArmor.add(Armor);
-	    
+
 	    JPanel panBonus = new JPanel();
 	    panBonus.setBorder(BorderFactory.createTitledBorder("Bonus"));
 	    JComboBox<Bonus> bonus = new JComboBox<Bonus>();
-	    
+
 	    for(Bonus b : Bonus.values())
 	    	bonus.addItem(b);
 	    panBonus.add(bonus);
-	    
+
 	    JPanel panCost = new JPanel();
 	    panArmor.setBorder(BorderFactory.createTitledBorder("Unit Cost"));
 	    Cost = new JTextField();
@@ -119,8 +119,8 @@ public class ClassDialog extends JDialog {
 	    content.add(panHeal);
 	    content.add(panArmor);
 	    content.add(panBonus);
-	    
-	    
+
+
 
 	    JPanel control = new JPanel();
 	    JButton okBouton = new JButton("OK");
@@ -128,10 +128,10 @@ public class ClassDialog extends JDialog {
 
 	    okBouton.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent arg0) {
-	    	  
+
 	      }
 	    });
-	    
+
 	    cost.addActionListener(new ActionListener(){
 		      public void actionPerformed(ActionEvent arg0) {
 		    	  classinfo.armor(Integer.parseInt(Armor.getText()));
@@ -157,7 +157,7 @@ public class ClassDialog extends JDialog {
 	    this.getContentPane().add(panIcon, BorderLayout.WEST);
 	    this.getContentPane().add(content, BorderLayout.CENTER);
 	    this.getContentPane().add(control, BorderLayout.SOUTH);
-	    
+
 	  }
 
 }
