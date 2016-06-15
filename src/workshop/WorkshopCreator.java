@@ -92,7 +92,7 @@ public class WorkshopCreator {
 			fis = new FileInputStream(files.get(i));
 			while((res = fis.read()) != -1){
 				if(res == '\n'){
-					Class newAction = Class.forName("roles.conditions." + buf);
+					Class<Condition> newAction = (Class<Condition>)Class.forName("roles.conditions." + buf);
 					newdeck.add(newAction);
 					buf="";
 				}else{
@@ -100,7 +100,7 @@ public class WorkshopCreator {
 				}
 			}
 			if(buf != ""){
-				Class newAction = Class.forName("roles.conditions." + buf);
+				Class<Condition> newAction = (Class<Condition>) Class.forName("roles.conditions." + buf);
 				newdeck.add(newAction);
 				buf="";
 			}
