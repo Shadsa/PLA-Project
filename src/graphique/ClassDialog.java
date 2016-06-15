@@ -119,6 +119,7 @@ public class ClassDialog extends JDialog {
 	    content.add(panHeal);
 	    content.add(panArmor);
 	    content.add(panBonus);
+	    content.add(panCost);
 
 
 
@@ -128,7 +129,8 @@ public class ClassDialog extends JDialog {
 
 	    okBouton.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent arg0) {
-
+	    	  	cost.doClick();
+	    	  	
 	      }
 	    });
 
@@ -150,7 +152,8 @@ public class ClassDialog extends JDialog {
 	        setVisible(false);
 	      }
 	    });
-
+	    
+	    control.add(cost);
 	    control.add(okBouton);
 	    control.add(cancelBouton);
 

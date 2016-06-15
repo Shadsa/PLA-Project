@@ -129,7 +129,7 @@ public class WorkshopCreator {
 //STRUCTURE
 
 	public void createClasse(String name, Bonus bonus, String deckActName, String deckCondName){
-			Classe newclass = new Classe(10,5,2,2,name,bonus,getDeckAction(deckActName),getDeckCondition(deckCondName));
+			Classe newclass = new Classe(10,5,2,2,name,false,bonus,getDeckAction(deckActName),getDeckCondition(deckCondName));
 			deckClasse.add(newclass);
 			deckClasseName.add(name);
 	}
