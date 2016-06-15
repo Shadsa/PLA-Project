@@ -10,7 +10,7 @@ import roles.conditions.*;
 public class Classe implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private int _HP;
 	private int _damage;
 	private int _heal;
@@ -20,6 +20,8 @@ public class Classe implements Serializable {
 	private int _cost;
 	private ArrayList<Class<Action>> avaibleAction;
 	private ArrayList<Class<Condition>> avaibleCondition;
+
+	private boolean _hard_walker;
 
 
 	public Classe(int HP, int damage, int heal, int armor, String name, Bonus bonus){
@@ -61,7 +63,7 @@ public class Classe implements Serializable {
 	public int HP(){
 		return _HP;
 	}
-	
+
 	public int cost(){
 		costSet();
 		return _cost;
@@ -82,12 +84,17 @@ public class Classe implements Serializable {
 	public String name(){
 		return _name;
 	}
-	
+
+	public boolean hard_walker()
+	{
+		return _hard_walker;
+	}
+
 	public Bonus bonus(){
 		return _bonus;
 	}
-	
-	
+
+
 	//Setter
 	public void HP(int i){
 		_HP=i;
@@ -108,7 +115,7 @@ public class Classe implements Serializable {
 	public void name(String n){
 		_name=n;
 	}
-	
+
 	public void bonus(Bonus b){
 		_bonus = b;
 	}
@@ -134,7 +141,7 @@ public class Classe implements Serializable {
 		}
 		return false;
 	}
-	
+
 	public void costSet(){
 		_cost = 5*_HP + 8*_damage + 8*_heal + 10*_armor;
 	}
