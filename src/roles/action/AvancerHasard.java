@@ -44,7 +44,7 @@ public final class AvancerHasard extends Action {
 				World.Case(destX, destY).setPersonnage(pers);
 				pers.setState(new States(Statut.REVEAL, direction));
 			}
-			else
+			else if(!(World.Case(destX, destY).type() instanceof Arbre))
 			{
 				World.Case(destX, destY).setPersonnage(pers);
 				pers.setState(new States(Statut.AVANCE, direction));
