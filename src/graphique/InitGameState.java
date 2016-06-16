@@ -44,7 +44,7 @@ public class InitGameState extends BasicGameState {
 	//Image de fond
 	private Image background;
 	//Le contrôleur des phases de jeu
-	private static StateGame game;
+	public static StateGame game;
 	private String sizeScreen;
 	private Input _input;
 

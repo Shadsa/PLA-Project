@@ -20,20 +20,24 @@ import roles.World;
 import roles.classe.Classe;
 import graphique.Button;
 import graphique.StateGame;
+import graphique.InitGameState;
+import graphique.MapTest;
+import graphique.MapGameState;
 
-public class DragAndDropState extends BasicGameState {
+class DragAndDropState extends BasicGameState {
 	private Bouton _bouton_drag;
 	public static final int ID = 3;
-	private MapTest map = new MapTest();
+	private MapTest map = new MapTest ();
 	private float _offsetMapX=0;
 	private float _offsetMapY=0;
 	private float mouseAbsoluteX;
 	private float mouseAbsoluteY;
 	private float _mouseMapX;
 	private float _mouseMapY;
+	private ArrayList<UnitInfo> UIFs;
 	private int _scrollingSpeed = 15;
 	private float _zoom = 1;
-	private static StateBasedGame game;
+	//private static StateBasedGame game;
 	private Input _input;
 	int compt_clic = 0; //compteur de clic
 	int x1; //variable de sauvegarde des coordonnées
@@ -44,7 +48,8 @@ public class DragAndDropState extends BasicGameState {
 	private int _tailleMapX=45;
 	private int _tailleMapY=75;
 	private Button _bouton_Jouer;
-	private ArrayList<UnitInfo> UIFs;
+	
+	//private static StateGame game;
 
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//World.BuildMap(40,57);
@@ -55,7 +60,8 @@ public class DragAndDropState extends BasicGameState {
 		Image overImage = img.getSubImage(633, 53, 123, 27);
 		Image downImage = img.getSubImage(633, 83, 123, 27);
 		_bouton_Jouer = new Button(arg0, "Jouer", arg0.getWidth()-150, arg0.getHeight()-50, normalImage, overImage, downImage);
-		UIFs = new ArrayList<UnitInfo>();	
+		//UIFs = new ArrayList<UnitInfo>();	
+		//DragAndDropState.game = (StateGame) game;
 	}
 
 	@Override
@@ -91,9 +97,9 @@ public class DragAndDropState extends BasicGameState {
 		_bouton_Jouer.update(arg0);
 		//Configuration du bouton Jouer
 		if (_bouton_Jouer.isDown()) {
-				game.enterState(MapGameState.ID);
-				//((MapGameState)DragAndDropState.game.getState(MapGameState.ID)).setGame(UIFs);
-				//DragAndDropState.game.enterState(MapGameState.ID);
+				//game.enterState(MapGameState.ID);
+				((MapGameState)InitGameState.game.getState(MapGameState.ID)).setGame(UIFs, map);
+				InitGameState.game.enterState(MapGameState.ID);
 				}
 		//Gestion des boutons en plein écran
 		//_bouton_Jouer.setLocation(arg0.getWidth()/2-150, arg0.getHeight()/2-50);
@@ -189,38 +195,7 @@ public class DragAndDropState extends BasicGameState {
 	public int getID() {
 		return ID;
 	}
-	public void setGame(ArrayList<UnitInfo> uIFs) {
 
-		int nb = 0;
-		ArrayList<Automate> autlist = new ArrayList<Automate>();
-		ArrayList<Classe> classes = new ArrayList<Classe>();
-		for(UnitInfo ui : uIFs)
-		{
-			nb++;
-			autlist.add(ui.automate);
-			classes.add(ui.classe);
-		}
-		World.addPlayer(new Joueur("Human", autlist, classes));
-		World.addPlayer(new Joueur("Zombie", autlist, classes));
-
-		try {
-			World.putAutomate(World.getPlayers().get(0).automate(0), 1, 1, World.getPlayers().get(0));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		/*for(Joueur j : World.getPlayers())
-		{
-			_joueurs.add(new graphique.GJoueur((j == World.getPlayers().get(0))?TypeUnit.Human:TypeUnit.Zombie));
-			j.addObserver(_joueurs.get(_joueurs.size()-1));
-			for(Personnage pers : j.getPersonnages())
-				_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
-		}*/
-		try {
-			this.map.init();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	public float zoom() {
 		return _zoom;
@@ -246,6 +221,47 @@ public class DragAndDropState extends BasicGameState {
 		this._offsetMapY = y;
 
 	}
+	
+	public void setGame(ArrayList<UnitInfo> uIFs) {
+
+		this.UIFs = uIFs;
+		int nb = 0;
+		ArrayList<Automate> autlist = new ArrayList<Automate>();
+		ArrayList<Classe> classes = new ArrayList<Classe>();
+		for(UnitInfo ui : uIFs)
+		{
+			nb++;
+			autlist.add(ui.automate);
+			classes.add(ui.classe);
+		}
+		World.addPlayer(new Joueur("Human", autlist, classes));
+		World.addPlayer(new Joueur("Zombie", autlist, classes));
+
+		try {
+			World.putAutomate(World.getPlayers().get(0).automate(0), 1, 1, World.getPlayers().get(0));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		/*//for(int i = 0; i < nb; i++)
+			World.getPlayers().get(0).createPersonnage(0, 1, 1);
+		//for(int i = 0; i < nb; i++)
+			World.getPlayers().get(1).createPersonnage(classes.size()-1, _tailleMapX-1, _tailleMapY-1);
+
+		/*for(Joueur j : World.getPlayers())
+		{
+			_joueurs.add(new graphique.GJoueur((j == World.getPlayers().get(0))?TypeUnit.Human:TypeUnit.Zombie));
+			j.addObserver(_joueurs.get(_joueurs.size()-1));
+			for(Personnage pers : j.getPersonnages())
+				_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
+		}*/
+		try {
+			this.map.init();
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 	
 	
 	

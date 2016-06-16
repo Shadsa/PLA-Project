@@ -54,7 +54,7 @@ public class MapGameState extends BasicGameState {
 	private float _offsetMapY = 0;
 
 	//Test
-	private MapTest map = new MapTest();
+	private MapTest map; //= new MapTest ();
 	private Input _input;
 	private int _scrollingSpeed = 15;
 	private float _zoom = 1;
@@ -532,9 +532,10 @@ public class MapGameState extends BasicGameState {
 		this._offsetMapY = y;
 
 	}
-	public void setGame(ArrayList<UnitInfo> uIFs) {
+	public void setGame(ArrayList<UnitInfo> uIFs, MapTest map) {
 
-		int nb = 0;
+		this.map = map;
+		/*int nb = 0;
 		ArrayList<Automate> autlist = new ArrayList<Automate>();
 		ArrayList<Classe> classes = new ArrayList<Classe>();
 		for(UnitInfo ui : uIFs)
@@ -550,11 +551,11 @@ public class MapGameState extends BasicGameState {
 			World.putAutomate(World.getPlayers().get(0).automate(0), 1, 1, World.getPlayers().get(0));
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 		//for(int i = 0; i < nb; i++)
 			World.getPlayers().get(0).createPersonnage(0, 1, 1);
-		//for(int i = 0; i < nb; i++)
-			World.getPlayers().get(1).createPersonnage(classes.size()-1, _tailleMapX-1, _tailleMapY-1);
+			//for(int i = 0; i < nb; i++)
+			//World.getPlayers().get(1).createPersonnage(classes.size()-1, _tailleMapX-1, _tailleMapY-1);
 
 		for(Joueur j : World.getPlayers())
 		{
@@ -563,10 +564,10 @@ public class MapGameState extends BasicGameState {
 			for(Personnage pers : j.getPersonnages())
 				_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
 		}
-		try {
+		/*try {
 			this.map.init();
 		} catch (SlickException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 }
