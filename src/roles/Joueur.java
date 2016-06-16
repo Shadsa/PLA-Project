@@ -35,7 +35,7 @@ public class Joueur extends Observable{
 	public Personnage createPersonnage(int type, int x, int y)
 	{
 		// WARNING faire plutot un get automate avec gestion d'erreur
-		if(type<=_automates.size()){
+		if((type+1)<=_automates.size()){
 			Personnage newPers = new Personnage(_automates.get(type), x, y, this,_classes.get(type));
 			_personnages.add(newPers);
 			setChanged();
