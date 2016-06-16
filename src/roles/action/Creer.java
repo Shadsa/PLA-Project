@@ -37,7 +37,7 @@ public final class Creer extends Action {
 		
 		if(World.isfree(destX, destY))
 		{
-			if(pers.owner().changerRessource(-250))
+			if(pers.owner().changerRessource(-100))
 				pers.owner().createPersonnage(_type, destX, destY);
 			pers.setState(new States(Statut.ATTAQUE, direction));
 		}

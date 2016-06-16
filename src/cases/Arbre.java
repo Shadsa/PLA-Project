@@ -6,7 +6,7 @@ import roles.action.CouperBois;
 
 public final class Arbre extends TypeCase {
 	
-	public final int _vie = 150;
+	public final int _vie = 200;
 	
 	protected static Action _action = new CouperBois();
 	
