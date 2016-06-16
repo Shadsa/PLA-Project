@@ -44,6 +44,7 @@ public class Player implements Observer{
 	public int AnimDead;
 	private Boolean _isDead;
 	private TypeUnit _human;
+	private TypeClothes _clothes;	
 	private SoundEffect soundEffect;
 
 	protected int _id;
@@ -60,9 +61,10 @@ public class Player implements Observer{
 		return _id;
 	}
 
-	public Player(Personnage pers, TypeUnit _type_unit) {
+	public Player(Personnage pers, TypeUnit _type_unit, TypeClothes _type_clothes) {
 		_hide = false;
 		_human = _type_unit;
+		_clothes = _type_clothes;
 		_id = nextID();
 		_isDead = false;
 		AnimDuration = MapGameState.Tick;
@@ -201,7 +203,7 @@ public static void sinit() throws SlickException
 		}
 
 	    if(_Awear != -1)
-	    	g.drawImage(Habits[_Abody].getImage(_human.animations[_Abody].getFrame()), x-32, y-60);
+	    	g.drawImage(_clothes.animations[_Abody].getImage(_human.animations[_Abody].getFrame()), x-32, y-60);
 
 	    if(_Aweapon != -1)
 	    	g.drawAnimation(Danimations[_Aweapon], x-32, y-60);
@@ -389,8 +391,8 @@ public static void sinit() throws SlickException
 					_Awear = anim;
 
 				    _Abody = anim;
-				    if(_human == TypeUnit.Zombie)
-				    	_Awear = -1;
+				    /*if(_human == TypeUnit.Zombie)
+				    	_Awear = -1;*/
 				    _Aweapon = danim;
 		}
 

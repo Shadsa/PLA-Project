@@ -542,28 +542,39 @@ public class MapGameState extends BasicGameState {
 	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2) {
 
 		//int nb = 0;
-		ArrayList<Automate> autlist = new ArrayList<Automate>();
-		ArrayList<Automate> autlist2 = new ArrayList<Automate>();
-		ArrayList<Classe> classes = new ArrayList<Classe>();
-		ArrayList<Classe> classes2 = new ArrayList<Classe>();
-		ArrayList<TypeUnit> type = new ArrayList<TypeUnit>();
-		ArrayList<TypeUnit> type2 = new ArrayList<TypeUnit>();
+		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
+		//ArrayList<Automate> autlist2 = new ArrayList<Automate>();
+		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
+		//ArrayList<Classe> classes2 = new ArrayList<Classe>();
+		ArrayList<ArrayList<TypeUnit>> type_unit = new ArrayList<ArrayList<TypeUnit>>();
+		//ArrayList<TypeUnit> type_unit2 = new ArrayList<TypeUnit>();
+		ArrayList<ArrayList<TypeClothes>> type_clothes = new ArrayList<ArrayList<TypeClothes>>();
+		//ArrayList<TypeClothes> type_clothes2 = new ArrayList<TypeClothes>();
 		for(UnitInfo ui : uIFs1)
-
 		{
 			//nb++;
-			autlist.add(ui.automate);
-			classes.add(ui.classe);
-			type.add(ui.color);
+			autlist.add(new ArrayList<Automate>());
+			classes.add(new ArrayList<Classe>());
+			type_unit.add(new ArrayList<TypeUnit>());
+			type_clothes.add(new ArrayList<TypeClothes>());
+			autlist.get(0).add(ui.automate);
+			classes.get(0).add(ui.classe);
+			type_unit.get(0).add(ui.color);
+			type_clothes.get(0).add(ui.clothes);
 		}
 		for(UnitInfo ui : uIFs2) {
 			//nb++;
-			autlist2.add(ui.automate);
-			classes2.add(ui.classe);
-			type2.add(ui.color);
+			autlist.add(new ArrayList<Automate>());
+			classes.add(new ArrayList<Classe>());
+			type_unit.add(new ArrayList<TypeUnit>());
+			type_clothes.add(new ArrayList<TypeClothes>());
+			autlist.get(1).add(ui.automate);
+			classes.get(1).add(ui.classe);
+			type_unit.get(1).add(ui.color);
+			type_clothes.get(1).add(ui.clothes);
 		}
-		World.addPlayer(new Joueur("Joueur1", autlist, classes));
-		World.addPlayer(new Joueur("Joueur2", autlist2, classes2));
+		World.addPlayer(new Joueur("Joueur1", autlist.get(0), classes.get(0)));
+		World.addPlayer(new Joueur("Joueur2", autlist.get(1), classes.get(1)));
 
 		try {
 			World.putAutomate(World.getPlayers().get(0).automate(0), 1, 1, World.getPlayers().get(0));
@@ -572,16 +583,18 @@ public class MapGameState extends BasicGameState {
 			e.printStackTrace();
 		}
 		//for(int i = 0; i < nb; i++)
-			World.getPlayers().get(0).createPersonnage(0, 1, 1);
+		World.getPlayers().get(0).createPersonnage(0, 1, 1);
 		//for(int i = 0; i < nb; i++)
-			World.getPlayers().get(1).createPersonnage(0, _tailleMapX-1, _tailleMapY-1);
+		World.getPlayers().get(1).createPersonnage(0, _tailleMapX-1, _tailleMapY-1);
 
+		int i=0;
 		for(Joueur j : World.getPlayers())
 		{
-			_joueurs.add(new GJoueur((j == World.getPlayers().get(0))?type:type2));
+			_joueurs.add(new GJoueur(type_unit.get(i),type_clothes.get(i)));
 			j.addObserver(_joueurs.get(_joueurs.size()-1));
 			for(Personnage pers : j.getPersonnages())
 				_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
+			i++;
 		}
 		try {
 			this.map.init();
