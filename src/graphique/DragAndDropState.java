@@ -223,37 +223,64 @@ class DragAndDropState extends BasicGameState {
 
 	}
 	
-	public void setGame(ArrayList<UnitInfo> uIFs) {
+	public void setGame(ArrayList<UnitInfo> uIFs1,ArrayList<UnitInfo> uIFs2) {
 
-		this.UIFs1 = uIFs;
-		int nb = 0;
-		ArrayList<Automate> autlist = new ArrayList<Automate>();
-		ArrayList<Classe> classes = new ArrayList<Classe>();
-		for(UnitInfo ui : uIFs)
+		this.UIFs1 = uIFs1;
+		this.UIFs2 = uIFs2;
+		//int nb = 0;
+		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
+		//ArrayList<Automate> autlist2 = new ArrayList<Automate>();
+		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
+		//ArrayList<Classe> classes2 = new ArrayList<Classe>();
+		ArrayList<ArrayList<TypeUnit>> type_unit = new ArrayList<ArrayList<TypeUnit>>();
+		//ArrayList<TypeUnit> type_unit2 = new ArrayList<TypeUnit>();
+		ArrayList<ArrayList<TypeClothes>> type_clothes = new ArrayList<ArrayList<TypeClothes>>();
+		//ArrayList<TypeClothes> type_clothes2 = new ArrayList<TypeClothes>();
+		for(UnitInfo ui : uIFs1)
 		{
-			nb++;
-			autlist.add(ui.automate);
-			classes.add(ui.classe);
+			//nb++;
+			autlist.add(new ArrayList<Automate>());
+			classes.add(new ArrayList<Classe>());
+			type_unit.add(new ArrayList<TypeUnit>());
+			type_clothes.add(new ArrayList<TypeClothes>());
+			autlist.get(0).add(ui.automate);
+			classes.get(0).add(ui.classe);
+			type_unit.get(0).add(ui.color);
+			type_clothes.get(0).add(ui.clothes);
 		}
-		World.addPlayer(new Joueur("Human", autlist, classes));
-		World.addPlayer(new Joueur("Zombie", autlist, classes));
+		for(UnitInfo ui : uIFs2) {
+			//nb++;
+			autlist.add(new ArrayList<Automate>());
+			classes.add(new ArrayList<Classe>());
+			type_unit.add(new ArrayList<TypeUnit>());
+			type_clothes.add(new ArrayList<TypeClothes>());
+			autlist.get(1).add(ui.automate);
+			classes.get(1).add(ui.classe);
+			type_unit.get(1).add(ui.color);
+			type_clothes.get(1).add(ui.clothes);
+		}
+		World.addPlayer(new Joueur("Joueur1", autlist.get(0), classes.get(0)));
+		World.addPlayer(new Joueur("Joueur2", autlist.get(1), classes.get(1)));
 
 		try {
-			World.putAutomate(World.getPlayers().get(0).automate(0), 1, 1, World.getPlayers().get(0));
+			World.putAutomates(World.getPlayers().get(0).Automates(), 1, 1, World.getPlayers().get(0));
+			World.putAutomates(World.getPlayers().get(1).Automates(),_tailleMapX-1, _tailleMapY-1, World.getPlayers().get(1));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		/*//for(int i = 0; i < nb; i++)
-			World.getPlayers().get(0).createPersonnage(0, 1, 1);
+		World.getPlayers().get(0).createPersonnage(0, 1, 1);
 		//for(int i = 0; i < nb; i++)
-			World.getPlayers().get(1).createPersonnage(classes.size()-1, _tailleMapX-1, _tailleMapY-1);
-
-		/*for(Joueur j : World.getPlayers())
+		World.getPlayers().get(1).createPersonnage(classes.size()-1, _tailleMapX-1, _tailleMapY-1);
+*/
+		/*int i=0;
+		for(Joueur j : World.getPlayers())
 		{
-			_joueurs.add(new graphique.GJoueur((j == World.getPlayers().get(0))?TypeUnit.Human:TypeUnit.Zombie));
+			_joueurs.add(new GJoueur(type_unit.get(i),type_clothes.get(i)));
 			j.addObserver(_joueurs.get(_joueurs.size()-1));
 			for(Personnage pers : j.getPersonnages())
 				_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
+			i++;
 		}*/
 		try {
 			this.map.init();
