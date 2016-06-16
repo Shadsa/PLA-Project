@@ -211,6 +211,15 @@
 		<action unite="1">Creer</action>
 		<suivant>0</suivant>
 	</transition>
+	<transition poids="8">
+		<etat>0</etat>
+		<condition compose="Et">
+			<condition1>UneCaseLibre</condition1>
+			<condition2 quantite="250">RessourcesPossedees</condition2>
+		</condition>
+		<action unite="2">Creer</action>
+		<suivant>0</suivant>
+	</transition>	
 	<transition poids="5">
 		<etat>0</etat>
 		<condition type="Arbre">UneCaseType</condition>

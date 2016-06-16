@@ -16,7 +16,7 @@ import roles.World;
 public final class Attaquer extends Action {
 
 	Cardinaux _direction;
-	private static int _Id = Action.getId(4);
+	private static int _Id = Action.getId(1);
 
 	private static final CaseProperty _propPers = new PersoCheck();
 	private static final CaseProperty _propCons = new ConstructionCheck();
