@@ -71,25 +71,42 @@ public class ClassDialog extends JDialog {
 	    nom.setPreferredSize(new Dimension(100, 25));
 	    panNom.setBorder(BorderFactory.createTitledBorder("Nom Classe"));
 	    panNom.add(nom);
+	    
+	    //AJOUT DES RESTRICTIONS
+	    JPanel panAct = new JPanel();
+	    panAct.setBorder(BorderFactory.createTitledBorder("Deck Action"));
+	    JComboBox<String> action = new JComboBox<String>();
+	    
+	    for(String b : StateGame.workshop.actionListName())
+	    	action.addItem(b);
+	    panAct.add(action);
+	    
+	    JPanel panCond = new JPanel();
+	    panCond.setBorder(BorderFactory.createTitledBorder("Deck Conditon"));
+	    JComboBox<String> condition = new JComboBox<String>();	    
+	    for(String b : StateGame.workshop.conditionListName())
+	    	condition.addItem(b);
+	    panCond.add(condition);
+	    
 
 
 	    //AJOUT DES ATTRIBUTS
 	    JPanel panHP = new JPanel();
 	    panHP.setBorder(BorderFactory.createTitledBorder("HP"));
 	    HP = new JTextField();
-	    HP.setPreferredSize(new Dimension(50, 25));
+	    HP.setPreferredSize(new Dimension(100, 25));
 	    panHP.add(HP);
 
 	    JPanel panDamage = new JPanel();
 	    panDamage.setBorder(BorderFactory.createTitledBorder("Damage"));
 	    Damage = new JTextField();
-	    Damage.setPreferredSize(new Dimension(50, 25));
+	    Damage.setPreferredSize(new Dimension(100, 25));
 	    panDamage.add(Damage);
 
 	    JPanel panHeal = new JPanel();
 	    panHeal.setBorder(BorderFactory.createTitledBorder("Heal Power"));
 	    Heal = new JTextField();
-	    Heal.setPreferredSize(new Dimension(50, 25));
+	    Heal.setPreferredSize(new Dimension(100, 25));
 	    panHeal.add(Heal);
 
 	    JPanel panArmor = new JPanel();
@@ -116,6 +133,8 @@ public class ClassDialog extends JDialog {
 	    JPanel content = new JPanel();
 	    content.setLayout(new FlowLayout());
 	    content.add(panNom);
+	    content.add(panAct);
+	    content.add(panCond);
 	    content.add(panHP);
 	    content.add(panDamage);
 	    content.add(panHeal);
@@ -150,6 +169,10 @@ public class ClassDialog extends JDialog {
 		    	  classinfo.HP(Integer.parseInt(HP.getText()));
 		    	  classinfo.damage(Integer.parseInt(Damage.getText()));
 		    	  classinfo.bonus((Bonus) bonus.getSelectedItem());
+		    	  
+		    	  
+		    	  
+		    	  
 		    	  Cost.setText(String.valueOf(classinfo.cost()));
 		      }
 		    });
