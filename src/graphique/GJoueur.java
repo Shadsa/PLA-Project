@@ -10,13 +10,16 @@ import roles.Personnage;
 
 public class GJoueur implements Observer{
 	private ArrayList<TypeUnit> _type_unit;
+	private ArrayList<TypeClothes> _type_clothes;
+	
 	private int _ressource;
 
 	private ArrayList<Player> _players = new ArrayList<Player>();
 
-	public GJoueur(ArrayList<TypeUnit> type_unit)
+	public GJoueur(ArrayList<TypeUnit> type_unit, ArrayList<TypeClothes> type_clothes)
 	{
 		_type_unit = type_unit;
+		_type_clothes = type_clothes;
 		_ressource = 0;
 	}
 
@@ -30,7 +33,7 @@ public class GJoueur implements Observer{
 
 	public void addPersonnage(Personnage pers)
 	{
-		_players.add(new Player(pers, _type_unit.get(pers.owner().getUnite(pers))));
+		_players.add(new Player(pers, _type_unit.get(pers.owner().getUnite(pers)), _type_clothes.get(pers.owner().getUnite(pers))));
 	}
 
 	public int ressource()

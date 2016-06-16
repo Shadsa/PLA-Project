@@ -3,12 +3,14 @@ package graphique;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
 import java.io.File;
@@ -24,10 +26,13 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+
+import com.sun.javafx.iio.ImageStorage.ImageType;
 
 import XML.XML_Reader;
 import roles.Automate;
@@ -60,18 +65,37 @@ public class UnitDialog extends JDialog {
   }
 
   private void initComponent(){
-		JLabel icon;
+		JLabel icon, iconH;
 		JTextField nom;
     //Icône
 	ImageIcon temp = new ImageIcon("src/asset/sprites/BODY_male.png");
 	Image image = temp.getImage();
 	image = createImage(new FilteredImageSource(image.getSource(),
 	            new CropImageFilter(0, 128, 64, 64)));
+	
+	ImageIcon tempH = new ImageIcon("src/asset/sprites/cult_clothes.png");
+	Image imageH = tempH.getImage();
+	imageH = createImage(new FilteredImageSource(imageH.getSource(),
+	            new CropImageFilter(0, 128, 64, 64)));
+	/*
+	BufferedImage imageF = new BufferedImage(64,64,BufferedImage.TYPE_INT_ARGB);
+	Graphics2D g2 = imageF.createGraphics();
+	g2.drawImage(image, 0, 0, null);
+	g2.drawImage(imageH, 0, 0, null);
+	g2.dispose();
+	ImageIcon newImg = new ImageIcon(imageF);*/
 
     icon = new JLabel(new ImageIcon(image));
-    JPanel panIcon = new JPanel();
-    panIcon.setLayout(new BorderLayout());
-    panIcon.add(icon);
+    icon.setOpaque(false);
+    iconH = new JLabel(new ImageIcon(imageH));
+    iconH.setOpaque(false);
+    JLayeredPane panIcon = new JLayeredPane();
+    panIcon.setPreferredSize(new Dimension(64,64));
+    //panIcon.setLayout(new BorderLayout());
+    icon.setBounds(10, 0, 64, 64);
+    iconH.setBounds(10, 0, 64, 64);
+    panIcon.add(icon,JLayeredPane.DEFAULT_LAYER);
+    panIcon.add(iconH,JLayeredPane.PALETTE_LAYER);
 
     //Le nom
     JPanel panNom = new JPanel();
@@ -106,7 +130,7 @@ public class UnitDialog extends JDialog {
     panClasse.add(classe);
 
     JPanel panSkin = new JPanel();
-    panSkin.setBorder(BorderFactory.createTitledBorder("Couleur"));
+    panSkin.setBorder(BorderFactory.createTitledBorder("Apparence"));
     JComboBox<String> color = new JComboBox<String>();
     for(TypeUnit t : TypeUnit.values()){
     	color.addItem(t.toString());
@@ -114,6 +138,14 @@ public class UnitDialog extends JDialog {
    /* color.addItem("Noir");
     color.addItem("Vert");*/
     panSkin.add(color);
+    
+    JPanel panClothes = new JPanel();
+    panClothes.setBorder(BorderFactory.createTitledBorder("Habits"));
+    JComboBox<String> clothes = new JComboBox<String>();
+    for(TypeClothes t : TypeClothes.values()){
+    	clothes.addItem(t.toString());
+    }
+    panClothes.add(clothes);
 
     JPanel panJoueur = new JPanel();
     panJoueur.setBorder(BorderFactory.createTitledBorder("Joueur"));
@@ -128,6 +160,7 @@ public class UnitDialog extends JDialog {
     content.add(panFile);
     content.add(panClasse);
     content.add(panSkin);
+    content.add(panClothes);
     content.add(panJoueur);
 
     JPanel control = new JPanel();
@@ -151,8 +184,7 @@ public class UnitDialog extends JDialog {
     		  jop.showMessageDialog(null, "Fichier automate ne convient pas à cette classe.", "Erreur", JOptionPane.ERROR_MESSAGE);
     		  return;
     	  }*/
-
-        uInfo = new UnitInfo(nom.getText(), aut, cla,TypeUnit.valueOf(color.getSelectedItem().toString()), choixJoueur);
+        uInfo = new UnitInfo(nom.getText(), aut, cla,TypeUnit.valueOf(color.getSelectedItem().toString()), TypeClothes.valueOf(clothes.getSelectedItem().toString()), choixJoueur);
         setVisible(false);
       }
     });
@@ -178,9 +210,24 @@ public class UnitDialog extends JDialog {
     color.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent e) {
 			ImageIcon typeCorps = new ImageIcon(TypeUnit.valueOf(color.getSelectedItem().toString()).sprite());
-			icon.setIcon(new ImageIcon(createImage(new FilteredImageSource(
+			
+			Image image = createImage(new FilteredImageSource(
 					typeCorps.getImage().getSource(),
-					new CropImageFilter(0, 128, 64, 64)))));
+					new CropImageFilter(0, 128, 64, 64)));
+			
+			icon.setIcon(new ImageIcon(image));
+        }               
+      });
+    
+    clothes.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent e) {
+			ImageIcon typeHabit = new ImageIcon(TypeClothes.valueOf(clothes.getSelectedItem().toString()).sprite());
+			
+			Image imageH = createImage(new FilteredImageSource(
+					typeHabit.getImage().getSource(),
+					new CropImageFilter(0, 128, 64, 64)));
+			
+			iconH.setIcon(new ImageIcon(imageH));
         }               
       });
 
