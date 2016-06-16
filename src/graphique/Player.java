@@ -47,6 +47,7 @@ public class Player implements Observer{
 	private SoundEffect soundEffect;
 
 	protected int _id;
+	protected GArmy _gArmy;
 
 	protected States _state;
 
@@ -60,7 +61,8 @@ public class Player implements Observer{
 		return _id;
 	}
 
-	public Player(Personnage pers, TypeUnit _type_unit) {
+	public Player(Personnage pers, TypeUnit _type_unit, GArmy gArmy) {
+		_gArmy = gArmy;
 		_hide = false;
 		_human = _type_unit;
 		_id = nextID();
@@ -68,10 +70,10 @@ public class Player implements Observer{
 		AnimDuration = MapGameState.Tick;
 		AnimDead = MapGameState.Tick;
 		_state = new States(Statut.ATTENDS, Cardinaux.SUD);
-		x = MapGameState.toX(pers.X());
-		y = MapGameState.toY(pers.Y());
-		_destX = MapGameState.toX(pers.X());
-		_destY = MapGameState.toX(pers.Y());
+		x = _gArmy.map().toX(pers.X());
+		y = _gArmy.map().toY(pers.Y());
+		_destX = _gArmy.map().toX(pers.X());
+		_destY = _gArmy.map().toX(pers.Y());
 		pers.addObserver(this);
 		soundEffect = new SoundEffect();
 		try {
@@ -295,8 +297,8 @@ public static void sinit() throws SlickException
 		public void update(Observable obs, Object obj) {
 			if(obs instanceof Personnage){
 				Personnage pers = (Personnage)obs;
-				_destX = MapGameState.toX(pers.X());
-				_destY = MapGameState.toX(pers.Y());
+				_destX = _gArmy.map().toX(pers.X());
+				_destY = _gArmy.map().toX(pers.Y());
 				if(((States)obj).statut == Statut.MORT) {
 					_isDead = true;
 					if(_human == TypeUnit.Human)
