@@ -1,6 +1,7 @@
 package graphique;
 
 import java.util.ArrayList;
+
 import jus.util.assertion.Require;
 
 import org.newdawn.slick.AppGameContainer;
@@ -14,6 +15,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
 import roles.classe.*;
 import roles.Automate;
 import roles.Cardinaux;
@@ -54,11 +56,12 @@ public class MapGameState extends BasicGameState {
 	private float _offsetMapY = 0;
 
 	//Test
-	private MapTest map; //= new MapTest ();
+	private MapTest map = InitGameState.map;
 	private Input _input;
 	private int _scrollingSpeed = 15;
 	private float _zoom = 1;
 	private StateGame game;
+	public static boolean debug = false;
 
 	//Boutons
 	private Button _bouton_fullScreen;
@@ -140,13 +143,16 @@ public class MapGameState extends BasicGameState {
 							p.render(g);
 
 		//Annule la translation pour l'affichage du string en dessous
-		g.resetTransform();
-		g.setColor(Color.white);
 		//Affichage de la position de la souris sur la map
-		g.drawString(mouse, 10, 50);
-		g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
-		g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 90);
-		g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 110);
+
+		if (debug) {
+			g.resetTransform();
+			g.setColor(Color.white);
+			g.drawString(mouse, 10, 50);
+			g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
+			g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 90);
+			g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 110);
+		}
 
 		//Affichage des huds
 		if(showhud) {
@@ -154,6 +160,8 @@ public class MapGameState extends BasicGameState {
 		}
 		
 		//Affichage ressources
+		g.resetTransform();
+		g.setColor(Color.white);
 		if (World.getPlayers().size() == 2) {
 			g.drawString("Ressources : J1 " + World.getPlayers().get(0).ressources(), 10, 250);
 			g.drawString("Ressources : J2 " + World.getPlayers().get(1).ressources(), 10, 270);
@@ -397,6 +405,11 @@ public class MapGameState extends BasicGameState {
 		_bouton_quitter.setLocation(container.getWidth()/2-62, container.getHeight()/2+80);
 		_bouton_reprendre.setLocation(container.getWidth()/2-62, container.getHeight()/2-80);
 		_bouton_menuPrincipal.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
+		
+		//Update du debug
+		if (_input.isKeyPressed(Input.KEY_F1)) {
+			debug = !debug;
+		}
 	}
 
 	/**
@@ -540,9 +553,7 @@ public class MapGameState extends BasicGameState {
 		this._offsetMapY = y;
 
 	}
-	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2, MapTest map) {
-
-		this.map = map;
+	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2) {
 		
 		//int nb = 0;
 		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();

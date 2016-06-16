@@ -33,7 +33,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-
 import XML.XML_Reader;
 import roles.Automate;
 import roles.Bonus;
