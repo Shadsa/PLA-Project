@@ -55,9 +55,11 @@ public class InitGameState extends BasicGameState {
 	private Button my_button;
 
 	private ArrayList<CrossButton> Personnages;
-	private ArrayList<UnitInfo> UIFs;
-	private ArrayList<Automate> autlist;
-	private ArrayList<Classe> classes;
+	private ArrayList<CrossButton> Personnages2;
+	private ArrayList<UnitInfo> UIFs1;
+	private ArrayList<UnitInfo> UIFs2;
+	//private ArrayList<Automate> autlist;
+	//private ArrayList<Classe> classes;
 
 	public WorkshopCreator woks;
 
@@ -71,33 +73,23 @@ public class InitGameState extends BasicGameState {
 		Button.init();
 		_input = container.getInput();
 		UI = new Image("src/asset/sprites/ui_big_pieces.png");
-		UIFs = new ArrayList<UnitInfo>();
-		autlist = new ArrayList<Automate>();
-		classes = new ArrayList<Classe>();
+		UIFs1 = new ArrayList<UnitInfo>();
+		UIFs2 = new ArrayList<UnitInfo>();
+		//autlist = new ArrayList<Automate>();
+		//classes = new ArrayList<Classe>();
 		Classe generique = woks.getDeckClasse("Ouvrier");//= new Classe(10,5,5,0,"default class",null);
 		Classe boost = woks.getDeckClasse("Default");//new Classe(10,5,5,0,"default class",Bonus.VIE);
   		World.classes.add(generique);
   		World.classes.add(boost);
 		background = new Image("src/asset/images/skeleton_army.jpg");
 		InitGameState.game = (StateGame) game;
-		//_bouton_jouer = new Bouton(container, new Image("src/asset/buttons/bouton_jouer_off.png"), new Image("src/asset/buttons/bouton_jouer_on.png"), container.getWidth()/2-62, container.getHeight()/2-80+200, 126, 30);
 		my_button = new Button(container, "Ajouter unité",container.getWidth()/4, container.getHeight()/4);
 		_bouton_jouer = new Button(container, "Jouer", container.getWidth()*3/4, container.getHeight()*3/4);
 		_bouton_quitter = new Button(container, "Quitter", my_button.x, _bouton_jouer.y);
 		_bouton_retour = new Button(container, "Retour", my_button.x + 70, _bouton_jouer.y);
 		sizeScreen = "Taille de l'ecran : " + container.getScreenWidth() + "x" + container.getScreenHeight();
 		Personnages = new ArrayList<CrossButton>();
-		/*// Chargement d'une nouvelle police de caractères
-		try {
-			InputStream inputStream	= ResourceLoader.getResourceAsStream("src/asset/fonts/Friedolin.ttf");
-
-			Font awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
-			awtFont = awtFont.deriveFont(50f); // set font size
-			font = new TrueTypeFont(awtFont, false);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
+		Personnages2 = new ArrayList<CrossButton>();
 	}
 
 	/**
@@ -111,20 +103,19 @@ public class InitGameState extends BasicGameState {
 		my_button.render(container, g);
 		for(CrossButton p : Personnages)
 			p.render(container, g);
+		for(CrossButton p : Personnages2)
+			p.render(container, g);
 		_bouton_jouer.render(container, g);
 		_bouton_quitter.render(container, g);
 		_bouton_retour.render(container, g);
 		g.setColor(Color.white);
-		/*if (_input.getControllerCount() >= 1) {
-			g.drawString("Appuyez sur START pour commencer.", 240, 300);
-		} else {*/
-		//}
 	}
 
 	/**
 	 * Passer à l’écran de jeu à l'appui de n'importe quelle touche.
 	 */
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		//Mise à jour liée des boutons
 		my_button.update(container);
 		_bouton_jouer.update(container);
 		_bouton_quitter.update(container);
@@ -139,22 +130,27 @@ public class InitGameState extends BasicGameState {
 			UnitInfo uInfo = new UnitDialog(null, "Ajouter une unite", true).showZDialog();
 			if(uInfo != null)
 			{
-				Personnages.add(new CrossButton(container, uInfo.nom, my_button.x+15, (Personnages.size() == 0)? my_button.y+my_button.height+7 : Personnages.get(Personnages.size()-1).y + Personnages.get(Personnages.size()-1).height+7));
-				UIFs.add(uInfo);
-				autlist.add(uInfo.automate);
-				classes.add(uInfo.classe);
+				if(uInfo.choixJoueur == "Joueur1") {
+					Personnages.add(new CrossButton(container, uInfo.nom, my_button.x+15, (Personnages.size() == 0)? my_button.y+my_button.height+7 : Personnages.get(Personnages.size()-1).y + Personnages.get(Personnages.size()-1).height+7));
+					UIFs1.add(uInfo);
+					//autlist.add(uInfo.automate);
+					//classes.add(uInfo.classe);
+				}
+				if(uInfo.choixJoueur == "Joueur2") {
+					Personnages2.add(new CrossButton(container, uInfo.nom, my_button.x+300, (Personnages2.size() == 0)? my_button.y+my_button.height+7 : Personnages2.get(Personnages2.size()-1).y + Personnages2.get(Personnages2.size()-1).height+7));
+					UIFs2.add(uInfo);
+				}
 			}
 		}
-
 		for(int i = Personnages.size()-1; i>=0; i--)
 		{
 			Personnages.get(i).update(container);
 			if(Personnages.get(i).isXPressed())
 			{
 				Personnages.remove(i);
-				UIFs.remove(i);
-				autlist.remove(i);
-				classes.remove(i);
+				UIFs1.remove(i);
+				//autlist.remove(i);
+				//classes.remove(i);
 				for(int j = Personnages.size()-1; j>=i; j--)
 				{
 					Personnages.get(j).setLocation(my_button.x+15, (j == 0)? my_button.y+my_button.height+7 : Personnages.get(j).y + Personnages.get(j).height+7);
@@ -186,11 +182,26 @@ public class InitGameState extends BasicGameState {
 		        }*/
 			}
 		}
+		for(int i = Personnages2.size()-1; i>=0; i--)
+		{
+			Personnages2.get(i).update(container);
+			if(Personnages2.get(i).isXPressed())
+			{
+				Personnages2.remove(i);
+				UIFs2.remove(i);
+				//autlist.remove(i);
+				//classes.remove(i);
+				for(int j = Personnages2.size()-1; j>=i; j--)
+				{
+					Personnages2.get(j).setLocation(my_button.x+300, (j == 0)? my_button.y+my_button.height+7 : Personnages2.get(j).y + Personnages2.get(j).height+7);
+				}
+			}
+		}
 
 
 		//Configuration du bouton jouer
 		if (_bouton_jouer.isPressed()) {
-			((MapGameState)InitGameState.game.getState(MapGameState.ID)).setGame(UIFs);
+			((MapGameState)InitGameState.game.getState(MapGameState.ID)).setGame(UIFs1, UIFs2);
 				InitGameState.game.enterState(MapGameState.ID, "src/asset/musics/game_music.ogg");
 		}
 

@@ -39,6 +39,7 @@ public class UnitDialog extends JDialog {
 
 	private Automate aut = null;
 	private Classe cla = null;
+	private String choixJoueur;
 
   public UnitDialog(JFrame parent, String title, boolean modal){
     super(parent, title, modal);
@@ -109,13 +110,20 @@ public class UnitDialog extends JDialog {
     color.addItem("Vert");
     panSkin.add(color);
 
-
+    JPanel panJoueur = new JPanel();
+    panJoueur.setBorder(BorderFactory.createTitledBorder("Joueur"));
+    JComboBox<String> joueur = new JComboBox<String>();
+    joueur.addItem("Joueur1");
+    joueur.addItem("Joueur2");
+    panJoueur.add(joueur);
+    
     JPanel content = new JPanel();
     content.setLayout(new FlowLayout());
     content.add(panNom);
     content.add(panFile);
     content.add(panClasse);
     content.add(panSkin);
+    content.add(panJoueur);
 
     JPanel control = new JPanel();
     JButton okBouton = new JButton("OK");
@@ -130,13 +138,15 @@ public class UnitDialog extends JDialog {
     		  return;
     	  if(cla == null)
     		  cla = (Classe)classe.getSelectedItem();//getClasse((String)classe.getSelectedItem());
+    	  if(choixJoueur == null)
+    		  choixJoueur = (String)joueur.getSelectedItem();
     	  /*if(!aut.match(World.classes.get(0)))
     	  {
     		  JOptionPane jop = new JOptionPane();
     		  jop.showMessageDialog(null, "Fichier automate ne convient pas à cette classe.", "Erreur", JOptionPane.ERROR_MESSAGE);
     		  return;
     	  }*/
-        uInfo = new UnitInfo(nom.getText(), aut, cla,"");
+        uInfo = new UnitInfo(nom.getText(), aut, cla,"", choixJoueur);
         setVisible(false);
       }
     });
@@ -150,6 +160,12 @@ public class UnitDialog extends JDialog {
     classe.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent arg0) {
         	cla = (Classe)classe.getSelectedItem();//getClasse((String)classe.getSelectedItem());
+          }
+        });
+    
+    joueur.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent arg0) {
+        	choixJoueur = (String)joueur.getSelectedItem();//getClasse((String)classe.getSelectedItem());
           }
         });
 

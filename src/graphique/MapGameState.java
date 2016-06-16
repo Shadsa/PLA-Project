@@ -152,6 +152,12 @@ public class MapGameState extends BasicGameState {
 			this.hud.render(g);
 		}
 		
+		//Affichage ressources
+		if (World.getPlayers().size() == 2) {
+			g.drawString("Ressources : J1 " + World.getPlayers().get(0).ressources(), 10, 250);
+			g.drawString("Ressources : J2 " + World.getPlayers().get(1).ressources(), 10, 270);
+		}
+		
 		//Affichage message de fin
 		if (World.fini) {
 			if(World.joueurs().size()==1){
@@ -531,19 +537,26 @@ public class MapGameState extends BasicGameState {
 		this._offsetMapY = y;
 
 	}
-	public void setGame(ArrayList<UnitInfo> uIFs) {
+	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2) {
 
-		int nb = 0;
+		//int nb = 0;
 		ArrayList<Automate> autlist = new ArrayList<Automate>();
+		ArrayList<Automate> autlist2 = new ArrayList<Automate>();
 		ArrayList<Classe> classes = new ArrayList<Classe>();
-		for(UnitInfo ui : uIFs)
+		ArrayList<Classe> classes2 = new ArrayList<Classe>();
+		for(UnitInfo ui : uIFs1)
 		{
-			nb++;
+			//nb++;
 			autlist.add(ui.automate);
 			classes.add(ui.classe);
 		}
-		World.addPlayer(new Joueur("Human", autlist, classes));
-		World.addPlayer(new Joueur("Zombie", autlist, classes));
+		for(UnitInfo ui : uIFs2) {
+			//nb++;
+			autlist2.add(ui.automate);
+			classes2.add(ui.classe);
+		}
+		World.addPlayer(new Joueur("Joueur1", autlist, classes));
+		World.addPlayer(new Joueur("Joueur2", autlist2, classes2));
 
 		try {
 			World.putAutomate(World.getPlayers().get(0).automate(0), 1, 1, World.getPlayers().get(0));
@@ -553,7 +566,7 @@ public class MapGameState extends BasicGameState {
 		//for(int i = 0; i < nb; i++)
 			World.getPlayers().get(0).createPersonnage(0, 1, 1);
 		//for(int i = 0; i < nb; i++)
-			World.getPlayers().get(1).createPersonnage(classes.size()-1, _tailleMapX-1, _tailleMapY-1);
+			World.getPlayers().get(1).createPersonnage(0, _tailleMapX-1, _tailleMapY-1);
 
 		for(Joueur j : World.getPlayers())
 		{
