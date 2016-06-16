@@ -1,6 +1,8 @@
 package graphique;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -71,6 +73,23 @@ public class ClassDialog extends JDialog {
 	    nom.setPreferredSize(new Dimension(100, 25));
 	    panNom.setBorder(BorderFactory.createTitledBorder("Nom Classe"));
 	    panNom.add(nom);
+	    
+	    //AJOUT DES RESTRICTIONS
+	    JPanel panAct = new JPanel();
+	    panAct.setBorder(BorderFactory.createTitledBorder("Deck Action"));
+	    JComboBox<String> action = new JComboBox<String>();
+	    
+	    for(String b : StateGame.workshop.actionListName())
+	    	action.addItem(b);
+	    panAct.add(action);
+	    
+	    JPanel panCond = new JPanel();
+	    panCond.setBorder(BorderFactory.createTitledBorder("Deck Conditon"));
+	    JComboBox<String> condition = new JComboBox<String>();	    
+	    for(String b : StateGame.workshop.conditionListName())
+	    	condition.addItem(b);
+	    panCond.add(condition);
+	    
 
 
 	    //AJOUT DES ATTRIBUTS
@@ -116,6 +135,8 @@ public class ClassDialog extends JDialog {
 	    JPanel content = new JPanel();
 	    content.setLayout(new FlowLayout());
 	    content.add(panNom);
+	    content.add(panAct);
+	    content.add(panCond);
 	    content.add(panHP);
 	    content.add(panDamage);
 	    content.add(panHeal);
@@ -150,6 +171,8 @@ public class ClassDialog extends JDialog {
 		    	  classinfo.HP(Integer.parseInt(HP.getText()));
 		    	  classinfo.damage(Integer.parseInt(Damage.getText()));
 		    	  classinfo.bonus((Bonus) bonus.getSelectedItem());
+		    	  classinfo.loadDeckAction(StateGame.workshop.getDeckAction(action.getSelectedItem().toString()));
+		    	  classinfo.loadDeckCondition(StateGame.workshop.getDeckCondition(condition.getSelectedItem().toString()));	    	  
 		    	  Cost.setText(String.valueOf(classinfo.cost()));
 		      }
 		    });

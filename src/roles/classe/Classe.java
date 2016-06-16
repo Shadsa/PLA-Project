@@ -97,6 +97,12 @@ public class Classe implements Serializable {
 
 
 	//Setter
+	
+	public void hard_walker(boolean b)
+	{
+		_hard_walker=b;
+	}
+	
 	public void HP(int i){
 		_HP=i;
 	}
@@ -127,6 +133,14 @@ public class Classe implements Serializable {
 
 	public void addCondition(Class cond){
 		avaibleCondition.add(cond);
+	}
+	
+	public void loadDeckAction(ArrayList<Class<Action>> act){
+		avaibleAction=act;
+	}
+
+	public void loadDeckCondition(ArrayList<Class<Condition>> cond){
+		avaibleCondition = cond;
 	}
 
 	public boolean isAction(Class act){

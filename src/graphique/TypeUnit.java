@@ -5,23 +5,23 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 public enum TypeUnit {
-	Human("src/asset/sprites/BODY_male.png","src/asset/sprites/Human_Slash.png","src/asset/sprites/Human_Die.png"),
-	Zombie("src/asset/sprites/BODY_skeleton.png","src/asset/sprites/slash_skeleton.png","src/asset/sprites/Die_skeleton.png");
+	Human("src/asset/sprites/BODY_male.png","src/asset/sprites/Human_Slash.png","src/asset/sprites/Human_Die.png","src/asset/sprites/BODY_male_spell.png"),
+	Zombie("src/asset/sprites/BODY_skeleton.png","src/asset/sprites/slash_skeleton.png","src/asset/sprites/Die_skeleton.png","src/asset/sprites/BODY_skeleton_spell.png");
 	
 	String _sprite;
-	public Animation[] animations = new Animation[21];
+	public Animation[] animations = new Animation[25];
 	
-	TypeUnit(String sprite1, String sprite2, String sprite3){
-		_sprite=sprite1;
+	TypeUnit(String walk, String slash, String hurt, String spell){
+		_sprite=walk;
 		
-		SpriteSheet spriteSheet1;
-		SpriteSheet spriteSheet2;
-		SpriteSheet spriteSheet3;
+		SpriteSheet walkSheet, slashSheet, hurtSheet, spellSheet;
+
 		try {
-			spriteSheet1 = new SpriteSheet(sprite1, 64, 64);
-			spriteSheet2 = new SpriteSheet(sprite2, 64, 64);
-			spriteSheet3 = new SpriteSheet(sprite3, 64, 64);
-			Player.initAnimation(animations, spriteSheet1, spriteSheet2, spriteSheet3);
+			walkSheet = new SpriteSheet(walk, 64, 64);
+			slashSheet = new SpriteSheet(slash, 64, 64);
+			hurtSheet = new SpriteSheet(hurt, 64, 64);
+			spellSheet = new SpriteSheet(spell, 64, 64);
+			Player.initAnimation(animations, walkSheet, slashSheet, hurtSheet, spellSheet);
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}

@@ -115,6 +115,20 @@ public class WorkshopCreator {
 
 	}
 	
+	public void loadClass(ArrayList<Classe> x) throws FileNotFoundException, ClassNotFoundException, IOException{
+		ArrayList<File> files = new ArrayList<File>();
+		File f = new File(filepath+"classe.deck/");
+		for(File name : f.listFiles()){
+			if(name.isFile()){
+				files.add(name);
+			}
+		}
+		for(int i=0;i<files.size();i++){
+			x.add(loadClass(files.get(i).getName()));
+		}
+		
+	}
+	
 	
 	// SERIALIZATION FUNCTION
 	
@@ -190,6 +204,18 @@ public class WorkshopCreator {
 
 	public ArrayList<ArrayList<Class<Condition>>> conditionList(){
 		return deckCondition;
+	}
+	
+	public ArrayList<String> classeListName(){
+		return deckClasseName;
+	}
+
+	public ArrayList<String> actionListName(){
+		return deckActionName;
+	}
+
+	public ArrayList<String> conditionListName(){
+		return deckConditionName;
 	}
 
 
