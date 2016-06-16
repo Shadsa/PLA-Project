@@ -81,7 +81,7 @@ public class Player implements Observer{
 			e.printStackTrace();
 		}
 
-		_Body = (_human != TypeUnit.Zombie)? Hanimations : animations ;
+		_Body = _human.animations;//(_human != TypeUnit.Zombie)? Hanimations : animations ;
 		_Abody = 0;
 		_Aweapon = -1;
 		_Awear = -1;
@@ -89,7 +89,7 @@ public class Player implements Observer{
 
 public static void sinit() throws SlickException
 {
-		SpriteSheet spriteSheet = new SpriteSheet("src/asset/sprites/BODY_skeleton.png", 64, 64);
+		/*SpriteSheet spriteSheet = new SpriteSheet("src/asset/sprites/BODY_skeleton.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("src/asset/sprites/slash_skeleton.png", 64, 64);
 		SpriteSheet spriteSheet3 = new SpriteSheet("src/asset/sprites/Die_skeleton.png", 64, 64);
 		initAnimation(animations, spriteSheet, spriteSheet2, spriteSheet3);
@@ -98,10 +98,13 @@ public static void sinit() throws SlickException
 		SpriteSheet HspriteSheet2 = new SpriteSheet("src/asset/sprites/Human_Slash.png", 64, 64);
 		SpriteSheet HspriteSheet3 = new SpriteSheet("src/asset/sprites/Human_Die.png", 64, 64);
 		initAnimation(Hanimations, HspriteSheet, HspriteSheet2, HspriteSheet3);
-
-		SpriteSheet Habitsprite = new SpriteSheet("src/asset/sprites/villager_vest.png", 64, 64);
+*/
+		/*SpriteSheet Habitsprite = new SpriteSheet("src/asset/sprites/villager_vest.png", 64, 64);
 		SpriteSheet Habitsprite2 = new SpriteSheet("src/asset/sprites/villager_vest_slash.png", 64, 64);
-		SpriteSheet Habitsprite3 = new SpriteSheet("src/asset/sprites/villager_vest_hurt.png", 64, 64);
+		SpriteSheet Habitsprite3 = new SpriteSheet("src/asset/sprites/villager_vest_hurt.png", 64, 64);*/
+		SpriteSheet Habitsprite = new SpriteSheet("src/asset/sprites/cult_clothes.png", 64, 64);
+		SpriteSheet Habitsprite2 = new SpriteSheet("src/asset/sprites/cult_clothes_slash.png", 64, 64);
+		SpriteSheet Habitsprite3 = new SpriteSheet("src/asset/sprites/cult_clothes_hurt.png", 64, 64);
 		initAnimation(Habits, Habitsprite, Habitsprite2, Habitsprite3);
 
 
@@ -198,7 +201,7 @@ public static void sinit() throws SlickException
 		}
 
 	    if(_Awear != -1)
-	    	g.drawImage(Habits[_Abody].getImage(Hanimations[_Abody].getFrame()), x-32, y-60);
+	    	g.drawImage(Habits[_Abody].getImage(_human.animations[_Abody].getFrame()), x-32, y-60);
 
 	    if(_Aweapon != -1)
 	    	g.drawAnimation(Danimations[_Aweapon], x-32, y-60);
@@ -391,7 +394,7 @@ public static void sinit() throws SlickException
 				    _Aweapon = danim;
 		}
 
-		private static void initAnimation(Animation[] anim, SpriteSheet moveS, SpriteSheet slashS, SpriteSheet dieS)
+		static void initAnimation(Animation[] anim, SpriteSheet moveS, SpriteSheet slashS, SpriteSheet dieS)
 		{
 			anim[0] = loadAnimation(moveS, 0, 1, 0);
 		    anim[1] = loadAnimation(moveS, 0, 1, 1);
