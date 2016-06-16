@@ -42,7 +42,7 @@ public final class DupliquerZombie extends Action {
 			Random R = new Random();
 			if(R.nextInt(Integer.min(100,pers.owner().getPersonnages().size()*2))<1)
 				pers.owner().createPersonnage(pers.owner().getUnite(pers), destX, destY);
-			pers.setState(new States(Statut.ATTAQUE, direction));
+			pers.setState(new States(Statut.INVOQUE, direction));
 		}
 	}
 

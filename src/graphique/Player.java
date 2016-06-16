@@ -34,10 +34,10 @@ public class Player implements Observer{
 	//Boolean pour savoir si le personnage bouge
 	private boolean moving = false;
 	//Tableau des modèles d'animation
-	public static Animation[][] _Bodys = new Animation[2][21];
+	/*public static Animation[][] _Bodys = new Animation[2][21];
 	public static Animation[] animations = _Bodys[0];
 	public static Animation[] Hanimations = _Bodys[1];
-	public static Animation[] Habits = new Animation[21];
+	public static Animation[] Habits = new Animation[21];*/
 	public static Animation[] Danimations = new Animation[4];
 	//
 	private int AnimDuration;
@@ -103,11 +103,11 @@ public static void sinit() throws SlickException
 */
 		/*SpriteSheet Habitsprite = new SpriteSheet("src/asset/sprites/villager_vest.png", 64, 64);
 		SpriteSheet Habitsprite2 = new SpriteSheet("src/asset/sprites/villager_vest_slash.png", 64, 64);
-		SpriteSheet Habitsprite3 = new SpriteSheet("src/asset/sprites/villager_vest_hurt.png", 64, 64);*/
+		SpriteSheet Habitsprite3 = new SpriteSheet("src/asset/sprites/villager_vest_hurt.png", 64, 64);
 		SpriteSheet Habitsprite = new SpriteSheet("src/asset/sprites/cult_clothes.png", 64, 64);
 		SpriteSheet Habitsprite2 = new SpriteSheet("src/asset/sprites/cult_clothes_slash.png", 64, 64);
 		SpriteSheet Habitsprite3 = new SpriteSheet("src/asset/sprites/cult_clothes_hurt.png", 64, 64);
-		initAnimation(Habits, Habitsprite, Habitsprite2, Habitsprite3);
+		initAnimation(Habits, Habitsprite, Habitsprite2, Habitsprite3);*/
 
 
 
@@ -379,6 +379,9 @@ public static void sinit() throws SlickException
 					case REVEAL:
 						anim = 17;
 					break;
+					case INVOQUE:
+						anim = 21;
+					break;
 				    }
 
 				    anim += dir;
@@ -396,8 +399,9 @@ public static void sinit() throws SlickException
 				    _Aweapon = danim;
 		}
 
-		static void initAnimation(Animation[] anim, SpriteSheet moveS, SpriteSheet slashS, SpriteSheet dieS)
+		static void initAnimation(Animation[] anim, SpriteSheet moveS, SpriteSheet slashS, SpriteSheet dieS, SpriteSheet spellS)
 		{
+
 			anim[0] = loadAnimation(moveS, 0, 1, 0);
 		    anim[1] = loadAnimation(moveS, 0, 1, 1);
 		    anim[2] = loadAnimation(moveS, 0, 1, 2);
@@ -412,6 +416,16 @@ public static void sinit() throws SlickException
 		    anim[9] = loadAnimation(slashS, 0, 5, 1);
 		    anim[10] = loadAnimation(slashS, 0, 5, 2);
 		    anim[11] = loadAnimation(slashS, 0, 5, 3);
+		    
+		    anim[21] = loadAnimation(spellS, 0, 6, 0);
+		    anim[22] = loadAnimation(spellS, 0, 6, 1);
+		    anim[23] = loadAnimation(spellS, 0, 6, 2);
+		    anim[24] = loadAnimation(spellS, 0, 6, 3);
+
+		    anim[21].setLooping(false);
+		    anim[22].setLooping(false);
+		    anim[23].setLooping(false);
+		    anim[24].setLooping(false);
 
 		    anim[12] = new Animation();
 		    for (int x = 0; x < 6; x++) {
