@@ -20,6 +20,7 @@ import roles.Cardinaux;
 import roles.Joueur;
 import roles.Personnage;
 import roles.World;
+import graphique.DragAndDropState;
 
 public class MapGameState extends BasicGameState {
 
@@ -53,7 +54,7 @@ public class MapGameState extends BasicGameState {
 	private float _offsetMapY = 0;
 
 	//Test
-	private MapTest map = new MapTest();
+	private MapTest map; //= new MapTest ();
 	private Input _input;
 	private int _scrollingSpeed = 15;
 	private float _zoom = 1;
@@ -541,6 +542,7 @@ public class MapGameState extends BasicGameState {
 	}
 	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2) {
 
+		this.map = map;
 		//int nb = 0;
 		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
 		//ArrayList<Automate> autlist2 = new ArrayList<Automate>();
@@ -581,11 +583,11 @@ public class MapGameState extends BasicGameState {
 			World.putAutomates(World.getPlayers().get(1).Automates(),_tailleMapX-1, _tailleMapY-1, World.getPlayers().get(1));
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 		//for(int i = 0; i < nb; i++)
 		World.getPlayers().get(0).createPersonnage(0, 1, 1);
 		//for(int i = 0; i < nb; i++)
-		World.getPlayers().get(1).createPersonnage(0, _tailleMapX-1, _tailleMapY-1);
+			//World.getPlayers().get(1).createPersonnage(classes.size()-1, _tailleMapX-1, _tailleMapY-1);
 
 		int i=0;
 		for(Joueur j : World.getPlayers())
@@ -596,10 +598,10 @@ public class MapGameState extends BasicGameState {
 				_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
 			i++;
 		}
-		try {
+		/*try {
 			this.map.init();
 		} catch (SlickException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 }
