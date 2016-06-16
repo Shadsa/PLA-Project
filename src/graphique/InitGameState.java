@@ -47,6 +47,7 @@ public class InitGameState extends BasicGameState {
 	public static StateGame game;
 	private String sizeScreen;
 	private Input _input;
+	
 
 	//Bouton
 	private Button _bouton_jouer;
