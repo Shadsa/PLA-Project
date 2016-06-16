@@ -10,7 +10,7 @@ import roles.States.Statut;
 public final class Avancer extends Action {
 
 	Cardinaux _direction;
-	private static int _Id = Action.getId(4);
+	private static int _Id = Action.getId(1);
 
 	public Avancer(Cardinaux card) {
 		super();

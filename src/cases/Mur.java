@@ -15,7 +15,7 @@ public class Mur extends TypeCase implements Construction {
 	
 	protected Joueur _owner;
 	
-	public final static int _id = getId(37);
+	public final static int _id = getId(1);
 	
 	public int value() {
 		return _id;

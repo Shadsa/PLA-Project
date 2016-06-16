@@ -52,6 +52,8 @@ public class Soigner extends Action {
 		System.out.print(pers.ID() + " soigne " + target.ID() + ".\n");
 		pers.setState(new States(Statut.SOIGNE, direction));
 		target.change_vie(+ pers.heal());
+		if(target.vie()+pers.heal() <= target.classe().HP())
+			pers.owner().changerRessource(5);
 	}
 
 	@Override

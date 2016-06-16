@@ -5,6 +5,7 @@ import cases.CaseProperty;
 import cases.ConstructionCheck;
 import cases.EnnemiCheck;
 import cases.PersoCheck;
+import cases.Piege;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;
@@ -57,7 +58,7 @@ public final class Combattre extends Action {
 			// System.out.print(pers.ID() + " attaque " + target.ID() + ".\n");
 			pers.setState(new States(Statut.ATTAQUE, direction));
 			target.change_vie(-pers.damage());
-		} else if (_propCons.check(c)) {
+		} else if (_propCons.check(c) && c.type().value()!=Piege._id) {
 			c.attaquerCase(pers.damage());
 			pers.setState(new States(Statut.ATTAQUE, direction));
 		}

@@ -4,17 +4,15 @@ import roles.Personnage;
 import roles.World;
 import roles.action.Action;
 import roles.action.Attendre;
-import roles.action.PoserPiege;
-import roles.Cardinaux;
 import roles.Joueur;
 
 public class Piege extends TypeCase implements Construction {
 	
-	protected static Action _action = new PoserPiege(Cardinaux.SUD);
+	protected static Action _action = new Attendre();
 	
 	protected Joueur _owner;
 	
-	public final static int _id = getId(29);
+	public final static int _id = getId(1);
 	
 	public int value() {
 		return _id;
