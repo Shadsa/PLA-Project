@@ -578,6 +578,7 @@ public class MapGameState extends BasicGameState {
 
 		try {
 			World.putAutomate(World.getPlayers().get(0).automate(0), 1, 1, World.getPlayers().get(0));
+			World.putAutomate(World.getPlayers().get(1).automate(0),_tailleMapX*96-100, _tailleMapY*96-100, World.getPlayers().get(1));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
