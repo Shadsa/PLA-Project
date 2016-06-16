@@ -27,7 +27,7 @@ public class Mur extends TypeCase implements Construction {
 
 	@Override
 	public boolean franchissable() {
-		return false;
+		return true;
 	}
 	
 	public void setOwner(Joueur owner){

@@ -17,7 +17,7 @@
     	<etat>0</etat> 
     	<condition compose="Et"> 
       		<condition1 direction="N">Libre</condition1> 
-      		<condition2 quantite="280">RessourcesPossedees</condition2> 
+      		<condition2 quantite="356">RessourcesPossedees</condition2> 
     	</condition> 
     	<action direction="N">ConstruireMur</action> 
     	<suivant>1</suivant> 
@@ -26,7 +26,7 @@
     	<etat>0</etat> 
     	<condition compose="Et"> 
       		<condition1 direction="E">Libre</condition1> 
-      		<condition2 quantite="280">RessourcesPossedees</condition2> 
+      		<condition2 quantite="356">RessourcesPossedees</condition2> 
     	</condition> 
     	<action direction="E">ConstruireMur</action> 
     	<suivant>1</suivant> 
@@ -35,7 +35,7 @@
     	<etat>0</etat> 
     	<condition compose="Et"> 
       		<condition1 direction="S">Libre</condition1> 
-      		<condition2 quantite="280">RessourcesPossedees</condition2> 
+      		<condition2 quantite="356">RessourcesPossedees</condition2> 
     	</condition> 
     	<action direction="S">ConstruireMur</action> 
     	<suivant>1</suivant> 
@@ -44,7 +44,7 @@
     	<etat>0</etat> 
     	<condition compose="Et"> 
       		<condition1 direction="O">Libre</condition1> 
-      		<condition2 quantite="280">RessourcesPossedees</condition2> 
+      		<condition2 quantite="356">RessourcesPossedees</condition2> 
     	</condition> 
     	<action direction="O">ConstruireMur</action> 
     	<suivant>1</suivant> 
