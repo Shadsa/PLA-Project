@@ -56,7 +56,7 @@ public class MapGameState extends BasicGameState {
 	private float _offsetMapY = 0;
 
 	//Test
-	private MapTest map = InitGameState.map;
+	private MapTest map;
 	private Input _input;
 	private int _scrollingSpeed = 15;
 	private float _zoom = 1;
@@ -553,7 +553,9 @@ public class MapGameState extends BasicGameState {
 		this._offsetMapY = y;
 
 	}
-	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2) {
+	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2, MapTest map) {
+		
+		this.map = map;
 		
 		//int nb = 0;
 		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
