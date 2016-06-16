@@ -34,7 +34,8 @@ class DragAndDropState extends BasicGameState {
 	private float mouseAbsoluteY;
 	private float _mouseMapX;
 	private float _mouseMapY;
-	private ArrayList<UnitInfo> UIFs;
+	private ArrayList<UnitInfo> UIFs1;
+	private ArrayList<UnitInfo> UIFs2;
 	private int _scrollingSpeed = 15;
 	private float _zoom = 1;
 	//private static StateBasedGame game;
@@ -98,7 +99,7 @@ class DragAndDropState extends BasicGameState {
 		//Configuration du bouton Jouer
 		if (_bouton_Jouer.isDown()) {
 				//game.enterState(MapGameState.ID);
-				((MapGameState)InitGameState.game.getState(MapGameState.ID)).setGame(UIFs, map);
+				((MapGameState)InitGameState.game.getState(MapGameState.ID)).setGame(UIFs1, UIFs2, map);
 				InitGameState.game.enterState(MapGameState.ID);
 				}
 		//Gestion des boutons en plein écran
@@ -224,7 +225,7 @@ class DragAndDropState extends BasicGameState {
 	
 	public void setGame(ArrayList<UnitInfo> uIFs) {
 
-		this.UIFs = uIFs;
+		this.UIFs1 = uIFs;
 		int nb = 0;
 		ArrayList<Automate> autlist = new ArrayList<Automate>();
 		ArrayList<Classe> classes = new ArrayList<Classe>();

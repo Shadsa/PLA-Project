@@ -1,6 +1,7 @@
 package graphique;
 
 import java.awt.BorderLayout;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
@@ -32,7 +33,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import com.sun.javafx.iio.ImageStorage.ImageType;
 
 import XML.XML_Reader;
 import roles.Automate;

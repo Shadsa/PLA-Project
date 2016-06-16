@@ -565,7 +565,7 @@ public class MapGameState extends BasicGameState {
 			type_unit.get(0).add(ui.color);
 			type_clothes.get(0).add(ui.clothes);
 		}
-		for(UnitInfo ui : uIFs2) {
+		/*for(UnitInfo ui : uIFs2) {
 			//nb++;
 			autlist.add(new ArrayList<Automate>());
 			classes.add(new ArrayList<Classe>());
@@ -575,7 +575,7 @@ public class MapGameState extends BasicGameState {
 			classes.get(1).add(ui.classe);
 			type_unit.get(1).add(ui.color);
 			type_clothes.get(1).add(ui.clothes);
-		}
+		}*/
 		World.addPlayer(new Joueur("Joueur1", autlist.get(0), classes.get(0)));
 		World.addPlayer(new Joueur("Joueur2", autlist.get(1), classes.get(1)));
 
