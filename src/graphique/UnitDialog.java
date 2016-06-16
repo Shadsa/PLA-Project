@@ -7,6 +7,8 @@ import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
 import java.io.File;
@@ -105,9 +107,11 @@ public class UnitDialog extends JDialog {
     JPanel panSkin = new JPanel();
     panSkin.setBorder(BorderFactory.createTitledBorder("Couleur"));
     JComboBox<String> color = new JComboBox<String>();
-    color.addItem("Blanc");
-    color.addItem("Noir");
-    color.addItem("Vert");
+    for(TypeUnit t : TypeUnit.values()){
+    	color.addItem(t.toString());
+    }
+   /* color.addItem("Noir");
+    color.addItem("Vert");*/
     panSkin.add(color);
 
 
@@ -153,6 +157,15 @@ public class UnitDialog extends JDialog {
         	cla = (Classe)classe.getSelectedItem();//getClasse((String)classe.getSelectedItem());
           }
         });
+    
+    color.addItemListener(new ItemListener(){
+        public void itemStateChanged(ItemEvent e) {
+			ImageIcon typeCorps = new ImageIcon(TypeUnit.valueOf(e.getItem().toString()).sprite());
+			icon.setIcon(new ImageIcon(createImage(new FilteredImageSource(
+					typeCorps.getImage().getSource(),
+					new CropImageFilter(0, 128, 64, 64)))));
+        }               
+      });
 
     JButton cancelBouton = new JButton("Annuler");
     cancelBouton.addActionListener(new ActionListener(){
