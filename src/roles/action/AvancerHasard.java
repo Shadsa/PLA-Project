@@ -34,7 +34,7 @@ public final class AvancerHasard extends Action {
 		if(World.isfree(destX, destY))
 		{
 			//System.out.println(pers.ID() + " j'avance vers le " + direction +" "+ destX +" "+ destY + " etat="+pers.etat());
-			if(World.Case(destX, destY).type() instanceof Arbre)
+			if(World.Case(destX, destY).type() instanceof Arbre && pers.classe().hard_walker())
 			{
 				World.Case(destX, destY).setPersonnage(pers);
 				pers.setState(new States(Statut.HIDING, direction));
