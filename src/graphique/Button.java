@@ -1,16 +1,11 @@
 package graphique;
 
 import java.awt.Font;
-import java.awt.FontFormatException;
-import java.io.File;
-import java.io.IOException;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.geom.Rectangle;
@@ -38,6 +33,7 @@ public class Button extends AbstractComponent {
 	protected boolean down;
 	protected boolean pressed;
 	protected boolean over;
+	protected boolean prerendu = false;
 	protected Rectangle hitbox;
 
 	/**
@@ -51,8 +47,6 @@ public class Button extends AbstractComponent {
 	public Button(GUIContext container, String text, int x, int y) throws SlickException
 	{
 		super(container);
-		//font = Rotunda.deriveFont(Font.TRUETYPE_FONT, 12);
-		//font = new Font("src/asset/fonts/Friedolin.ttf", Font.PLAIN, 12);
 		setTrueTypeFont("src/asset/fonts/Berry Rotunda.ttf", 10);
 	    _text = text;
 	    width = ttf.getWidth(_text) + 22;
@@ -61,7 +55,7 @@ public class Button extends AbstractComponent {
 	}
 	
 	/**
-	 * Construit un bouton non extensible.
+	 * Construit un bouton non extensible, c'est à dire un bouton avec une image fixée.
 	 * @param container
 	 * @param text
 	 * @param x
@@ -92,10 +86,28 @@ public class Button extends AbstractComponent {
 	{
 		g.setFont(ttf);
 		if (extensible) { 
-			InitGameState.UI.draw(x, y, x+23, y+height, 634, 118, 657, 141);
-			InitGameState.UI.draw(x+23, y, x+width-23, y+height, 659, 118, 681, 141);
-			InitGameState.UI.draw(x+width-23, y, x+width, y+height, 683, 118, 707, 141);
-			ttf.drawString(x + 12, y + 13, _text, Color.black);
+			if(!prerendu) {
+				//Prérendu normalImage
+				normalImage = new Image(container.getScreenWidth(),container.getScreenHeight());
+				Graphics g1 = normalImage.getGraphics();
+				chargementBouton1(g1);
+				g1.flush();
+				normalImage = normalImage.getSubImage(x, y, 200, 100);
+				
+				//Prérendu overImage
+				overImage = new Image(container.getScreenWidth(),container.getScreenHeight());
+				Graphics g2 = overImage.getGraphics();
+				chargementBouton1Over(g2);
+				g2.flush();
+				overImage = overImage.getSubImage(x, y, 200, 100);
+				prerendu = true;
+			}
+			if (isOver()) {
+				overImage.draw(x, y);
+			} else {
+				normalImage.draw(x, y);
+			}
+			ttf.drawString(x + 12, y + 15, _text, Color.black);
 		} else {
 			if (isDown()) {
 				downImage.draw(x, y);
@@ -219,5 +231,61 @@ public class Button extends AbstractComponent {
 	    this.x = x;
 	    this.y = y;
 	    hitbox = new Rectangle(x, y, width, height);
+	}
+	
+	private void chargementBouton1(Graphics g) {
+		//Haut gauche
+		g.drawImage(InitGameState.UI, x, y, x+24, y+9, 590, 424, 614, 433);
+		//Haut droite
+		g.drawImage(InitGameState.UI, x+24+width-46, y, x+24+width-46+25, y+10, 640, 424, 665, 434);
+		int i = 0, j = 0;
+		for(i = 0; i < height-15; i++) {
+			//Milieu gauche
+			g.drawImage(InitGameState.UI, x, y+9+i, x+24, y+9+i+1, 590, 435, 614, 436);
+			//Milieu droite
+			g.drawImage(InitGameState.UI, x+24+width-46, y+9+i, x+24+width-46+26, y+9+i+1, 640, 435, 666, 441);
+			for(j = 0; j < width-45; j++) {
+				if(i == 0) {
+					//Haut milieu
+					g.drawImage(InitGameState.UI, x+24+j, y, x+24+1+j, y+9, 616, 424, 617, 433);
+					//Bas milieu
+					g.drawImage(InitGameState.UI, x+24+j, y+10+height-16, x+24+1+j, y+10+height-6, 616, 442, 639, 452);
+				}
+				//Milieu milieu
+				g.drawImage(InitGameState.UI, x+24+j, y+9+i, x+24+1+j, y+9+1+i, 616, 435, 617, 436);
+			}
+			}
+		//Bas gauche
+		g.drawImage(InitGameState.UI, x, y+9+(i), x+24, y+9+i+10, 590, 442, 614, 452);
+		//Bas droite
+		g.drawImage(InitGameState.UI, x+24+width-46, y+9+(i), x+24+width-46+26, y+9+i+10, 640, 442, 666, 452);
+	}
+	
+	private void chargementBouton1Over(Graphics g) {
+		//Haut gauche
+		g.drawImage(InitGameState.UI, x, y, x+24, y+9, 590, 453, 614, 462);
+		//Haut droite
+		g.drawImage(InitGameState.UI, x+24+width-46, y, x+24+width-46+25, y+10, 640, 453, 665, 463);
+		int i = 0, j = 0;
+		for(i = 0; i < height-15; i++) {
+			//Milieu gauche
+			g.drawImage(InitGameState.UI, x, y+9+i, x+24, y+9+i+1, 590, 464, 614, 465);
+			//Milieu droite
+			g.drawImage(InitGameState.UI, x+24+width-46, y+9+i, x+24+width-46+26, y+9+i+1, 640, 464, 666, 471);
+			for(j = 0; j < width-45; j++) {
+				if(i == 0) {
+					//Haut milieu
+					g.drawImage(InitGameState.UI, x+24+j, y, x+24+1+j, y+9, 616, 453, 617, 462);
+					//Bas milieu
+					g.drawImage(InitGameState.UI, x+24+j, y+10+height-16, x+24+1+j, y+10+height-6, 616, 471, 639, 481);
+				}
+				//Milieu milieu
+				g.drawImage(InitGameState.UI, x+24+j, y+9+i, x+24+1+j, y+9+1+i, 616, 464, 617, 465);
+			}
+			}
+		//Bas gauche
+		g.drawImage(InitGameState.UI, x, y+9+(i), x+24, y+9+i+10, 590, 471, 614, 481);
+		//Bas droite
+		g.drawImage(InitGameState.UI, x+24+width-46, y+9+(i), x+24+width-46+26, y+9+i+10, 640, 471, 666, 481);
 	}
 }

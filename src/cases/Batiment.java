@@ -1,14 +1,15 @@
 package cases;
 
-import roles.Cardinaux;
 import roles.Personnage;
-import roles.action.*;
+import roles.action.Action;
 
 public final class Batiment extends TypeCase {
 
+	public final int _vie = 5;
+
 	protected Action _action;
-	
-	public final static int _id = 0;
+		
+	public final static int _id = getId(1);
 	
 	public Batiment(Action a){
 		_action = a;

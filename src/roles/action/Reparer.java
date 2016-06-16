@@ -1,7 +1,6 @@
 package roles.action;
 
 import cases.CaseAction;
-import cases.Plaine;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;
@@ -12,7 +11,7 @@ public final class Reparer extends Action {
 
 	Cardinaux _direction;
 	
-	private static int _Id = Action.getId(4);
+	private static int _Id = Action.getId(1);
 	
 	public Reparer(Cardinaux card) {
 		super();

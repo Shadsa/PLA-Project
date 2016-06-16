@@ -69,6 +69,7 @@ public class Personnage extends Observable{
 
 	public void agir() {
 		_brain.agir(this);
+		_location.Evenement(this);
 	}
 
 	public int etat()
@@ -132,7 +133,7 @@ public class Personnage extends Observable{
 			for(int range=1;range<=maxRange;range++)
 				for(int y=-range;y<=range;y++)
 					if(World.Case(X()+range, Y()+y)!=null && c.check(World.Case(X()+range, Y()+y))){
-						System.out.println("Arbre à l'est :"+range+" "+y);
+						//System.out.println("Arbre à l'est :"+range+" "+y);
 						return true;
 					}
 			break;
@@ -140,7 +141,7 @@ public class Personnage extends Observable{
 			for(int range=1;range<=maxRange;range++)
 				for(int y=-range;y<=range;y++)
 					if(World.Case(X()-range, Y()+y)!=null && c.check(World.Case(X()-range, Y()+y))){
-						System.out.println("Arbre à l'ouest :"+(-range)+" "+y);
+						//System.out.println("Arbre à l'ouest :"+(-range)+" "+y);
 						return true;
 					}
 			break;
@@ -148,7 +149,7 @@ public class Personnage extends Observable{
 			for(int range=1;range<=maxRange;range++)
 				for(int x=-range;x<=range;x++)
 					if(World.Case(X()+x, Y()+range)!=null && c.check(World.Case(X()+x, Y()+range))){
-						System.out.println("Arbre au sud :"+x+" "+range);
+						//System.out.println("Arbre au sud :"+x+" "+range);
 						return true;
 					}
 			break;
@@ -156,7 +157,7 @@ public class Personnage extends Observable{
 			for(int range=1;range<=maxRange;range++)
 				for(int x=-range;x<=range;x++)
 					if(World.Case(X()+x, Y()-range)!=null && c.check(World.Case(X()+x, Y()-range))){
-						System.out.println("Arbre au nord :"+x+" "+(-range));
+						//System.out.println("Arbre au nord :"+x+" "+(-range));
 						return true;
 					}
 		}

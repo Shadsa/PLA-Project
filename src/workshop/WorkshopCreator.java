@@ -5,11 +5,16 @@ import roles.*;
 import roles.action.Action;
 import roles.classe.Classe;
 import roles.conditions.Condition;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
 
 public class WorkshopCreator {
@@ -53,6 +58,7 @@ public class WorkshopCreator {
 		}
 
 		for(int i=0;i<files.size();i++){
+			deckActionName.add(files.get(i).getName());
 			ArrayList<Class<Action>> newdeck = new ArrayList<Class<Action>>();
 			fis = new FileInputStream(files.get(i));
 			while((res = fis.read()) != -1){
@@ -60,7 +66,7 @@ public class WorkshopCreator {
 					Class<Action> newAction = (Class<Action>) Class.forName("roles.action." + buf);
 					newdeck.add(newAction);
 					buf="";
-				}else{
+				}else if(res != '\r'){
 					buf+= (char)res;
 				}
 			}
@@ -84,19 +90,20 @@ public class WorkshopCreator {
 		}
 
 		for(int i=0;i<files.size();i++){
+			deckConditionName.add(files.get(i).getName());
 			ArrayList<Class<Condition>> newdeck = new ArrayList<Class<Condition>>();
 			fis = new FileInputStream(files.get(i));
 			while((res = fis.read()) != -1){
 				if(res == '\n'){
-					Class newAction = Class.forName("roles.conditions." + buf);
+					Class<Condition> newAction = (Class<Condition>)Class.forName("roles.conditions." + buf);
 					newdeck.add(newAction);
 					buf="";
-				}else{
+				}else if(res != '\r'){
 					buf+= (char)res;
 				}
 			}
 			if(buf != ""){
-				Class newAction = Class.forName("roles.conditions." + buf);
+				Class<Condition> newAction = (Class<Condition>) Class.forName("roles.conditions." + buf);
 				newdeck.add(newAction);
 				buf="";
 			}
@@ -107,12 +114,39 @@ public class WorkshopCreator {
 
 
 	}
+	
+	
+	// SERIALIZATION FUNCTION
+	
+			public Classe loadClass(String name) throws FileNotFoundException, IOException, ClassNotFoundException{ //désérialisation
+				ObjectInputStream ois = new ObjectInputStream(
+			              					new BufferedInputStream(
+			              							new FileInputStream(
+			              									new File(filepath+"classe.deck/"+name))));
+				Classe g = (Classe) ois.readObject();
+				ois.close();
+			    return g;
+			}
+			
+			public void saveClass(Classe c) throws IOException{//sérialisation
+			    ObjectOutputStream oos = new ObjectOutputStream(
+			    								new BufferedOutputStream(
+								            		  new FileOutputStream(
+								            				  new File(filepath+"classe.deck/"+c.name()))));
+			    
+			    oos.writeObject(c);
+			    oos.close();
+			    
+			}
+		
+
+
 
 
 //STRUCTURE
 
 	public void createClasse(String name, Bonus bonus, String deckActName, String deckCondName){
-			Classe newclass = new Classe(10,5,2,2,name,bonus,getDeckAction(deckActName),getDeckCondition(deckCondName));
+			Classe newclass = new Classe(10,5,2,2,name,false,bonus,getDeckAction(deckActName),getDeckCondition(deckCondName));
 			deckClasse.add(newclass);
 			deckClasseName.add(name);
 	}
@@ -120,16 +154,17 @@ public class WorkshopCreator {
 
 	public ArrayList<Class<Action>> getDeckAction(String name){
 		for(int i=0;i<deckActionName.size();i++){
-			if(deckActionName.get(i)==name){
+			if(deckActionName.get(i).equalsIgnoreCase(name)){
 				return deckAction.get(deckActionName.indexOf(deckActionName.get(i)));
 			}
 		}
 		return null;
 	}
+	
 
 	public ArrayList<Class<Condition>> getDeckCondition(String name){
 		for(int i=0;i<deckConditionName.size();i++){
-			if(deckConditionName.get(i)==name){
+			if(deckConditionName.get(i).equalsIgnoreCase(name)){
 				return deckCondition.get(deckConditionName.indexOf(deckConditionName.get(i)));
 			}
 		}
@@ -138,7 +173,7 @@ public class WorkshopCreator {
 
 	public Classe getDeckClasse(String name){
 		for(int i=0;i<deckClasseName.size();i++){
-			if(deckClasseName.get(i)==name){
+			if(deckClasseName.get(i).equalsIgnoreCase(name)){
 				return deckClasse.get(deckClasseName.indexOf(deckClasseName.get(i)));
 			}
 		}

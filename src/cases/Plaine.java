@@ -1,8 +1,8 @@
 package cases;
 
-import roles.Cardinaux;
 import roles.Personnage;
-import roles.action.*;
+import roles.action.Action;
+import roles.action.Attendre;
 
 public final class Plaine extends TypeCase {
 
@@ -28,6 +28,11 @@ public final class Plaine extends TypeCase {
 	@Override
 	public boolean franchissable() {
 		return true;
+	}
+
+	@Override
+	public Action action() {
+		return _action;
 	}
 
 }

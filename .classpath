@@ -32,5 +32,7 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="PLA-Project/lib/natives"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/jus.util.assertion.jar"/>
+	<classpathentry kind="lib" path="lib/jus.util.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

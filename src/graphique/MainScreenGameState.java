@@ -17,6 +17,7 @@ public class MainScreenGameState extends BasicGameState {
 	public static final int ID = 1;
 	//Image de fond
 	private Image background;
+	//Ensemble des entrées clavier/souris/manette
 	private Input _input;
 
 	//Musique
@@ -28,7 +29,13 @@ public class MainScreenGameState extends BasicGameState {
 	private Button _bouton_quitter;
 	private Button _bouton_fullScreen;
 	private Button _bouton_son;
+	private Button _bouton_options;
 
+	/**
+	 * Initialise la boucle de jeu. Cette méthode est appelée avant que la boucle démarre.
+	 * @param container Le conteneur du jeu dans lequels les composants sont crées et affichés.
+	 * @param game Le contrôleur des différentes boucles de jeu.
+	 */
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		_input = container.getInput();
 		this.background = new Image("src/asset/images/skeleton_army.jpg");
@@ -40,15 +47,18 @@ public class MainScreenGameState extends BasicGameState {
 		_bouton_jouer = new Button(container, "Jouer", container.getWidth()/2-62, container.getHeight()/2-80, normalImage, overImage, downImage);
 		_bouton_fullScreen = new Button(container, "Plein écran", container.getWidth()/2-62, container.getHeight()/2, normalImage, overImage, downImage);
 		_bouton_son = new Button(container, "Désactiver son", container.getWidth()/2-62, container.getHeight()/2-40, normalImage, overImage, downImage);
-		_bouton_quitter = new Button(container, "Quitter", container.getWidth()/2-62, container.getHeight()/2+40, normalImage, overImage, downImage);
+		_bouton_quitter = new Button(container, "Quitter", container.getWidth()/2-62, container.getHeight()/2+80, normalImage, overImage, downImage);
+		_bouton_options = new Button(container, "Options", container.getWidth()/2-62, container.getHeight()/2+40, normalImage, overImage, downImage);
 		//music = new Music("src/asset/musics/menu_music.ogg");
 	   // music.loop();
 
 	}
 
 	/**
-	 * Contenons nous d'afficher l'image de fond.
-	 * Le texte est placé approximativement au centre.
+	 * Affichage des éléments du jeu dans le conteneur.
+	 * @param container Le conteneur du jeu dans lequels les composants sont crées et affichés.
+	 * @param game Le contrôleur des différentes boucles de jeu.
+	 * @param g Le contexte graphique qui peut être utilisé pour afficher les éléments.
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		background.draw(0, 0, container.getWidth(), container.getHeight());
@@ -56,6 +66,7 @@ public class MainScreenGameState extends BasicGameState {
 		_bouton_fullScreen.render(container, g);
 		_bouton_quitter.render(container, g);
 		_bouton_son.render(container, g);
+		_bouton_options.render(container, g);
 		g.setColor(Color.white);
 		/*if (_input.getControllerCount() >= 1) {
 			g.drawString("Appuyez sur START pour commencer.", 240, 300);
@@ -64,14 +75,23 @@ public class MainScreenGameState extends BasicGameState {
 	}
 
 	/**
-	 * Passer à l’écran de jeu à l'appui de n'importe quelle touche.
+	 * Mise à jour des attributs et des éléments du conteneur.
+	 * @param container Le conteneur du jeu dans lequels les composants sont crées et affichés.
+	 * @param game Le contrôleur des différentes boucles de jeu.
+	 * @param delta Le temps mis entre chaque mise à jour en millisecondes.
 	 */
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {	
 		_bouton_jouer.update(container);
 		_bouton_fullScreen.update(container);
 		_bouton_quitter.update(container);
 		_bouton_son.update(container);
+		_bouton_options.update(container);
 
+		if(_bouton_options.isPressed())
+		{
+			ClassDialog classDialog = new ClassDialog(null, "Création d'un classe", true);
+			classDialog.setVisible(true);
+		}
 		//Configuration du bouton jouer
 		if (_bouton_jouer.isDown()) {
 				game.enterState(InitGameState.ID);
@@ -116,21 +136,23 @@ public class MainScreenGameState extends BasicGameState {
 		_bouton_jouer.setLocation(container.getWidth()/2-62, container.getHeight()/2-80);
 		_bouton_fullScreen.setLocation(container.getWidth()/2-62, container.getHeight()/2);
 		_bouton_son.setLocation(container.getWidth()/2-62, container.getHeight()/2-40);
-		_bouton_quitter.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
+		_bouton_quitter.setLocation(container.getWidth()/2-62, container.getHeight()/2+80);
+		_bouton_options.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
 	}
-
+	
+	/**
+	 * Notification que l'on entre dans cette boucle de jeu.
+	 * @param container Le contexte dans lequels les composants sont crées et affichés.
+	 * @param game Le contrôleur des différentes boucles de jeu.
+	 */
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		_bouton_son.setText(container.getMusicVolume() > 0 ? "Désactiver son" : "activer son");
 		_bouton_fullScreen.setText(container.isFullscreen() ? "Fenêtré" : "Plein écran");
 	}
 
-	@Override
-	public void keyPressed(int key, char c) {
-	}
-
 	/**
-	 * L'identifiant permet d'identifier les différentes boucles.
-	 * Pour passer de l'une à l'autre.
+	 * Récupère l'identifiant unique de la boucle de jeu.
+	 * return L'identifiant de la boucle.
 	 */
 	public int getID() {
 		return ID;

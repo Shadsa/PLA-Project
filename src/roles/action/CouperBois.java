@@ -2,7 +2,6 @@ package roles.action;
 
 import cases.Arbre;
 import cases.CaseProperty;
-import cases.Plaine;
 import cases.TypeCheck;
 import roles.Cardinaux;
 import roles.Personnage;
@@ -35,11 +34,9 @@ public final class CouperBois extends Action {
 		}
 		else return;
 		
-		if(World.Case(destX, destY)!=null && World.Case(destX, destY).type().value() == Arbre.getInstance().value()){
-			World.Case(destX, destY).attaquerCase(pers.damage());
-			pers.setState(new States(Statut.ATTAQUE, direction));
-			pers.owner().changerRessource(10);
-		}
+		World.Case(destX, destY).attaquerCase(pers.damage());
+		pers.setState(new States(Statut.ATTAQUE, direction));
+		pers.owner().changerRessource(21);
 	}
 
 	@Override

@@ -1,12 +1,8 @@
 package roles.conditions;
 
-import cases.Case;
 import cases.CaseProperty;
-import cases.Construction;
-import cases.Mur;
 import cases.TypeCase;
 import cases.TypeCheck;
-import roles.Cardinaux;
 import roles.Personnage;
 import roles.World;
 

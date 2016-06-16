@@ -8,6 +8,7 @@ import cases.*;
 
 public class Carte extends Vector<Vector<Case>>{
 
+	private static final long serialVersionUID = -8840331548046134782L;
 	private int _hauteur;
 	private int _largeur;
 	
@@ -212,44 +213,58 @@ public class Carte extends Vector<Vector<Case>>{
 	}
 	
 	private void putLac(int x, int y, int facteur){
-		if(Case(x,y)!=null && x>2 && x<_largeur-2 && Case(x,y).type().franchissable() && Case(x,y).type().value() != Eau.getInstance().value()){
+		if(Case(x,y)!=null && x>2 && x<_largeur-2 && Case(x,y).type().franchissable() && !(Case(x,y).type() instanceof Eau)){
 			Random R = new Random();
-			this.modifierCase(Eau.getInstance(), x, y);
-			if(facteur==1){
-				if(R.nextInt(3)>1)
-					putLac(x-1,y,0);
-				if(R.nextInt(3)>1)
-					putLac(x+1,y,0);
-				if(R.nextInt(3)>1)
-					putLac(x,y-1,0);
-				if(R.nextInt(3)>1)
-					putLac(x,y+1,0);
-			}
-			else if(facteur>1){
-				int nextFacteur;
-				if(R.nextInt(3)>1)
-					nextFacteur=facteur;
-				else
-					nextFacteur=facteur-1;	
-				putLac(x-1,y,nextFacteur);
-				
-				/*if(R.nextInt(3)>1)
-					nextFacteur=facteur;
-				else
-					nextFacteur=facteur-1;	*/
-				putLac(x+1,y,nextFacteur);
-				
-				/*if(R.nextInt(3)>1)
-					nextFacteur=facteur;
-				else
-					nextFacteur=facteur-1;*/	
-				putLac(x,y-1,nextFacteur);
-				
-				/*if(R.nextInt(3)>1)
-					nextFacteur=facteur;
-				else
-					nextFacteur=facteur-1;	*/
-				putLac(x,y+1,nextFacteur);
+			
+			if(facteur>0){ 
+				modifierCase(Eau.getInstance(), x, y);
+				if (facteur == 1) {
+					if(R.nextInt(3)==2){
+						putLac(x - 1, y, 0);
+						putLac(x + 1, y, 0);
+					} else if(R.nextInt(3)==1)
+						putLac(x - 1, y, 0);
+					else
+						putLac(x + 1, y, 0);
+					
+					if(R.nextInt(3)==2){
+						putLac(x, y - 1, 0);
+						putLac(x, y + 1, 0);	
+					} else if(R.nextInt(3)==1)
+						putLac(x, y - 1, 0);
+					else
+						putLac(x, y + 1, 0);
+				} else if (facteur > 1) {
+					int nextFacteur;
+					if (R.nextInt(3) > 1)
+						nextFacteur = facteur;
+					else
+						nextFacteur = facteur - 1;
+					putLac(x - 1, y, nextFacteur);
+					/*
+					 * if(R.nextInt(3)>1) nextFacteur=facteur; else
+					 * nextFacteur=facteur-1;
+					 */
+					putLac(x + 1, y, nextFacteur);
+					/*
+					 * if(R.nextInt(3)>1) nextFacteur=facteur; else
+					 * nextFacteur=facteur-1;
+					 */
+					putLac(x, y - 1, nextFacteur);
+					/*
+					 * if(R.nextInt(3)>1) nextFacteur=facteur; else
+					 * nextFacteur=facteur-1;
+					 */
+					putLac(x, y + 1, nextFacteur);
+				}
+			} else{
+				int adja = 0;
+				adja += (Case(x-1,y)!=null && Case(x-1,y).type() instanceof Eau)? 1 : 0;
+				adja += (Case(x+1,y)!=null && Case(x+1,y).type() instanceof Eau)? 1 : 0;
+				adja += (Case(x,y-1)!=null && Case(x,y-1).type() instanceof Eau)? 1 : 0;
+				adja += (Case(x,y+1)!=null && Case(x,y+1).type() instanceof Eau)? 1 : 0;
+				if(adja>1)
+					modifierCase(Eau.getInstance(), x, y);
 			}
 		}
 	}

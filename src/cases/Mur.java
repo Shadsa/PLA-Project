@@ -1,21 +1,21 @@
 package cases;
 
-import roles.Cardinaux;
 import roles.Personnage;
 import roles.action.Action;
-import roles.action.Attaquer;
+import roles.action.Attendre;
+import roles.action.ConstruireMur;
+import roles.Cardinaux;
 import roles.Joueur;
 
 public class Mur extends TypeCase implements Construction {
 	
-	public final int _vie = 1;
+	public final int _vie = 20;
 
-	protected static Action _action = new Attaquer(Cardinaux.EST);
-	
+	protected static Action _action = new ConstruireMur(Cardinaux.NORD);
 	
 	protected Joueur _owner;
 	
-	public final static int _id = getId(37);
+	public final static int _id = getId(1);
 	
 	public int value() {
 		return _id;
@@ -27,7 +27,7 @@ public class Mur extends TypeCase implements Construction {
 
 	@Override
 	public boolean franchissable() {
-		return false;
+		return true;
 	}
 	
 	public void setOwner(Joueur owner){
@@ -43,4 +43,8 @@ public class Mur extends TypeCase implements Construction {
 		_action.Act(pers);
 	}
 
+	public Action action() {
+		return _action;
+	}
+	
 }

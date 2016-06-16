@@ -3,7 +3,7 @@ package XML;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,19 +15,14 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.ErrorHandler;
-import org.xml.sax.helpers.DefaultHandler;
-
-import java.lang.reflect.Method;
-
-import cases.TypeCase;
-
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+import org.xml.sax.helpers.DefaultHandler;
 
 import roles.Automate;
 import roles.Cardinaux;
-import roles.action.*;
-import roles.conditions.*;
+import roles.action.Action;
+import roles.conditions.Condition;
 
 
 public class XML_Reader {
@@ -126,7 +121,7 @@ public class XML_Reader {
 			else if(att.getLength() > 1){
 				Cardinaux C = CardOfString(att.item(0).getNodeValue());
 				String s1 = e.getTextContent();
-				cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(Class.class,Cardinaux.class).newInstance(Class.forName("cases."+att.item(0).getNodeValue()),C);
+				cond = (Condition) Class.forName("roles.conditions."+s1).getDeclaredConstructor(Class.class,Cardinaux.class).newInstance(Class.forName("cases."+att.item(1).getNodeValue()),C);
 				
 			}
 			else{

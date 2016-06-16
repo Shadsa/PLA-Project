@@ -28,26 +28,23 @@ public class Joueur extends Observable{
 		return _personnages;
 	}
 
-	public Personnage createPersonnage(Classe type, int x, int y)
-	{
-		// WARNING faire plutot un get automate avec gestion d'erreur
-		Personnage newPers = new Personnage(_automates.get(_classes.indexOf(type)), x, y, this,type);
-		_personnages.add(newPers);
-		setChanged();
-		notifyObservers(newPers);
-		return newPers;
+	public int getUnite(Personnage pers){
+		return _automates.indexOf(pers._brain);
 	}
-	
+
 	public Personnage createPersonnage(int type, int x, int y)
 	{
 		// WARNING faire plutot un get automate avec gestion d'erreur
-		Personnage newPers = new Personnage(_automates.get(type), x, y, this,_classes.get(type));
-		_personnages.add(newPers);
-		setChanged();
-		notifyObservers(newPers);
-		return newPers;
+		if((type+1)<=_automates.size()){
+			Personnage newPers = new Personnage(_automates.get(type), x, y, this,_classes.get(type));
+			_personnages.add(newPers);
+			setChanged();
+			notifyObservers(newPers);
+			return newPers;
+		}
+		return null;
 	}
-	
+
 	public int nbUnit(Classe c){
 		int count=0;
 		for(Personnage p : _personnages)
@@ -55,7 +52,7 @@ public class Joueur extends Observable{
 				count++;
 		return count;
 	}
-	
+
 	public int ratioUnit(Classe c){
 		return 100*(nbUnit(c)/_personnages.size());
 	}
@@ -63,7 +60,7 @@ public class Joueur extends Observable{
 	public int ressources(){
 		return _ressources;
 	}
-	
+
 	public Automate automate(int i){
 		return _automates.get(0);
 	}
