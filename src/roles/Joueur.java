@@ -42,6 +42,7 @@ public class Joueur extends Observable{
 			notifyObservers(newPers);
 			return newPers;
 		}
+		//TODO penser à faire planter ici
 		return null;
 	}
 
