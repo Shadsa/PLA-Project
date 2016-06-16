@@ -32,8 +32,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import com.sun.javafx.iio.ImageStorage.ImageType;
-
 import XML.XML_Reader;
 import roles.Automate;
 import roles.Bonus;

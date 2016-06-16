@@ -58,6 +58,7 @@ public class MapGameState extends BasicGameState {
 	private int _scrollingSpeed = 15;
 	private float _zoom = 1;
 	private StateGame game;
+	public static boolean debug = false;
 
 	//Boutons
 	private Button _bouton_fullScreen;
@@ -139,13 +140,16 @@ public class MapGameState extends BasicGameState {
 							p.render(g);
 
 		//Annule la translation pour l'affichage du string en dessous
-		g.resetTransform();
-		g.setColor(Color.white);
 		//Affichage de la position de la souris sur la map
-		g.drawString(mouse, 10, 50);
-		g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
-		g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 90);
-		g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 110);
+
+		if (debug) {
+			g.resetTransform();
+			g.setColor(Color.white);
+			g.drawString(mouse, 10, 50);
+			g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
+			g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 90);
+			g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 110);
+		}
 
 		//Affichage des huds
 		if(showhud) {
@@ -153,6 +157,8 @@ public class MapGameState extends BasicGameState {
 		}
 		
 		//Affichage ressources
+		g.resetTransform();
+		g.setColor(Color.white);
 		if (World.getPlayers().size() == 2) {
 			g.drawString("Ressources : J1 " + World.getPlayers().get(0).ressources(), 10, 250);
 			g.drawString("Ressources : J2 " + World.getPlayers().get(1).ressources(), 10, 270);
@@ -396,6 +402,11 @@ public class MapGameState extends BasicGameState {
 		_bouton_quitter.setLocation(container.getWidth()/2-62, container.getHeight()/2+80);
 		_bouton_reprendre.setLocation(container.getWidth()/2-62, container.getHeight()/2-80);
 		_bouton_menuPrincipal.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
+		
+		//Update du debug
+		if (_input.isKeyPressed(Input.KEY_F1)) {
+			debug = !debug;
+		}
 	}
 
 	/**
@@ -578,7 +589,7 @@ public class MapGameState extends BasicGameState {
 
 		try {
 			World.putAutomate(World.getPlayers().get(0).automate(0), 1, 1, World.getPlayers().get(0));
-			World.putAutomate(World.getPlayers().get(1).automate(0),_tailleMapX*96-100, _tailleMapY*96-100, World.getPlayers().get(1));
+			World.putAutomate(World.getPlayers().get(1).automate(0),35, 45, World.getPlayers().get(1));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
