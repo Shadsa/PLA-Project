@@ -67,7 +67,7 @@ public class Carte extends Vector<Vector<Case>>{
 	 * @throws Exception : si cette case n'existe pas
 	 */
 	public void putCaseAction(CaseAction c, int x, int y, Joueur j) throws Exception {
-		if(x < 0 || y < 0 || x >= size() || y >= get(x).size())
+		if(x < 0 || y < 0 || y >= size() || x >= get(y).size())
 			throw new Exception("Dépassement de la carte");
 		c.setCase(x, y, j);
 		get(y).set(x, c);
@@ -112,7 +112,7 @@ public class Carte extends Vector<Vector<Case>>{
 	}
 	
 	public void putAutomates(ArrayList<Automate> A, int x, int y, Joueur j) throws Exception {
-		int xdeb = x, dim=0;
+		int xdeb=1, dim=0;
 		ArrayList<CaseAction> action_list = new ArrayList<CaseAction>();
 		for(Automate a : A)
 			for(ArrayList<CaseAction> ligne : a.get_action())
@@ -120,7 +120,11 @@ public class Carte extends Vector<Vector<Case>>{
 					action_list.add(c);
 					dim++;
 				}
-		dim = x + (int) Math.sqrt(dim);
+		dim = (int) Math.sqrt(dim);
+		if(x>(dim+1)) xdeb = x-(dim+1);
+			x = xdeb;
+		if(y>(dim+1)) y = y-(dim+1);
+		dim = dim + x;
 		for(CaseAction c : action_list){
 			try {
 				putCaseAction(c,x++,y,j);

@@ -23,7 +23,7 @@ public final class Avancer extends Action {
 		int destY = pers.Y() + ((_direction == Cardinaux.NORD)? (-1) : ((_direction == Cardinaux.SUD)? 1 : 0));
 		if(World.isfree(destX, destY))
 		{
-			if(World.Case(destX, destY).type() instanceof Arbre)
+			if(World.Case(destX, destY).type() instanceof Arbre && pers.classe().hard_walker())
 			{
 				//System.out.print(pers.ID() + "j'avance vers l'arbre " + _direction + destX + " " + destY + ".\n");
 				World.Case(destX, destY).setPersonnage(pers);

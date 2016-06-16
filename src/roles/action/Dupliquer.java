@@ -39,7 +39,7 @@ public final class Dupliquer extends Action {
 		{
 			if(pers.owner().changerRessource(-100))
 				pers.owner().createPersonnage(pers.owner().getUnite(pers), destX, destY);
-			pers.setState(new States(Statut.ATTAQUE, direction));
+			pers.setState(new States(Statut.INVOQUE, direction));
 		}
 	}
 

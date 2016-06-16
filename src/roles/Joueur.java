@@ -76,4 +76,8 @@ public class Joueur extends Observable{
 	public String nom() {
 		return _nom;
 	}
+	
+	public ArrayList<Automate> Automates(){
+		return _automates;
+	}
 }

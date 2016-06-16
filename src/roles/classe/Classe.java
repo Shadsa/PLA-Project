@@ -97,6 +97,12 @@ public class Classe implements Serializable {
 
 
 	//Setter
+	
+	public void hard_walker(boolean b)
+	{
+		_hard_walker=b;
+	}
+	
 	public void HP(int i){
 		_HP=i;
 	}

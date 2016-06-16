@@ -87,6 +87,10 @@ public abstract class World {
 	public static void putAutomate(Automate a, int x, int y, Joueur j) throws Exception{
 		_map.putAutomate(a, x, y, j);
 	}
+	
+	public static void putAutomates(ArrayList<Automate> a, int x, int y, Joueur j) throws Exception{
+		_map.putAutomates(a, x, y, j);
+	}
 
 	public static ArrayList<Joueur> joueurs() {
 		return _joueurs;

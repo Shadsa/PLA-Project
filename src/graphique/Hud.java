@@ -7,7 +7,7 @@ import org.newdawn.slick.SlickException;
 
 public class Hud {//550 182
 
-	private Image playerBars;
+	static public Image playerBars;
 	private static final int HUD_BAR_X = 10;
 	private static final int HUD_BAR_Y = 150;
 	private int debug = 10;
