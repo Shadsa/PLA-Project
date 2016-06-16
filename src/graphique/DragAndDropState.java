@@ -46,8 +46,8 @@ class DragAndDropState extends BasicGameState {
 	Case c01;
 	Case c02;
 	private ArrayList<GJoueur> _joueurs;
-	private int _tailleMapX=45;
-	private int _tailleMapY=75;
+	private int _tailleMapX=75;
+	private int _tailleMapY=45;
 	private Button _bouton_Jouer;
 	
 	//private static StateGame game;

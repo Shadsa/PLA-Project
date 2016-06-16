@@ -76,7 +76,7 @@ public class Carte extends Vector<Vector<Case>>{
 	public void putCase(Case c) throws Exception {
 		int x = c.X();
 		int y = c.Y();
-		if(x < 0 || y < 0 || x >= size() || y >= get(x).size())
+		if(x < 0 || y < 0 || y >= size() || x >= get(y).size())
 			throw new Exception("Dépassement de la carte");
 		get(y).set(x, c);
 	}
@@ -112,7 +112,7 @@ public class Carte extends Vector<Vector<Case>>{
 	}
 	
 	public void putAutomates(ArrayList<Automate> A, int x, int y, Joueur j) throws Exception {
-		int xdeb=1, dim=0;
+		int xdeb, dim=0;
 		ArrayList<CaseAction> action_list = new ArrayList<CaseAction>();
 		for(Automate a : A)
 			for(ArrayList<CaseAction> ligne : a.get_action())
@@ -121,15 +121,17 @@ public class Carte extends Vector<Vector<Case>>{
 					dim++;
 				}
 		dim = (int) Math.sqrt(dim);
-		if(x>(dim+1)) xdeb = x-(dim+1);
-			x = xdeb;
-		if(y>(dim+1)) y = y-(dim+1);
-		dim = dim + x;
+		if (x+dim >= _largeur)
+			x = _largeur-(dim+1);
+		xdeb = x;
+		if (y+dim >= _hauteur)
+			y = _hauteur-(dim+1);
+		dim += x;
 		for(CaseAction c : action_list){
 			try {
 				putCaseAction(c,x++,y,j);
 			} catch (Exception e) {
-				throw new Exception("Impossible de placer l'automate");
+				throw new Exception("Impossible de placer l'automate case : "+x+","+y);
 			}
 			if(x>dim){
 				y++;
