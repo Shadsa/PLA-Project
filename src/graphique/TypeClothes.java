@@ -6,9 +6,9 @@ import org.newdawn.slick.SpriteSheet;
 
 public enum TypeClothes {
 	Cult("src/asset/sprites/cult_clothes.png","src/asset/sprites/cult_clothes_slash.png","src/asset/sprites/cult_clothes_hurt.png","src/asset/sprites/cult_clothes_spell.png"),
-	Civilian("src/asset/sprites/villager_vest.png","src/asset/sprites/villager_vest_slash.png","src/asset/sprites/villager_vest_hurt.png","src/asset/sprites/cult_clothes_spell.png"),
-	Naked("src/asset/sprites/no_clothes.png","src/asset/sprites/no_clothes_slash.png","src/asset/sprites/no_clothes_hurt.png","src/asset/sprites/cult_clothes_spell.png"),
-	Armor("src/asset/sprites/armor.png","src/asset/sprites/armor_slash.png","src/asset/sprites/armor_hurt.png","src/asset/sprites/cult_clothes_spell.png");
+	Civilian("src/asset/sprites/villager_vest.png","src/asset/sprites/villager_vest_slash.png","src/asset/sprites/villager_vest_hurt.png","src/asset/sprites/villager_vest_spell.png"),
+	Naked("src/asset/sprites/no_clothes.png","src/asset/sprites/no_clothes_slash.png","src/asset/sprites/no_clothes_hurt.png","src/asset/sprites/no_clothes_spell.png"),
+	Armor("src/asset/sprites/armor.png","src/asset/sprites/armor_slash.png","src/asset/sprites/armor_hurt.png","src/asset/sprites/armor_spell.png");
 	
 	String _sprite;
 	public Animation[] animations = new Animation[25];
