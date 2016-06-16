@@ -209,10 +209,12 @@ public class MapGameState extends BasicGameState {
 		{
 			_time -= Tick;
 			World.nextTurn();
-			for(Animation anim : Player.animations)
-				anim.restart();
-			for(Animation anim : Player.Hanimations)
-				anim.restart();
+			for(TypeUnit t : TypeUnit.values()){
+				for(Animation anim : t.animations)
+					anim.restart();
+			}
+			/*for(Animation anim : Player.Hanimations)
+				anim.restart();*/
 			for(Animation anim : Player.Danimations)
 				anim.restart();
 		}
@@ -536,11 +538,13 @@ public class MapGameState extends BasicGameState {
 		int nb = 0;
 		ArrayList<Automate> autlist = new ArrayList<Automate>();
 		ArrayList<Classe> classes = new ArrayList<Classe>();
+		ArrayList<TypeUnit> type = new ArrayList<TypeUnit>();
 		for(UnitInfo ui : uIFs)
 		{
 			nb++;
 			autlist.add(ui.automate);
 			classes.add(ui.classe);
+			type.add(ui.color);
 		}
 		World.addPlayer(new Joueur("Human", autlist, classes));
 		World.addPlayer(new Joueur("Zombie", autlist, classes));
@@ -557,7 +561,7 @@ public class MapGameState extends BasicGameState {
 
 		for(Joueur j : World.getPlayers())
 		{
-			_joueurs.add(new graphique.GJoueur((j == World.getPlayers().get(0))?TypeUnit.Human:TypeUnit.Zombie));
+			_joueurs.add(new GJoueur(type));
 			j.addObserver(_joueurs.get(_joueurs.size()-1));
 			for(Personnage pers : j.getPersonnages())
 				_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
