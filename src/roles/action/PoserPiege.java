@@ -1,6 +1,9 @@
 package roles.action;
 
+import cases.Caillou;
+import cases.Case;
 import cases.Piege;
+import cases.Plaine;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;
@@ -11,7 +14,7 @@ public class PoserPiege extends Action {
 	 
 		Cardinaux _direction;  
 	    
-		private static int _Id = Action.getId(9);  
+		private static int _Id = Action.getId(1);  
 	 
 		public PoserPiege(Cardinaux card) {  
 			super();  
@@ -22,8 +25,8 @@ public class PoserPiege extends Action {
 		public void Act(Personnage pers) {  
 			int destX = pers.X() + ((_direction == Cardinaux.OUEST)? (-1) : ((_direction == Cardinaux.EST)? 1 : 0));  
 			int destY = pers.Y() + ((_direction == Cardinaux.NORD)? (-1) : ((_direction == Cardinaux.SUD)? 1 : 0));  
-			World.modifierCase(new Piege(pers), destX, destY);  
-			pers.owner().changerRessource(-250);  
+			if(pers.owner().changerRessource(-50) && (World.Case(destX, destY).type() instanceof Plaine || World.Case(destX, destY).type() instanceof Caillou))
+				World.modifierCase(new Piege(pers), destX, destY);  
 			pers.setState(new States(Statut.ATTAQUE, _direction));  
 		}  
 	 

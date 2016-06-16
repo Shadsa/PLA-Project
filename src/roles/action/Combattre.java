@@ -3,7 +3,9 @@ package roles.action;
 import cases.Case;
 import cases.CaseProperty;
 import cases.ConstructionCheck;
+import cases.EnnemiCheck;
 import cases.PersoCheck;
+import cases.Piege;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;
@@ -22,7 +24,20 @@ public final class Combattre extends Action {
 		int destX=pers.X();
 		int destY=pers.Y();
 		Cardinaux direction;
-		if(_propPers.check(World.Case(destX-1, destY)) || _propCons.check(World.Case(destX-1, destY))){
+		CaseProperty p = new EnnemiCheck(pers);
+		if(p.check(World.Case(destX-1, destY))){
+			destX--; direction = Cardinaux.OUEST;
+		}
+		else if(p.check(World.Case(destX+1, destY))){
+			destX++; direction = Cardinaux.EST;
+		}
+		else if(p.check(World.Case(destX, destY-1))){
+			destY--; direction = Cardinaux.NORD;
+		}
+		else if(p.check(World.Case(destX, destY+1))){
+			destY++; direction = Cardinaux.SUD;
+		}
+		else if(_propPers.check(World.Case(destX-1, destY)) || _propCons.check(World.Case(destX-1, destY))){
 			destX--; direction = Cardinaux.OUEST;
 		}
 		else if(_propPers.check(World.Case(destX+1, destY)) || _propCons.check(World.Case(destX+1, destY))){
@@ -43,7 +58,7 @@ public final class Combattre extends Action {
 			// System.out.print(pers.ID() + " attaque " + target.ID() + ".\n");
 			pers.setState(new States(Statut.ATTAQUE, direction));
 			target.change_vie(-pers.damage());
-		} else if (_propCons.check(c)) {
+		} else if (_propCons.check(c) && c.type().value()!=Piege._id) {
 			c.attaquerCase(pers.damage());
 			pers.setState(new States(Statut.ATTAQUE, direction));
 		}

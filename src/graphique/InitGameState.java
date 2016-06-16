@@ -65,7 +65,7 @@ public class InitGameState extends BasicGameState {
 
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 
-		woks = new WorkshopCreator();
+		woks = StateGame.workshop;
 		woks.createClasse("Ouvrier", null, "Ouvrier", "Ouvrier");
 		woks.createClasse("Default", null, "RandomNoIdea", "ClasseTest");
 

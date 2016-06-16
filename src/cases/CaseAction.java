@@ -34,9 +34,9 @@ public class CaseAction extends Case {
 		return 1;
 	}
 	
-	public Action action(){
+	/*public Action action(){
 		return _initial.action();
-	}
+	}*/
 	
 	public Joueur owner() {
 		return _owner;

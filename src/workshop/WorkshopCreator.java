@@ -5,6 +5,9 @@ import roles.*;
 import roles.action.Action;
 import roles.classe.Classe;
 import roles.conditions.Condition;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -111,20 +114,34 @@ public class WorkshopCreator {
 
 
 	}
+	
+	
+	// SERIALIZATION FUNCTION
+	
+			public Classe loadClass(String name) throws FileNotFoundException, IOException, ClassNotFoundException{ //désérialisation
+				ObjectInputStream ois = new ObjectInputStream(
+			              					new BufferedInputStream(
+			              							new FileInputStream(
+			              									new File(filepath+"classe.deck/"+name))));
+				Classe g = (Classe) ois.readObject();
+				ois.close();
+			    return g;
+			}
+			
+			public void saveClass(Classe c) throws IOException{//sérialisation
+			    ObjectOutputStream oos = new ObjectOutputStream(
+			    								new BufferedOutputStream(
+								            		  new FileOutputStream(
+								            				  new File(filepath+"classe.deck/"+c.name()))));
+			    
+			    oos.writeObject(c);
+			    oos.close();
+			    
+			}
+		
 
-// API FUNCTION
-	
-	public void loadClass(){ //désérialisation
-		ObjectInputStream ois;
-	    ObjectOutputStream oos;
-	    
-	}
-	
-	public void saveClass(Classe c){//sérialisation
-		ObjectInputStream ois;
-	    ObjectOutputStream oos;
-	    
-	}
+
+
 
 //STRUCTURE
 
@@ -143,6 +160,7 @@ public class WorkshopCreator {
 		}
 		return null;
 	}
+	
 
 	public ArrayList<Class<Condition>> getDeckCondition(String name){
 		for(int i=0;i<deckConditionName.size();i++){

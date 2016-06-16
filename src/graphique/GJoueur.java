@@ -9,12 +9,12 @@ import org.newdawn.slick.SlickException;
 import roles.Personnage;
 
 public class GJoueur implements Observer{
-	private TypeUnit _type_unit;
+	private ArrayList<TypeUnit> _type_unit;
 	private int _ressource;
 
 	private ArrayList<Player> _players = new ArrayList<Player>();
 
-	public GJoueur(TypeUnit type_unit)
+	public GJoueur(ArrayList<TypeUnit> type_unit)
 	{
 		_type_unit = type_unit;
 		_ressource = 0;
@@ -30,7 +30,7 @@ public class GJoueur implements Observer{
 
 	public void addPersonnage(Personnage pers)
 	{
-		_players.add(new Player(pers, _type_unit));
+		_players.add(new Player(pers, _type_unit.get(pers.owner().getUnite(pers))));
 	}
 
 	public int ressource()
@@ -38,9 +38,9 @@ public class GJoueur implements Observer{
 		return _ressource;
 	}
 
-	public TypeUnit type_unit()
+	public TypeUnit type_unit(int i)
 	{
-		return _type_unit;
+		return _type_unit.get(i);
 	}
 
 	public ArrayList<Player> getPersonnage() {

@@ -7,6 +7,8 @@ import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
 import java.io.File;
@@ -47,6 +49,7 @@ public class UnitDialog extends JDialog {
     this.setLocationRelativeTo(null);
     this.setResizable(false);
     this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+    this.setAlwaysOnTop(true);
 	initComponent();
 	uInfo = null;
   }
@@ -105,9 +108,11 @@ public class UnitDialog extends JDialog {
     JPanel panSkin = new JPanel();
     panSkin.setBorder(BorderFactory.createTitledBorder("Couleur"));
     JComboBox<String> color = new JComboBox<String>();
-    color.addItem("Blanc");
-    color.addItem("Noir");
-    color.addItem("Vert");
+    for(TypeUnit t : TypeUnit.values()){
+    	color.addItem(t.toString());
+    }
+   /* color.addItem("Noir");
+    color.addItem("Vert");*/
     panSkin.add(color);
 
     JPanel panJoueur = new JPanel();
@@ -146,7 +151,8 @@ public class UnitDialog extends JDialog {
     		  jop.showMessageDialog(null, "Fichier automate ne convient pas à cette classe.", "Erreur", JOptionPane.ERROR_MESSAGE);
     		  return;
     	  }*/
-        uInfo = new UnitInfo(nom.getText(), aut, cla,"", choixJoueur);
+
+        uInfo = new UnitInfo(nom.getText(), aut, cla,TypeUnit.valueOf(color.getSelectedItem().toString()), choixJoueur);
         setVisible(false);
       }
     });
@@ -168,6 +174,16 @@ public class UnitDialog extends JDialog {
         	choixJoueur = (String)joueur.getSelectedItem();//getClasse((String)classe.getSelectedItem());
           }
         });
+
+    color.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent e) {
+			ImageIcon typeCorps = new ImageIcon(TypeUnit.valueOf(color.getSelectedItem().toString()).sprite());
+			icon.setIcon(new ImageIcon(createImage(new FilteredImageSource(
+					typeCorps.getImage().getSource(),
+					new CropImageFilter(0, 128, 64, 64)))));
+        }               
+      });
+
 
     JButton cancelBouton = new JButton("Annuler");
     cancelBouton.addActionListener(new ActionListener(){
