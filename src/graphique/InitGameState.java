@@ -100,7 +100,7 @@ public class InitGameState extends BasicGameState {
 	}
 
 	/**
-	 * Contenons nous d'afficher l'image de fond.
+	 * Contentons nous d'afficher l'image de fond.
 	 * Le texte est placé approximativement au centre.
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {

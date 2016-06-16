@@ -1,11 +1,12 @@
 package graphique;
 
 import java.util.ArrayList;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -17,6 +18,8 @@ import roles.Personnage;
 import cases.TypeCase;
 import roles.World;
 import roles.classe.Classe;
+import graphique.Button;
+import graphique.StateGame;
 
 public class DragAndDropState extends BasicGameState {
 	private Bouton _bouton_drag;
@@ -30,7 +33,7 @@ public class DragAndDropState extends BasicGameState {
 	private float _mouseMapY;
 	private int _scrollingSpeed = 15;
 	private float _zoom = 1;
-	private StateBasedGame game;
+	private static StateBasedGame game;
 	private Input _input;
 	int compt_clic = 0; //compteur de clic
 	int x1; //variable de sauvegarde des coordonnées
@@ -40,17 +43,25 @@ public class DragAndDropState extends BasicGameState {
 	private ArrayList<GJoueur> _joueurs;
 	private int _tailleMapX=45;
 	private int _tailleMapY=75;
+	private Button _bouton_Jouer;
+	private ArrayList<UnitInfo> UIFs;
 
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//World.BuildMap(40,57);
 		//map.init();	
 		_input = arg0.getInput();
+		Image img = new Image("src/asset/sprites/ui_big_pieces.png");
+		Image normalImage = img.getSubImage(633, 23, 123, 27);
+		Image overImage = img.getSubImage(633, 53, 123, 27);
+		Image downImage = img.getSubImage(633, 83, 123, 27);
+		_bouton_Jouer = new Button(arg0, "Jouer", arg0.getWidth()-150, arg0.getHeight()-50, normalImage, overImage, downImage);
+		UIFs = new ArrayList<UnitInfo>();	
 	}
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g)
 			throws SlickException {
-		//Affichage de la map
+				//Affichage de la map
 				this.map.render(g, _offsetMapX, _offsetMapY, zoom(), arg0.getWidth(), arg0.getHeight());
 				//Annule la translation pour l'affichage du string en dessous
 				g.resetTransform();
@@ -61,6 +72,7 @@ public class DragAndDropState extends BasicGameState {
 						g.drawString(World.joueurs().get(0).nom()+" a gagné! Félicitations à lui, vraiment.", arg0.getWidth()/2-175, arg0.getHeight()/2);
 						g.resetTransform();
 					}}
+			_bouton_Jouer.render(arg0, g);
 			if (c01 != null) 
 				g.drawImage(Hud.playerBars, toX(c01.X()), toY(c01.Y()),toX(c01.X())+ MapGameState.TILESIZE*zoom(), toY(c01.Y())+ MapGameState.TILESIZE*zoom(), 732, 228, 756, 252);
 	}
@@ -73,9 +85,20 @@ public class DragAndDropState extends BasicGameState {
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2)
 			throws SlickException {
-		if (_input.isKeyPressed(Input.KEY_ESCAPE)) {
+		/*if (_input.isKeyPressed(Input.KEY_ESCAPE)) {
 			game.enterState(MainScreenGameState.ID);
-		}
+		}*/
+		_bouton_Jouer.update(arg0);
+		//Configuration du bouton Jouer
+		if (_bouton_Jouer.isDown()) {
+				game.enterState(MapGameState.ID);
+				//((MapGameState)DragAndDropState.game.getState(MapGameState.ID)).setGame(UIFs);
+				//DragAndDropState.game.enterState(MapGameState.ID);
+				}
+		//Gestion des boutons en plein écran
+		//_bouton_Jouer.setLocation(arg0.getWidth()/2-150, arg0.getHeight()/2-50);
+		
+		
 		TypeCase t1 = null;
 		
 		if (compt_clic %2 == 0 && arg0.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)){
@@ -223,4 +246,8 @@ public class DragAndDropState extends BasicGameState {
 		this._offsetMapY = y;
 
 	}
+	
+	
+	
+
 }

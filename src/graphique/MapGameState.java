@@ -20,6 +20,7 @@ import roles.Cardinaux;
 import roles.Joueur;
 import roles.Personnage;
 import roles.World;
+import graphique.DragAndDropState;
 
 public class MapGameState extends BasicGameState {
 
