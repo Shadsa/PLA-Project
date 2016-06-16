@@ -577,8 +577,8 @@ public class MapGameState extends BasicGameState {
 		World.addPlayer(new Joueur("Joueur2", autlist.get(1), classes.get(1)));
 
 		try {
-			World.putAutomate(World.getPlayers().get(0).automate(0), 1, 1, World.getPlayers().get(0));
-			World.putAutomate(World.getPlayers().get(1).automate(0),_tailleMapX*96-100, _tailleMapY*96-100, World.getPlayers().get(1));
+			World.putAutomates(World.getPlayers().get(0).Automates(), 1, 1, World.getPlayers().get(0));
+			World.putAutomates(World.getPlayers().get(1).Automates(),_tailleMapX-1, _tailleMapY-1, World.getPlayers().get(1));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
