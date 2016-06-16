@@ -391,8 +391,8 @@ public static void sinit() throws SlickException
 					_Awear = anim;
 
 				    _Abody = anim;
-				    if(_human == TypeUnit.Zombie)
-				    	_Awear = -1;
+				    /*if(_human == TypeUnit.Zombie)
+				    	_Awear = -1;*/
 				    _Aweapon = danim;
 		}
 
