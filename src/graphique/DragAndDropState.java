@@ -227,7 +227,7 @@ class DragAndDropState extends BasicGameState {
 
 		this.UIFs1 = uIFs1;
 		this.UIFs2 = uIFs2;
-		//int nb = 0;
+		///int nb = 0;
 		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
 		//ArrayList<Automate> autlist2 = new ArrayList<Automate>();
 		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
