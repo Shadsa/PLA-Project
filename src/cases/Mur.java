@@ -9,7 +9,7 @@ import roles.Joueur;
 
 public class Mur extends TypeCase implements Construction {
 	
-	public final int _vie = 10;
+	public final int _vie = 20;
 
 	protected static Action _action = new ConstruireMur(Cardinaux.NORD);
 	

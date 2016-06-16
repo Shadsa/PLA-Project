@@ -25,7 +25,7 @@ public class PoserPiege extends Action {
 		public void Act(Personnage pers) {  
 			int destX = pers.X() + ((_direction == Cardinaux.OUEST)? (-1) : ((_direction == Cardinaux.EST)? 1 : 0));  
 			int destY = pers.Y() + ((_direction == Cardinaux.NORD)? (-1) : ((_direction == Cardinaux.SUD)? 1 : 0));  
-			if(pers.owner().changerRessource(-50) && (World.Case(destX, destY).type() instanceof Plaine && World.Case(destX, destY).type() instanceof Caillou))
+			if(pers.owner().changerRessource(-50) && (World.Case(destX, destY).type() instanceof Plaine || World.Case(destX, destY).type() instanceof Caillou))
 				World.modifierCase(new Piege(pers), destX, destY);  
 			pers.setState(new States(Statut.ATTAQUE, _direction));  
 		}  

@@ -192,7 +192,7 @@
 		<condition compose="Et">
 			<condition1 compose="Et">
 				<condition1>UneCaseLibre</condition1>
-				<condition2 quantite="350">RessourcesPossedees</condition2>
+				<condition2 quantite="340">RessourcesPossedees</condition2>
 			</condition1>
 			<condition2 compose="Ou">
 				<condition1 quantite="5">NbInf</condition1>
@@ -206,7 +206,7 @@
 		<etat>0</etat>
 		<condition compose="Et">
 			<condition1>UneCaseLibre</condition1>
-			<condition2 quantite="350">RessourcesPossedees</condition2>
+			<condition2 quantite="340">RessourcesPossedees</condition2>
 		</condition>
 		<action unite="1">Creer</action>
 		<suivant>0</suivant>
