@@ -81,7 +81,9 @@ class DragAndDropState extends BasicGameState {
 					}}
 			_bouton_Jouer.render(arg0, g);
 			if (c01 != null) 
-				g.drawImage(Hud.playerBars, toX(c01.X()), toY(c01.Y()),toX(c01.X())+ MapGameState.TILESIZE*zoom(), toY(c01.Y())+ MapGameState.TILESIZE*zoom(), 732, 228, 756, 252);
+				//g.drawImage(Hud.playerBars, toX(c01.X()), toY(c01.Y()),toX(c01.X())+ MapGameState.TILESIZE*zoom(), toY(c01.Y())+ MapGameState.TILESIZE*zoom(), 732, 228, 756, 252);
+				g.drawImage(Hud.playerBars, toX(c01.X()), toY(c01.Y()),toX(c01.X())+ MapGameState.TILESIZE*zoom(), toY(c01.Y())+ MapGameState.TILESIZE*zoom(), 440, 419, 560, 539);
+				g.scale(zoom(),zoom());
 	}
 
 
@@ -229,19 +231,14 @@ class DragAndDropState extends BasicGameState {
 		this.UIFs2 = uIFs2;
 
 
-		//int nb = 0;
 
 		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
-		//ArrayList<Automate> autlist2 = new ArrayList<Automate>();
 		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
-		//ArrayList<Classe> classes2 = new ArrayList<Classe>();
 		ArrayList<ArrayList<TypeUnit>> type_unit = new ArrayList<ArrayList<TypeUnit>>();
-		//ArrayList<TypeUnit> type_unit2 = new ArrayList<TypeUnit>();
 		ArrayList<ArrayList<TypeClothes>> type_clothes = new ArrayList<ArrayList<TypeClothes>>();
-		//ArrayList<TypeClothes> type_clothes2 = new ArrayList<TypeClothes>();
+
 		for(UnitInfo ui : uIFs1)
 		{
-			//nb++;
 			autlist.add(new ArrayList<Automate>());
 			classes.add(new ArrayList<Classe>());
 			type_unit.add(new ArrayList<TypeUnit>());
@@ -271,20 +268,7 @@ class DragAndDropState extends BasicGameState {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		/*//for(int i = 0; i < nb; i++)
-		World.getPlayers().get(0).createPersonnage(0, 1, 1);
-		//for(int i = 0; i < nb; i++)
-		World.getPlayers().get(1).createPersonnage(classes.size()-1, _tailleMapX-1, _tailleMapY-1);
-*/
-		/*int i=0;
-		for(Joueur j : World.getPlayers())
-		{
-			_joueurs.add(new GJoueur(type_unit.get(i),type_clothes.get(i)));
-			j.addObserver(_joueurs.get(_joueurs.size()-1));
-			for(Personnage pers : j.getPersonnages())
-				_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
-			i++;
-		}*/
+
 		try {
 			this.map.init();
 		} catch (SlickException e) {
