@@ -1,6 +1,8 @@
 package graphique;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -94,19 +96,19 @@ public class ClassDialog extends JDialog {
 	    JPanel panHP = new JPanel();
 	    panHP.setBorder(BorderFactory.createTitledBorder("HP"));
 	    HP = new JTextField();
-	    HP.setPreferredSize(new Dimension(100, 25));
+	    HP.setPreferredSize(new Dimension(50, 25));
 	    panHP.add(HP);
 
 	    JPanel panDamage = new JPanel();
 	    panDamage.setBorder(BorderFactory.createTitledBorder("Damage"));
 	    Damage = new JTextField();
-	    Damage.setPreferredSize(new Dimension(100, 25));
+	    Damage.setPreferredSize(new Dimension(50, 25));
 	    panDamage.add(Damage);
 
 	    JPanel panHeal = new JPanel();
 	    panHeal.setBorder(BorderFactory.createTitledBorder("Heal Power"));
 	    Heal = new JTextField();
-	    Heal.setPreferredSize(new Dimension(100, 25));
+	    Heal.setPreferredSize(new Dimension(50, 25));
 	    panHeal.add(Heal);
 
 	    JPanel panArmor = new JPanel();
@@ -169,10 +171,8 @@ public class ClassDialog extends JDialog {
 		    	  classinfo.HP(Integer.parseInt(HP.getText()));
 		    	  classinfo.damage(Integer.parseInt(Damage.getText()));
 		    	  classinfo.bonus((Bonus) bonus.getSelectedItem());
-		    	  
-		    	  
-		    	  
-		    	  
+		    	  classinfo.loadDeckAction(StateGame.workshop.getDeckAction(action.getSelectedItem().toString()));
+		    	  classinfo.loadDeckCondition(StateGame.workshop.getDeckCondition(condition.getSelectedItem().toString()));	    	  
 		    	  Cost.setText(String.valueOf(classinfo.cost()));
 		      }
 		    });
