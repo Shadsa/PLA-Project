@@ -16,27 +16,27 @@ public final class CouperBois extends Action {
 	private static final CaseProperty _prop = new TypeCheck(Arbre.class);
 
 	@Override
-	public void Act(int world, Personnage pers) {
+	public void Act(World world, Personnage pers) {
 		int destX=pers.X();
 		int destY=pers.Y();
 		Cardinaux direction;
-		if(_prop.check(World.Case(world, destX-1, destY))){
+		if(_prop.check(world.Case(destX-1, destY))){
 			destX--; direction = Cardinaux.OUEST;
 		}
-		else if(_prop.check(World.Case(world, destX+1, destY))){
+		else if(_prop.check(world.Case(destX+1, destY))){
 			destX++; direction = Cardinaux.EST;
 		}
-		else if(_prop.check(World.Case(world, destX, destY-1))){
+		else if(_prop.check(world.Case(destX, destY-1))){
 			destY--; direction = Cardinaux.NORD;
 		}
-		else if(_prop.check(World.Case(world, destX, destY+1))){
+		else if(_prop.check(world.Case(destX, destY+1))){
 			destY++; direction = Cardinaux.SUD;
 		}
 		else return;
 
-		World.Case(world, destX, destY).attaquerCase(pers.damage());
+		world.Case(destX, destY).attaquerCase(pers.damage());
 		pers.setState(new States(Statut.ATTAQUE, direction));
-		pers.owner().changerRessource(10);
+		pers.owner().joueur().changerRessource(10);
 	}
 
 	@Override

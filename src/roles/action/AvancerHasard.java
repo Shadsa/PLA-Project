@@ -13,11 +13,11 @@ public final class AvancerHasard extends Action {
 	private static int _Id = Action.getId(1);
 
 	@Override
-	public void Act(int world, Personnage pers) {
+	public void Act(World world, Personnage pers) {
 		Cardinaux direction;
 		Case cible = pers.cible();
 		if(cible == null || (cible.X()==pers.X() && cible.Y()==pers.Y())){
-			pers.setCible(World.randomCase(world));
+			pers.setCible(world.randomCase());
 			cible = pers.cible();
 		}
 		if(cible.Y()>pers.Y())
@@ -31,29 +31,29 @@ public final class AvancerHasard extends Action {
 
 		int destX = pers.X() + ((direction == Cardinaux.OUEST)? (-1) : ((direction == Cardinaux.EST)? 1 : 0));
 		int destY = pers.Y() + ((direction == Cardinaux.NORD)? (-1) : ((direction == Cardinaux.SUD)? 1 : 0));
-		if(World.isfree(world, destX, destY))
+		if(world.isfree(destX, destY))
 		{
 			//System.out.println(pers.ID() + " j'avance vers le " + direction +" "+ destX +" "+ destY + " etat="+pers.etat());
-			if(World.Case(world, destX, destY).type() instanceof Arbre)
+			if(world.Case(destX, destY).type() instanceof Arbre)
 			{
-				World.Case(world, destX, destY).setPersonnage(pers);
+				world.Case(destX, destY).setPersonnage(pers);
 				pers.setState(new States(Statut.HIDING, direction));
 			}
-			else if(World.Case(world, pers.X(), pers.Y()).type() instanceof Arbre)
+			else if(world.Case(pers.X(), pers.Y()).type() instanceof Arbre)
 			{
-				World.Case(world, destX, destY).setPersonnage(pers);
+				world.Case(destX, destY).setPersonnage(pers);
 				pers.setState(new States(Statut.REVEAL, direction));
 			}
 			else
 			{
-				World.Case(world, destX, destY).setPersonnage(pers);
+				world.Case(destX, destY).setPersonnage(pers);
 				pers.setState(new States(Statut.AVANCE, direction));
 			}
 		}
 		else if(direction==Cardinaux.NORD || direction==Cardinaux.SUD)
-			pers.setCible(World.Case(world, pers.cible().X(), pers.Y()));
+			pers.setCible(world.Case(pers.cible().X(), pers.Y()));
 		else
-			pers.setCible(World.Case(world, pers.X(), pers.cible().Y()));
+			pers.setCible(world.Case(pers.X(), pers.cible().Y()));
 	}
 
 	@Override

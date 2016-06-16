@@ -184,4 +184,9 @@ public class Personnage extends Observable{
 			if(_vie > _classe.HP())
 				_vie = _classe.HP();
 	}
+
+	public World world()
+	{
+		return _owner.world();
+	}
 }

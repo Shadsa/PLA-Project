@@ -7,9 +7,9 @@ import roles.classe.Classe;
 
 public class Army extends Observable{
 
-	Joueur _joueur;
-	ArrayList<Personnage> _personnages;
-	World _world;
+	protected Joueur _joueur;
+	protected ArrayList<Personnage> _personnages;
+	protected World _world;
 
 	public Army(World world, Joueur j)
 	{
@@ -27,7 +27,7 @@ public class Army extends Observable{
 		return _personnages;
 	}
 
-	public Personnage createPersonnage(int type, int x, int y, int world)
+	public Personnage createPersonnage(int type, int x, int y)
 	{
 		// WARNING faire plutot un get automate avec gestion d'erreur
 		Personnage newPers = new Personnage(_joueur.automate(type), x, y, this, _joueur.classe(type));

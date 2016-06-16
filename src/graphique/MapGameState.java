@@ -569,9 +569,9 @@ public class MapGameState extends BasicGameState {
 			e.printStackTrace();
 		}
 		//for(int i = 0; i < nb; i++)
-			world0.army().get(0).createPersonnage(0, 1, 1, 0);
+			world0.army().get(0).createPersonnage(0, 1, 1);
 		//for(int i = 0; i < nb; i++)
-			world0.army().get(1).createPersonnage(classes.size()-1, _tailleMapX-1, _tailleMapY-1, 0);
+			world0.army().get(1).createPersonnage(classes.size()-1, _tailleMapX-1, _tailleMapY-1);
 
 		for(Army a : world0.army())
 		{

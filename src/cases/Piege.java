@@ -19,7 +19,7 @@ public class Piege extends TypeCase implements Construction {
 	}
 
 	public Piege(Personnage pers) {
-		setOwner(pers.owner());
+		setOwner(pers.owner().joueur());
 	}
 
 	@Override
@@ -42,9 +42,9 @@ public class Piege extends TypeCase implements Construction {
 
 	@Override
 	public void Evenement(Personnage pers) {
-		if(_owner != pers.owner()){
+		if(_owner != pers.owner().joueur()){
 			pers.change_vie(-1000);
-			World.modifierCase(pers.world(), Plaine.getInstance(), pers.X(), pers.Y());
+			pers.world().modifierCase(Plaine.getInstance(), pers.X(), pers.Y());
 		}
 	}
 

@@ -23,11 +23,11 @@ public class MapTest {
 		width = world.SizeX();
 		height = world.SizeY();
 		map = new Vector<Vector<ObjetTest>> ();
-		for (int j = 0; j < world.SizeY() ; j++) {
+		for (int j = 0; j < height ; j++) {
 			map.add(new Vector<ObjetTest> ());
 		}
-		for (int j = 0; j < world.SizeY() ; j++) {
-			for (int i = 0; i < world.SizeX() ; i++) {
+		for (int j = 0; j < height ; j++) {
+			for (int i = 0; i < width ; i++) {
 				map.get(j).add(new ObjetTest(world.Case(i, j).value()));
 				world.Case(i, j).addObserver(map.get(j).get(i));
 			}
@@ -61,8 +61,8 @@ public class MapTest {
 			xi = 0;
 		spriteSheet.startUse();
 		//Parcours de la map test
-		for (int i = yi; i < height  && i<yf; i++) {
-			for (int j = xi; j < width  && j<xf; j++) {
+		for (int i = yi; i < this.height  && i<yf; i++) {
+			for (int j = xi; j < this.width  && j<xf; j++) {
 				ObjetTest vj = map.get(i).get(j);
 				int img = 0;
 				int img2 = 0;
@@ -129,8 +129,8 @@ public class MapTest {
 				g.scale(zoom, zoom);
 
 				spriteSheet.startUse();
-				for (int i = 0; i < height; i++) {
-					for (int j = 0; j < width; j++) {
+				for (int i = 0; i < this.height; i++) {
+					for (int j = 0; j < this.width; j++) {
 						ObjetTest vj = map.get(i).get(j);
 						int img = 0;
 						int img2 = 0;

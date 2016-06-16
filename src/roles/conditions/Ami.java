@@ -18,7 +18,7 @@ public class Ami extends Condition {
 		int destX = target.X() + ((_direction == Cardinaux.OUEST)? (-1) : ((_direction == Cardinaux.EST)? 1 : 0));
 		int destY = target.Y() + ((_direction == Cardinaux.NORD)? (-1) : ((_direction == Cardinaux.SUD)? 1 : 0));
 		CaseProperty p = new AmiCheck(target);
-		return p.check(World.Case(target.world(), destX, destY));
+		return p.check(target.world().Case(destX, destY));
 	}
 
 }

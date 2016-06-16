@@ -20,7 +20,7 @@ public class Mur extends TypeCase implements Construction {
 	}
 
 	public Mur(Personnage pers) {
-		setOwner(pers.owner());
+		setOwner(pers.owner().joueur());
 	}
 
 	@Override

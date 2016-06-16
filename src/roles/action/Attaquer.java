@@ -27,17 +27,17 @@ public final class Attaquer extends Action {
 	}
 
 	@Override
-	public void Act(int world, Personnage pers) {
+	public void Act(World world, Personnage pers) {
 		int destX = pers.X() + ((_direction == Cardinaux.OUEST) ? (-1) : ((_direction == Cardinaux.EST) ? 1 : 0));
 		int destY = pers.Y() + ((_direction == Cardinaux.NORD) ? (-1) : ((_direction == Cardinaux.SUD) ? 1 : 0));
-		Case c = World.Case(world, destX, destY);
+		Case c = world.Case(destX, destY);
 
 		if (_propPers.check(c)) {
-			Personnage target = World.Case(world, destX, destY).Personnage();
+			Personnage target = world.Case(destX, destY).Personnage();
 			pers.setState(new States(Statut.ATTAQUE, _direction));
 			target.change_vie(-pers.damage());
 		} else if (_propCons.check(c)) {
-			World.Case(world, destX, destY).attaquerCase(pers.damage());
+			world.Case(destX, destY).attaquerCase(pers.damage());
 			pers.setState(new States(Statut.ATTAQUE, _direction));
 		}
 	}

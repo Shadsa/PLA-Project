@@ -14,8 +14,8 @@ public final class Raser extends Action {
 	private static int _Id = Action.getId(1);
 
 	@Override
-	public void Act(int world, Personnage pers) {
-		World.modifierCase(world, Plaine.getInstance(), pers.X(), pers.Y());
+	public void Act(World world, Personnage pers) {
+		world.modifierCase(Plaine.getInstance(), pers.X(), pers.Y());
 		pers.setState(new States(Statut.ATTAQUE, Cardinaux.NORD));
 	}
 

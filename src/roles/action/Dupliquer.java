@@ -17,28 +17,28 @@ public final class Dupliquer extends Action {
 	}*/
 
 	@Override
-	public void Act(int world, Personnage pers) {
+	public void Act(World world, Personnage pers) {
 		int destX=pers.X();
 		int destY=pers.Y();
 		Cardinaux direction;
-		if(World.isfree(world, destX-1, destY)){
+		if(world.isfree(destX-1, destY)){
 			destX--; direction = Cardinaux.OUEST;
 		}
-		else if(World.isfree(world, destX+1, destY)){
+		else if(world.isfree(destX+1, destY)){
 			destX++; direction = Cardinaux.EST;
 		}
-		else if(World.isfree(world, destX, destY-1)){
+		else if(world.isfree(destX, destY-1)){
 			destY--; direction = Cardinaux.NORD;
 		}
-		else if(World.isfree(world, destX, destY+1)){
+		else if(world.isfree(destX, destY+1)){
 			destY++; direction = Cardinaux.SUD;
 		}
 		else return;
 
-		if(World.isfree(world, destX, destY))
+		if(world.isfree(destX, destY))
 		{
-			if(pers.owner().changerRessource(-250))
-				pers.owner().createPersonnage(pers.owner().getUnite(pers), destX, destY, pers.world());
+			if(pers.owner().joueur().changerRessource(-250))
+				pers.owner().createPersonnage(pers.owner().joueur().getUnite(pers), destX, destY);
 			pers.setState(new States(Statut.ATTAQUE, direction));
 		}
 	}

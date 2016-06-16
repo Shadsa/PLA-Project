@@ -14,7 +14,7 @@ import roles.World;
 public class DragAndDropState extends BasicGameState {
 	private Bouton _bouton_drag;
 	public static final int ID = 3;
-	private MapTest map = new MapTest();
+	//private MapTest map = new MapTest();
 	private float _offsetMapX=0;
 	private float _offsetMapY=0;
 	private float zoom = 1;
@@ -26,7 +26,7 @@ public class DragAndDropState extends BasicGameState {
 
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//World.BuildMap(40,57);
-		//map.init();	
+		//map.init();
 	}
 
 	@Override
@@ -44,9 +44,9 @@ public class DragAndDropState extends BasicGameState {
 		if (_input.isKeyPressed(Input.KEY_ESCAPE)) {
 			game.enterState(MainScreenGameState.ID);
 		}
-		Case c01;
+		/*Case c01;
 		TypeCase t1 = null;
-		
+
 		if (arg0.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)){
 			compt_clic+=1;
 			if (compt_clic == 2){
@@ -62,10 +62,10 @@ public class DragAndDropState extends BasicGameState {
 				c01 = World.Case(x1, y1);
 				t1 = c01.type();
 			}
-		}
-				
+		}*/
+
 	}
-	
+
 	public void keyPressed(int key, char c) {
 	}
 
