@@ -201,7 +201,7 @@ public class InitGameState extends BasicGameState {
 
 		//Configuration du bouton jouer
 		if (_bouton_jouer.isPressed()) {
-			((DragAndDropState)InitGameState.game.getState(DragAndDropState.ID)).setGame(UIFs);
+			((DragAndDropState)InitGameState.game.getState(DragAndDropState.ID)).setGame(UIFs1);
 				InitGameState.game.enterState(DragAndDropState.ID, "src/asset/musics/game_music.ogg");
 		}
 
