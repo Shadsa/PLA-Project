@@ -46,6 +46,7 @@ public class UnitDialog extends JDialog {
     this.setLocationRelativeTo(null);
     this.setResizable(false);
     this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+    this.setAlwaysOnTop(true);
 	initComponent();
 	uInfo = null;
   }
