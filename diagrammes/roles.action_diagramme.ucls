@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.10" icons="true" automaticImage="PNG" always-add-relationships="false" 
+  generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true" 
+  router="FAN">  
+  <class id="1" language="java" name="roles.action.Avancer" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/action/Avancer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="129" x="1179" y="-336"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="roles.action.Action" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/action/Action.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="129" x="1303" y="-142"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="roles.action.PoserPiege" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/action/PoserPiege.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="138" x="1005" y="-299"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="roles.action.Soigner" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/action/Soigner.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="129" x="894" y="-208"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="roles.action.Attendre" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/action/Attendre.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="129" x="799" y="-139"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="roles.action.Combattre" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/action/Combattre.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="151" x="824" y="-61"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="roles.action.Creer" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/action/Creer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="129" x="978" y="-6"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="roles.action.Reparer" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/action/Reparer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="129" x="1138" y="40"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="roles.action.AvancerJoueur" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/action/AvancerJoueur.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="129" x="1325" y="49"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="roles.action.CouperBois" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/action/CouperBois.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="129" x="1520" y="35"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="roles.action.DupliquerZombie" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/action/DupliquerZombie.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="129" x="1676" y="-35"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="roles.action.AvancerHasard" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/action/AvancerHasard.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="129" x="1770" y="-141"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="roles.action.ConstruireMur" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/action/ConstruireMur.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="152" x="1671" y="-220"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="roles.action.Dupliquer" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/action/Dupliquer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="129" x="1598" y="-320"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="roles.action.Attaquer" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/action/Attaquer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="151" x="1386" y="-335"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <generalization id="16">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="17">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="18">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="19">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="20">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="21">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="22">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="23">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="24">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="25">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="26">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="27">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="28">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="29">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

@@ -124,7 +124,7 @@ public class UnitDialog extends JDialog {
     JPanel panClasse = new JPanel();
     panClasse.setBorder(BorderFactory.createTitledBorder("Classe"));
     JComboBox<Classe> classe = new JComboBox<Classe>();
-    for(Classe cla : World.classes)
+    for(Classe cla : StateGame.workshop.classeList())
     	classe.addItem(cla);
     panClasse.add(classe);
 

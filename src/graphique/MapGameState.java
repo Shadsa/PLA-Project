@@ -595,7 +595,7 @@ public class MapGameState extends BasicGameState {
 		}
 		if (!enJeu) {
 			World.getPlayers().get(0).createPersonnage(0, 1, 1);
-			World.getPlayers().get(1).createPersonnage(0, _tailleMapX-1, _tailleMapY-1);
+			World.getPlayers().get(1).createPersonnage(0, _tailleMapX-2, _tailleMapY-2);
 			
 			int i=0;
 			for(Joueur j : World.getPlayers())

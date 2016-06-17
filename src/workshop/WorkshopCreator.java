@@ -115,7 +115,7 @@ public class WorkshopCreator {
 
 	}
 	
-	public void loadClass(ArrayList<Classe> x) throws FileNotFoundException, ClassNotFoundException, IOException{
+	public void loadClassWS() throws FileNotFoundException, ClassNotFoundException, IOException{
 		ArrayList<File> files = new ArrayList<File>();
 		File f = new File(filepath+"classe.deck/");
 		for(File name : f.listFiles()){
@@ -124,7 +124,7 @@ public class WorkshopCreator {
 			}
 		}
 		for(int i=0;i<files.size();i++){
-			x.add(loadClass(files.get(i).getName()));
+			deckClasse.add(loadClass(files.get(i).getName()));
 		}
 		
 	}

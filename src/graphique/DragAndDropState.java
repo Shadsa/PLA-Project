@@ -184,11 +184,7 @@ class DragAndDropState extends BasicGameState {
 	 * @see org.newdawn.slick.state.GameState#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta)
-			throws SlickException {
-		/*if (_input.isKeyPressed(Input.KEY_ESCAPE)) {
-			game.enterState(MainScreenGameState.ID);
-		}*/
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		_bouton_confirmer.update(container);
 		if (!container.isPaused()) {
 			_bouton_Jouer.update(container);
@@ -201,7 +197,7 @@ class DragAndDropState extends BasicGameState {
 			if (_bouton_placerAutomate.isDown()) {
 				try {
 					World.putAutomates(World.getPlayers().get(0).Automates(), 1, 1, World.getPlayers().get(0));
-					World.putAutomates(World.getPlayers().get(1).Automates(),World.map().largeur()-1, World.map().hauteur()-1, World.getPlayers().get(1));
+					World.putAutomates(World.getPlayers().get(1).Automates(),World.map().largeur()-2, World.map().hauteur()-2, World.getPlayers().get(1));
 					map.init();
 				} catch (Exception e) {
 					e.printStackTrace();

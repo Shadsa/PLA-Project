@@ -7,6 +7,54 @@
 		<action>AvancerHasard</action>
 		<suivant>1</suivant>
 	</transition>
+	<transition poids="1"> 
+    	<etat>1</etat> 
+    	<condition direction="N">CaseAmi</condition> 
+    	<action direction="N">Reparer</action> 
+    	<suivant>0</suivant> 
+  	</transition>
+  	<transition poids="1"> 
+    	<etat>1</etat> 
+    	<condition direction="E">CaseAmi</condition> 
+    	<action direction="E">Reparer</action> 
+    	<suivant>0</suivant> 
+  	</transition>
+  	<transition poids="1"> 
+    	<etat>1</etat> 
+    	<condition direction="S">CaseAmi</condition> 
+    	<action direction="S">Reparer</action> 
+    	<suivant>0</suivant> 
+  	</transition>
+  	<transition poids="1"> 
+    	<etat>1</etat> 
+    	<condition direction="O">CaseAmi</condition> 
+    	<action direction="O">Reparer</action> 
+    	<suivant>0</suivant> 
+  	</transition> 
+  	<transition poids="1"> 
+    	<etat>1</etat> 
+    	<condition direction="N">CaseAmi</condition> 
+    	<action direction="N">Reparer</action> 
+    	<suivant>0</suivant> 
+  	</transition>
+  	<transition poids="1"> 
+    	<etat>1</etat> 
+    	<condition direction="E">CaseAmi</condition> 
+    	<action direction="E">Reparer</action> 
+    	<suivant>0</suivant> 
+  	</transition>
+  	<transition poids="1"> 
+    	<etat>1</etat> 
+    	<condition direction="S">CaseAmi</condition> 
+    	<action direction="S">Reparer</action> 
+    	<suivant>0</suivant> 
+  	</transition>
+  	<transition poids="1"> 
+    	<etat>1</etat> 
+    	<condition direction="O">CaseAmi</condition> 
+    	<action direction="O">Reparer</action> 
+    	<suivant>0</suivant> 
+  	</transition> 
 	<transition poids="1">
 		<etat>1</etat>
 		<condition>Vide</condition>
@@ -47,6 +95,54 @@
       		<condition2 quantite="356">RessourcesPossedees</condition2> 
     	</condition> 
     	<action direction="O">ConstruireMur</action> 
+    	<suivant>1</suivant> 
+  	</transition> 
+  		<transition poids="1"> 
+    	<etat>0</etat> 
+    	<condition direction="N">CaseAmi</condition> 
+    	<action direction="N">Reparer</action> 
+    	<suivant>1</suivant> 
+  	</transition>
+  	<transition poids="1"> 
+    	<etat>0</etat> 
+    	<condition direction="E">CaseAmi</condition> 
+    	<action direction="E">Reparer</action> 
+    	<suivant>1</suivant> 
+  	</transition>
+  	<transition poids="1"> 
+    	<etat>0</etat> 
+    	<condition direction="S">CaseAmi</condition> 
+    	<action direction="S">Reparer</action> 
+    	<suivant>1</suivant> 
+  	</transition>
+  	<transition poids="1"> 
+    	<etat>0</etat> 
+    	<condition direction="O">CaseAmi</condition> 
+    	<action direction="O">Reparer</action> 
+    	<suivant>1</suivant> 
+  	</transition> 
+  	<transition poids="1"> 
+    	<etat>0</etat> 
+    	<condition direction="N">CaseAmi</condition> 
+    	<action direction="N">Reparer</action> 
+    	<suivant>1</suivant> 
+  	</transition>
+  	<transition poids="1"> 
+    	<etat>0</etat> 
+    	<condition direction="E">CaseAmi</condition> 
+    	<action direction="E">Reparer</action> 
+    	<suivant>1</suivant> 
+  	</transition>
+  	<transition poids="1"> 
+    	<etat>0</etat> 
+    	<condition direction="S">CaseAmi</condition> 
+    	<action direction="S">Reparer</action> 
+    	<suivant>1</suivant> 
+  	</transition>
+  	<transition poids="1"> 
+    	<etat>0</etat> 
+    	<condition direction="O">CaseAmi</condition> 
+    	<action direction="O">Reparer</action> 
     	<suivant>1</suivant> 
   	</transition> 
 </automate>

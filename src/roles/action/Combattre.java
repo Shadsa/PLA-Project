@@ -58,7 +58,7 @@ public final class Combattre extends Action {
 			// System.out.print(pers.ID() + " attaque " + target.ID() + ".\n");
 			pers.setState(new States(Statut.ATTAQUE, direction));
 			target.change_vie(-pers.damage());
-		} else if (_propCons.check(c) && c.type().value()!=Piege._id) {
+		} else if (_propCons.check(c)) {
 			c.attaquerCase(pers.damage());
 			pers.setState(new States(Statut.ATTAQUE, direction));
 		}

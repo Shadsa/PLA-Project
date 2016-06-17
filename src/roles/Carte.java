@@ -96,7 +96,6 @@ public class Carte extends Vector<Vector<Case>> implements Serializable{
 			for(CaseAction c : ligne){
 				action_list.add(c);
 				dim++;
-				
 			}
 		dim = x + (int) Math.sqrt(dim);
 		for(CaseAction c : action_list){
@@ -123,10 +122,10 @@ public class Carte extends Vector<Vector<Case>> implements Serializable{
 				}
 		dim = (int) Math.sqrt(dim);
 		if (x+dim >= _largeur)
-			x = _largeur-(dim+1);
+			x = _largeur-(dim+1)-1;
 		xdeb = x;
 		if (y+dim >= _hauteur)
-			y = _hauteur-(dim+1);
+			y = _hauteur-(dim+1)-1;
 		dim += x;
 		for(CaseAction c : action_list){
 			try {
@@ -206,15 +205,13 @@ public class Carte extends Vector<Vector<Case>> implements Serializable{
 	
 	private void randomForet(){
 		Random R = new Random();
-		for(int y=0; y<_hauteur; y+=5){
-			for(int x=0; x<=_largeur; x+=5){
-				int roll = R.nextInt(20);
-				if(roll==0){
-					putForet(x,y,3);
-				}
-				else if(roll<=4){
-					putForet(x,y,2);
-				}
+		int incrX = (_largeur/5);
+		int incrY = (_hauteur/5);
+		for(int y=0; y<_hauteur; y+=incrY){
+			for(int x=0; x<=_largeur; x+=incrX){
+				int xF = Math.min(R.nextInt(incrX)+x,_largeur);
+				int yF = Math.min(R.nextInt(incrY)+y,_hauteur);
+				putForet(xF,yF,2);
 			}
 		}
 	}

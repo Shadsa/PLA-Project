@@ -5,7 +5,7 @@ import roles.action.Action;
 
 public final class Batiment extends TypeCase {
 
-	public final int _vie = 5;
+	public final int _vie = 20;
 
 	protected Action _action;
 		

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.10" icons="true" automaticImage="PNG" always-add-relationships="false" 
+  generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true" 
+  router="FAN">  
+  <class id="1" language="java" name="roles.conditions.RatioInf" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/RatioInf.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="158" x="1440" y="-154"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="roles.conditions.Et" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/Et.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="158" x="1565" y="-261"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="roles.conditions.NbInf" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/NbInf.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="158" x="1281" y="-108"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="roles.conditions.Type" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/Type.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="195" x="1106" y="-54"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="roles.conditions.EnnemiProche" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/EnnemiProche.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="158" x="1164" y="1"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="roles.conditions.CaseAmi" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/CaseAmi.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="158" x="1291" y="60"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="roles.conditions.Vide" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/Vide.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="158" x="1389" y="127"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="roles.conditions.Condition" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/Condition.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="158" x="1666" y="-29"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="roles.conditions.ArbreProche" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/ArbreProche.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="52" width="158" x="1526" y="182"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="roles.conditions.UneCaseLibre" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/UneCaseLibre.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="158" x="1660" y="239"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="roles.conditions.UnAmi" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/UnAmi.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="158" x="1819" y="185"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="roles.conditions.Ou" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/Ou.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="52" width="158" x="1759" y="-265"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="roles.conditions.RessourcesPossedees" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/RessourcesPossedees.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="158" x="1961" y="130"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="roles.conditions.Libre" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/Libre.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="52" width="158" x="2090" y="74"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="roles.conditions.OrdreDonne" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/OrdreDonne.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="158" x="2194" y="19"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="roles.conditions.Ami" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/Ami.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="52" width="158" x="2286" y="-38"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="roles.conditions.UneCaseType" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/UneCaseType.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="193" x="2205" y="-99"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="roles.conditions.Ennemi" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/Ennemi.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="158" x="2045" y="-128"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="roles.conditions.UnEnnemi" project="PLA-Project-JAVAPART" 
+    file="/PLA-Project-JAVAPART/src/roles/conditions/UnEnnemi.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="158" x="1883" y="-161"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <generalization id="20">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="21">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="22">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="23">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="24">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="25">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="26">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="27">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="28">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="29">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="30">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="31">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="32">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="33">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="34">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="35">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="36">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="37">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
