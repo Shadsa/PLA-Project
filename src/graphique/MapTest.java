@@ -17,6 +17,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import cases.*;
 import jus.util.assertion.Require;
 import roles.Army;
+import roles.Joueur;
 import roles.Personnage;
 import roles.World;
 
@@ -44,7 +45,7 @@ public class MapTest extends Observable {
 
 	private ArrayList<GArmy> _joueurs = new ArrayList<GArmy>();
 
-	public MapTest(GUIContext container, int x, int y, int width, int height)
+	public MapTest(int x, int y, int width, int height)
 	{
 		_x = x;
 		_y = y;
@@ -56,7 +57,7 @@ public class MapTest extends Observable {
 	{
 		// plutot avoir un buffer image
 		map = new Vector<Vector<ObjetTest>> ();
-		for (int j = 0; j < world.SizeX() ; j++) {
+		for (int j = 0; j < world.SizeY() ; j++) {
 			map.add(new Vector<ObjetTest> ());
 		}
 		for (int j = 0; j < world.SizeY() ; j++) {
@@ -98,6 +99,11 @@ public class MapTest extends Observable {
 		//Parcours de la map test
 		for (int i = yi; i < map.size()  && i<yf; i++) {
 			for (int j = xi; j < map.get(0).size()  && j<xf; j++) {
+				System.out.println("ttttttt");
+				System.out.println(map.size());
+				System.out.println(map.get(i).size());
+				System.out.println(j);
+				System.out.println(i);
 				ObjetTest vj = map.get(i).get(j);
 				int img = 0;
 				int img2 = 0;
@@ -255,9 +261,9 @@ public class MapTest extends Observable {
 					j.getPersonnage().remove(j.getPersonnage().get(i));
 	}
 
-	public void addArmy(GJoueur gj, Army a)
+	public void addArmy(Army a)
 	{
-		_joueurs.add(new GArmy(gj, this));
+		_joueurs.add(new GArmy(a.joueur(), this));
 		a.addObserver(_joueurs.get(_joueurs.size()-1));
 		for(Personnage pers : a.getPersonnages())
 			_joueurs.get(_joueurs.size()-1).addPersonnage(pers);

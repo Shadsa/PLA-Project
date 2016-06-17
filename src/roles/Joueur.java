@@ -3,6 +3,7 @@ package roles;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import graphique.TypeUnit;
 import roles.classe.Classe;
 
 public class Joueur extends Observable{
@@ -48,5 +49,10 @@ public class Joueur extends Observable{
 
 	public Classe classe(int type) {
 		return _classes.get(type);
+	}
+
+	public TypeUnit type_unit() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

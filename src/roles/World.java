@@ -10,6 +10,7 @@ import roles.classe.Classe;
 
 public class World {
 	public static ArrayList<Classe> classes = new ArrayList<Classe>();
+	public static ArrayList<World> Univers = new ArrayList<World>();
 
 	Carte _map;
 	private ArrayList<Army> _army = new ArrayList<Army>();

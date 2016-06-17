@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import roles.Joueur;
 import roles.Personnage;
 
 public class GArmy implements Observer {
 
-	private GJoueur _joueur;
+	private Joueur _joueur;
 	private MapTest _map;
 	private ArrayList<Player> _players = new ArrayList<Player>();
 
 
 
-	public GArmy(GJoueur gj, MapTest map) {
+	public GArmy(Joueur gj, MapTest map) {
 		_joueur = gj;
 		_map = map;
 	}
