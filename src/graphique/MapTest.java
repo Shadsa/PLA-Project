@@ -287,8 +287,8 @@ public class MapTest extends Observable {
 	}
 
 	public void setZoom(float fact, float mx, float my) {
-		x = x + mx / zoom - mx / (zoom * fact);
-		y = y + my / zoom - my / (zoom * fact);
+		x = x * fact + mx * (fact - 1);// + mx / zoom - mx / (zoom * fact);
+		y = y * fact + my * (fact - 1);// + my / zoom - my / (zoom * fact);
 		this.zoom = zoom * fact;
 	}
 
