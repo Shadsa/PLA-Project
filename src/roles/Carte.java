@@ -285,7 +285,48 @@ public class Carte extends Vector<Vector<Case>> implements Serializable{
 		}
 	}
 	
-	
+	public void switchCase(Case c1, Case c2){
+		if(c1 == null || c2 == null || (c1 instanceof Terrain && c2 instanceof Terrain)){
+			return;
+		}
+		int x1 = c1.X();
+		int x2 = c2.X();
+		int y1 = c1.Y();
+		int y2 = c2.Y();
+		
+		if(c1 instanceof CaseAction)
+			try {
+				putCaseAction(((CaseAction) c1),x2,y2,((CaseAction) c1).owner());
+			} catch (Exception e) {
+			    	e.printStackTrace();
+				System.out.println("bug1");
+				return;
+			}
+		else{
+		    try {
+			putCase(new Terrain(x2,y2,c1.type()));
+		    } catch (Exception e) {
+			e.printStackTrace();
+		    }
+		}
+		
+		if(c2 instanceof CaseAction)
+			try {
+				putCaseAction(((CaseAction) c2),x1,y1,((CaseAction) c2).owner());
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("bug2");
+				return;
+			}
+		else{
+		    try {
+			putCase(new Terrain(x1,y1,c2.type()));
+		    } catch (Exception e) {
+			e.printStackTrace();
+		    }
+		}
+		
+	}
 	
 	
 	
