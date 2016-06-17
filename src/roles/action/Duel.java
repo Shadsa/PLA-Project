@@ -34,6 +34,7 @@ public final class Duel extends Action {
 		Case c = world.Case(destX, destY);
 
 		if (_propPers.check(c)) {
+			pers.setFighting(true);
 			MapGameState.fight(pers, c.Personnage());
 		}
 	}

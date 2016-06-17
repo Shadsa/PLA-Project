@@ -20,6 +20,7 @@ public class Personnage extends Observable{
 	private int _armor;
 	private Cardinaux _directionJoueur = null;
 	private Case _cible;
+	private Boolean _fighting;
 
 	protected int _id;
 	protected Army _owner;
@@ -56,6 +57,7 @@ public class Personnage extends Observable{
 		_damage = _classe.damage();
 		_heal = _classe.heal();
 		_armor = _classe.armor();
+		_fighting = false;
 		owner.world().Case(x, y).setPersonnage(this);
 	}
 
@@ -68,6 +70,7 @@ public class Personnage extends Observable{
 	}
 
 	public void agir() {
+		if(_fighting) return;
 		_brain.agir(this);
 		_location.Evenement(this);
 	}
@@ -188,5 +191,8 @@ public class Personnage extends Observable{
 	public World world()
 	{
 		return _owner.world();
+	}
+	public void setFighting(boolean b) {
+		_fighting = b;
 	}
 }

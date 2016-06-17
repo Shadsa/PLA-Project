@@ -82,7 +82,6 @@ public class MapGameState extends BasicGameState implements Observer {
 		Image overImage = img.getSubImage(633, 53, 123, 27);
 		Image downImage = img.getSubImage(633, 83, 123, 27);
 		_GUnivers.add(new MapTest(0, 0, container.getScreenWidth(), container.getScreenHeight()));
-		_GUnivers.add(new MapTest(0, 0, container.getScreenWidth()/2, container.getScreenHeight()/2));
 		//Instanciation des boutons
 		_bouton_fullScreen = new Button(container, "Plein écran", container.getWidth()/2-62, container.getHeight()/2, normalImage, overImage, downImage);
 		_bouton_son = new Button(container, "Désactiver son", container.getWidth()/2-62, container.getHeight()/2-40, normalImage, overImage, downImage);
@@ -266,7 +265,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		}
 
 		//Gestion du scrolling de la map avec la souris/manette/clavier
-		MapTest focus = (/* map2 != null && */ _GUnivers.get(1).isOver(_input.getMouseX(), _input.getMouseY()))?_GUnivers.get(1) : _GUnivers.get(0);
+		MapTest focus = (_GUnivers.size() > 1 && _GUnivers.get(1).isOver(_input.getMouseX(), _input.getMouseY()))?_GUnivers.get(1) : _GUnivers.get(0);
 		if (mouseAbsoluteY == container.getHeight() || _input.isControllerDown(0) || _input.isKeyDown(208)) {
 			focus.move(0, 1);
 		}
@@ -284,13 +283,13 @@ public class MapGameState extends BasicGameState implements Observer {
 		//Zoom avant
 		if (_input.isKeyDown(201))
 		{
-			focus.setZoom(1.03f, _input.getMouseX(), _input.getMouseY());
+			focus.setZoom(1.01f, _input.getMouseX(), _input.getMouseY());
 		}
 
 		//Zoom arrière
 		if (_tailleMapX * TILESIZE * focus.zoom() > container.getWidth() && _tailleMapX * TILESIZE * focus.zoom() > container.getHeight()) {
 			if (_input.isKeyDown(209) && focus.zoom() > 0) {
-				focus.setZoom(1/1.03f, _input.getMouseX(), _input.getMouseY());
+				focus.setZoom(1/1.03f, _input.getAbsoluteMouseX(), _input.getAbsoluteMouseY());
 			}
 		}
 
@@ -414,6 +413,7 @@ public class MapGameState extends BasicGameState implements Observer {
 
 		if(x >= _GUnivers.get(0).getX() && y >= _GUnivers.get(0).getY() && x<=_GUnivers.get(0).getX()+_GUnivers.get(0).getWidth() && y<=_GUnivers.get(0).getY()+_GUnivers.get(0).getHeight())
 			_GUnivers.get(0).mousePressed(button, x, y);
+		if(_GUnivers.size()>1)
 		if(x >= _GUnivers.get(1).getX() && y >= _GUnivers.get(1).getY() && x<=_GUnivers.get(1).getX()+_GUnivers.get(1).getWidth() && y<=_GUnivers.get(1).getY()+_GUnivers.get(1).getHeight())
 			_GUnivers.get(1).mousePressed(button, x, y);
 		//super.mousePressed(button, x, y);
@@ -500,11 +500,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		}
 		World.Univers.add(new World(_tailleMapY,_tailleMapX));
 		_GUnivers.get(0).initialise(World.Univers.get(0));
-		World.Univers.add(new World(2, 15));
-		_GUnivers.get(1).initialise(World.Univers.get(1));
-
 		_GUnivers.get(0).addObserver(this);
-		_GUnivers.get(1).addObserver(this);
 
 		ArrayList<Automate> autlist = new ArrayList<Automate>();
 		ArrayList<Classe> classes = new ArrayList<Classe>();
@@ -518,8 +514,6 @@ public class MapGameState extends BasicGameState implements Observer {
 		jjj.add(new Joueur("Zombie", autlist, classes));
 		new Army(World.Univers.get(0), jjj.get(0));
 		new Army(World.Univers.get(0), jjj.get(1));
-		new Army(World.Univers.get(1), jjj.get(0));
-		new Army(World.Univers.get(1), jjj.get(1));
 
 		try {
 			World.Univers.get(0).putAutomate(jjj.get(0).automate(0), 1, 1, jjj.get(0));
@@ -531,19 +525,9 @@ public class MapGameState extends BasicGameState implements Observer {
 	//for(int i = 0; i < nb; i++)
 		World.Univers.get(0).army().get(1).createPersonnage(classes.size()-1, _tailleMapX-1, _tailleMapY-1);
 
-
-
-		World.Univers.get(1).army().get(0).createPersonnage(0, 1, 1);
-		World.Univers.get(1).army().get(1).createPersonnage(classes.size()-1, World.Univers.get(1).SizeX()-1, World.Univers.get(1).SizeY()-1);
-
 		for(Army a : World.Univers.get(0).army())
 		{
 			_GUnivers.get(0).addArmy(a);
-		}
-
-		for(Army a : World.Univers.get(1).army())
-		{
-			_GUnivers.get(1).addArmy(a);
 		}
 	}
 

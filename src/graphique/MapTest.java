@@ -99,11 +99,6 @@ public class MapTest extends Observable {
 		//Parcours de la map test
 		for (int i = yi; i < map.size()  && i<yf; i++) {
 			for (int j = xi; j < map.get(0).size()  && j<xf; j++) {
-				System.out.println("ttttttt");
-				System.out.println(map.size());
-				System.out.println(map.get(i).size());
-				System.out.println(j);
-				System.out.println(i);
 				ObjetTest vj = map.get(i).get(j);
 				int img = 0;
 				int img2 = 0;
@@ -292,8 +287,8 @@ public class MapTest extends Observable {
 	}
 
 	public void setZoom(float fact, float mx, float my) {
-		x = x + mx * (fact - 1) * zoom();
-		y = y + my * (fact - 1) * zoom();
+		x = x + mx / zoom - mx / (zoom * fact);
+		y = y + my / zoom - my / (zoom * fact);
 		this.zoom = zoom * fact;
 	}
 
