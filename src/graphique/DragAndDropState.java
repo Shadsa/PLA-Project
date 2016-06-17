@@ -184,7 +184,7 @@ class DragAndDropState extends BasicGameState {
 			System.out.println("Sauvegarde OK !");*/
 			try {
 				World.putAutomates(World.getPlayers().get(0).Automates(), 1, 1, World.getPlayers().get(0));
-				World.putAutomates(World.getPlayers().get(1).Automates(),World.map().largeur()-1, World.map().hauteur()-1, World.getPlayers().get(1));
+				World.putAutomates(World.getPlayers().get(1).Automates(),World.map().largeur()-2, World.map().hauteur()-2, World.getPlayers().get(1));
 				map.init();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
