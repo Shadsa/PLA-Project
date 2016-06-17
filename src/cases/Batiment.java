@@ -5,11 +5,11 @@ import roles.action.Action;
 
 public final class Batiment extends TypeCase {
 
-	public final int _vie = 5;
+	public final int _vie = 20;
 
 	protected Action _action;
 
-	public final static int _id = getId(20);
+	public final static int _id = getId(1);
 
 	public Batiment(Action a){
 		_action = a;

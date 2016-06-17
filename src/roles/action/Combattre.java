@@ -3,6 +3,7 @@ package roles.action;
 import cases.Case;
 import cases.CaseProperty;
 import cases.ConstructionCheck;
+import cases.EnnemiCheck;
 import cases.PersoCheck;
 import roles.Cardinaux;
 import roles.Personnage;
@@ -22,7 +23,20 @@ public final class Combattre extends Action {
 		int destX=pers.X();
 		int destY=pers.Y();
 		Cardinaux direction;
-		if(_propPers.check(world.Case(destX-1, destY)) || _propCons.check(world.Case(destX-1, destY))){
+		CaseProperty p = new EnnemiCheck(pers);
+		if(p.check(world.Case(destX-1, destY))){
+			destX--; direction = Cardinaux.OUEST;
+		}
+		else if(p.check(world.Case(destX+1, destY))){
+			destX++; direction = Cardinaux.EST;
+		}
+		else if(p.check(world.Case(destX, destY-1))){
+			destY--; direction = Cardinaux.NORD;
+		}
+		else if(p.check(world.Case(destX, destY+1))){
+			destY++; direction = Cardinaux.SUD;
+		}
+		else if(_propPers.check(world.Case(destX-1, destY)) || _propCons.check(world.Case(destX-1, destY))){
 			destX--; direction = Cardinaux.OUEST;
 		}
 		else if(_propPers.check(world.Case(destX+1, destY)) || _propCons.check(world.Case(destX+1, destY))){
@@ -35,9 +49,9 @@ public final class Combattre extends Action {
 			destY++; direction = Cardinaux.SUD;
 		}
 		else return;
-
+		
 		Case c = world.Case(destX, destY);
-
+		
 		if (_propPers.check(c)) {
 			Personnage target = c.Personnage();
 			// System.out.print(pers.ID() + " attaque " + target.ID() + ".\n");
@@ -48,6 +62,7 @@ public final class Combattre extends Action {
 			pers.setState(new States(Statut.ATTAQUE, direction));
 		}
 	}
+
 
 	@Override
 	public int toInt() {

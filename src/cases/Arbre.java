@@ -1,15 +1,14 @@
 package cases;
 
-import roles.Cardinaux;
 import roles.Personnage;
 import roles.action.Action;
-import roles.action.Attaquer;
+import roles.action.CouperBois;
 
 public final class Arbre extends TypeCase {
 
-	public final int _vie = 150;
+	public final int _vie = 80;
 
-	protected static Action _action = new Attaquer(Cardinaux.SUD);
+	protected static Action _action = new CouperBois();
 
 	private static Arbre _instance = new Arbre();
 
@@ -32,5 +31,9 @@ public final class Arbre extends TypeCase {
 	public boolean franchissable() {
 		return true;
 	}
+
+	public Action action() {
+		return _action;
+	}	
 
 }

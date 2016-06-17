@@ -36,7 +36,7 @@ public abstract class TypeCase {
 		}
 	}
 
-	public void Evenement(Personnage pers){
-	}
+	public void Evenement(Personnage pers){}
 	
+	public abstract Action action() ;
 }

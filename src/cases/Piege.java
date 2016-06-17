@@ -12,7 +12,7 @@ public class Piege extends TypeCase implements Construction {
 
 	protected Joueur _owner;
 
-	public final static int _id = getId(29);
+	public final static int _id = getId(1);
 
 	public int value() {
 		return _id;
@@ -47,5 +47,10 @@ public class Piege extends TypeCase implements Construction {
 			pers.world().modifierCase(Plaine.getInstance(), pers.X(), pers.Y());
 		}
 	}
+
+	@Override
+	public Action action() {
+		return _action;
+	}	
 
 }

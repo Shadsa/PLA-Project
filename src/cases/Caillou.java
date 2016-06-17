@@ -7,7 +7,7 @@ import roles.Cardinaux;
 
 public final class Caillou extends TypeCase {
 
-	protected static Action _action = new Attaquer(Cardinaux.NORD);
+	protected static Action _action = new Combattre();
 
 	private static Caillou _instance = new Caillou();
 
@@ -30,5 +30,9 @@ public final class Caillou extends TypeCase {
 	public boolean franchissable() {
 		return true;
 	}
+
+	public Action action() {
+		return _action;
+	}	
 
 }
