@@ -156,16 +156,18 @@ public class MapGameState extends BasicGameState {
 		}
 
 		//Affichage des huds
-		if(showhud) {
+		if(showhud && !_target.isDead()) {
 			this.hud.render(g);
 		}
 		
-		//Affichage ressources
+		//Affichage détails des joueurs
 		g.resetTransform();
 		g.setColor(Color.white);
 		if (World.getPlayers().size() == 2) {
 			g.drawString("Ressources : J1 " + World.getPlayers().get(0).ressources(), 10, 250);
 			g.drawString("Ressources : J2 " + World.getPlayers().get(1).ressources(), 10, 270);
+			g.drawString("Nb personnages : " + World.getPlayers().get(0).getPersonnages().size(), 10, 290);
+			g.drawString("Nb personnages : " + World.getPlayers().get(1).getPersonnages().size(), 10, 310);
 		}
 		
 		//Affichage message de fin
