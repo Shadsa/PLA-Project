@@ -176,10 +176,10 @@ public class MapGameState extends BasicGameState implements Observer {
 			for(int i = 0; i<World.Univers.size(); i++)
 				World.Univers.get(i).nextTurn();
 
-			for(Animation anim : Player.animations)
-				anim.restart();
-			for(Animation anim : Player.Hanimations)
-				anim.restart();
+			for(TypeUnit t : TypeUnit.values()){
+				for(Animation anim : t.animations)
+					anim.restart();
+}
 			for(Animation anim : Player.Danimations)
 				anim.restart();
 		}

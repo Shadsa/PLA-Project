@@ -1,12 +1,17 @@
 package graphique;
 
 import java.awt.BorderLayout;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
 import java.io.File;
@@ -22,6 +27,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -39,6 +45,7 @@ public class UnitDialog extends JDialog {
 
 	private Automate aut = null;
 	private Classe cla = null;
+	private String choixJoueur;
 
   public UnitDialog(JFrame parent, String title, boolean modal){
     super(parent, title, modal);
@@ -46,6 +53,7 @@ public class UnitDialog extends JDialog {
     this.setLocationRelativeTo(null);
     this.setResizable(false);
     this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+    this.setAlwaysOnTop(true);
 	initComponent();
 	uInfo = null;
   }
@@ -56,24 +64,43 @@ public class UnitDialog extends JDialog {
   }
 
   private void initComponent(){
-		JLabel icon;
+		JLabel icon, iconH;
 		JTextField nom;
-    //IcÃ´ne
+    //Icône
 	ImageIcon temp = new ImageIcon("src/asset/sprites/BODY_male.png");
 	Image image = temp.getImage();
 	image = createImage(new FilteredImageSource(image.getSource(),
 	            new CropImageFilter(0, 128, 64, 64)));
+	
+	ImageIcon tempH = new ImageIcon("src/asset/sprites/cult_clothes.png");
+	Image imageH = tempH.getImage();
+	imageH = createImage(new FilteredImageSource(imageH.getSource(),
+	            new CropImageFilter(0, 128, 64, 64)));
+	/*
+	BufferedImage imageF = new BufferedImage(64,64,BufferedImage.TYPE_INT_ARGB);
+	Graphics2D g2 = imageF.createGraphics();
+	g2.drawImage(image, 0, 0, null);
+	g2.drawImage(imageH, 0, 0, null);
+	g2.dispose();
+	ImageIcon newImg = new ImageIcon(imageF);*/
 
     icon = new JLabel(new ImageIcon(image));
-    JPanel panIcon = new JPanel();
-    panIcon.setLayout(new BorderLayout());
-    panIcon.add(icon);
+    icon.setOpaque(false);
+    iconH = new JLabel(new ImageIcon(imageH));
+    iconH.setOpaque(false);
+    JLayeredPane panIcon = new JLayeredPane();
+    panIcon.setPreferredSize(new Dimension(64,64));
+    //panIcon.setLayout(new BorderLayout());
+    icon.setBounds(10, 0, 64, 64);
+    iconH.setBounds(10, 0, 64, 64);
+    panIcon.add(icon,JLayeredPane.DEFAULT_LAYER);
+    panIcon.add(iconH,JLayeredPane.PALETTE_LAYER);
 
     //Le nom
     JPanel panNom = new JPanel();
     nom = new JTextField();
     nom.setPreferredSize(new Dimension(100, 25));
-    panNom.setBorder(BorderFactory.createTitledBorder("Nom UnitÃ©"));
+    panNom.setBorder(BorderFactory.createTitledBorder("Nom Unité"));
     panNom.add(nom);
 
     //L'automate
@@ -97,25 +124,43 @@ public class UnitDialog extends JDialog {
     JPanel panClasse = new JPanel();
     panClasse.setBorder(BorderFactory.createTitledBorder("Classe"));
     JComboBox<Classe> classe = new JComboBox<Classe>();
-    for(Classe cla : World.classes)
+    for(Classe cla : World.classes)//StateGame.workshop.classeList())
     	classe.addItem(cla);
     panClasse.add(classe);
 
     JPanel panSkin = new JPanel();
-    panSkin.setBorder(BorderFactory.createTitledBorder("Couleur"));
+    panSkin.setBorder(BorderFactory.createTitledBorder("Apparence"));
     JComboBox<String> color = new JComboBox<String>();
-    color.addItem("Blanc");
-    color.addItem("Noir");
-    color.addItem("Vert");
+    for(TypeUnit t : TypeUnit.values()){
+    	color.addItem(t.toString());
+    }
+   /* color.addItem("Noir");
+    color.addItem("Vert");*/
     panSkin.add(color);
+    
+    JPanel panClothes = new JPanel();
+    panClothes.setBorder(BorderFactory.createTitledBorder("Habits"));
+    JComboBox<String> clothes = new JComboBox<String>();
+    for(TypeClothes t : TypeClothes.values()){
+    	clothes.addItem(t.toString());
+    }
+    panClothes.add(clothes);
 
-
+    JPanel panJoueur = new JPanel();
+    panJoueur.setBorder(BorderFactory.createTitledBorder("Joueur"));
+    JComboBox<String> joueur = new JComboBox<String>();
+    joueur.addItem("Joueur1");
+    joueur.addItem("Joueur2");
+    panJoueur.add(joueur);
+    
     JPanel content = new JPanel();
     content.setLayout(new FlowLayout());
     content.add(panNom);
     content.add(panFile);
     content.add(panClasse);
     content.add(panSkin);
+    content.add(panClothes);
+    content.add(panJoueur);
 
     JPanel control = new JPanel();
     JButton okBouton = new JButton("OK");
@@ -130,13 +175,15 @@ public class UnitDialog extends JDialog {
     		  return;
     	  if(cla == null)
     		  cla = (Classe)classe.getSelectedItem();//getClasse((String)classe.getSelectedItem());
+    	  if(choixJoueur == null)
+    		  choixJoueur = (String)joueur.getSelectedItem();
     	  /*if(!aut.match(World.classes.get(0)))
     	  {
     		  JOptionPane jop = new JOptionPane();
-    		  jop.showMessageDialog(null, "Fichier automate ne convient pas Ã  cette classe.", "Erreur", JOptionPane.ERROR_MESSAGE);
+    		  jop.showMessageDialog(null, "Fichier automate ne convient pas à cette classe.", "Erreur", JOptionPane.ERROR_MESSAGE);
     		  return;
     	  }*/
-        uInfo = new UnitInfo(nom.getText(), aut, cla,"");
+        uInfo = new UnitInfo(nom.getText(), aut, cla,TypeUnit.valueOf(color.getSelectedItem().toString()), TypeClothes.valueOf(clothes.getSelectedItem().toString()), choixJoueur);
         setVisible(false);
       }
     });
@@ -152,6 +199,37 @@ public class UnitDialog extends JDialog {
         	cla = (Classe)classe.getSelectedItem();//getClasse((String)classe.getSelectedItem());
           }
         });
+    
+    joueur.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent arg0) {
+        	choixJoueur = (String)joueur.getSelectedItem();//getClasse((String)classe.getSelectedItem());
+          }
+        });
+
+    color.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent e) {
+			ImageIcon typeCorps = new ImageIcon(TypeUnit.valueOf(color.getSelectedItem().toString()).sprite());
+			
+			Image image = createImage(new FilteredImageSource(
+					typeCorps.getImage().getSource(),
+					new CropImageFilter(0, 128, 64, 64)));
+			
+			icon.setIcon(new ImageIcon(image));
+        }               
+      });
+    
+    clothes.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent e) {
+			ImageIcon typeHabit = new ImageIcon(TypeClothes.valueOf(clothes.getSelectedItem().toString()).sprite());
+			
+			Image imageH = createImage(new FilteredImageSource(
+					typeHabit.getImage().getSource(),
+					new CropImageFilter(0, 128, 64, 64)));
+			
+			iconH.setIcon(new ImageIcon(imageH));
+        }               
+      });
+
 
     JButton cancelBouton = new JButton("Annuler");
     cancelBouton.addActionListener(new ActionListener(){
@@ -191,10 +269,9 @@ public class UnitDialog extends JDialog {
 			  cla = cl;
 	  if(aut != null && !aut.match(cla))
 		  cla = null;
-
 		if(cla == null){
 			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, "La classe ne correspond pas Ã  l'automate.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			jop.showMessageDialog(null, "La classe ne correspond pas à l'automate.", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
   }*/
 }

@@ -1,13 +1,12 @@
 package cases;
 
-import roles.Cardinaux;
 import roles.Personnage;
 import roles.action.Action;
-import roles.action.Attaquer;
+import roles.action.AvancerHasard;
 
 public final class Eau extends TypeCase {
 
-	protected static Action _action = new Attaquer(Cardinaux.NORD);
+	protected static Action _action = new AvancerHasard();
 
 	private static Eau _instance = new Eau();
 
@@ -30,5 +29,9 @@ public final class Eau extends TypeCase {
 	public boolean franchissable() {
 		return false;
 	}
+
+	public Action action() {
+		return _action;
+	}	
 
 }

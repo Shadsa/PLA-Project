@@ -1,5 +1,6 @@
 package roles.action;
 
+import cases.AmiCheck;
 import cases.Arbre;
 import cases.CaseProperty;
 import cases.PersoCheck;
@@ -21,7 +22,20 @@ public class Soigner extends Action {
 		int destX=pers.X();
 		int destY=pers.Y();
 		Cardinaux direction;
-		if(_prop.check(world.Case(destX-1, destY))){
+		CaseProperty p = new AmiCheck(pers);
+		if(p.check(world.Case(destX-1, destY))){
+			destX--; direction = Cardinaux.OUEST;
+		}
+		else if(p.check(world.Case(destX+1, destY))){
+			destX++; direction = Cardinaux.EST;
+		}
+		else if(p.check(world.Case(destX, destY-1))){
+			destY--; direction = Cardinaux.NORD;
+		}
+		else if(p.check(world.Case(destX, destY+1))){
+			destY++; direction = Cardinaux.SUD;
+		}
+		else if(_prop.check(world.Case(destX-1, destY))){
 			destX--; direction = Cardinaux.OUEST;
 		}
 		else if(_prop.check(world.Case(destX+1, destY))){
@@ -37,7 +51,7 @@ public class Soigner extends Action {
 
 
 		Personnage target = world.Case(destX, destY).Personnage();
-		System.out.print(pers.ID() + " soigne " + target.ID() + ".\n");
+		//System.out.print(pers.ID() + " soigne " + target.ID() + ".\n");
 		pers.setState(new States(Statut.SOIGNE, direction));
 		target.change_vie(+ pers.heal());
 	}

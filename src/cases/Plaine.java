@@ -30,4 +30,8 @@ public final class Plaine extends TypeCase {
 		return true;
 	}
 
+	public Action action() {
+		return _action;
+	}	
+
 }

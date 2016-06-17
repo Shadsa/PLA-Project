@@ -67,10 +67,10 @@ public class Hud {//550 182
 			    	anim = 12;
 			    }
 			    //System.out.println(_state.statut);
-			    if(MapGameState._target.human() == TypeUnit.Human)
+			    /*if(MapGameState._target.human() == TypeUnit.Human)
 			    	g.drawAnimation(Player.Hanimations[anim], HUD_BAR_X+1, HUD_BAR_Y-3);
-			    else
-			    	g.drawAnimation(Player.animations[anim], HUD_BAR_X, HUD_BAR_Y);
+			    else*/
+			    	g.drawAnimation(MapGameState._target.human().animations[anim], HUD_BAR_X, HUD_BAR_Y);
 
 			    if(danim != -1 && anim != 12)
 			    	g.drawAnimation(Player.Danimations[danim], HUD_BAR_X, HUD_BAR_Y);
