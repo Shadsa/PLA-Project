@@ -60,9 +60,15 @@ type condition =
   | NbInf of int
   | RatioInf of int
   | RessourcesPossedees of int
-(*
-  | ...
-*)
+
+let arbreProche (d : cellule) : condition = ArbreProche(d)
+let caseAmi (d : cellule) : condition = CaseAmi(d)
+let ennemi (d : cellule) : condition = Ennemi(d)
+let ennemiProche (d : cellule) : condition = EnnemiProche(d)
+let libre (d : cellule) : condition = Libre(d)
+let typeCase (t : typeCellule) (d : cellule) : condition = Type(t,d)
+
+  
 
 
 type etat = int
@@ -158,6 +164,8 @@ let rec output_cond (c : condition) (p : int) (suff : String.t) =
     output_stab (fbalise b) p
     end
    | ArbreProche(cellule) -> output_stab ((balise b (Direction(cellule)))^"ArbreProche"^(fbalise b)) p
+   | Ami(cellule) -> output_stab ((balise b (Direction(cellule)))^"Ami"^(fbalise b)) p
+   | CaseAmi(cellule) -> output_stab ((balise b (Direction(cellule)))^"Ami"^(fbalise b)) p
    | EnnemiProche(cellule) -> output_stab ((balise b (Direction(cellule)))^"EnnemiProche"^(fbalise b)) p
    | Ennemi(cellule) -> output_stab ((balise b (Direction(cellule)))^"Ennemi"^(fbalise b)) p
    | Libre(cellule) -> output_stab ((balise b (Direction(cellule)))^"Libre"^(fbalise b)) p
@@ -176,6 +184,7 @@ let output_act (a : action) (p : int) =
    | Combattre -> output_stab ((balise b Rien)^"Combattre"^(fbalise b)) p
    | CouperBois -> output_stab ((balise b Rien)^"CouperBois"^(fbalise b)) p
    | DupliquerZombie -> output_stab ((balise b Rien)^"DupliquerZombie"^(fbalise b)) p
+   | Duel -> output_stab ((balise b Rien)^"Duel"^(fbalise b)) p
    | Soigner -> output_stab ((balise b Rien)^"Soigner"^(fbalise b)) p
    | Attaquer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Attaquer"^(fbalise b)) p
    | Avancer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Avancer"^(fbalise b)) p
@@ -207,11 +216,13 @@ let output_automate (a : automate) (p : int) =
   output_stab (fbalise "automate") p
 
 let ecrireXML (nom : string) (auto : automate) =
-  let o = open_out "Ouvrier.xml" in
+  let o = open_out nom in
+  begin
   output := Some(o);
   output_string o "<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n\n";
   output_automate auto 0;
   close_out o
+  end
 
 
 let creerAutomate (a : automate list) : automate = List.concat a
@@ -224,10 +235,10 @@ let rec appliquerSurListe (f : etat->etat->automate) (e1 : etat list) (e2 : etat
   | [] -> []
 
 let appliquerSurListe (f : etat->etat->automate) (e1 : etat) (e2 : etat list) : automate =  
-  List.map (f e1) e2
+  creerAutomate (List.map (f e1) e2)
 
 let appliquerSurListe (f : etat->etat->automate) (e1 : etat list) (e2 : etat) : automate =  
-  List.map (fun e -> f e e2) e1
+  creerAutomate (List.map (fun e -> f e e2) e1)
 
 
   
@@ -245,11 +256,11 @@ let hostile (p : poids) (e1 : etat) (e2 : etat) : automate =
 let recolteur (p : poids) (e1 : etat) (e2 : etat) : automate =
   [(e1,UneCaseType(Arbre),CouperBois,e2,p)]
   
-let createurNbRatio (p : poids) (type : int) (cout : int) (min : int) (minRat : int) (e1 : etat) (e2 : etat) : automate =
-  [(e1,Et(Et(UneCaseLibre,RessourcesPossedees(cout)),Ou(NbInf(min),RatioInf(minRat))),Creer(type),e2,p)]
+let createurNbRatio (p : poids) (typeU : int) (cout : int) (min : int) (minRat : int) (e1 : etat) (e2 : etat) : automate =
+  [(e1,Et(Et(UneCaseLibre,RessourcesPossedees(cout)),Ou(NbInf(min),RatioInf(minRat))),Creer(typeU),e2,p)]
 
-let createur (p : poids) (type : int) (cout : int) (e1 : etat) (e2 : etat) : automate =
-  [(e1,Et(UneCaseLibre,RessourcesPossedees(cout)),Creer(type),e2,p)]
+let createur (p : poids) (typeU : int) (cout : int) (e1 : etat) (e2 : etat) : automate =
+  [(e1,Et(UneCaseLibre,RessourcesPossedees(cout)),Creer(typeU),e2,p)]
 
 let createurZ (p : poids) (e1 : etat) (e2 : etat) : automate =
   [(e1,UneCaseLibre,DupliquerZombie,e2,p)]
@@ -263,22 +274,5 @@ let soigneur (p : poids) (e1 : etat) (e2 : etat) : automate =
 let fonceur (p : poids) (e1 : etat) (eL : etat list) : automate =
   creerAutomate (List.map2 (fun e d -> [(e1,Libre(d),Avancer(d),e,p); (e,Libre(d),Avancer(d),e,p); (e,Vide,Attendre,e1,0)]) eL [N;S;E;O])
 
-let chercheur (p : poids) (ed : etat list) (e1 : etat list) (e2 : etat list) (er : etat) : automate =
-  creerAutomate (appliquerSurListe (fun (e1,e2,d) -> creerAutomate (appliquerSurListe (fun e -> [(e,Et(Libre(d),ArbreProche(d)),Avancer(d),e1,p);(e1,Et(Libre(d),ArbreProche(d)),Avancer(d),e1,p+1);(e1,ArbreProche(d),Attendre,e2,p);(e1,Vide,Attendre,er,0);(e2,Et(Libre(d),ArbreProche(d)),Avancer(d),e1,p+1);(e2,Vide,Attendre,er,0)]) ed)) (supercombine e1 e2 [N;S;E;O]))
-
-let chasseur (p : poids) (ed : etat list) (e1 : etat list) (e2 : etat list) (er : etat) : automate =
-  creerAutomate(appliquerSurListe (fun (e1,e2,d) -> creerAutomate (appliquerSurListe (fun e -> [(e,Et(Libre(d),EnnemiProche(d)),Avancer(d),e1,p);(e1,Et(Libre(d),EnnemiProche(d)),Avancer(d),e1,p+1);(e1,EnnemiProche(d),Attendre,e2,p);(e1,Vide,Attendre,er,0);(e2,Et(Libre(d),EnnemiProche(d)),Avancer(d),e1,p+1);(e2,Vide,Attendre,er,0)]) ed)) (supercombine e1 e2 [N;S;E;O]))
-
-
-
-let ouvrier = creerAutomate [errant 1 0 0; chercheur 3 [0] [1;3;5;7] [2;4;6;8] 0; createurNbRatio 10 0 100 5 25 0 0; createur 8 1 100 0 0; appliquerSurListe (recolteur 5) [0;1;2;3;4;5;6;7;8] [0]]
-
-let zombie = creerAutomate [errant 1 0 0; chasseur 3 [0] [1;3;5;7] [2;4;6;8] 0; createurZ 1 0 0; appliquerSurListe (hostile 6) [0;1;2;3;4;5;6;7;8] [0]]
-
-let soldat = creerAutomate [errant 1 0 0; chasseur 3 [0] [1;3;5;7] [2;4;6;8] 0; appliquerSurListe (hostile 6) [0;1;2;3;4;5;6;7;8] [0]]
-
-
-let main =
-  ecrireXML "Ouvrier.xml" ouvrier;
-  ecrireXML "Zombie.xml" zombie;
-  ecrireXML "Soldat.xml" soldat
+let chercheur (p : poids) (cond : cellule -> condition) (ed : etat) (e1 : etat list) (e2 : etat list) : automate =
+  creerAutomate (List.map (fun (e1,e2,d) -> [(ed,Et(Libre(d),cond d),Avancer(d),e1,p);(e1,Et(Libre(d),cond d),Avancer(d),e1,p+1);(e1,cond d,Attendre,e2,p);(e1,Vide,Attendre,ed,0);(e2,Et(Libre(d),cond d),Avancer(d),e1,p+1);(e2,Vide,Attendre,ed,0)]) (supercombine e1 e2 [N;S;E;O]))

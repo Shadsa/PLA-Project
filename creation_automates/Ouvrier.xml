@@ -192,21 +192,21 @@
 		<condition compose="Et">
 			<condition1 compose="Et">
 				<condition1>UneCaseLibre</condition1>
-				<condition2 quantite="250">RessourcesPossedees</condition2>
+				<condition2 quantite="100">RessourcesPossedees</condition2>
 			</condition1>
 			<condition2 compose="Ou">
 				<condition1 quantite="5">NbInf</condition1>
 				<condition2 quantite="25">RatioInf</condition2>
 			</condition2>
 		</condition>
-		<action>Dupliquer</action>
+		<action unite="0">Creer</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="8">
 		<etat>0</etat>
 		<condition compose="Et">
 			<condition1>UneCaseLibre</condition1>
-			<condition2 quantite="250">RessourcesPossedees</condition2>
+			<condition2 quantite="100">RessourcesPossedees</condition2>
 		</condition>
 		<action unite="1">Creer</action>
 		<suivant>0</suivant>
