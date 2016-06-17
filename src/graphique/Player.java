@@ -34,16 +34,17 @@ public class Player implements Observer{
 	//Boolean pour savoir si le personnage bouge
 	private boolean moving = false;
 	//Tableau des modèles d'animation
-	public static Animation[][] _Bodys = new Animation[2][21];
+	/*public static Animation[][] _Bodys = new Animation[2][21];
 	public static Animation[] animations = _Bodys[0];
 	public static Animation[] Hanimations = _Bodys[1];
-	public static Animation[] Habits = new Animation[21];
+	public static Animation[] Habits = new Animation[21];*/
 	public static Animation[] Danimations = new Animation[4];
 	//
 	private int AnimDuration;
 	public int AnimDead;
 	private Boolean _isDead;
 	private TypeUnit _human;
+	private TypeClothes _clothes; 
 	private SoundEffect soundEffect;
 
 	protected int _id;
@@ -61,10 +62,11 @@ public class Player implements Observer{
 		return _id;
 	}
 
-	public Player(Personnage pers, TypeUnit _type_unit, GArmy gArmy) {
+	public Player(Personnage pers, TypeUnit _type_unit, TypeClothes _type_clothes, GArmy gArmy) {
 		_gArmy = gArmy;
 		_hide = false;
 		_human = _type_unit;
+		_clothes = _type_clothes;
 		_id = nextID();
 		_isDead = false;
 		AnimDuration = MapGameState.Tick;
@@ -83,7 +85,7 @@ public class Player implements Observer{
 			e.printStackTrace();
 		}
 
-		_Body = (_human != TypeUnit.Zombie)? Hanimations : animations ;
+		_Body = _human.animations;//(_human != TypeUnit.Zombie)? Hanimations : animations ;
 		_Abody = 0;
 		_Aweapon = -1;
 		_Awear = -1;
@@ -91,7 +93,7 @@ public class Player implements Observer{
 
 public static void sinit() throws SlickException
 {
-		SpriteSheet spriteSheet = new SpriteSheet("src/asset/sprites/BODY_skeleton.png", 64, 64);
+		/*SpriteSheet spriteSheet = new SpriteSheet("src/asset/sprites/BODY_skeleton.png", 64, 64);
 		SpriteSheet spriteSheet2 = new SpriteSheet("src/asset/sprites/slash_skeleton.png", 64, 64);
 		SpriteSheet spriteSheet3 = new SpriteSheet("src/asset/sprites/Die_skeleton.png", 64, 64);
 		initAnimation(animations, spriteSheet, spriteSheet2, spriteSheet3);
@@ -104,7 +106,7 @@ public static void sinit() throws SlickException
 		SpriteSheet Habitsprite = new SpriteSheet("src/asset/sprites/villager_vest.png", 64, 64);
 		SpriteSheet Habitsprite2 = new SpriteSheet("src/asset/sprites/villager_vest_slash.png", 64, 64);
 		SpriteSheet Habitsprite3 = new SpriteSheet("src/asset/sprites/villager_vest_hurt.png", 64, 64);
-		initAnimation(Habits, Habitsprite, Habitsprite2, Habitsprite3);
+		initAnimation(Habits, Habitsprite, Habitsprite2, Habitsprite3);*/
 
 
 
@@ -199,8 +201,8 @@ public static void sinit() throws SlickException
 	    		g.drawAnimation(_Body[_Abody], x-32, y-60);
 		}
 
-	    if(_Awear != -1)
-	    	g.drawImage(Habits[_Abody].getImage(Hanimations[_Abody].getFrame()), x-32, y-60);
+		if(_Awear != -1)
+			g.drawImage(_clothes.animations[_Abody].getImage(_human.animations[_Abody].getFrame()), x-32, y-60);
 
 	    if(_Aweapon != -1)
 	    	g.drawAnimation(Danimations[_Aweapon], x-32, y-60);
@@ -338,6 +340,9 @@ public static void sinit() throws SlickException
 		public TypeUnit human() {
 			return _human;
 		}
+		public TypeClothes clothes() {
+			return _clothes;
+		}
 		public int AnimDuration() {
 			return AnimDuration;
 		}
@@ -393,7 +398,7 @@ public static void sinit() throws SlickException
 				    _Aweapon = danim;
 		}
 
-		private static void initAnimation(Animation[] anim, SpriteSheet moveS, SpriteSheet slashS, SpriteSheet dieS)
+		static void initAnimation(Animation[] anim, SpriteSheet moveS, SpriteSheet slashS, SpriteSheet dieS, SpriteSheet spellS)
 		{
 			anim[0] = loadAnimation(moveS, 0, 1, 0);
 		    anim[1] = loadAnimation(moveS, 0, 1, 1);
@@ -409,6 +414,11 @@ public static void sinit() throws SlickException
 		    anim[9] = loadAnimation(slashS, 0, 5, 1);
 		    anim[10] = loadAnimation(slashS, 0, 5, 2);
 		    anim[11] = loadAnimation(slashS, 0, 5, 3);
+		    
+		    anim[21] = loadAnimation(spellS, 0, 6, 0);
+		    anim[22] = loadAnimation(spellS, 0, 6, 1);
+		    anim[23] = loadAnimation(spellS, 0, 6, 2);
+		    anim[24] = loadAnimation(spellS, 0, 6, 3);
 
 		    anim[12] = new Animation();
 		    for (int x = 0; x < 6; x++) {
