@@ -303,10 +303,7 @@ public static void sinit() throws SlickException
 				_destY = _gArmy.map().toX(pers.Y());
 				if(((States)obj).statut == Statut.MORT) {
 					_isDead = true;
-					if(_human == TypeUnit.Human)
-						soundEffect.dead_human().play();
-					else
-						soundEffect.dead_skeleton().play();
+					soundEffect.dead_human().play();
 				}
 				if(_state.statut == Statut.HIDE || _state.statut == Statut.HIDING) {
 					if(((States)obj).statut != Statut.REVEAL)
