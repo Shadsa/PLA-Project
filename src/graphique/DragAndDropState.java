@@ -13,10 +13,10 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -25,12 +25,10 @@ import cases.Case;
 import roles.Automate;
 import roles.Carte;
 import roles.Joueur;
-import roles.Personnage;
 import cases.TypeCase;
 import roles.World;
 import roles.classe.Classe;
 import graphique.Button;
-import graphique.StateGame;
 import graphique.InitGameState;
 import graphique.MapTest;
 import graphique.MapGameState;
@@ -44,11 +42,13 @@ class DragAndDropState extends BasicGameState {
 	private float mouseAbsoluteY;
 	private float _mouseMapX;
 	private float _mouseMapY;
-	private StateBasedGame game;
+	private boolean pause = false;
+	private boolean saveMode = false;
 	private ArrayList<UnitInfo> UIFs1;
 	private ArrayList<UnitInfo> UIFs2;
 	private int _scrollingSpeed = 15;
 	private float _zoom = 1;
+	private float alpha = 0;
 	//private static StateBasedGame game;
 	private Input _input;
 	int compt_clic = 0; //compteur de clic
@@ -56,24 +56,18 @@ class DragAndDropState extends BasicGameState {
 	int y1;
 	Case c01;
 	Case c02;
-	private ArrayList<GJoueur> _joueurs;
-	private int _tailleMapX=75;
-	private int _tailleMapY=45;
 	private Button _bouton_Jouer;
 	private Button _bouton_sauvegarder;
 	private Button _bouton_charger;
 	private Button _bouton_placerAutomate;
-	//private Button _bouton
+	private Button _bouton_confirmer;
 	
-	//private TextField textInput;
+	private TextField textInput;
 	private UnicodeFont ttf;
 	
 	//private static StateGame game;
 
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-		//World.BuildMap(40,57);
-		//map.init();	
-		this.game = game;
 		_input = container.getInput();
 		Image img = new Image("src/asset/sprites/ui_big_pieces.png");
 		Image normalImage = img.getSubImage(633, 23, 123, 27);
@@ -83,10 +77,10 @@ class DragAndDropState extends BasicGameState {
 		_bouton_sauvegarder = new Button(container, "Sauvegarder", container.getWidth()-150, 10, normalImage, overImage, downImage);
 		_bouton_charger = new Button(container, "Charger", container.getWidth()-150, 50, normalImage, overImage, downImage);
 		_bouton_placerAutomate = new Button(container, "Placer Automate", container.getWidth()-150, 90, normalImage, overImage, downImage);
-		setTrueTypeFont("src/asset/fonts/Berry Rotunda.ttf", 20);
-		//textInput = new TextField (container, ttf, 10, 400, 100, 40);
-		//UIFs = new ArrayList<UnitInfo>();	
-		//DragAndDropState.game = (StateGame) game;
+		_bouton_confirmer = new Button(container, "Confirmer", container.getWidth()-150, 130, normalImage, overImage, downImage);
+		setFont("Arial", 20);
+		textInput = new TextField (container, ttf, container.getWidth()/2-150, container.getHeight()/2-40, 300, 28);
+		textInput.setBorderColor(Color.white);
 	}
 
 	@Override
@@ -99,51 +93,75 @@ class DragAndDropState extends BasicGameState {
 			_bouton_charger.render(container, g);
 			_bouton_placerAutomate.render(container, g);
 			if (c01 != null) {
-				g.drawImage(Hud.playerBars, toX(c01.X()), toY(c01.Y()),toX(c01.X())+ MapGameState.TILESIZE*zoom(), toY(c01.Y())+ MapGameState.TILESIZE*zoom(), 440, 419, 560, 539);
+				g.drawImage(Hud.playerBars, -offsetMapX() + toX(c01.X()), -offsetMapY() + toY(c01.Y()),-offsetMapX() + toX(c01.X())+ MapGameState.TILESIZE*zoom(), -offsetMapY() + toY(c01.Y())+ MapGameState.TILESIZE*zoom(), 440, 419, 560, 539);
 			}
 				
-			
-			//Comportement bouton charger
-			if (_bouton_charger.isPressed()) {
-				File f = new File("src/asset/maps/coucou.map");
-				//background.draw();
+			if (!container.isPaused()) {
+				//Comportement bouton charger
+				if (_bouton_charger.isPressed()) {
+					container.setPaused(!pause);
+				}
 				
-				//this.map.render(g, _offsetMapX, _offsetMapY, zoom(), arg0.getWidth(), arg0.getHeight());
-				try
-				{
-				    ObjectInputStream ois = new ObjectInputStream (new FileInputStream (f));
-				    World.setMap((Carte)ois.readObject());
-				    ois.close();
+				//Comportement bouton sauvegarder
+				if (_bouton_sauvegarder.isPressed()) {
+					container.setPaused(!pause);
+					saveMode = true;
+					
 				}
-				catch (ClassNotFoundException exception)
-				{
-				    System.out.println ("Impossible de lire l'objet : " + exception.getMessage());
-				}
-				catch (IOException exception)
-				{
-				    System.out.println ("Erreur lors de l'écriture : " + exception.getMessage());
-				}
-				System.out.println("Chargement OK !");
-				map.init();
-			}
-			/*textInput.setFocus(true);
-			textInput.render(container, g);*/
-			
-			//Comportement bouton sauvegarder
-			if (_bouton_sauvegarder.isPressed()) {
-				
-				File f = new File("src/asset/maps/map.map");
-				try
-				{
-				    ObjectOutputStream oos = new ObjectOutputStream (new FileOutputStream (f));
-				    oos.writeObject (World.map());
-				    oos.close();
-				}
-				catch (IOException exception)
-				{
-				    System.out.println ("Erreur lors de l'écriture : " + exception.getMessage());
-				}
-				System.out.println("Sauvegarde OK !");
+			    if (alpha > 0) {
+			        alpha -= 0.01f;
+			    }
+			} else if (container.isPaused()) {
+			    Rectangle rect = new Rectangle (0, 0, container.getScreenWidth(), container.getScreenHeight());
+			    g.setColor(new Color (255, 255, 255, alpha));
+			    g.fill(rect);
+			    textInput.setFocus(true);
+			    _bouton_confirmer.render(container, g);
+
+			    if (alpha < 0.4f) {
+			        alpha += 0.01f;
+			    }
+			    textInput.setBackgroundColor(Color.black);
+			    textInput.render(container, g);
+			    
+			    if(_bouton_confirmer.isPressed()) {
+			    	String mapPath = "src/asset/maps/";
+			    	mapPath += textInput.getText();
+					File f = new File(mapPath);
+					if(saveMode) {
+						try
+						{
+						    ObjectOutputStream oos = new ObjectOutputStream (new FileOutputStream (f));
+						    oos.writeObject (World.map());
+						    oos.close();
+						}
+						catch (IOException exception)
+						{
+						    System.out.println ("Erreur lors de l'écriture : " + exception.getMessage());
+						}
+						System.out.println("Sauvegarde OK !");
+					} else {
+						try
+						{
+						    ObjectInputStream ois = new ObjectInputStream (new FileInputStream (f));
+						    World.setMap((Carte)ois.readObject());
+						    ois.close();
+						}
+						catch (ClassNotFoundException exception)
+						{
+						    System.out.println ("Impossible de lire l'objet : " + exception.getMessage());
+						}
+						catch (IOException exception)
+						{
+						    System.out.println ("Erreur lors de l'écriture : " + exception.getMessage());
+						}
+						System.out.println("Chargement OK !");
+						map.init();
+					}
+					textInput.setText("");
+					container.setPaused(false);
+					saveMode = false;
+			    }
 			}
 	}
 
@@ -154,6 +172,14 @@ class DragAndDropState extends BasicGameState {
 	    ttf.loadGlyphs();
 	}
 
+	public void setFont(String nom, int fontSize) throws SlickException {     
+		ttf = new UnicodeFont(new java.awt.Font(nom, java.awt.Font.PLAIN, fontSize));
+		ttf.addAsciiGlyphs();
+		ttf.addGlyphs(400,600);
+		ttf.getEffects().add(new ColorEffect());
+		ttf.loadGlyphs();
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.newdawn.slick.state.GameState#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
@@ -163,72 +189,63 @@ class DragAndDropState extends BasicGameState {
 		/*if (_input.isKeyPressed(Input.KEY_ESCAPE)) {
 			game.enterState(MainScreenGameState.ID);
 		}*/
-		_bouton_Jouer.update(container);
-		_bouton_sauvegarder.update(container);
-		_bouton_charger.update(container);
-		_bouton_placerAutomate.update(container);
-
-		//Configuration bouton placer automate
-		if (_bouton_placerAutomate.isDown()) {
-			/*File f = new File("src/asset/maps/map.map");
-			try
-			{
-			    ObjectOutputStream oos = new ObjectOutputStream (new FileOutputStream (f));
-			    oos.writeObject (World.map());
-			    oos.close();
-			}
-			catch (IOException exception)
-			{
-			    System.out.println ("Erreur lors de l'écriture : " + exception.getMessage());
-			}
-			System.out.println("Sauvegarde OK !");*/
-			try {
-				World.putAutomates(World.getPlayers().get(0).Automates(), 1, 1, World.getPlayers().get(0));
-				World.putAutomates(World.getPlayers().get(1).Automates(),World.map().largeur()-1, World.map().hauteur()-1, World.getPlayers().get(1));
-				map.init();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			map.init();
-		}
-		
-		//Configuration du bouton Jouer
-		if (_bouton_Jouer.isDown()) {
-				((MapGameState)InitGameState.game.getState(MapGameState.ID)).setGame(UIFs1, UIFs2, map);
-				InitGameState.game.enterState(MapGameState.ID);
+		_bouton_confirmer.update(container);
+		if (!container.isPaused()) {
+			_bouton_Jouer.update(container);
+			_bouton_sauvegarder.update(container);
+			_bouton_charger.update(container);
+			_bouton_placerAutomate.update(container);
+			
+	
+			//Configuration bouton placer automate
+			if (_bouton_placerAutomate.isDown()) {
+				try {
+					World.putAutomates(World.getPlayers().get(0).Automates(), 1, 1, World.getPlayers().get(0));
+					World.putAutomates(World.getPlayers().get(1).Automates(),World.map().largeur()-1, World.map().hauteur()-1, World.getPlayers().get(1));
+					map.init();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-		//Gestion des boutons en plein écran
-		//_bouton_Jouer.setLocation(arg0.getWidth()/2-150, arg0.getHeight()/2-50);
-		
-		
-		TypeCase t1 = null;
-		
-		if (compt_clic %2 == 0 && container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)){
-			System.out.print("11\n");
-			if (compt_clic == 2){
-				System.out.print("21\n");
-				t1 = c01.type();
-				c02 = World.Case(fromX(container.getInput().getAbsoluteMouseX()),fromY(container.getInput().getAbsoluteMouseY()));
-				c01.modifierCase(c02.type());
-				c02.modifierCase(t1);
-				compt_clic += 1;
+				map.init();
 			}
-			else {
-				System.out.print("22\n");
-				int x1 = fromX(container.getInput().getAbsoluteMouseX());
-				int y1 = fromY(container.getInput().getAbsoluteMouseY());
-				System.out.print(x1+"\n");
-				System.out.print(y1+"\n");
-				c01 = World.Case(x1, y1);
-				compt_clic+=1;
+			
+			//Configuration du bouton Jouer
+			if (_bouton_Jouer.isDown()) {
+					((MapGameState)InitGameState.game.getState(MapGameState.ID)).setGame(UIFs1, UIFs2, map);
+					InitGameState.game.enterState(MapGameState.ID);
+					}
+			//Gestion des boutons en plein écran
+			//_bouton_Jouer.setLocation(arg0.getWidth()/2-150, arg0.getHeight()/2-50);
+			
+			
+			TypeCase t1 = null;
+			
+			if (compt_clic %2 == 0 && container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)){
+				System.out.print("11\n");
+				if (compt_clic == 2){
+					System.out.print("21\n");
+					t1 = c01.type();
+					c02 = World.Case(fromX(container.getInput().getAbsoluteMouseX()),fromY(container.getInput().getAbsoluteMouseY()));
+					c01.modifierCase(c02.type());
+					c02.modifierCase(t1);
+					compt_clic += 1;
+				}
+				else {
+					System.out.print("22\n");
+					int x1 = fromX(container.getInput().getAbsoluteMouseX());
+					int y1 = fromY(container.getInput().getAbsoluteMouseY());
+					System.out.print(x1+"\n");
+					System.out.print(y1+"\n");
+					c01 = World.Case(x1, y1);
+					compt_clic+=1;
+				}
 			}
-		}
-		else if (compt_clic %2 == 1 && !container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)){
-			System.out.print("12\n");
-			if (compt_clic ==3) {compt_clic = 0;
-			c01=null;}
-			else {compt_clic +=1;}
+			else if (compt_clic %2 == 1 && !container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)){
+				System.out.print("12\n");
+				if (compt_clic ==3) {compt_clic = 0;
+				c01=null;}
+				else {compt_clic +=1;}
+			}
 		}
 		
 		//Gestion du scrolling de la map avec la souris/manette/clavier

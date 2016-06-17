@@ -44,7 +44,7 @@ public class ClassDialog extends JDialog {
 
 	public ClassDialog(JFrame parent, String title, boolean modal){
 	    super(parent, title, modal);
-	    this.setSize(850, 120);
+	    this.setSize(850, 170);
 	    this.setLocationRelativeTo(null);
 	    this.setResizable(false);
 	    this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
