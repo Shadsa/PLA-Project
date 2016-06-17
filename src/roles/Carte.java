@@ -96,7 +96,6 @@ public class Carte extends Vector<Vector<Case>> implements Serializable{
 			for(CaseAction c : ligne){
 				action_list.add(c);
 				dim++;
-				
 			}
 		dim = x + (int) Math.sqrt(dim);
 		for(CaseAction c : action_list){
@@ -123,10 +122,10 @@ public class Carte extends Vector<Vector<Case>> implements Serializable{
 				}
 		dim = (int) Math.sqrt(dim);
 		if (x+dim >= _largeur)
-			x = _largeur-(dim+1);
+			x = _largeur-(dim+1)-1;
 		xdeb = x;
 		if (y+dim >= _hauteur)
-			y = _hauteur-(dim+1);
+			y = _hauteur-(dim+1)-1;
 		dim += x;
 		for(CaseAction c : action_list){
 			try {

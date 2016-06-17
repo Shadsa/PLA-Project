@@ -49,7 +49,7 @@ public class Soigner extends Action {
 		
 
 		Personnage target = World.Case(destX, destY).Personnage();
-		System.out.print(pers.ID() + " soigne " + target.ID() + ".\n");
+		//System.out.print(pers.ID() + " soigne " + target.ID() + ".\n");
 		pers.setState(new States(Statut.INVOQUE, direction));
 		target.change_vie(+ pers.heal());
 	}
