@@ -57,7 +57,7 @@ public final class AvancerHasard extends Action {
 		int destX = pers.X() + ((direction == Cardinaux.OUEST)? (-1) : ((direction == Cardinaux.EST)? 1 : 0));
 		int destY = pers.Y() + ((direction == Cardinaux.NORD)? (-1) : ((direction == Cardinaux.SUD)? 1 : 0));
 		//if(World.isfree(destX, destY) && !(World.Case(destX, destY).type() instanceof Mur && pers.owner() != ((Construction) World.Case(destX, destY).type()).getOwner()))
-		if(p.check(World.Case(destX, destY)))
+		if(p.check(World.Case(destX, destY)) && !(World.Case(destX, destY).type() instanceof Mur && pers.owner() != ((Construction) World.Case(destX, destY).type()).getOwner()))
 		{
 			//System.out.println(pers.ID() + " j'avance vers le " + direction +" "+ destX +" "+ destY + " etat="+pers.etat());
 			if(World.Case(destX, destY).type() instanceof Arbre /*&& pers.classe().hard_walker()*/)
