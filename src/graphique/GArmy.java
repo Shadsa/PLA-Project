@@ -28,7 +28,7 @@ public class GArmy implements Observer {
 	public void addPersonnage(Personnage pers)
 	{
 		//TODO gerer vetements et apparence
-		_players.add(new Player(pers, TypeUnit.Human, TypeClothes.Civilian, this));
+		_players.add(new Player(pers, pers.owner().joueur().getType(pers), pers.owner().joueur().getClothes(pers), this));
 	}
 
 

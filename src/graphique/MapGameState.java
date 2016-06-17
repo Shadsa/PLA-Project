@@ -492,7 +492,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		this._offsetMapY = y;
 
 	}*/
-	public void setGame(ArrayList<UnitInfo> uIFs) {
+	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2) {
 		try {
 			MapTest.init();
 		} catch (SlickException e1) {
@@ -502,16 +502,38 @@ public class MapGameState extends BasicGameState implements Observer {
 		_GUnivers.get(0).initialise(World.Univers.get(0));
 		_GUnivers.get(0).addObserver(this);
 
-		ArrayList<Automate> autlist = new ArrayList<Automate>();
-		ArrayList<Classe> classes = new ArrayList<Classe>();
-		for(UnitInfo ui : uIFs)
+		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
+		//ArrayList<Automate> autlist2 = new ArrayList<Automate>();
+		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
+		//ArrayList<Classe> classes2 = new ArrayList<Classe>();
+		ArrayList<ArrayList<TypeUnit>> type_unit = new ArrayList<ArrayList<TypeUnit>>();
+		//ArrayList<TypeUnit> type_unit2 = new ArrayList<TypeUnit>();
+		ArrayList<ArrayList<TypeClothes>> type_clothes = new ArrayList<ArrayList<TypeClothes>>();
+		//ArrayList<TypeClothes> type_clothes2 = new ArrayList<TypeClothes>();
+		for(UnitInfo ui : uIFs1)
 		{
-			ui.automate.ajoute_transition(0, new Duel(Cardinaux.OUEST), new Ennemi(Cardinaux.OUEST), 0, 100);
-			autlist.add(ui.automate);
-			classes.add(ui.classe);
+			//nb++;
+			autlist.add(new ArrayList<Automate>());
+			classes.add(new ArrayList<Classe>());
+			type_unit.add(new ArrayList<TypeUnit>());
+			type_clothes.add(new ArrayList<TypeClothes>());
+			autlist.get(0).add(ui.automate);
+			classes.get(0).add(ui.classe);
+			type_unit.get(0).add(ui.color);
+			type_clothes.get(0).add(ui.clothes);
 		}
-		jjj.add(new Joueur("Human", autlist, classes));
-		jjj.add(new Joueur("Zombie", autlist, classes));
+		for(UnitInfo ui : uIFs2) {
+			autlist.add(new ArrayList<Automate>());
+			classes.add(new ArrayList<Classe>());
+			type_unit.add(new ArrayList<TypeUnit>());
+			type_clothes.add(new ArrayList<TypeClothes>());
+			autlist.get(1).add(ui.automate);
+			classes.get(1).add(ui.classe);
+			type_unit.get(1).add(ui.color);
+			type_clothes.get(1).add(ui.clothes);
+}
+		jjj.add(new Joueur("Human", autlist.get(0), classes.get(0), type_unit.get(0), type_clothes.get(0)));
+		jjj.add(new Joueur("Zombie", autlist.get(1), classes.get(1), type_unit.get(1), type_clothes.get(1)));
 		new Army(World.Univers.get(0), jjj.get(0));
 		new Army(World.Univers.get(0), jjj.get(1));
 
@@ -523,7 +545,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		//for(int i = 0; i < nb; i++)
 		World.Univers.get(0).army().get(0).createPersonnage(0, 1, 1);
 	//for(int i = 0; i < nb; i++)
-		World.Univers.get(0).army().get(1).createPersonnage(classes.size()-1, _tailleMapX-1, _tailleMapY-1);
+		World.Univers.get(0).army().get(1).createPersonnage(0, _tailleMapX-1, _tailleMapY-1);
 
 		for(Army a : World.Univers.get(0).army())
 		{
