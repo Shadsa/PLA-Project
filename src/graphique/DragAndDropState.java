@@ -222,8 +222,10 @@ class DragAndDropState extends BasicGameState {
 					System.out.print("21\n");
 					t1 = c01.type();
 					c02 = World.Case(fromX(container.getInput().getAbsoluteMouseX()),fromY(container.getInput().getAbsoluteMouseY()));
-					c01.modifierCase(c02.type());
-					c02.modifierCase(t1);
+					//c01.modifierCase(c02.type());
+					//c02.modifierCase(t1);
+					World.switchCase(c01, c02);
+					map.init();
 					compt_clic += 1;
 				}
 				else {
