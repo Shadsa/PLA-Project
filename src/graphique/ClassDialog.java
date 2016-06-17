@@ -124,6 +124,13 @@ public class ClassDialog extends JDialog {
 	    for(Bonus b : Bonus.values())
 	    	bonus.addItem(b);
 	    panBonus.add(bonus);
+	    
+	    JPanel panWalker = new JPanel();
+	    panWalker.setBorder(BorderFactory.createTitledBorder("Walker"));
+	    JComboBox<String> walker = new JComboBox<String>();
+	    walker.addItem("true");
+	    walker.addItem("false");
+	    panWalker.add(walker);
 
 	    JPanel panCost = new JPanel();
 	    panCost.setBorder(BorderFactory.createTitledBorder("Unit Cost"));
@@ -142,6 +149,7 @@ public class ClassDialog extends JDialog {
 	    content.add(panHeal);
 	    content.add(panArmor);
 	    content.add(panBonus);
+	    content.add(panWalker);
 	    content.add(panCost);
 
 
@@ -172,8 +180,14 @@ public class ClassDialog extends JDialog {
 		    	  classinfo.damage(Integer.parseInt(Damage.getText()));
 		    	  classinfo.bonus((Bonus) bonus.getSelectedItem());
 		    	  classinfo.loadDeckAction(StateGame.workshop.getDeckAction(action.getSelectedItem().toString()));
-		    	  classinfo.loadDeckCondition(StateGame.workshop.getDeckCondition(condition.getSelectedItem().toString()));	    	  
+		    	  classinfo.loadDeckCondition(StateGame.workshop.getDeckCondition(condition.getSelectedItem().toString()));	 
+		    	  if(walker.getSelectedItem().toString().equalsIgnoreCase("true")){
+		    		  classinfo.hard_walker(true);
+		    	  }else{
+		    		  classinfo.hard_walker(false);
+		    	  }
 		    	  Cost.setText(String.valueOf(classinfo.cost()));
+		    	  setVisible(false);
 		      }
 		    });
 

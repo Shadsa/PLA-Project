@@ -158,7 +158,10 @@ public class Classe implements Serializable {
 	}
 
 	public void costSet(){
-		_cost = 5*_HP + 8*_damage + 8*_heal + 10*_armor;
+		int bon =0;
+		if(_hard_walker)
+			bon = 100;
+		_cost = 5*_HP + 8*_damage + 8*_heal + 10*_armor + bon;
 	}
 
 	@Override
