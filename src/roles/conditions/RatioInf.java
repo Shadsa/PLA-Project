@@ -11,6 +11,6 @@ public class RatioInf extends Condition {
 	}
 	@Override
 	public boolean value(Personnage target) {
-		return target.owner().ratioUnit(target.classe())<_quantite;
+		return target.owner().ratioUnit(target.getUnite())<_quantite;
 	}
 }

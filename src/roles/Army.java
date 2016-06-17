@@ -37,16 +37,16 @@ public class Army extends Observable{
 		return newPers;
 	}
 
-	public int nbUnit(Classe c){
+	public int nbUnit(int type){
 		int count=0;
 		for(Personnage p : _personnages)
-			if(p.classe()==c)
+			if(p.getUnite()==type)
 				count++;
 		return count;
 	}
 
-	public int ratioUnit(Classe c){
-		return 100*(nbUnit(c)/_personnages.size());
+	public int ratioUnit(int type){
+		return (100*(nbUnit(type))/_personnages.size());
 	}
 
 	public World world() {

@@ -199,15 +199,13 @@ public class Carte extends Vector<Vector<Case>>{
 	
 	private void randomForet(){
 		Random R = new Random();
-		for(int y=0; y<_hauteur; y+=5){
-			for(int x=0; x<=_largeur; x+=5){
-				int roll = R.nextInt(20);
-				if(roll==0){
-					putForet(x,y,3);
-				}
-				else if(roll<=4){
-					putForet(x,y,2);
-				}
+		int incrX = (_largeur/5);
+		int incrY = (_hauteur/5);
+		for(int y=0; y<_hauteur; y+=incrY){
+			for(int x=0; x<=_largeur; x+=incrX){
+				int xF = Math.min(R.nextInt(incrX)+x,_largeur);
+				int yF = Math.min(R.nextInt(incrY)+y,_hauteur);
+				putForet(xF,yF,2);
 			}
 		}
 	}

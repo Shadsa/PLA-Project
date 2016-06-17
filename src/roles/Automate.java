@@ -91,7 +91,7 @@ public class Automate {
 		}
 
 		Collections.shuffle(choice);
-		System.out.println("Je vais " + _action.get(pers.etat()).get(choice.get(0)).action().getClass().getName());
+		//System.out.println("Je vais " + _action.get(pers.etat()).get(choice.get(0)).action().getClass().getName());
 		_action.get(pers.etat()).get(choice.get(0)).Act(pers);
 		pers.setetat(_next.get(pers.etat()).get(choice.get(0)));
 	}

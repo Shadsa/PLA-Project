@@ -4,6 +4,7 @@ import java.util.Observable;
 
 import cases.Case;
 import cases.CaseProperty;
+import cases.LibreCheck;
 import roles.States.Statut;
 import roles.classe.Classe;
 
@@ -131,38 +132,35 @@ public class Personnage extends Observable{
 	 * @return la direction vers laquelle se trouve la case la plus proche, ou null si aucune case n'a été trouvée
 	 */
 	public boolean find(CaseProperty c, Cardinaux direction, int maxRange){
+		CaseProperty p = new LibreCheck(this);
 		switch(direction){
 		case EST:
+			p.check(_owner.world().Case(X()+1, Y()));
 			for(int range=1;range<=maxRange;range++)
 				for(int y=-range;y<=range;y++)
-					if(_owner.world().Case(X()+range, Y()+y)!=null && c.check(_owner.world().Case(X()+range, Y()+y))){
-						System.out.println("Arbre à l'est :"+range+" "+y);
+					if(_owner.world().Case(X()+range, Y()+y)!=null && c.check(_owner.world().Case(X()+range, Y()+y)))
 						return true;
-					}
 			break;
 		case OUEST:
+			p.check(_owner.world().Case(X()-1, Y()));
 			for(int range=1;range<=maxRange;range++)
 				for(int y=-range;y<=range;y++)
-					if(_owner.world().Case(X()-range, Y()+y)!=null && c.check(_owner.world().Case(X()-range, Y()+y))){
-						System.out.println("Arbre à l'ouest :"+(-range)+" "+y);
+					if(_owner.world().Case(X()-range, Y()+y)!=null && c.check(_owner.world().Case(X()-range, Y()+y)))
 						return true;
-					}
 			break;
 		case SUD:
+			p.check(_owner.world().Case(X(), Y()+1));
 			for(int range=1;range<=maxRange;range++)
 				for(int x=-range;x<=range;x++)
-					if(_owner.world().Case(X()+x, Y()+range)!=null && c.check(_owner.world().Case(X()+x, Y()+range))){
-						System.out.println("Arbre au sud :"+x+" "+range);
+					if(_owner.world().Case(X()+x, Y()+range)!=null && c.check(_owner.world().Case(X()+x, Y()+range)))
 						return true;
-					}
 			break;
 		case NORD:
+			p.check(_owner.world().Case(X(), Y()-1));
 			for(int range=1;range<=maxRange;range++)
 				for(int x=-range;x<=range;x++)
-					if(_owner.world().Case(X()+x, Y()-range)!=null && c.check(_owner.world().Case(X()+x, Y()-range))){
-						System.out.println("Arbre au nord :"+x+" "+(-range));
+					if(_owner.world().Case(X()+x, Y()-range)!=null && c.check(_owner.world().Case(X()+x, Y()-range)))
 						return true;
-					}
 		}
 		return false;
 	}
@@ -194,5 +192,9 @@ public class Personnage extends Observable{
 	}
 	public void setFighting(boolean b) {
 		_fighting = b;
+	}
+	
+	public int getUnite(){
+		return this.owner().joueur().getUnite(this);
 	}
 }
