@@ -84,6 +84,14 @@ public abstract class World {
 		return _map.size();
 	}
 
+	public static Carte map() {
+		return _map;
+	}
+	
+	public static void setMap(Carte map) {
+		_map = map;
+	}
+
 	public static void putAutomate(Automate a, int x, int y, Joueur j) throws Exception{
 		_map.putAutomate(a, x, y, j);
 	}
@@ -94,6 +102,10 @@ public abstract class World {
 
 	public static ArrayList<Joueur> joueurs() {
 		return _joueurs;
+	}
+	
+	public static void resetJoueurs() {
+		_joueurs.clear();
 	}
 
 }

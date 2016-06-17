@@ -1,11 +1,12 @@
 package cases;
 
+import java.io.Serializable;
 import java.util.Observable;
 
 import roles.Personnage;
 import roles.action.Action;
 
-public abstract class Case extends Observable{
+public abstract class Case extends Observable implements Serializable{
 
 	Personnage _personnage;
 	protected int _x;

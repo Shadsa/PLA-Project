@@ -1,5 +1,7 @@
 package cases;
 
+import java.io.Serializable;
+
 import roles.Personnage;
 import roles.action.Action;
 import roles.action.AvancerHasard;

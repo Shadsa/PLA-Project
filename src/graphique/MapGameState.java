@@ -62,6 +62,7 @@ public class MapGameState extends BasicGameState {
 	private float _zoom = 1;
 	private StateGame game;
 	public static boolean debug = false;
+	private boolean enJeu = false;
 
 	//Boutons
 	private Button _bouton_fullScreen;
@@ -196,6 +197,15 @@ public class MapGameState extends BasicGameState {
 		        alpha -= 0.01f;
 		    }
 	    }
+		
+		//Configuration du bouton menu principal
+		if (_bouton_menuPrincipal.isPressed()) {
+			_input.clearMousePressedRecord();
+			World.resetJoueurs();
+			enJeu = false;
+			_joueurs.clear();
+			this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
+		}
 	}
 
 
@@ -392,11 +402,6 @@ public class MapGameState extends BasicGameState {
 				}
 			}
 
-			//Configuration du bouton menu principal
-			if (_bouton_menuPrincipal.isPressed()) {
-				_input.clearMousePressedRecord();
-				this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
-			}
 		}
 
 		//Configuration des boutons en plain écran
@@ -579,7 +584,6 @@ public class MapGameState extends BasicGameState {
 			type_clothes.get(0).add(ui.clothes);
 		}
 		for(UnitInfo ui : uIFs2) {
-			//nb++;
 			autlist.add(new ArrayList<Automate>());
 			classes.add(new ArrayList<Classe>());
 			type_unit.add(new ArrayList<TypeUnit>());
@@ -589,28 +593,20 @@ public class MapGameState extends BasicGameState {
 			type_unit.get(1).add(ui.color);
 			type_clothes.get(1).add(ui.clothes);
 		}
-		/*World.addPlayer(new Joueur("Joueur1", autlist.get(0), classes.get(0)));
-		World.addPlayer(new Joueur("Joueur2", autlist.get(1), classes.get(1)));
-
-		try {
-			World.putAutomates(World.getPlayers().get(0).Automates(), 1, 1, World.getPlayers().get(0));
-			World.putAutomates(World.getPlayers().get(1).Automates(),_tailleMapX-1, _tailleMapY-1, World.getPlayers().get(1));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
-		//for(int i = 0; i < nb; i++)
-		World.getPlayers().get(0).createPersonnage(0, 1, 1);
-		//for(int i = 0; i < nb; i++)
-		World.getPlayers().get(1).createPersonnage(0, _tailleMapX-1, _tailleMapY-1);
-
-		int i=0;
-		for(Joueur j : World.getPlayers())
-		{
-			_joueurs.add(new GJoueur(type_unit.get(i),type_clothes.get(i)));
-			j.addObserver(_joueurs.get(_joueurs.size()-1));
-			for(Personnage pers : j.getPersonnages())
-				_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
-			i++;
+		if (!enJeu) {
+			World.getPlayers().get(0).createPersonnage(0, 1, 1);
+			World.getPlayers().get(1).createPersonnage(0, _tailleMapX-1, _tailleMapY-1);
+			
+			int i=0;
+			for(Joueur j : World.getPlayers())
+			{
+				_joueurs.add(new GJoueur(type_unit.get(i),type_clothes.get(i)));
+				j.addObserver(_joueurs.get(_joueurs.size()-1));
+				for(Personnage pers : j.getPersonnages())
+					_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
+				i++;
+				enJeu = true;
+			}
 		}
 		/*try {
 			this.map.init();

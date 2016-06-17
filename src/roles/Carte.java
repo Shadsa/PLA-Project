@@ -1,12 +1,13 @@
 package roles;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 
 import cases.*;
 
-public class Carte extends Vector<Vector<Case>>{
+public class Carte extends Vector<Vector<Case>> implements Serializable{
 
 	private static final long serialVersionUID = -8840331548046134782L;
 	private int _hauteur;

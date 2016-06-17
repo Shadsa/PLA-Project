@@ -1,8 +1,10 @@
 package roles.action;
 
+import java.io.Serializable;
+
 import roles.Personnage;
 
-public abstract class Action {
+public abstract class Action implements Serializable{
 
 	private static int _nextId = 0;
 
