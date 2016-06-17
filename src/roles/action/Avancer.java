@@ -35,7 +35,7 @@ public final class Avancer extends Action {
 				World.Case(destX, destY).setPersonnage(pers);
 				pers.setState(new States(Statut.REVEAL, _direction));
 			}
-			else
+			else if(!(World.Case(destX, destY).type() instanceof Arbre))
 			{
 				//System.out.print(pers.ID() + "j'avance vers le " + _direction + destX + " " + destY + ".\n");
 				World.Case(destX, destY).setPersonnage(pers);

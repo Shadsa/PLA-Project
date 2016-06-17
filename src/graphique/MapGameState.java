@@ -1,6 +1,7 @@
 package graphique;
 
 import java.util.ArrayList;
+
 import jus.util.assertion.Require;
 
 import org.newdawn.slick.AppGameContainer;
@@ -14,12 +15,14 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
 import roles.classe.*;
 import roles.Automate;
 import roles.Cardinaux;
 import roles.Joueur;
 import roles.Personnage;
 import roles.World;
+import graphique.DragAndDropState;
 
 public class MapGameState extends BasicGameState {
 
@@ -53,11 +56,13 @@ public class MapGameState extends BasicGameState {
 	private float _offsetMapY = 0;
 
 	//Test
-	private MapTest map = new MapTest();
+	private MapTest map;
 	private Input _input;
 	private int _scrollingSpeed = 15;
 	private float _zoom = 1;
 	private StateGame game;
+	public static boolean debug = false;
+	private boolean enJeu = false;
 
 	//Boutons
 	private Button _bouton_fullScreen;
@@ -139,13 +144,16 @@ public class MapGameState extends BasicGameState {
 							p.render(g);
 
 		//Annule la translation pour l'affichage du string en dessous
-		g.resetTransform();
-		g.setColor(Color.white);
 		//Affichage de la position de la souris sur la map
-		g.drawString(mouse, 10, 50);
-		g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
-		g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 90);
-		g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 110);
+
+		if (debug) {
+			g.resetTransform();
+			g.setColor(Color.white);
+			g.drawString(mouse, 10, 50);
+			g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
+			g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 90);
+			g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 110);
+		}
 
 		//Affichage des huds
 		if(showhud) {
@@ -153,6 +161,8 @@ public class MapGameState extends BasicGameState {
 		}
 		
 		//Affichage ressources
+		g.resetTransform();
+		g.setColor(Color.white);
 		if (World.getPlayers().size() == 2) {
 			g.drawString("Ressources : J1 " + World.getPlayers().get(0).ressources(), 10, 250);
 			g.drawString("Ressources : J2 " + World.getPlayers().get(1).ressources(), 10, 270);
@@ -187,6 +197,15 @@ public class MapGameState extends BasicGameState {
 		        alpha -= 0.01f;
 		    }
 	    }
+		
+		//Configuration du bouton menu principal
+		if (_bouton_menuPrincipal.isPressed()) {
+			_input.clearMousePressedRecord();
+			World.resetJoueurs();
+			enJeu = false;
+			_joueurs.clear();
+			this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
+		}
 	}
 
 
@@ -383,11 +402,6 @@ public class MapGameState extends BasicGameState {
 				}
 			}
 
-			//Configuration du bouton menu principal
-			if (_bouton_menuPrincipal.isPressed()) {
-				_input.clearMousePressedRecord();
-				this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
-			}
 		}
 
 		//Configuration des boutons en plain écran
@@ -396,6 +410,11 @@ public class MapGameState extends BasicGameState {
 		_bouton_quitter.setLocation(container.getWidth()/2-62, container.getHeight()/2+80);
 		_bouton_reprendre.setLocation(container.getWidth()/2-62, container.getHeight()/2-80);
 		_bouton_menuPrincipal.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
+		
+		//Update du debug
+		if (_input.isKeyPressed(Input.KEY_F1)) {
+			debug = !debug;
+		}
 	}
 
 	/**
@@ -539,8 +558,10 @@ public class MapGameState extends BasicGameState {
 		this._offsetMapY = y;
 
 	}
-	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2) {
-
+	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2, MapTest map) {
+		
+		this.map = map;
+		
 		//int nb = 0;
 		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
 		//ArrayList<Automate> autlist2 = new ArrayList<Automate>();
@@ -563,7 +584,6 @@ public class MapGameState extends BasicGameState {
 			type_clothes.get(0).add(ui.clothes);
 		}
 		for(UnitInfo ui : uIFs2) {
-			//nb++;
 			autlist.add(new ArrayList<Automate>());
 			classes.add(new ArrayList<Classe>());
 			type_unit.add(new ArrayList<TypeUnit>());
@@ -573,33 +593,25 @@ public class MapGameState extends BasicGameState {
 			type_unit.get(1).add(ui.color);
 			type_clothes.get(1).add(ui.clothes);
 		}
-		World.addPlayer(new Joueur("Joueur1", autlist.get(0), classes.get(0)));
-		World.addPlayer(new Joueur("Joueur2", autlist.get(1), classes.get(1)));
-
-		try {
-			World.putAutomates(World.getPlayers().get(0).Automates(), 1, 1, World.getPlayers().get(0));
-			World.putAutomates(World.getPlayers().get(1).Automates(),_tailleMapX-1, _tailleMapY-1, World.getPlayers().get(1));
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (!enJeu) {
+			World.getPlayers().get(0).createPersonnage(0, 1, 1);
+			World.getPlayers().get(1).createPersonnage(0, _tailleMapX-1, _tailleMapY-1);
+			
+			int i=0;
+			for(Joueur j : World.getPlayers())
+			{
+				_joueurs.add(new GJoueur(type_unit.get(i),type_clothes.get(i)));
+				j.addObserver(_joueurs.get(_joueurs.size()-1));
+				for(Personnage pers : j.getPersonnages())
+					_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
+				i++;
+				enJeu = true;
+			}
 		}
-		//for(int i = 0; i < nb; i++)
-		World.getPlayers().get(0).createPersonnage(0, 1, 1);
-		//for(int i = 0; i < nb; i++)
-		World.getPlayers().get(1).createPersonnage(0, _tailleMapX-1, _tailleMapY-1);
-
-		int i=0;
-		for(Joueur j : World.getPlayers())
-		{
-			_joueurs.add(new GJoueur(type_unit.get(i),type_clothes.get(i)));
-			j.addObserver(_joueurs.get(_joueurs.size()-1));
-			for(Personnage pers : j.getPersonnages())
-				_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
-			i++;
-		}
-		try {
+		/*try {
 			this.map.init();
 		} catch (SlickException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 }

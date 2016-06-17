@@ -1,11 +1,12 @@
 package roles;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 
 import roles.classe.Classe;
 
-public class Joueur extends Observable{
+public class Joueur extends Observable implements Serializable {
 
 	private String _nom;
 	ArrayList<Personnage> _personnages;
@@ -42,6 +43,7 @@ public class Joueur extends Observable{
 			notifyObservers(newPers);
 			return newPers;
 		}
+		//TODO penser � faire planter ici
 		return null;
 	}
 

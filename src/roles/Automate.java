@@ -2,6 +2,7 @@
 
 package roles;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -13,7 +14,7 @@ import roles.States.Statut;
 import roles.action.Action;
 import roles.conditions.Condition;
 
-public class Automate {
+public class Automate implements Serializable{
 	ArrayList<ArrayList<CaseAction>> _action;
 	ArrayList<ArrayList<Condition>> _condition;
 	ArrayList<ArrayList<Integer>> _poids;

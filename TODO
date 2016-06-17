@@ -18,15 +18,16 @@ tester les val pour pas gÃ©nÃ©rer les erreurs dans le xml
 optimisation handler select poids avant test
 Mini map dessine dans une image
 couleur perso
+Debug animation HUD
 
 optimise voit arbre???
 pompe pendant attent
 
 
 Interface :
-Ne plus afficher le personnage dès qu'il est mort (après avoir cliqué dessus)
-La quantité de ressources des joueurs
-Nombre de personnages pour chaque unité
+Ne plus afficher le personnage dï¿½s qu'il est mort (aprï¿½s avoir cliquï¿½ dessus)
+La quantitï¿½ de ressources des joueurs
+Nombre de personnages pour chaque unitï¿½
 Temps
 
 Selection du personnage (et des vetements) dans unitDialog

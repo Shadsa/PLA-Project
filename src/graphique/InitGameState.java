@@ -44,9 +44,10 @@ public class InitGameState extends BasicGameState {
 	//Image de fond
 	private Image background;
 	//Le contrôleur des phases de jeu
-	private static StateGame game;
+	public static StateGame game;
 	private String sizeScreen;
 	private Input _input;
+	
 
 	//Bouton
 	private Button _bouton_jouer;
@@ -93,7 +94,7 @@ public class InitGameState extends BasicGameState {
 	}
 
 	/**
-	 * Contenons nous d'afficher l'image de fond.
+	 * Contentons nous d'afficher l'image de fond.
 	 * Le texte est placé approximativement au centre.
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
@@ -201,8 +202,8 @@ public class InitGameState extends BasicGameState {
 
 		//Configuration du bouton jouer
 		if (_bouton_jouer.isPressed()) {
-			((MapGameState)InitGameState.game.getState(MapGameState.ID)).setGame(UIFs1, UIFs2);
-				InitGameState.game.enterState(MapGameState.ID, "src/asset/musics/game_music.ogg");
+			((DragAndDropState)InitGameState.game.getState(DragAndDropState.ID)).setGame(UIFs1,UIFs2);
+				InitGameState.game.enterState(DragAndDropState.ID, "src/asset/musics/game_music.ogg");
 		}
 
 		//Configuration du bouton quitter

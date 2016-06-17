@@ -302,7 +302,9 @@ public static void sinit() throws SlickException
 				Personnage pers = (Personnage)obs;
 				_destX = MapGameState.toX(pers.X());
 				_destY = MapGameState.toX(pers.Y());
-				if(((States)obj).statut == Statut.MORT) {
+				if(((States)obj).statut == Statut.INVOQUE) {
+					soundEffect.invoquer().play(1.0f, 0.4f);
+				} else if(((States)obj).statut == Statut.MORT) {
 					_isDead = true;
 					if(_human == TypeUnit.Human)
 						soundEffect.dead_human().play();
