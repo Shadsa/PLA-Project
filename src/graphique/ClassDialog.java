@@ -44,7 +44,7 @@ public class ClassDialog extends JDialog {
 
 	public ClassDialog(JFrame parent, String title, boolean modal){
 	    super(parent, title, modal);
-	    this.setSize(850, 170);
+	    this.setSize(850, 180);
 	    this.setLocationRelativeTo(null);
 	    this.setResizable(false);
 	    this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -94,27 +94,27 @@ public class ClassDialog extends JDialog {
 
 	    //AJOUT DES ATTRIBUTS
 	    JPanel panHP = new JPanel();
-	    panHP.setBorder(BorderFactory.createTitledBorder("HP"));
+	    panHP.setBorder(BorderFactory.createTitledBorder("Santé"));
 	    HP = new JTextField();
 	    HP.setPreferredSize(new Dimension(50, 25));
 	    panHP.add(HP);
 
 	    JPanel panDamage = new JPanel();
-	    panDamage.setBorder(BorderFactory.createTitledBorder("Damage"));
+	    panDamage.setBorder(BorderFactory.createTitledBorder("Attaque"));
 	    Damage = new JTextField();
-	    Damage.setPreferredSize(new Dimension(50, 25));
+	    Damage.setPreferredSize(new Dimension(75, 25));
 	    panDamage.add(Damage);
 
 	    JPanel panHeal = new JPanel();
-	    panHeal.setBorder(BorderFactory.createTitledBorder("Heal Power"));
+	    panHeal.setBorder(BorderFactory.createTitledBorder("Puissance de soin"));
 	    Heal = new JTextField();
-	    Heal.setPreferredSize(new Dimension(50, 25));
+	    Heal.setPreferredSize(new Dimension(150, 25));
 	    panHeal.add(Heal);
 
 	    JPanel panArmor = new JPanel();
-	    panArmor.setBorder(BorderFactory.createTitledBorder("Armor"));
+	    panArmor.setBorder(BorderFactory.createTitledBorder("Armure"));
 	    Armor = new JTextField();
-	    Armor.setPreferredSize(new Dimension(50, 25));
+	    Armor.setPreferredSize(new Dimension(75, 25));
 	    panArmor.add(Armor);
 
 	    JPanel panBonus = new JPanel();
@@ -126,16 +126,17 @@ public class ClassDialog extends JDialog {
 	    panBonus.add(bonus);
 	    
 	    JPanel panWalker = new JPanel();
-	    panWalker.setBorder(BorderFactory.createTitledBorder("Walker"));
+	    panWalker.setBorder(BorderFactory.createTitledBorder("Traverse arbre"));
 	    JComboBox<String> walker = new JComboBox<String>();
-	    walker.addItem("true");
-	    walker.addItem("false");
+	    walker.addItem("oui");
+	    walker.addItem("non");
+	    panWalker.setPreferredSize(new Dimension(150, 55));
 	    panWalker.add(walker);
 
 	    JPanel panCost = new JPanel();
-	    panCost.setBorder(BorderFactory.createTitledBorder("Unit Cost"));
+	    panCost.setBorder(BorderFactory.createTitledBorder("Coût unité"));
 	    Cost = new JTextField();
-	    Cost.setPreferredSize(new Dimension(50, 25));
+	    Cost.setPreferredSize(new Dimension(100, 25));
 	    Cost.setEditable(false);
 	    panCost.add(Cost);
 
@@ -156,7 +157,7 @@ public class ClassDialog extends JDialog {
 
 	    JPanel control = new JPanel();
 	    JButton okBouton = new JButton("OK");
-	    JButton cost = new JButton("Cost");
+	    JButton cost = new JButton("Coût");
 
 	    okBouton.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent arg0) {
@@ -181,7 +182,7 @@ public class ClassDialog extends JDialog {
 		    	  classinfo.bonus((Bonus) bonus.getSelectedItem());
 		    	  classinfo.loadDeckAction(StateGame.workshop.getDeckAction(action.getSelectedItem().toString()));
 		    	  classinfo.loadDeckCondition(StateGame.workshop.getDeckCondition(condition.getSelectedItem().toString()));	 
-		    	  if(walker.getSelectedItem().toString().equalsIgnoreCase("true")){
+		    	  if(walker.getSelectedItem().toString().equalsIgnoreCase("oui")){
 		    		  classinfo.hard_walker(true);
 		    	  }else{
 		    		  classinfo.hard_walker(false);

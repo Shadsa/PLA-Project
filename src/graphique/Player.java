@@ -306,7 +306,7 @@ public static void sinit() throws SlickException
 					//soundEffect.invoquer().play(1.0f, 0.4f);
 				} else if(((States)obj).statut == Statut.MORT) {
 					_isDead = true;
-					if(_human == TypeUnit.Human)
+					if(_human == TypeUnit.Humain)
 						soundEffect.dead_human().play();
 					else
 						soundEffect.dead_skeleton().play();
