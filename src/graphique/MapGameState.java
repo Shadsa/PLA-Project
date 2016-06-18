@@ -45,6 +45,8 @@ public class MapGameState extends BasicGameState {
 	private float _mouseMapY;
 	private boolean showhud = false;
 	private float alpha = 0;
+	private int secondeTime = 0;
+	private int minuteTime = 0;
 
 	public static Player _target = null;
 	public static Personnage _targetp = null;
@@ -133,6 +135,8 @@ public class MapGameState extends BasicGameState {
 		g.scale(_zoom, _zoom);
 		this.map.render(g, _offsetMapX, _offsetMapY, zoom(), container.getWidth(), container.getHeight());
 		
+		
+		
 		//Affichage des personnages
 		for(graphique.GJoueur j : _joueurs)
 			for(Player p : j.getPersonnage())
@@ -141,8 +145,13 @@ public class MapGameState extends BasicGameState {
 						if(p.getY()-TILESIZE < (_offsetMapY + container.getHeight())/zoom())
 							p.render(g);
 
-		//Annule la translation pour l'affichage du string en dessous
-		//Affichage de la position de la souris sur la map
+		
+		//Affichage des huds
+		if(showhud && !_target.isDead()) {
+			this.hud.render(g);
+		}
+		
+		//Affichage du mdoe debug
 		if (debug) {
 			g.resetTransform();
 			g.setColor(Color.white);
@@ -152,11 +161,6 @@ public class MapGameState extends BasicGameState {
 			g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 110);
 		}
 
-		//Affichage des huds
-		if(showhud && !_target.isDead()) {
-			this.hud.render(g);
-		}
-		
 		//Affichage détails des joueurs
 		g.resetTransform();
 		g.setColor(Color.white);
@@ -206,6 +210,14 @@ public class MapGameState extends BasicGameState {
 			_joueurs.clear();
 			this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
 		}
+		
+		//Affichage compteur de tours
+		g.resetTransform();
+		if (secondeTime == 60) {
+			secondeTime = 0;
+			minuteTime++;
+		}
+		g.drawString("Temps de jeu : " + minuteTime + ":" + secondeTime, 10, 330);
 	}
 
 	/**
@@ -233,6 +245,7 @@ public class MapGameState extends BasicGameState {
 		{
 			_time -= Tick;
 			World.nextTurn();
+			secondeTime++;
 			for(TypeUnit t : TypeUnit.values()){
 				for(Animation anim : t.animations)
 					anim.restart();
@@ -361,15 +374,18 @@ public class MapGameState extends BasicGameState {
 			 container.setPaused(!container.isPaused());
 		}
 
-		//Configuration du bouton quitter
+
 		if (container.isPaused()) {
 
 			//Configuration du bouton pause
 			 if (_bouton_reprendre.isPressed()) {
 				 container.setPaused(!container.isPaused());
 			}
-
+			 
+			//Configuration du bouton quitter
 			if (_bouton_quitter.isPressed()) {
+				secondeTime = 0;
+				minuteTime = 0;
 				container.exit();
 			}
 
@@ -409,8 +425,9 @@ public class MapGameState extends BasicGameState {
 		_bouton_menuPrincipal.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
 		
 		//Update du debug
-		if (_input.isKeyPressed(Input.KEY_F1)) {
+		if (_input.isKeyPressed(Input.KEY_F3)) {
 			debug = !debug;
+			container.setShowFPS(debug);
 		}
 	}
 
