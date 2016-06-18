@@ -107,5 +107,9 @@ public abstract class World {
 	public static void resetJoueurs() {
 		_joueurs.clear();
 	}
+	
+	public static void switchCase(Case c1, Case c2){
+		_map.switchCase(c1, c2);
+	}
 
 }

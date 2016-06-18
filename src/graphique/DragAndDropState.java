@@ -42,6 +42,8 @@ class DragAndDropState extends BasicGameState {
 	private float mouseAbsoluteY;
 	private float _mouseMapX;
 	private float _mouseMapY;
+	private int mapSizeX;
+	private int mapSizeY;
 	private boolean pause = false;
 	private boolean saveMode = false;
 	private ArrayList<UnitInfo> UIFs1;
@@ -85,84 +87,88 @@ class DragAndDropState extends BasicGameState {
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-			//Affichage de la map
-			this.map.render(g, _offsetMapX, _offsetMapY, zoom(), container.getWidth(), container.getHeight());
-			g.resetTransform();
-			_bouton_Jouer.render(container, g);
-			_bouton_sauvegarder.render(container, g);
-			_bouton_charger.render(container, g);
-			_bouton_placerAutomate.render(container, g);
-			if (c01 != null) {
-				g.drawImage(Hud.playerBars, -offsetMapX() + toX(c01.X()), -offsetMapY() + toY(c01.Y()),-offsetMapX() + toX(c01.X())+ MapGameState.TILESIZE*zoom(), -offsetMapY() + toY(c01.Y())+ MapGameState.TILESIZE*zoom(), 440, 419, 560, 539);
+		//Affichage de la map
+		g.translate(-_offsetMapX, -_offsetMapY);
+		g.scale(_zoom, _zoom);
+		this.map.render(g, _offsetMapX, _offsetMapY, zoom(), container.getWidth(), container.getHeight());
+		g.resetTransform();
+		_bouton_Jouer.render(container, g);
+		_bouton_sauvegarder.render(container, g);
+		_bouton_charger.render(container, g);
+		_bouton_placerAutomate.render(container, g);
+		if (c01 != null) {
+			g.drawImage(Hud.playerBars, -offsetMapX() + toX(c01.X()), -offsetMapY() + toY(c01.Y()),-offsetMapX() + toX(c01.X())+ MapGameState.TILESIZE*zoom(), -offsetMapY() + toY(c01.Y())+ MapGameState.TILESIZE*zoom(), 440, 419, 560, 539);
+		}
+			
+		if (!container.isPaused()) {
+			//Comportement bouton charger
+			if (_bouton_charger.isPressed()) {
+				container.setPaused(!pause);
 			}
+			
+			//Comportement bouton sauvegarder
+			if (_bouton_sauvegarder.isPressed()) {
+				container.setPaused(!pause);
+				saveMode = true;
 				
-			if (!container.isPaused()) {
-				//Comportement bouton charger
-				if (_bouton_charger.isPressed()) {
-					container.setPaused(!pause);
-				}
-				
-				//Comportement bouton sauvegarder
-				if (_bouton_sauvegarder.isPressed()) {
-					container.setPaused(!pause);
-					saveMode = true;
-					
-				}
-			    if (alpha > 0) {
-			        alpha -= 0.01f;
-			    }
-			} else if (container.isPaused()) {
-			    Rectangle rect = new Rectangle (0, 0, container.getScreenWidth(), container.getScreenHeight());
-			    g.setColor(new Color (255, 255, 255, alpha));
-			    g.fill(rect);
-			    textInput.setFocus(true);
-			    _bouton_confirmer.render(container, g);
+			}
+		    if (alpha > 0) {
+		        alpha -= 0.01f;
+		    }
+		} else if (container.isPaused()) {
+		    Rectangle rect = new Rectangle (0, 0, container.getScreenWidth(), container.getScreenHeight());
+		    g.setColor(new Color (255, 255, 255, alpha));
+		    g.fill(rect);
+		    textInput.setFocus(true);
+		    _bouton_confirmer.render(container, g);
 
-			    if (alpha < 0.4f) {
-			        alpha += 0.01f;
-			    }
-			    textInput.setBackgroundColor(Color.black);
-			    textInput.render(container, g);
-			    
-			    if(_bouton_confirmer.isPressed()) {
-			    	String mapPath = "src/asset/maps/";
-			    	mapPath += textInput.getText();
-					File f = new File(mapPath);
-					if(saveMode) {
-						try
-						{
-						    ObjectOutputStream oos = new ObjectOutputStream (new FileOutputStream (f));
-						    oos.writeObject (World.map());
-						    oos.close();
-						}
-						catch (IOException exception)
-						{
-						    System.out.println ("Erreur lors de l'écriture : " + exception.getMessage());
-						}
-						System.out.println("Sauvegarde OK !");
-					} else {
-						try
-						{
-						    ObjectInputStream ois = new ObjectInputStream (new FileInputStream (f));
-						    World.setMap((Carte)ois.readObject());
-						    ois.close();
-						}
-						catch (ClassNotFoundException exception)
-						{
-						    System.out.println ("Impossible de lire l'objet : " + exception.getMessage());
-						}
-						catch (IOException exception)
-						{
-						    System.out.println ("Erreur lors de l'écriture : " + exception.getMessage());
-						}
-						System.out.println("Chargement OK !");
-						map.init();
+		    if (alpha < 0.4f) {
+		        alpha += 0.01f;
+		    }
+		    textInput.setBackgroundColor(Color.black);
+		    textInput.render(container, g);
+		    
+		    if(_bouton_confirmer.isPressed() || _input.isKeyPressed(Input.KEY_ENTER)) {
+		    	String mapPath = "src/asset/maps/";
+		    	mapPath += textInput.getText();
+				File f = new File(mapPath);
+				if(saveMode) {
+					try
+					{
+					    ObjectOutputStream oos = new ObjectOutputStream (new FileOutputStream (f));
+					    oos.writeObject (World.map());
+					    oos.close();
 					}
-					textInput.setText("");
-					container.setPaused(false);
-					saveMode = false;
-			    }
-			}
+					catch (IOException exception)
+					{
+					    System.out.println ("Erreur lors de l'écriture : " + exception.getMessage());
+					}
+					System.out.println("Sauvegarde OK !");
+				} else {
+					try
+					{
+					    ObjectInputStream ois = new ObjectInputStream (new FileInputStream (f));
+					    World.setMap((Carte)ois.readObject());
+					    ois.close();
+					}
+					catch (ClassNotFoundException exception)
+					{
+					    System.out.println ("Impossible de lire l'objet : " + exception.getMessage());
+					}
+					catch (IOException exception)
+					{
+					    System.out.println ("Erreur lors de l'écriture : " + exception.getMessage());
+					}
+					System.out.println("Chargement OK !");
+					map.init();
+					mapSizeX = World.map().largeur() * MapGameState.TILESIZE;
+					mapSizeY = World.map().hauteur() * MapGameState.TILESIZE;
+				}
+				textInput.setText("");
+				container.setPaused(false);
+				saveMode = false;
+		    }
+		}
 	}
 
 	public void setTrueTypeFont(String chemin, int fontSize) throws SlickException {
@@ -192,7 +198,8 @@ class DragAndDropState extends BasicGameState {
 			_bouton_charger.update(container);
 			_bouton_placerAutomate.update(container);
 			
-	
+			
+			
 			//Configuration bouton placer automate
 			if (_bouton_placerAutomate.isDown()) {
 				try {
@@ -210,24 +217,15 @@ class DragAndDropState extends BasicGameState {
 					((MapGameState)InitGameState.game.getState(MapGameState.ID)).setGame(UIFs1, UIFs2, map);
 					InitGameState.game.enterState(MapGameState.ID);
 					}
-			//Gestion des boutons en plein écran
-			//_bouton_Jouer.setLocation(arg0.getWidth()/2-150, arg0.getHeight()/2-50);
-			
-			
-			TypeCase t1 = null;
-			
+
 			if (compt_clic %2 == 0 && container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)){
-				System.out.print("11\n");
 				if (compt_clic == 2){
-					System.out.print("21\n");
-					t1 = c01.type();
 					c02 = World.Case(fromX(container.getInput().getAbsoluteMouseX()),fromY(container.getInput().getAbsoluteMouseY()));
-					c01.modifierCase(c02.type());
-					c02.modifierCase(t1);
+					World.switchCase(c01, c02);
+					map.init();
 					compt_clic += 1;
 				}
 				else {
-					System.out.print("22\n");
 					int x1 = fromX(container.getInput().getAbsoluteMouseX());
 					int y1 = fromY(container.getInput().getAbsoluteMouseY());
 					System.out.print(x1+"\n");
@@ -260,33 +258,39 @@ class DragAndDropState extends BasicGameState {
 
 				//Gestion du zoom
 				//Zoom avant
-				if (_input.isKeyDown(201))
-				{
+				if (_input.isKeyDown(201)) {
 					setZoom(zoom() * 1.03f);
-					setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
-					setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
+					/*setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
+					setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);*/
 				}
 				
 				//Zoom arrière
-				if (_input.isKeyDown(209) && zoom() > 0) {
-						setZoom(zoom() / 1.03f);
-						if (zoom() < 0) {
-							setZoom(0);
-						}
-						setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
-						setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
+				if (_input.isKeyDown(209) && (mapSizeX * zoom() > container.getWidth() || mapSizeY * zoom() > container.getHeight())) {
+					setZoom(zoom() / 1.03f);
+					/*setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
+					setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);*/
 					}
 				
 				
 	}
 	
+	/**
+	 * Notification que l'on entre dans cette boucle de jeu.
+	 * @param container Le contexte dans lequels les composants sont crées et affichés.
+	 * @param game Le contrôleur des différentes boucles de jeu.
+	 */
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+		mapSizeX = World.map().largeur() * MapGameState.TILESIZE;
+		mapSizeY = World.map().hauteur() * MapGameState.TILESIZE;
+	}
+	
 	public int fromX(float x)
 	{
-		return (int) ((int) (x - _offsetMapX) / (MapGameState.TILESIZE*zoom()));
+		return (int) ((int) (x + _offsetMapX) / (MapGameState.TILESIZE * zoom()));
 	}
 	public int fromY(float y)
 	{
-		return (int) ((int) (y - _offsetMapY) / (MapGameState.TILESIZE*zoom()));
+		return (int) ((int) (y + _offsetMapY) / (MapGameState.TILESIZE * zoom()));
 	}
 	
 	public void keyPressed(int key, char c) {
@@ -294,11 +298,11 @@ class DragAndDropState extends BasicGameState {
 	
 	public float toX(int x)
 	{
-		return x * MapGameState.TILESIZE*zoom();
+		return x * MapGameState.TILESIZE * zoom();
 	}
 	public float toY(int y)
 	{
-		return y * MapGameState.TILESIZE*zoom();
+		return y * MapGameState.TILESIZE * zoom();
 	}
 
 	@Override
@@ -337,8 +341,6 @@ class DragAndDropState extends BasicGameState {
 		this.UIFs1 = uIFs1;
 		this.UIFs2 = uIFs2;
 
-
-
 		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
 		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
 		ArrayList<ArrayList<TypeUnit>> type_unit = new ArrayList<ArrayList<TypeUnit>>();
@@ -356,7 +358,6 @@ class DragAndDropState extends BasicGameState {
 			type_clothes.get(0).add(ui.clothes);
 		}
 		for(UnitInfo ui : uIFs2) {
-			//nb++;
 			autlist.add(new ArrayList<Automate>());
 			classes.add(new ArrayList<Classe>());
 			type_unit.add(new ArrayList<TypeUnit>());

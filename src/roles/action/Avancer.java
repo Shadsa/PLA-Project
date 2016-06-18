@@ -2,7 +2,9 @@ package roles.action;
 
 import cases.Arbre;
 import cases.CaseProperty;
+import cases.Construction;
 import cases.LibreCheck;
+import cases.Mur;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;
@@ -24,7 +26,7 @@ public final class Avancer extends Action {
 		CaseProperty p = new LibreCheck(pers);
 		int destX = pers.X() + ((_direction == Cardinaux.OUEST)? (-1) : ((_direction == Cardinaux.EST)? 1 : 0));
 		int destY = pers.Y() + ((_direction == Cardinaux.NORD)? (-1) : ((_direction == Cardinaux.SUD)? 1 : 0));
-		if(p.check(World.Case(destX, destY)))
+		if(p.check(World.Case(destX, destY)) && !(World.Case(destX, destY).type() instanceof Mur && pers.owner() != ((Construction) World.Case(destX, destY).type()).getOwner()))
 		{
 			if(World.Case(destX, destY).type() instanceof Arbre )
 			{

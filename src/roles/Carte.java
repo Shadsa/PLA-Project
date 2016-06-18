@@ -145,7 +145,7 @@ public class Carte extends Vector<Vector<Case>> implements Serializable{
 	}
 	
 	private void putForet(int x, int y, int facteur){
-		if(Case(x,y)!=null && Case(x,y).type().franchissable() && Case(x,y).type().value() != Arbre.getInstance().value()){
+		if(Case(x,y)!=null && (x>0 || y>_hauteur/2) && (x<_largeur-1 || y<_hauteur/2) && (y>0 || x>_largeur/2) && (y<_hauteur-1 || x<_largeur/2) && Case(x,y).type().franchissable() && Case(x,y).type().value() != Arbre.getInstance().value()){
 			Random R = new Random();
 			this.modifierCase(Arbre.getInstance(), x, y);
 			if(facteur==1){
@@ -205,8 +205,8 @@ public class Carte extends Vector<Vector<Case>> implements Serializable{
 	
 	private void randomForet(){
 		Random R = new Random();
-		int incrX = (_largeur/5);
-		int incrY = (_hauteur/5);
+		int incrX = (_largeur>=_hauteur)?15:9;//(_largeur/5);
+		int incrY = (_largeur>=_hauteur)?9:15;//(_hauteur/5);
 		for(int y=0; y<_hauteur; y+=incrY){
 			for(int x=0; x<=_largeur; x+=incrX){
 				int xF = Math.min(R.nextInt(incrX)+x,_largeur);
@@ -217,7 +217,7 @@ public class Carte extends Vector<Vector<Case>> implements Serializable{
 	}
 	
 	private void putLac(int x, int y, int facteur){
-		if(Case(x,y)!=null && x>2 && x<_largeur-2 && Case(x,y).type().franchissable() && !(Case(x,y).type() instanceof Eau)){
+		if(Case(x,y)!=null && (x>1 || y>_hauteur/2) && (x<_largeur-2 || y<_hauteur/2) && (y>1 || x>_largeur/2) && (y<_hauteur-2 || x<_largeur/2) && Case(x,y).type().franchissable() && !(Case(x,y).type() instanceof Eau)){
 			Random R = new Random();
 			
 			if(facteur>0){ 
@@ -275,8 +275,8 @@ public class Carte extends Vector<Vector<Case>> implements Serializable{
 	
 	private void randomLac(){
 		Random R = new Random();
-		for(int y=0; y<_hauteur; y+=5){
-			for(int x=0; x<=_largeur; x+=5){
+		for(int y=5; y<_hauteur-5; y+=5){
+			for(int x=5; x<=_largeur-5; x+=5){
 				int roll = R.nextInt(20);
 				if(roll==0){
 					putLac(x,y,5);
@@ -285,7 +285,48 @@ public class Carte extends Vector<Vector<Case>> implements Serializable{
 		}
 	}
 	
-	
+	public void switchCase(Case c1, Case c2){
+		if(c1 == null || c2 == null || (c1 instanceof Terrain && c2 instanceof Terrain)){
+			return;
+		}
+		int x1 = c1.X();
+		int x2 = c2.X();
+		int y1 = c1.Y();
+		int y2 = c2.Y();
+		
+		if(c1 instanceof CaseAction)
+			try {
+				putCaseAction(((CaseAction) c1),x2,y2,((CaseAction) c1).owner());
+			} catch (Exception e) {
+			    	e.printStackTrace();
+				System.out.println("bug1");
+				return;
+			}
+		else{
+		    try {
+			putCase(new Terrain(x2,y2,c1.type()));
+		    } catch (Exception e) {
+			e.printStackTrace();
+		    }
+		}
+		
+		if(c2 instanceof CaseAction)
+			try {
+				putCaseAction(((CaseAction) c2),x1,y1,((CaseAction) c2).owner());
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("bug2");
+				return;
+			}
+		else{
+		    try {
+			putCase(new Terrain(x1,y1,c2.type()));
+		    } catch (Exception e) {
+			e.printStackTrace();
+		    }
+		}
+		
+	}
 	
 	
 	
