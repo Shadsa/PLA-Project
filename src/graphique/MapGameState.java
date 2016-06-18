@@ -151,25 +151,9 @@ public class MapGameState extends BasicGameState {
 			this.hud.render(g);
 		}
 		
-		//Affichage du mdoe debug
-		if (debug) {
-			g.resetTransform();
-			g.setColor(Color.white);
-			g.drawString(mouse, 10, 50);
-			g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
-			g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 90);
-			g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 110);
-		}
+		affichageDebug(g);
 
-		//Affichage détails des joueurs
-		g.resetTransform();
-		g.setColor(Color.white);
-		if (World.getPlayers().size() == 2) {
-			g.drawString("Ressources : J1 " + World.getPlayers().get(0).ressources(), 10, 250);
-			g.drawString("Ressources : J2 " + World.getPlayers().get(1).ressources(), 10, 270);
-			g.drawString("Nb personnages : " + World.getPlayers().get(0).getPersonnages().size(), 10, 290);
-			g.drawString("Nb personnages : " + World.getPlayers().get(1).getPersonnages().size(), 10, 310);
-		}
+		affichageDetailJeu(g);
 		
 		//Affichage message de fin
 		if (World.fini) {
@@ -210,14 +194,6 @@ public class MapGameState extends BasicGameState {
 			_joueurs.clear();
 			this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
 		}
-		
-		//Affichage compteur de tours
-		g.resetTransform();
-		if (secondeTime == 60) {
-			secondeTime = 0;
-			minuteTime++;
-		}
-		g.drawString("Temps de jeu : " + minuteTime + ":" + secondeTime, 10, 330);
 	}
 
 	/**
@@ -262,77 +238,7 @@ public class MapGameState extends BasicGameState {
 		_mouseMapY = (mouseAbsoluteY + offsetMapY()) / zoom();
 		mouse = "MouseAbsoluteX : " + mouseAbsoluteX + ", MouseAbsoluteY : " + mouseAbsoluteY;
 
-		//Activer ou non l'attente
-		if (_input.isKeyDown(Input.KEY_W)){
-			if (TickWait){
-				TickWait=false;
-				AnimTick = Tick;
-			}
-			else{
-				TickWait=true;
-				AnimTick = Tick*6/10;
-			}
-			MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
-		}
-
-		//Gestion de la vitesse du jeu
-		//Acc�l�rer
-		if (_input.isKeyDown(Input.KEY_N) && Tick > 125){
-			if (Tick > 1050 ){
-				Tick=Tick-100;
-				if(TickWait)
-					AnimTick = Tick*6/10;
-				else
-					AnimTick = Tick;
-				MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
-			}
-			else{
-				if (Tick > 250 ){
-					Tick=Tick-50;
-					if(TickWait)
-						AnimTick = Tick*6/10;
-					else
-						AnimTick = Tick;
-					MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
-				}
-				else{
-					Tick=Tick-25;
-					if(TickWait)
-						AnimTick = Tick*6/10;
-					else
-						AnimTick = Tick;
-					MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
-				}
-			}
-		}
-		//Ralentir
-		if (_input.isKeyDown(Input.KEY_B) && Tick < 4000){
-			if (Tick < 950){
-				Tick = Tick+50;
-				if(TickWait)
-					AnimTick = Tick*6/10;
-				else
-					AnimTick = Tick;
-				MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
-			}
-			else{
-				Tick = Tick+100;
-				if(TickWait)
-					AnimTick = Tick*6/10;
-				else
-					AnimTick = Tick;
-				MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
-			}
-		}
-		//R�-initialiser
-		if (_input.isKeyDown(Input.KEY_V)){
-			Tick = 1000;
-			if(TickWait)
-				AnimTick = Tick*6/10;
-			else
-				AnimTick = Tick;
-			MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
-		}
+		gestionVitesseDeJeu(Input.KEY_B, Input.KEY_N, Input.KEY_W, Input.KEY_V);
 
 		//Gestion du scrolling de la map avec la souris/manette/clavier
 		if (mouseAbsoluteY == container.getHeight() || _input.isControllerDown(0) || _input.isKeyDown(208)) {
@@ -347,27 +253,8 @@ public class MapGameState extends BasicGameState {
 		if (mouseAbsoluteY == 1 || _input.isControllerUp(0) || _input.isKeyDown(200)) {
 			setOffsetMapY(offsetMapY() - _scrollingSpeed);
 		}
-
-		//Gestion du zoom
-		//Zoom avant
-		if (_input.isKeyDown(201))
-		{
-			setZoom(zoom() * 1.03f);
-			setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
-			setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
-		}
 		
-		//Zoom arrière
-		if (World.map().largeur() * TILESIZE * zoom() > container.getWidth() && World.map().hauteur() * TILESIZE * zoom() > container.getHeight()) {
-			if (_input.isKeyDown(209) && zoom() > 0) {
-				setZoom(zoom() / 1.03f);
-				if (zoom() < 0) {
-					setZoom(0);
-				}
-				setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
-				setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
-			}
-		}
+		gestionZoomClavier(container, Input.KEY_NEXT, Input.KEY_PRIOR, 1.03f);
 
 		//Configuration de la pause
 		if (_input.isKeyPressed(Input.KEY_ESCAPE)) {
@@ -416,13 +303,8 @@ public class MapGameState extends BasicGameState {
 			}
 
 		}
-
-		//Configuration des boutons en plain écran
-		_bouton_fullScreen.setLocation(container.getWidth()/2-62, container.getHeight()/2);
-		_bouton_son.setLocation(container.getWidth()/2-62, container.getHeight()/2-40);
-		_bouton_quitter.setLocation(container.getWidth()/2-62, container.getHeight()/2+80);
-		_bouton_reprendre.setLocation(container.getWidth()/2-62, container.getHeight()/2-80);
-		_bouton_menuPrincipal.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
+		
+		autoDeplacementBouton(container);
 		
 		//Update du debug
 		if (_input.isKeyPressed(Input.KEY_F3)) {
@@ -557,6 +439,166 @@ public class MapGameState extends BasicGameState {
 		this._offsetMapY = y;
 
 	}
+	
+	/**
+	 * Affichage des informations pour le debug. Il n'est pas affiché de base.
+	 * @param g Le contexte graphique utilisé pour l'affichage des informations.
+	 */
+	public void affichageDebug(Graphics g) {
+		if (debug) {
+			g.resetTransform();
+			g.setColor(Color.white);
+			g.drawString(mouse, 10, 30);
+			g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 50);
+			g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 70);
+			g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 90);
+		}
+	}
+	
+	/**
+	 * Gestion de la vitesse de jeu pendant la partie.
+	 * @param ralentir Code de la touche choisie pour ralentir le jeu.
+	 * @param accelerer Code de la touche choisie pour accélerer le jeu.
+	 * @param attente Code de la touche choisie pour activer/désactiver l'attente entre chaque tour le jeu.
+	 * @param reinit Code de la touche choisie pour réinitialiser la vitesse du jeu.
+	 */
+	public void gestionVitesseDeJeu(int ralentir, int accelerer, int attente, int reinit) {
+		//Activer ou non l'attente
+		if (_input.isKeyDown(attente)){
+			if (TickWait){
+				TickWait=false;
+				AnimTick = Tick;
+			}
+			else{
+				TickWait=true;
+				AnimTick = Tick*6/10;
+			}
+			MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
+		}
+
+		//Gestion de la vitesse du jeu
+		//Acc�l�rer
+		if (_input.isKeyDown(accelerer) && Tick > 125){
+			if (Tick > 1050 ){
+				Tick=Tick-100;
+				if(TickWait)
+					AnimTick = Tick*6/10;
+				else
+					AnimTick = Tick;
+				MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
+			}
+			else{
+				if (Tick > 250 ){
+					Tick=Tick-50;
+					if(TickWait)
+						AnimTick = Tick*6/10;
+					else
+						AnimTick = Tick;
+					MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
+				}
+				else{
+					Tick=Tick-25;
+					if(TickWait)
+						AnimTick = Tick*6/10;
+					else
+						AnimTick = Tick;
+					MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
+				}
+			}
+		}
+		//Ralentir
+		if (_input.isKeyDown(ralentir) && Tick < 4000){
+			if (Tick < 950){
+				Tick = Tick+50;
+				if(TickWait)
+					AnimTick = Tick*6/10;
+				else
+					AnimTick = Tick;
+				MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
+			}
+			else{
+				Tick = Tick+100;
+				if(TickWait)
+					AnimTick = Tick*6/10;
+				else
+					AnimTick = Tick;
+				MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
+			}
+		}
+		//R�-initialiser
+		if (_input.isKeyDown(reinit)){
+			Tick = 1000;
+			if(TickWait)
+				AnimTick = Tick*6/10;
+			else
+				AnimTick = Tick;
+			MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
+		}
+	}
+	
+	/**
+	 * Gestion de l'affichage des détails du jeu (joueurs, temps).
+	 * @param g Le contexte graphique utilisé pour afficher les informations.
+	 */
+	public void affichageDetailJeu(Graphics g) {
+		g.resetTransform();
+		g.setColor(Color.white);
+		
+		//Affichage des détails des joueurs
+		if (World.getPlayers().size() == 2) {
+			g.drawString("Ressources : J1 " + World.getPlayers().get(0).ressources(), 10, 250);
+			g.drawString("Ressources : J2 " + World.getPlayers().get(1).ressources(), 10, 270);
+			g.drawString("Nb personnages : " + World.getPlayers().get(0).getPersonnages().size(), 10, 290);
+			g.drawString("Nb personnages : " + World.getPlayers().get(1).getPersonnages().size(), 10, 310);
+		}
+		
+		//Affichage compteur de tours
+		if (secondeTime == 60) {
+			secondeTime = 0;
+			minuteTime++;
+		}
+		g.drawString("Temps de jeu : " + minuteTime + ":" + secondeTime, 10, 330);
+	}
+	
+	/**
+	 * Gestion de l'adaptation de la position des boutons en fonction de la taille de la fenêtre.
+	 * @param container Le conteneur du jeu.
+	 */
+	public void autoDeplacementBouton(GameContainer container) {
+		_bouton_fullScreen.setLocation(container.getWidth()/2-62, container.getHeight()/2);
+		_bouton_son.setLocation(container.getWidth()/2-62, container.getHeight()/2-40);
+		_bouton_quitter.setLocation(container.getWidth()/2-62, container.getHeight()/2+80);
+		_bouton_reprendre.setLocation(container.getWidth()/2-62, container.getHeight()/2-80);
+		_bouton_menuPrincipal.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
+	}
+	
+	/**
+	 * Gestion du zoom au clavier. Le dezoom est limité par la taille de la carte.
+	 * @param container Le conteneur du jeu.
+	 * @param dezoom Code de la touche choisie pour le dezoom.
+	 * @param zoom Code de la touche choisie pour le zoom.
+	 * @param vitesseZoom Vitesse du zoom/dezoom.
+	 */
+	public void gestionZoomClavier(GameContainer container, int dezoom, int zoom, float vitesseZoom) {
+		//Gestion du zoom
+		//Zoom avant
+		if (_input.isKeyDown(zoom))
+		{
+			setZoom(zoom() * vitesseZoom);
+			setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
+			setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
+		}
+		
+		//Zoom arrière
+		if (World.map().largeur() * TILESIZE * zoom() > container.getWidth() && World.map().hauteur() * TILESIZE * zoom() > container.getHeight()) {
+			if (_input.isKeyDown(dezoom)) {
+				setZoom(zoom() / vitesseZoom);
+				setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
+				setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
+			}
+		}
+	}
+	
 	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2, MapTest map) {
 		
 		this.map = map;
@@ -568,7 +610,6 @@ public class MapGameState extends BasicGameState {
 		
 		for(UnitInfo ui : uIFs1)
 		{
-			//nb++;
 			autlist.add(new ArrayList<Automate>());
 			classes.add(new ArrayList<Classe>());
 			type_unit.add(new ArrayList<TypeUnit>());

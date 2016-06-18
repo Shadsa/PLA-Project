@@ -128,7 +128,7 @@ class DragAndDropState extends BasicGameState {
 		    textInput.setBackgroundColor(Color.black);
 		    textInput.render(container, g);
 		    
-		    if(_bouton_confirmer.isPressed()) {
+		    if(_bouton_confirmer.isPressed() || _input.isKeyPressed(Input.KEY_ENTER)) {
 		    	String mapPath = "src/asset/maps/";
 		    	mapPath += textInput.getText();
 				File f = new File(mapPath);
@@ -161,8 +161,8 @@ class DragAndDropState extends BasicGameState {
 					}
 					System.out.println("Chargement OK !");
 					map.init();
-					mapSizeX = World.map().largeur();
-					mapSizeY = World.map().hauteur();
+					mapSizeX = World.map().largeur() * MapGameState.TILESIZE;
+					mapSizeY = World.map().hauteur() * MapGameState.TILESIZE;
 				}
 				textInput.setText("");
 				container.setPaused(false);
@@ -286,11 +286,11 @@ class DragAndDropState extends BasicGameState {
 	
 	public int fromX(float x)
 	{
-		return (int) ((int) (x + _offsetMapX) / (MapGameState.TILESIZE*zoom()));
+		return (int) ((int) (x + _offsetMapX) / (MapGameState.TILESIZE * zoom()));
 	}
 	public int fromY(float y)
 	{
-		return (int) ((int) (y + _offsetMapY) / (MapGameState.TILESIZE*zoom()));
+		return (int) ((int) (y + _offsetMapY) / (MapGameState.TILESIZE * zoom()));
 	}
 	
 	public void keyPressed(int key, char c) {
@@ -298,11 +298,11 @@ class DragAndDropState extends BasicGameState {
 	
 	public float toX(int x)
 	{
-		return x * MapGameState.TILESIZE*zoom();
+		return x * MapGameState.TILESIZE * zoom();
 	}
 	public float toY(int y)
 	{
-		return y * MapGameState.TILESIZE*zoom();
+		return y * MapGameState.TILESIZE * zoom();
 	}
 
 	@Override
@@ -341,8 +341,6 @@ class DragAndDropState extends BasicGameState {
 		this.UIFs1 = uIFs1;
 		this.UIFs2 = uIFs2;
 
-
-
 		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
 		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
 		ArrayList<ArrayList<TypeUnit>> type_unit = new ArrayList<ArrayList<TypeUnit>>();
@@ -360,7 +358,6 @@ class DragAndDropState extends BasicGameState {
 			type_clothes.get(0).add(ui.clothes);
 		}
 		for(UnitInfo ui : uIFs2) {
-			//nb++;
 			autlist.add(new ArrayList<Automate>());
 			classes.add(new ArrayList<Classe>());
 			type_unit.add(new ArrayList<TypeUnit>());
