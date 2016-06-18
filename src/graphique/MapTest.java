@@ -40,10 +40,7 @@ public class MapTest {
 
 	public void render(Graphics g, float x, float y, float zoom, int width, int height) throws SlickException {
 
-		//Gestion du scrolling de la map
-		g.translate(-x, -y);
-		//Gestion du zoom
-		g.scale(zoom, zoom);
+
 
 		int xi = MapGameState.fromX(x/zoom);
 		int yi = MapGameState.fromY(y/zoom);

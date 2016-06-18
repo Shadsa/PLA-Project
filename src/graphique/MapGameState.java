@@ -49,7 +49,7 @@ public class MapGameState extends BasicGameState {
 	public static Player _target = null;
 	public static Personnage _targetp = null;
 
-	private int _tailleMapY = 20;
+	private int _tailleMapY = 45;
 	private int _tailleMapX = 75;
 
 	private float _offsetMapX = 0;
@@ -132,7 +132,9 @@ public class MapGameState extends BasicGameState {
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 
-		//Affichage de la map
+		//Affichage de la map (zoom + scrolling)
+		g.translate(-_offsetMapX, -_offsetMapY);
+		g.scale(_zoom, _zoom);
 		this.map.render(g, _offsetMapX, _offsetMapY, zoom(), container.getWidth(), container.getHeight());
 		
 		//Affichage des personnages
@@ -145,7 +147,6 @@ public class MapGameState extends BasicGameState {
 
 		//Annule la translation pour l'affichage du string en dessous
 		//Affichage de la position de la souris sur la map
-
 		if (debug) {
 			g.resetTransform();
 			g.setColor(Color.white);
@@ -241,8 +242,7 @@ public class MapGameState extends BasicGameState {
 				for(Animation anim : t.animations)
 					anim.restart();
 			}
-			/*for(Animation anim : Player.Hanimations)
-				anim.restart();*/
+
 			for(Animation anim : Player.Danimations)
 				anim.restart();
 		}
@@ -464,12 +464,6 @@ public class MapGameState extends BasicGameState {
 		break;
 		}
 	}
-
-	/*public void keyPressed(int key, char c) {
-		if (key == Input.KEY_A){
-			this.game.enterState(3);
-		}
-	}*/
 	
 	/**
 	 * Notification qu'un bouton de la souris a été pressée (la méthode est appelée à ce moment là).
@@ -535,15 +529,6 @@ public class MapGameState extends BasicGameState {
 		return _mouseMapY;
 	}
 
-	public void setMouseMapX(int x) {
-		this._mouseMapX = x;
-	}
-
-	public void setMouseMapY(int y) {
-		this._mouseMapY = y;
-	}
-
-
 	public float offsetMapX() {
 		return _offsetMapX;
 	}
@@ -564,15 +549,11 @@ public class MapGameState extends BasicGameState {
 		
 		this.map = map;
 		
-		//int nb = 0;
 		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
-		//ArrayList<Automate> autlist2 = new ArrayList<Automate>();
 		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
-		//ArrayList<Classe> classes2 = new ArrayList<Classe>();
 		ArrayList<ArrayList<TypeUnit>> type_unit = new ArrayList<ArrayList<TypeUnit>>();
-		//ArrayList<TypeUnit> type_unit2 = new ArrayList<TypeUnit>();
 		ArrayList<ArrayList<TypeClothes>> type_clothes = new ArrayList<ArrayList<TypeClothes>>();
-		//ArrayList<TypeClothes> type_clothes2 = new ArrayList<TypeClothes>();
+		
 		for(UnitInfo ui : uIFs1)
 		{
 			//nb++;
@@ -610,10 +591,5 @@ public class MapGameState extends BasicGameState {
 				enJeu = true;
 			}
 		}
-		/*try {
-			this.map.init();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}*/
 	}
 }

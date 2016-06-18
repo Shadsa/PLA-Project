@@ -42,6 +42,8 @@ class DragAndDropState extends BasicGameState {
 	private float mouseAbsoluteY;
 	private float _mouseMapX;
 	private float _mouseMapY;
+	private int mapSizeX;
+	private int mapSizeY;
 	private boolean pause = false;
 	private boolean saveMode = false;
 	private ArrayList<UnitInfo> UIFs1;
@@ -81,88 +83,94 @@ class DragAndDropState extends BasicGameState {
 		setFont("Arial", 20);
 		textInput = new TextField (container, ttf, container.getWidth()/2-150, container.getHeight()/2-40, 300, 28);
 		textInput.setBorderColor(Color.white);
+		mapSizeX = World.map().largeur() * MapGameState.TILESIZE;
+		mapSizeY = World.map().hauteur() * MapGameState.TILESIZE;
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-			//Affichage de la map
-			this.map.render(g, _offsetMapX, _offsetMapY, zoom(), container.getWidth(), container.getHeight());
-			g.resetTransform();
-			_bouton_Jouer.render(container, g);
-			_bouton_sauvegarder.render(container, g);
-			_bouton_charger.render(container, g);
-			_bouton_placerAutomate.render(container, g);
-			if (c01 != null) {
-				g.drawImage(Hud.playerBars, -offsetMapX() + toX(c01.X()), -offsetMapY() + toY(c01.Y()),-offsetMapX() + toX(c01.X())+ MapGameState.TILESIZE*zoom(), -offsetMapY() + toY(c01.Y())+ MapGameState.TILESIZE*zoom(), 440, 419, 560, 539);
+		//Affichage de la map
+		g.translate(-_offsetMapX, -_offsetMapY);
+		g.scale(_zoom, _zoom);
+		this.map.render(g, _offsetMapX, _offsetMapY, zoom(), container.getWidth(), container.getHeight());
+		g.resetTransform();
+		_bouton_Jouer.render(container, g);
+		_bouton_sauvegarder.render(container, g);
+		_bouton_charger.render(container, g);
+		_bouton_placerAutomate.render(container, g);
+		if (c01 != null) {
+			g.drawImage(Hud.playerBars, -offsetMapX() + toX(c01.X()), -offsetMapY() + toY(c01.Y()),-offsetMapX() + toX(c01.X())+ MapGameState.TILESIZE*zoom(), -offsetMapY() + toY(c01.Y())+ MapGameState.TILESIZE*zoom(), 440, 419, 560, 539);
+		}
+			
+		if (!container.isPaused()) {
+			//Comportement bouton charger
+			if (_bouton_charger.isPressed()) {
+				container.setPaused(!pause);
 			}
+			
+			//Comportement bouton sauvegarder
+			if (_bouton_sauvegarder.isPressed()) {
+				container.setPaused(!pause);
+				saveMode = true;
 				
-			if (!container.isPaused()) {
-				//Comportement bouton charger
-				if (_bouton_charger.isPressed()) {
-					container.setPaused(!pause);
-				}
-				
-				//Comportement bouton sauvegarder
-				if (_bouton_sauvegarder.isPressed()) {
-					container.setPaused(!pause);
-					saveMode = true;
-					
-				}
-			    if (alpha > 0) {
-			        alpha -= 0.01f;
-			    }
-			} else if (container.isPaused()) {
-			    Rectangle rect = new Rectangle (0, 0, container.getScreenWidth(), container.getScreenHeight());
-			    g.setColor(new Color (255, 255, 255, alpha));
-			    g.fill(rect);
-			    textInput.setFocus(true);
-			    _bouton_confirmer.render(container, g);
+			}
+		    if (alpha > 0) {
+		        alpha -= 0.01f;
+		    }
+		} else if (container.isPaused()) {
+		    Rectangle rect = new Rectangle (0, 0, container.getScreenWidth(), container.getScreenHeight());
+		    g.setColor(new Color (255, 255, 255, alpha));
+		    g.fill(rect);
+		    textInput.setFocus(true);
+		    _bouton_confirmer.render(container, g);
 
-			    if (alpha < 0.4f) {
-			        alpha += 0.01f;
-			    }
-			    textInput.setBackgroundColor(Color.black);
-			    textInput.render(container, g);
-			    
-			    if(_bouton_confirmer.isPressed()) {
-			    	String mapPath = "src/asset/maps/";
-			    	mapPath += textInput.getText();
-					File f = new File(mapPath);
-					if(saveMode) {
-						try
-						{
-						    ObjectOutputStream oos = new ObjectOutputStream (new FileOutputStream (f));
-						    oos.writeObject (World.map());
-						    oos.close();
-						}
-						catch (IOException exception)
-						{
-						    System.out.println ("Erreur lors de l'écriture : " + exception.getMessage());
-						}
-						System.out.println("Sauvegarde OK !");
-					} else {
-						try
-						{
-						    ObjectInputStream ois = new ObjectInputStream (new FileInputStream (f));
-						    World.setMap((Carte)ois.readObject());
-						    ois.close();
-						}
-						catch (ClassNotFoundException exception)
-						{
-						    System.out.println ("Impossible de lire l'objet : " + exception.getMessage());
-						}
-						catch (IOException exception)
-						{
-						    System.out.println ("Erreur lors de l'écriture : " + exception.getMessage());
-						}
-						System.out.println("Chargement OK !");
-						map.init();
+		    if (alpha < 0.4f) {
+		        alpha += 0.01f;
+		    }
+		    textInput.setBackgroundColor(Color.black);
+		    textInput.render(container, g);
+		    
+		    if(_bouton_confirmer.isPressed()) {
+		    	String mapPath = "src/asset/maps/";
+		    	mapPath += textInput.getText();
+				File f = new File(mapPath);
+				if(saveMode) {
+					try
+					{
+					    ObjectOutputStream oos = new ObjectOutputStream (new FileOutputStream (f));
+					    oos.writeObject (World.map());
+					    oos.close();
 					}
-					textInput.setText("");
-					container.setPaused(false);
-					saveMode = false;
-			    }
-			}
+					catch (IOException exception)
+					{
+					    System.out.println ("Erreur lors de l'écriture : " + exception.getMessage());
+					}
+					System.out.println("Sauvegarde OK !");
+				} else {
+					try
+					{
+					    ObjectInputStream ois = new ObjectInputStream (new FileInputStream (f));
+					    World.setMap((Carte)ois.readObject());
+					    ois.close();
+					}
+					catch (ClassNotFoundException exception)
+					{
+					    System.out.println ("Impossible de lire l'objet : " + exception.getMessage());
+					}
+					catch (IOException exception)
+					{
+					    System.out.println ("Erreur lors de l'écriture : " + exception.getMessage());
+					}
+					System.out.println("Chargement OK !");
+					map.init();
+					mapSizeX = World.map().largeur();
+					mapSizeY = World.map().hauteur();
+				}
+				textInput.setText("");
+				container.setPaused(false);
+				saveMode = false;
+		    }
+		}
 	}
 
 	public void setTrueTypeFont(String chemin, int fontSize) throws SlickException {
@@ -192,7 +200,8 @@ class DragAndDropState extends BasicGameState {
 			_bouton_charger.update(container);
 			_bouton_placerAutomate.update(container);
 			
-	
+			
+			
 			//Configuration bouton placer automate
 			if (_bouton_placerAutomate.isDown()) {
 				try {
@@ -251,19 +260,15 @@ class DragAndDropState extends BasicGameState {
 
 				//Gestion du zoom
 				//Zoom avant
-				if (_input.isKeyDown(201))
-				{
+				if (_input.isKeyDown(201)) {
 					setZoom(zoom() * 1.03f);
 					/*setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
 					setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);*/
 				}
 				
 				//Zoom arrière
-				if (_input.isKeyDown(209) && zoom() > 0 && (MapGameState.TILESIZE*World.map().hauteur()*_zoom > container.getHeight() || MapGameState.TILESIZE*World.map().largeur()*_zoom > container.getWidth())) {
+				if (_input.isKeyDown(209) && (mapSizeX * zoom() > container.getWidth() || mapSizeY * zoom() > container.getHeight())) {
 					setZoom(zoom() / 1.03f);
-					if (zoom() < 0) {
-						setZoom(0);
-					}
 					/*setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
 					setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);*/
 					}
