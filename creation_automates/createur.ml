@@ -13,4 +13,5 @@ let soldat = creerAutomate [errant 1 0 0; chercheur 3 ennemiProche 0 [1;3;5;7] [
 let main =
   ecrireXML "Ouvrier.xml" ouvrier;
   ecrireXML "Zombie.xml" zombie;
-  ecrireXML "Soldat.xml" soldat
+  ecrireXML "Soldat.xml" soldat;
+  flush_all
