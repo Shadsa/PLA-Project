@@ -193,7 +193,7 @@ public class Personnage extends Observable{
 	public void setFighting(boolean b) {
 		_fighting = b;
 	}
-	
+
 	public int getUnite(){
 		return this.owner().joueur().getUnite(this);
 	}

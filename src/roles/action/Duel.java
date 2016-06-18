@@ -35,6 +35,7 @@ public final class Duel extends Action {
 
 		if (_propPers.check(c)) {
 			pers.setFighting(true);
+			c.Personnage().setFighting(true);
 			MapGameState.fight(pers, c.Personnage());
 		}
 	}

@@ -15,10 +15,12 @@ public class World {
 	Carte _map;
 	private ArrayList<Army> _army = new ArrayList<Army>();
 	public boolean fini = false;
+	private boolean _isArena;
 
-	public World(int hauteur, int largeur)
+	public World(int hauteur, int largeur, Boolean isArena)
 	{
 		_map = new Carte(hauteur,largeur);
+		_isArena = isArena;
 	}
 
 	public void addArmy(Army a)
@@ -92,6 +94,10 @@ public class World {
 
 	public ArrayList<Army> army() {
 		return _army;
+	}
+
+	public boolean isArena() {
+		return _isArena;
 	}
 
 }

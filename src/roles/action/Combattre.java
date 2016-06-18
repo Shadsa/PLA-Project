@@ -5,6 +5,7 @@ import cases.CaseProperty;
 import cases.ConstructionCheck;
 import cases.EnnemiCheck;
 import cases.PersoCheck;
+import graphique.MapGameState;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;
@@ -49,10 +50,16 @@ public final class Combattre extends Action {
 			destY++; direction = Cardinaux.SUD;
 		}
 		else return;
-		
+
 		Case c = world.Case(destX, destY);
-		
-		if (_propPers.check(c)) {
+		if (_propPers.check(c) || world.isArena()) {
+			pers.setFighting(true);
+			pers.setState(new States(Statut.ATTAQUE, direction));
+			c.Personnage().setFighting(true);
+			c.Personnage().setState(new States(Statut.ATTAQUE, Cardinaux.oppose(direction)));
+			MapGameState.fight(pers, c.Personnage());
+		}
+		else if (_propPers.check(c)) {
 			Personnage target = c.Personnage();
 			// System.out.print(pers.ID() + " attaque " + target.ID() + ".\n");
 			pers.setState(new States(Statut.ATTAQUE, direction));

@@ -18,6 +18,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import cases.Plaine;
 import roles.classe.*;
 import roles.conditions.Ennemi;
 import roles.conditions.Libre;
@@ -26,7 +28,9 @@ import roles.Automate;
 import roles.Cardinaux;
 import roles.Joueur;
 import roles.Personnage;
+import roles.States;
 import roles.World;
+import roles.States.Statut;
 import roles.action.Duel;
 
 public class MapGameState extends BasicGameState implements Observer {
@@ -52,9 +56,8 @@ public class MapGameState extends BasicGameState implements Observer {
 	public static Player _target = null;
 	public static Personnage _targetp = null;
 
-	private int _tailleMapY = 45;
-	private int _tailleMapX = 75;
-
+	private int _tailleMapY = 10;
+	private int _tailleMapX = 10;
 	//Test
 	private static ArrayList<MapTest> _GUnivers = new ArrayList<MapTest>();
 	private Input _input;
@@ -283,7 +286,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		//Zoom avant
 		if (_input.isKeyDown(201))
 		{
-			focus.setZoom(1.01f, _input.getMouseX(), _input.getMouseY());
+			focus.setZoom(1.03f, _input.getMouseX(), _input.getMouseY());
 		}
 
 		//Zoom arrière
@@ -498,7 +501,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		} catch (SlickException e1) {
 			e1.printStackTrace();
 		}
-		World.Univers.add(new World(_tailleMapY,_tailleMapX));
+		World.Univers.add(new World(_tailleMapY,_tailleMapX, false));
 		_GUnivers.get(0).initialise(World.Univers.get(0));
 		_GUnivers.get(0).addObserver(this);
 
@@ -538,10 +541,13 @@ public class MapGameState extends BasicGameState implements Observer {
 		new Army(World.Univers.get(0), jjj.get(1));
 
 		try {
-			World.Univers.get(0).putAutomate(jjj.get(0).automate(0), 1, 1, jjj.get(0));
+			//World.Univers.get(0).putAutomate(jjj.get(0).automate(0), 1, 1, jjj.get(0));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		for(int i = 0; i < World.Univers.get(0).SizeY(); i++)
+			for(int j = 0; j < World.Univers.get(0).SizeX(); j++)
+			World.Univers.get(0).modifierCase(new Plaine(),  i, j);
 		//for(int i = 0; i < nb; i++)
 		World.Univers.get(0).army().get(0).createPersonnage(0, 1, 1);
 	//for(int i = 0; i < nb; i++)
@@ -551,6 +557,16 @@ public class MapGameState extends BasicGameState implements Observer {
 		{
 			_GUnivers.get(0).addArmy(a);
 		}
+
+
+
+		Personnage pers = World.Univers.get(0).army().get(0).getPersonnages().get(0);
+		Personnage pp   = World.Univers.get(0).army().get(1).getPersonnages().get(0);
+		fight(pers, pp);
+		pers.setFighting(true);
+		pers.setState(new States(Statut.ATTAQUE, Cardinaux.SUD));
+		pp.setFighting(true);
+		pp.setState(new States(Statut.ATTAQUE, Cardinaux.oppose(Cardinaux.SUD)));
 	}
 
 	@Override
@@ -578,15 +594,18 @@ public class MapGameState extends BasicGameState implements Observer {
 
 	public static void fight(Personnage pers, Personnage personnage)
 	{
-		World w = new World(7, 7);
+		World w = new World(7, 7, true);
+
+				for(int i = 0; i < w.SizeY(); i++)
+					for(int j = 0; j < w.SizeX(); j++)
+					w.modifierCase(new Plaine(),  i, j);
 		World.Univers.add(w);
-		MapTest mt = new MapTest(0, 0, 300, 300);
+		MapTest mt = new MapTest(0, 0, 500, 500);
 		mt.initialise(w);
 		_GUnivers.add(mt);
-		w.addArmy(new Army(w, pers.owner().joueur()));
+		mt.addArmy(new Army(w, pers.owner().joueur()));
 		w.army().get(0).createPersonnage(pers.owner().joueur().getUnite(pers), 0, 0);
-		mt.addArmy(w.army().get(0));
-		w.addArmy(new Army(w, personnage.owner().joueur()));
+		mt.addArmy(new Army(w, personnage.owner().joueur()));
 		w.army().get(0).createPersonnage(personnage.owner().joueur().getUnite(personnage), 6, 6);
 
 
