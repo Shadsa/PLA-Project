@@ -52,7 +52,7 @@ public final class Combattre extends Action {
 		else return;
 
 		Case c = world.Case(destX, destY);
-		if (_propPers.check(c) || world.isArena()) {
+		if (_propPers.check(c) && !world.isArena()) {
 			pers.setFighting(true);
 			pers.setState(new States(Statut.ATTAQUE, direction));
 			c.Personnage().setFighting(true);

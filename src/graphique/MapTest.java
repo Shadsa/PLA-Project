@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Vector;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -79,6 +80,8 @@ public class MapTest extends Observable {
 
 	public void render(Graphics g) throws SlickException {
 
+		//Nettoyage de la zone d'affichage
+		g.drawImage(spriteSheet, _x, _y, _x+_width, _y+_height, 96, 0, 96*2, 96);
 		//Gestion du scrolling de la map
 		g.translate(-x, -y);
 		//Gestion du zoom
