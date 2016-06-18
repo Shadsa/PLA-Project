@@ -17,6 +17,7 @@ type attribut =
   | Quantite of int
   | Poids of int
   | Compose of String.t
+  | ComposeUnaire of String.t
   | NbEtats of int
   | Unite of int
   | Rien
@@ -54,6 +55,7 @@ type condition =
   | Libre of cellule
   | Et of condition*condition
   | Ou of condition*condition
+  | Non of condition
   | Type of typeCellule*cellule
   | UneCaseType of typeCellule
   | NbInf of int

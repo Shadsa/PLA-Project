@@ -1,3 +1,4 @@
+open TypesAutomate
 open Constructeur
 open Output
   

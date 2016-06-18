@@ -48,6 +48,7 @@ let balise (s : String.t) (a : attribut) =
    | Unite(i) -> " unite=\""^(string_of_int i)^"\""
    | Poids(i) -> " poids=\""^(string_of_int i)^"\""
    | Compose(s) -> " compose=\""^s^"\""
+   | ComposeUnaire(s) -> " composeUnaire=\""^s^"\""
    | NbEtats(i) -> " nbEtats=\""^(string_of_int i)^"\""
    |_ -> ""
 
@@ -85,6 +86,12 @@ let rec output_cond (c : condition) (p : int) (suff : String.t) =
     output_stab (balise b (Compose("Ou"))) p;
     output_cond c1 (p+1) "1";
     output_cond c2 (p+1) "2";
+    output_stab (fbalise b) p
+    end
+   | Non(c) ->
+    begin
+    output_stab (balise b (ComposeUnaire("Non"))) p;
+    output_cond c (p+1) "";
     output_stab (fbalise b) p
     end
    | ArbreProche(cellule) -> output_stab ((balise b (Direction(cellule)))^"ArbreProche"^(fbalise b)) p

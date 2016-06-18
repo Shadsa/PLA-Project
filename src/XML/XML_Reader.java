@@ -118,6 +118,10 @@ public class XML_Reader {
 				c2 = getCondition(n.getChildNodes().item(3),(Element) ((Element) n).getElementsByTagName("condition2").item(0));
 				cond = (Condition) Class.forName("roles.conditions."+att.item(0).getNodeValue()).getDeclaredConstructor(Condition.class,Condition.class).newInstance(c1,c2);
 			}
+			else if(att.item(0).getNodeName()=="composeUnaire") {
+				c1 = getCondition(n.getChildNodes().item(1),(Element) ((Element) n).getElementsByTagName("condition").item(0));
+				cond = (Condition) Class.forName("roles.conditions."+att.item(0).getNodeValue()).getDeclaredConstructor(Condition.class).newInstance(c1);
+			}
 			else if(att.getLength() > 1){
 				Cardinaux C = CardOfString(att.item(0).getNodeValue());
 				String s1 = e.getTextContent();
