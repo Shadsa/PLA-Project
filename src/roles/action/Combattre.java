@@ -53,11 +53,9 @@ public final class Combattre extends Action {
 
 		Case c = world.Case(destX, destY);
 		if (_propPers.check(c) && !world.isArena()) {
-			pers.setFighting(true);
 			pers.setState(new States(Statut.ATTAQUE, direction));
-			c.Personnage().setFighting(true);
 			c.Personnage().setState(new States(Statut.ATTAQUE, Cardinaux.oppose(direction)));
-			MapGameState.fight(pers, c.Personnage());
+			MapGameState.fight(pers, c.Personnage(), Cardinaux.oppose(direction));
 		}
 		else if (_propPers.check(c)) {
 			Personnage target = c.Personnage();

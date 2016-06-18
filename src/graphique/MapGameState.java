@@ -56,8 +56,8 @@ public class MapGameState extends BasicGameState implements Observer {
 	public static Player _target = null;
 	public static Personnage _targetp = null;
 
-	private int _tailleMapY = 10;
-	private int _tailleMapX = 10;
+	private int _tailleMapY = 75;
+	private int _tailleMapX = 45;
 	//Test
 	private MapTest _mainm;
 	private World _mainw;
@@ -196,7 +196,7 @@ public class MapGameState extends BasicGameState implements Observer {
 						for(Personnage p : World.Univers.get(i).getArmys().get(0).getPersonnages())
 						{
 							if(p.imageOF() != null)
-								p.imageOF().setFighting(false);
+								p.imageOF().setFighting(false, null);
 						}
 						World.Univers.remove(i);
 						_GUnivers.remove(i);
@@ -565,8 +565,8 @@ public class MapGameState extends BasicGameState implements Observer {
 			type_unit.get(1).add(ui.color);
 			type_clothes.get(1).add(ui.clothes);
 }
-		jjj.add(new Joueur("Human", autlist.get(0), classes.get(0), type_unit.get(0), type_clothes.get(0)));
-		jjj.add(new Joueur("Zombie", autlist.get(1), classes.get(1), type_unit.get(1), type_clothes.get(1)));
+		jjj.add(new Joueur("Human", autlist.get(0), autlist.get(0), classes.get(0), type_unit.get(0), type_clothes.get(0)));
+		jjj.add(new Joueur("Zombie", autlist.get(1), autlist.get(1), classes.get(1), type_unit.get(1), type_clothes.get(1)));
 		new Army(World.Univers.get(0), jjj.get(0));
 		new Army(World.Univers.get(0), jjj.get(1));
 
@@ -575,9 +575,9 @@ public class MapGameState extends BasicGameState implements Observer {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		for(int i = 0; i < World.Univers.get(0).SizeY(); i++)
+		/*for(int i = 0; i < World.Univers.get(0).SizeY(); i++)
 			for(int j = 0; j < World.Univers.get(0).SizeX(); j++)
-			World.Univers.get(0).modifierCase(new Plaine(),  i, j);
+			World.Univers.get(0).modifierCase(new Plaine(),  i, j);*/
 		//for(int i = 0; i < nb; i++)
 		World.Univers.get(0).army().get(0).createPersonnage(0, 1, 1, null);
 	//for(int i = 0; i < nb; i++)
@@ -622,9 +622,27 @@ public class MapGameState extends BasicGameState implements Observer {
 		}
 	}
 
-	public static void fight(Personnage pers, Personnage personnage)
+	public static void fight(Personnage pers, Personnage personnage, Cardinaux dirinc)
 	{
+		if(personnage.isfighting())
+		{
+			World w = personnage.fightworld();
+			pers.setFighting(true, w);
+			for(Army arm : w.army())
+				if(arm.joueur() == pers.owner().joueur())
+				{
+					arm.join(pers.owner().joueur().getUnite(pers), dirinc, pers);
+					return;
+				}
+
+			// jamais éxécuté à 2 joueurs
+			_GUnivers.get(World.Univers.indexOf(w)).addArmy(new Army(w, pers.owner().joueur()));
+			w.army().get(w.army().size()-1).createPersonnage(pers.owner().joueur().getUnite(pers), 0, 0, pers);
+
+		}
 		World w = new World(7, 7, true);
+		pers.setFighting(true, w);
+		personnage.setFighting(true, w);
 
 				for(int i = 0; i < w.SizeY(); i++)
 					for(int j = 0; j < w.SizeX(); j++)
@@ -634,8 +652,8 @@ public class MapGameState extends BasicGameState implements Observer {
 		mt.initialise(w);
 		_GUnivers.add(mt);
 		mt.addArmy(new Army(w, pers.owner().joueur()));
-		w.army().get(0).createPersonnage(pers.owner().joueur().getUnite(pers), 0, 0, pers);
+		w.army().get(0).join(pers.owner().joueur().getUnite(pers), dirinc, pers);
 		mt.addArmy(new Army(w, personnage.owner().joueur()));
-		w.army().get(1).createPersonnage(personnage.owner().joueur().getUnite(personnage), 6, 6, personnage);
+		w.army().get(1).join(personnage.owner().joueur().getUnite(personnage), Cardinaux.oppose(dirinc), personnage);
 	}
 }

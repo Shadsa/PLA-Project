@@ -11,6 +11,7 @@ import roles.classe.Classe;
 public class Personnage extends Observable{
 
 	Automate _brain;
+	Automate _brainC;
 	protected int _paralysie = 0;
 	protected Case _location;
 	protected Classe _classe;
@@ -23,6 +24,7 @@ public class Personnage extends Observable{
 	private Case _cible;
 	private Boolean _fighting;
 	private Personnage _imageOF;
+	private World _fightworld;
 
 	protected int _id;
 	protected Army _owner;
@@ -46,12 +48,13 @@ public class Personnage extends Observable{
 		this._directionJoueur = direction;
 	}
 
-	public Personnage(Automate brain, int x, int y, Personnage imageOF, Army owner,Classe classe)
+	public Personnage(Automate brain, Automate brainc, int x, int y, Personnage imageOF, Army owner,Classe classe)
 	{
 		_etat = 0;
 		_vie = 10;
 		_id = nextID();
 		_brain = brain;
+		_brainC = brainc;
 		_paralysie = 0;
 		_owner = owner;
 		_classe = classe;
@@ -194,8 +197,9 @@ public class Personnage extends Observable{
 	{
 		return _owner.world();
 	}
-	public void setFighting(boolean b) {
+	public void setFighting(boolean b, World fw) {
 		_fighting = b;
+		_fightworld = fw;
 	}
 
 	public int getUnite(){
@@ -203,5 +207,13 @@ public class Personnage extends Observable{
 	}
 	public Personnage imageOF() {
 		return _imageOF;
+	}
+
+	public World fightworld()
+	{
+		return _fightworld;
+	}
+	public boolean isfighting() {
+		return _fighting;
 	}
 }

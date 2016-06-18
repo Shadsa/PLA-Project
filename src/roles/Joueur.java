@@ -10,7 +10,8 @@ import roles.classe.Classe;
 public class Joueur extends Observable{
 
 	private String _nom;
-	ArrayList<Automate> _automates;
+	private ArrayList<Automate> _automates;
+	private ArrayList<Automate> _automatesc;
 	ArrayList<Classe> _classes; //indicage sur celui de Automate pour la cores'
 	ArrayList<TypeUnit> _type_unit;
 	ArrayList<TypeClothes> _type_clothes;
@@ -18,10 +19,11 @@ public class Joueur extends Observable{
 
 
 
-	public Joueur(String nom, ArrayList<Automate> automates, ArrayList<Classe> classes, ArrayList<TypeUnit> type_unit, ArrayList<TypeClothes> type_clothes)
+	public Joueur(String nom, ArrayList<Automate> automates, ArrayList<Automate> automatesc, ArrayList<Classe> classes, ArrayList<TypeUnit> type_unit, ArrayList<TypeClothes> type_clothes)
 	{
 		_nom = nom;
 		_automates = automates;
+		_automatesc = automatesc;
 		_classes = classes;
 		_type_unit = type_unit;
 		_type_clothes = type_clothes;
@@ -31,11 +33,11 @@ public class Joueur extends Observable{
 	public int getUnite(Personnage pers){
 		return _automates.indexOf(pers._brain);
 	}
-	
+
 	public TypeUnit getType(Personnage pers){
 		return _type_unit.get(getUnite(pers));
 	}
-	
+
 	public TypeClothes getClothes(Personnage pers){
 		return _type_clothes.get(getUnite(pers));
 	}
@@ -64,8 +66,7 @@ public class Joueur extends Observable{
 		return _classes.get(type);
 	}
 
-	public TypeUnit type_unit() {
-		// TODO Auto-generated method stub
-		return null;
+	public Automate automatec(int type) {
+		return _automatesc.get(type);
 	}
 }
