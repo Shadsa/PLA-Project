@@ -57,23 +57,25 @@ let balise (s : String.t) (a : attribut) =
 let fbalise(s : String.t) =
   "</"^s^">"
 
+let output_with_balise (b : String.t) (a : attribut) (p : int) (nom : String.t) =
+  output_stab ((balise b a)^nom^(fbalise b)) p  
   
   
 let output_cour (e : etat) (p : int) =
-  output_stab ((balise "etat" Rien)^(string_of_int e)^(fbalise "etat")) p
+  output_with_balise "etat" Rien p (string_of_int e)
 
 let output_suiv (e : etat) (p : int) =
-  output_stab ((balise "suivant" Rien)^(string_of_int e)^(fbalise "suivant")) p
+  output_with_balise "suivant" Rien p (string_of_int e)
 
 
 let rec output_cond (c : condition) (p : int) (suff : String.t) =
   let b = "condition"^suff in
   match c with
-   | Vide -> output_stab ((balise b Rien)^"Vide"^(fbalise b)) p
-   | OrdreDonne -> output_stab ((balise b Rien)^"OrdreDonne"^(fbalise b)) p
-   | UneCaseLibre -> output_stab ((balise b Rien)^"UneCaseLibre"^(fbalise b)) p
-   | UnAmi -> output_stab ((balise b Rien)^"UnAmi"^(fbalise b)) p
-   | UnEnnemi -> output_stab ((balise b Rien)^"UnEnnemi"^(fbalise b)) p
+   | Vide -> output_with_balise b Rien p "Vide"
+   | OrdreDonne -> output_with_balise b Rien p "OrdreDonne"
+   | UneCaseLibre -> output_with_balise b Rien p "UneCaseLibre"
+   | UnAmi -> output_with_balise b Rien p "UnAmi"
+   | UnEnnemi -> output_with_balise b Rien p "UnEnnemi"
    | Et(c1,c2) ->
     begin
     output_stab (balise b (Compose("Et"))) p;
@@ -94,35 +96,35 @@ let rec output_cond (c : condition) (p : int) (suff : String.t) =
     output_cond c (p+1) "";
     output_stab (fbalise b) p
     end
-   | ArbreProche(cellule) -> output_stab ((balise b (Direction(cellule)))^"ArbreProche"^(fbalise b)) p
-   | Ami(cellule) -> output_stab ((balise b (Direction(cellule)))^"Ami"^(fbalise b)) p
-   | CaseAmi(cellule) -> output_stab ((balise b (Direction(cellule)))^"Ami"^(fbalise b)) p
-   | EnnemiProche(cellule) -> output_stab ((balise b (Direction(cellule)))^"EnnemiProche"^(fbalise b)) p
-   | Ennemi(cellule) -> output_stab ((balise b (Direction(cellule)))^"Ennemi"^(fbalise b)) p
-   | Libre(cellule) -> output_stab ((balise b (Direction(cellule)))^"Libre"^(fbalise b)) p
-   | Type(typeCellule,cellule) -> output_stab ((balise b (Type(typeCellule,cellule)))^"Type"^(fbalise b)) p
-   | UneCaseType(typeCellule) -> output_stab ((balise b (TypeG(typeCellule)))^"UneCaseType"^(fbalise b)) p
-   | NbInf(quantite) -> output_stab ((balise b (Quantite(quantite)))^"NbInf"^(fbalise b)) p
-   | RatioInf(quantite) -> output_stab ((balise b (Quantite(quantite)))^"RatioInf"^(fbalise b)) p 
-   | RessourcesPossedees(quantite) -> output_stab ((balise b (Quantite(quantite)))^"RessourcesPossedees"^(fbalise b)) p   
+   | ArbreProche(cellule) -> output_with_balise b (Direction(cellule)) p "ArbreProche"
+   | Ami(cellule) -> output_with_balise b (Direction(cellule)) p "Ami"
+   | CaseAmi(cellule) -> output_with_balise b (Direction(cellule)) p "Ami"
+   | EnnemiProche(cellule) -> output_with_balise b (Direction(cellule)) p "EnnemiProche"
+   | Ennemi(cellule) -> output_with_balise b (Direction(cellule)) p "Ennemi"
+   | Libre(cellule) -> output_with_balise b (Direction(cellule)) p "Libre"
+   | Type(typeCellule,cellule) -> output_with_balise b (Type(typeCellule,cellule)) p "Type"
+   | UneCaseType(typeCellule) -> output_with_balise b (TypeG(typeCellule)) p "UneCaseType"
+   | NbInf(quantite) -> output_with_balise b (Quantite(quantite)) p "NbInf"
+   | RatioInf(quantite) -> output_with_balise b (Quantite(quantite)) p "RatioInf" 
+   | RessourcesPossedees(quantite) -> output_with_balise b (Quantite(quantite)) p "RessourcesPossedees"   
 
 let output_act (a : action) (p : int) =
   let b = "action" in
   match a with
-   | Attendre -> output_stab ((balise b Rien)^"Attendre"^(fbalise b)) p
-   | AvancerJoueur -> output_stab ((balise b Rien)^"AvancerJoueur"^(fbalise b)) p
-   | AvancerHasard -> output_stab ((balise b Rien)^"AvancerHasard"^(fbalise b)) p
-   | Combattre -> output_stab ((balise b Rien)^"Combattre"^(fbalise b)) p
-   | CouperBois -> output_stab ((balise b Rien)^"CouperBois"^(fbalise b)) p
-   | DupliquerZombie -> output_stab ((balise b Rien)^"DupliquerZombie"^(fbalise b)) p
-   | Duel -> output_stab ((balise b Rien)^"Duel"^(fbalise b)) p
-   | Soigner -> output_stab ((balise b Rien)^"Soigner"^(fbalise b)) p
-   | Attaquer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Attaquer"^(fbalise b)) p
-   | Avancer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Avancer"^(fbalise b)) p
-   | ConstruireMur(cellule) -> output_stab ((balise b (Direction(cellule)))^"ConstruireMur"^(fbalise b)) p
-   | PoserPiege(cellule) -> output_stab ((balise b (Direction(cellule)))^"PoserPiege"^(fbalise b)) p
-   | Reparer(cellule) -> output_stab ((balise b (Direction(cellule)))^"Reparer"^(fbalise b)) p
-   | Creer(t) -> output_stab ((balise b (Unite(t)))^"Creer"^(fbalise b)) p
+   | Attendre -> output_with_balise b Rien p "Attendre"
+   | AvancerJoueur -> output_with_balise b Rien p "AvancerJoueur"
+   | AvancerHasard -> output_with_balise b Rien p "AvancerHasard"
+   | Combattre -> output_with_balise b Rien p "Combattre"
+   | CouperBois -> output_with_balise b Rien p "CouperBois"
+   | DupliquerZombie -> output_with_balise b Rien p "DupliquerZombie"
+   | Duel -> output_with_balise b Rien p "Duel"
+   | Soigner -> output_with_balise b Rien p "Soigner"
+   | Attaquer(cellule) -> output_with_balise b (Direction(cellule)) p "Attaquer"
+   | Avancer(cellule) -> output_with_balise b (Direction(cellule)) p "Avancer"
+   | ConstruireMur(cellule) -> output_with_balise b (Direction(cellule)) p "ConstruireMur"
+   | PoserPiege(cellule) -> output_with_balise b (Direction(cellule)) p "PoserPiege"
+   | Reparer(cellule) -> output_with_balise b (Direction(cellule)) p "Reparer"
+   | Creer(t) -> output_with_balise b (Unite(t)) p "Creer"
   
   
 let output_transition ((ec,c,a,es,pds) : transition) (p : int) =
