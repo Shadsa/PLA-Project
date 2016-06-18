@@ -22,6 +22,7 @@ public class Personnage extends Observable{
 	private Cardinaux _directionJoueur = null;
 	private Case _cible;
 	private Boolean _fighting;
+	private Personnage _imageOF;
 
 	protected int _id;
 	protected Army _owner;
@@ -45,7 +46,7 @@ public class Personnage extends Observable{
 		this._directionJoueur = direction;
 	}
 
-	public Personnage(Automate brain, int x, int y, Army owner,Classe classe)
+	public Personnage(Automate brain, int x, int y, Personnage imageOF, Army owner,Classe classe)
 	{
 		_etat = 0;
 		_vie = 10;
@@ -59,6 +60,7 @@ public class Personnage extends Observable{
 		_heal = _classe.heal();
 		_armor = _classe.armor();
 		_fighting = false;
+		_imageOF = imageOF;
 		owner.world().Case(x, y).setPersonnage(this);
 	}
 
@@ -167,11 +169,13 @@ public class Personnage extends Observable{
 
 	public void change_vie(int delta)
 	{
+
+		if(_imageOF != null)
+			_imageOF.change_vie(delta);
 		if(delta <0){
 			delta = _armor + delta;
 			if(delta>=0){delta =1;}
 		}
-
 		_vie += delta;
 		if(_vie <= 0)
 		{
@@ -179,7 +183,7 @@ public class Personnage extends Observable{
 			setChanged();
 			notifyObservers(new States(Statut.MORT));
 			_owner.getPersonnages().remove(this);
-			_location.setPersonnage(null);;
+			_location.setPersonnage(null);
 		}
 		else
 			if(_vie > _classe.HP())
@@ -196,5 +200,8 @@ public class Personnage extends Observable{
 
 	public int getUnite(){
 		return this.owner().joueur().getUnite(this);
+	}
+	public Personnage imageOF() {
+		return _imageOF;
 	}
 }
