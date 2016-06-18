@@ -216,13 +216,6 @@ public class InitGameState extends BasicGameState {
 		if (_bouton_quitter.pressed) {
 			container.exit();
 		}
-
-
-		/*if (_input.isKeyPressed(Input.KEY_A)){
-			game.enterState(DragAndDropState.ID);
-		}*/
-
-		//Gestion des boutons en plein écran
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {

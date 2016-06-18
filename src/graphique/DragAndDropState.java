@@ -210,20 +210,12 @@ class DragAndDropState extends BasicGameState {
 					((MapGameState)InitGameState.game.getState(MapGameState.ID)).setGame(UIFs1, UIFs2, map);
 					InitGameState.game.enterState(MapGameState.ID);
 					}
-			//Gestion des boutons en plein écran
-			//_bouton_Jouer.setLocation(arg0.getWidth()/2-150, arg0.getHeight()/2-50);
-			
-			
-			TypeCase t1 = null;
-			
+
 			if (compt_clic %2 == 0 && container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)){
 				System.out.print("11\n");
 				if (compt_clic == 2){
 					System.out.print("21\n");
-					t1 = c01.type();
 					c02 = World.Case(fromX(container.getInput().getAbsoluteMouseX()),fromY(container.getInput().getAbsoluteMouseY()));
-					//c01.modifierCase(c02.type());
-					//c02.modifierCase(t1);
 					World.switchCase(c01, c02);
 					map.init();
 					compt_clic += 1;

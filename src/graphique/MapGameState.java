@@ -202,6 +202,7 @@ public class MapGameState extends BasicGameState {
 		
 		//Configuration du bouton menu principal
 		if (_bouton_menuPrincipal.isPressed()) {
+			container.setPaused(false);
 			_input.clearMousePressedRecord();
 			World.resetJoueurs();
 			enJeu = false;
