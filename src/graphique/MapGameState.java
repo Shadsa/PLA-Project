@@ -49,9 +49,6 @@ public class MapGameState extends BasicGameState {
 	public static Player _target = null;
 	public static Personnage _targetp = null;
 
-	private int _tailleMapY = 45;
-	private int _tailleMapX = 75;
-
 	private float _offsetMapX = 0;
 	private float _offsetMapY = 0;
 
@@ -116,8 +113,7 @@ public class MapGameState extends BasicGameState {
 		_bouton_quitter = new Button(container, "Quitter", container.getWidth()/2-62, container.getHeight()/2+80, normalImage, overImage, downImage);
 		_bouton_menuPrincipal = new Button(container, "Menu principal", container.getWidth()/2-62, container.getHeight()/2+40, normalImage, overImage, downImage);
 		_bouton_reprendre = new Button(container, "Reprendre", container.getWidth()/2-62, container.getHeight()/2-80, normalImage, overImage, downImage);
-		//Initialisation du monde
-		World.BuildMap(_tailleMapY,_tailleMapX);
+
 		//Initialisation des animations des personnages
 		Player.sinit();
 		//Initialisation de l'hud
@@ -211,7 +207,6 @@ public class MapGameState extends BasicGameState {
 			this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
 		}
 	}
-
 
 	/**
 	 * Mise à jour des attributs et des éléments du conteneur.
@@ -350,7 +345,7 @@ public class MapGameState extends BasicGameState {
 		}
 		
 		//Zoom arrière
-		if (_tailleMapX * TILESIZE * zoom() > container.getWidth() && _tailleMapX * TILESIZE * zoom() > container.getHeight()) {
+		if (World.map().largeur() * TILESIZE * zoom() > container.getWidth() && World.map().hauteur() * TILESIZE * zoom() > container.getHeight()) {
 			if (_input.isKeyDown(209) && zoom() > 0) {
 				setZoom(zoom() / 1.03f);
 				if (zoom() < 0) {

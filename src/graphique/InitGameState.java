@@ -36,7 +36,8 @@ public class InitGameState extends BasicGameState {
 
 	static Image UI;
 
-
+	private int _tailleMapY = 45;
+	private int _tailleMapX = 75;
 
 
 	//Identifiant unique de la boucle de jeu
@@ -208,6 +209,8 @@ public class InitGameState extends BasicGameState {
 
 		//Configuration du bouton jouer
 		if (_bouton_jouer.isPressed()) {
+			//Initialisation du monde
+			World.BuildMap(_tailleMapY,_tailleMapX);
 			((DragAndDropState)InitGameState.game.getState(DragAndDropState.ID)).setGame(UIFs1,UIFs2);
 				InitGameState.game.enterState(DragAndDropState.ID, "src/asset/musics/game_music.ogg");
 		}

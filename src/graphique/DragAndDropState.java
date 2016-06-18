@@ -83,8 +83,6 @@ class DragAndDropState extends BasicGameState {
 		setFont("Arial", 20);
 		textInput = new TextField (container, ttf, container.getWidth()/2-150, container.getHeight()/2-40, 300, 28);
 		textInput.setBorderColor(Color.white);
-		mapSizeX = World.map().largeur() * MapGameState.TILESIZE;
-		mapSizeY = World.map().hauteur() * MapGameState.TILESIZE;
 	}
 
 	@Override
@@ -274,6 +272,16 @@ class DragAndDropState extends BasicGameState {
 					}
 				
 				
+	}
+	
+	/**
+	 * Notification que l'on entre dans cette boucle de jeu.
+	 * @param container Le contexte dans lequels les composants sont crées et affichés.
+	 * @param game Le contrôleur des différentes boucles de jeu.
+	 */
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+		mapSizeX = World.map().largeur() * MapGameState.TILESIZE;
+		mapSizeY = World.map().hauteur() * MapGameState.TILESIZE;
 	}
 	
 	public int fromX(float x)

@@ -25,11 +25,8 @@ pompe pendant attent
 
 
 Interface :
-Ne plus afficher le personnage d�s qu'il est mort (apr�s avoir cliqu� dessus)
-La quantit� de ressources des joueurs
 Nombre de personnages pour chaque unit�
 Temps
-+Charger la map juste avant de l'afficher (et tout ce qui va avec pour pouvoir faire une nouvelle partie sans devoir quitter le programme)
 
 Selection du personnage (et des vetements) dans unitDialog
 
