@@ -7,6 +7,9 @@ val ennemiProche : cellule -> condition
 val libre : cellule -> condition
 val typeCase : typeCellule -> cellule -> condition
 
+val mur : cellule -> action
+val piege : cellule -> action
+
 val creerAutomate : automate list -> automate 
 
 val appliquerSurListe : (etat->etat->automate) -> etat list -> etat list -> automate 
@@ -29,9 +32,12 @@ val createurZ : poids -> etat -> etat -> automate
   
 val errant : poids -> etat -> etat -> automate
   
-val soigneur : poids -> etat -> etat -> automate
+val medecin : poids -> etat -> etat -> automate
 
 val fonceur : poids -> etat list -> etat -> etat -> automate
 
+val reparateur : poids -> etat -> etat -> automate
+
 val chercheur : poids -> (cellule->condition) -> etat list -> etat -> etat  -> automate
 
+val constructeur : poids -> (cellule->action) -> int -> etat -> etat -> automate 

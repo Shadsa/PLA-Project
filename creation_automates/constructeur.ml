@@ -7,6 +7,9 @@ let ennemiProche (d : cellule) : condition = EnnemiProche(d)
 let libre (d : cellule) : condition = Libre(d)
 let typeCase (t : typeCellule) (d : cellule) : condition = Type(t,d)
 
+let mur (d : cellule) : action = ConstruireMur(d)
+let piege (d : cellule) : action = PoserPiege(d)
+
 let creerAutomate (a : automate list) : automate = List.concat a
 
 let rec appliquerSurListe (f : etat->etat->automate) (e1 : etat list) (e2 : etat list) : automate =  
@@ -48,13 +51,19 @@ let createurZ (p : poids) (e1 : etat) (e2 : etat) : automate =
 let errant (p : poids) (e1 : etat) (e2 : etat) : automate =
   [(e1,Vide,AvancerHasard,e2,p)]
   
-let soigneur (p : poids) (e1 : etat) (e2 : etat) : automate =
+let medecin (p : poids) (e1 : etat) (e2 : etat) : automate =
   [(e1,UnAmi,Soigner,e2,p)]
 
 let fonceur (p : poids) (eL : etat list) (e1 : etat) (e2 : etat) : automate =
   creerAutomate (List.map2 (fun e d -> [(e1,Libre(d),Avancer(d),e,p); (e,Libre(d),Avancer(d),e,p); (e,Vide,Attendre,e2,0)]) eL [N;S;E;O])
 
+let reparateur (p : poids) (e1 : etat) (e2 : etat) : automate =
+    creerAutomate (List.map (fun d -> [(e1,CaseAmi(d),Reparer(d),e,p)]) [N;S;E;O])
+
 let chercheur (p : poids) (cond : cellule -> condition) (eL : etat list) (e1 : etat) (e2 : etat) : automate =
   creerAutomate (List.map2 (fun e d -> [(e1,Et(Libre(d),cond d),Avancer(d),e,p);
 					     (e,Et(Libre(d),cond d),Avancer(d),e,p+1);
 					     (e,Vide,Attendre,e2,0)]) eL [N;S;E;O])
+
+let constructeur (p : poids) (construire : cellule -> action) (cout : int) (e1 : etat) (e2 : etat) : automate =
+  creerAutomate (List.map (fun d -> [(e1,Et(Libre(d),RessourcesPossedees(cout)),construire d,e2,p)]) [N;S;E;O])
