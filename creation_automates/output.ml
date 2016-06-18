@@ -152,5 +152,5 @@ let ecrireXML (nom : string) (auto : automate) =
   output := Some(o);
   output_string o "<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n\n";
   output_automate auto 0;
-  close_out o
+  close_out_noerr o
   end
