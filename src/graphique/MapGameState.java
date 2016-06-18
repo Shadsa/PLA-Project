@@ -49,7 +49,7 @@ public class MapGameState extends BasicGameState {
 	public static Player _target = null;
 	public static Personnage _targetp = null;
 
-	private int _tailleMapY = 45;
+	private int _tailleMapY = 20;
 	private int _tailleMapX = 75;
 
 	private float _offsetMapX = 0;
@@ -247,10 +247,9 @@ public class MapGameState extends BasicGameState {
 				anim.restart();
 		}
 
-		//Position de la souris par rapport au conteneur
+		//Position de la souris
 		mouseAbsoluteX = _input.getAbsoluteMouseX();
 		mouseAbsoluteY = _input.getAbsoluteMouseY();
-		//Position de la souris sur la map
 		_mouseMapX = (mouseAbsoluteX + offsetMapX()) / zoom();
 		_mouseMapY = (mouseAbsoluteY + offsetMapY()) / zoom();
 		mouse = "MouseAbsoluteX : " + mouseAbsoluteX + ", MouseAbsoluteY : " + mouseAbsoluteY;
@@ -598,7 +597,7 @@ public class MapGameState extends BasicGameState {
 		}
 		if (!enJeu) {
 			World.getPlayers().get(0).createPersonnage(0, 1, 1);
-			World.getPlayers().get(1).createPersonnage(0, _tailleMapX-2, _tailleMapY-2);
+			World.getPlayers().get(1).createPersonnage(0, World.map().largeur()-2, World.map().hauteur()-2);
 			
 			int i=0;
 			for(Joueur j : World.getPlayers())

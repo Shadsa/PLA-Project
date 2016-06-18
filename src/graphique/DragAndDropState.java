@@ -212,16 +212,13 @@ class DragAndDropState extends BasicGameState {
 					}
 
 			if (compt_clic %2 == 0 && container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)){
-				System.out.print("11\n");
 				if (compt_clic == 2){
-					System.out.print("21\n");
 					c02 = World.Case(fromX(container.getInput().getAbsoluteMouseX()),fromY(container.getInput().getAbsoluteMouseY()));
 					World.switchCase(c01, c02);
 					map.init();
 					compt_clic += 1;
 				}
 				else {
-					System.out.print("22\n");
 					int x1 = fromX(container.getInput().getAbsoluteMouseX());
 					int y1 = fromY(container.getInput().getAbsoluteMouseY());
 					System.out.print(x1+"\n");
@@ -257,18 +254,18 @@ class DragAndDropState extends BasicGameState {
 				if (_input.isKeyDown(201))
 				{
 					setZoom(zoom() * 1.03f);
-					setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
-					setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
+					/*setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
+					setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);*/
 				}
 				
 				//Zoom arrière
-				if (_input.isKeyDown(209) && zoom() > 0) {
-						setZoom(zoom() / 1.03f);
-						if (zoom() < 0) {
-							setZoom(0);
-						}
-						setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
-						setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
+				if (_input.isKeyDown(209) && zoom() > 0 && (MapGameState.TILESIZE*World.map().hauteur()*_zoom > container.getHeight() || MapGameState.TILESIZE*World.map().largeur()*_zoom > container.getWidth())) {
+					setZoom(zoom() / 1.03f);
+					if (zoom() < 0) {
+						setZoom(0);
+					}
+					/*setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
+					setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);*/
 					}
 				
 				
@@ -276,11 +273,11 @@ class DragAndDropState extends BasicGameState {
 	
 	public int fromX(float x)
 	{
-		return (int) ((int) (x - _offsetMapX) / (MapGameState.TILESIZE*zoom()));
+		return (int) ((int) (x + _offsetMapX) / (MapGameState.TILESIZE*zoom()));
 	}
 	public int fromY(float y)
 	{
-		return (int) ((int) (y - _offsetMapY) / (MapGameState.TILESIZE*zoom()));
+		return (int) ((int) (y + _offsetMapY) / (MapGameState.TILESIZE*zoom()));
 	}
 	
 	public void keyPressed(int key, char c) {
