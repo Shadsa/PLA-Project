@@ -2,13 +2,25 @@ COMPILE=ocamlc
 
 all: clean main
 
-main: automate.cmo createur.ml
+main: typesAutomate.cmo constructeur.cmo output.cmo createur.ml
 	$(COMPILE) $? -o $@
 
-automate.cmo: automate.ml automate.cmi
+typesAutomate.cmo: typesAutomate.ml typesAutomate.cmi
 	$(COMPILE) -c $<
 
-automate.cmi: automate.mli
+typesAutomate.cmi: typesAutomate.mli
+	$(COMPILE) -c $<
+
+constructeur.cmo: constructeur.ml constructeur.cmi
+	$(COMPILE) -c $<
+
+constructeur.cmi: constructeur.mli
+	$(COMPILE) -c $<
+
+output.cmo: output.ml output.cmi
+	$(COMPILE) -c $<
+
+output.cmi: output.mli
 	$(COMPILE) -c $<
 
 clean:
