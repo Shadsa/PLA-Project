@@ -53,6 +53,7 @@ public class MapGameState extends BasicGameState implements Observer {
 	private boolean showhud = false;
 	private float alpha = 0;
 
+	public static MapTest _targetw = null;
 	public static Player _target = null;
 	public static Personnage _targetp = null;
 
@@ -108,26 +109,29 @@ public class MapGameState extends BasicGameState implements Observer {
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		//Affichage de la map
-		for(MapTest mt : _GUnivers)
+		/*for(MapTest mt : _GUnivers)
 		{
 			mt.render(g);
 			//Annule la translation pour l'affichage du string en dessous
 			g.resetTransform();
+		}*/
+		_mainm.render(g);
+		g.resetTransform();
+
+		if(_targetw != null)
+		{
+			_targetw.render(g);
+			g.resetTransform();
 		}
 
 
+		g.setColor(Color.white);
 
 		//Affichage message de fin
 		if (World.Univers.size() == 0) {
-			_mainm.render(g);
-			g.resetTransform();
-
-			g.setColor(Color.white);
 			g.drawString(_mainw.army().get(0).joueur().nom()+" a gagné! Félicitations à lui, vraiment.", container.getWidth()/2-175, container.getHeight()/2);
 			g.resetTransform();
 		}
-
-		g.setColor(Color.white);
 		//Affichage de la position de la souris sur la map
 		g.drawString(mouse, 10, 50);
 		g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
@@ -296,7 +300,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		}
 
 		//Gestion du scrolling de la map avec la souris/manette/clavier
-		MapTest focus = (_GUnivers.size() > 1 && _GUnivers.get(1).isOver(_input.getMouseX(), _input.getMouseY()))?_GUnivers.get(1) : _mainm;
+		MapTest focus = (_targetw != null && _targetw.isOver(_input.getMouseX(), _input.getMouseY()))?_targetw : _mainm;
 		if (mouseAbsoluteY == container.getHeight() || _input.isControllerDown(0) || _input.isKeyDown(208)) {
 			focus.move(0, 1);
 		}
@@ -442,11 +446,11 @@ public class MapGameState extends BasicGameState implements Observer {
 	 */
 	public void mousePressed(int button, int x, int y) {
 
-		if(x >= _GUnivers.get(0).getX() && y >= _GUnivers.get(0).getY() && x<=_GUnivers.get(0).getX()+_GUnivers.get(0).getWidth() && y<=_GUnivers.get(0).getY()+_GUnivers.get(0).getHeight())
-			_GUnivers.get(0).mousePressed(button, x, y);
-		if(_GUnivers.size()>1)
+		if(x >= _mainm.getX() && y >= _mainm.getY() && x<=_mainm.getX()+_mainm.getWidth() && y<=_mainm.getY()+_mainm.getHeight())
+			_mainm.mousePressed(button, x, y);
+		/*if(_GUnivers.size()>1)
 		if(x >= _GUnivers.get(1).getX() && y >= _GUnivers.get(1).getY() && x<=_GUnivers.get(1).getX()+_GUnivers.get(1).getWidth() && y<=_GUnivers.get(1).getY()+_GUnivers.get(1).getHeight())
-			_GUnivers.get(1).mousePressed(button, x, y);
+			_GUnivers.get(1).mousePressed(button, x, y);*/
 		//super.mousePressed(button, x, y);
 		/*for(graphique.GJoueur j : _joueurs)
 			for(Player p : j.getPersonnage())
@@ -498,12 +502,6 @@ public class MapGameState extends BasicGameState implements Observer {
 
 	public void setMouseMapY(int y) {
 		this._mouseMapY = y;
-	}
-
-	public void setTarget(Player p, int x, int y)
-	{
-		_target = p;
-		_targetp = World.Univers.get(0).Case(x, y).Personnage();
 	}
 
 
@@ -607,14 +605,26 @@ public class MapGameState extends BasicGameState implements Observer {
 				int x = (arg1.getClass().getDeclaredField("mx").getInt(arg1));
 				int y = (arg1.getClass().getDeclaredField("my").getInt(arg1));
 				_target = ((Player)arg1.getClass().getDeclaredField("mtargetp").get(arg1));
-				if(_targetp != World.Univers.get(0).Case(x, y).Personnage())
+				if(_target != null && _targetp != World.Univers.get(0).Case(x, y).Personnage())
 				{
 					_targetp = World.Univers.get(0).Case(x, y).Personnage();
+					// Si il y a eu une imprécision (rare)
+					if(_targetp == null)
+					{
+						_target = null;
+						_targetw = null;
+						return;
+					}
+					if(_targetp.fightworld() != null && World.Univers.indexOf(_targetp.fightworld()) != -1)
+						_targetw = _GUnivers.get(World.Univers.indexOf(_targetp.fightworld()));
+					else
+						_targetw = null;
 				}
 				else
 				{
 					_target = null;
 					_targetp = null;
+					_targetw = null;
 				}
 			} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
 				e.printStackTrace();

@@ -337,11 +337,11 @@ public class MapTest extends Observable {
 		return (mouseX >= p.getX()-32 && mouseX <= p.getX()+32 && mouseY >= p.getY()-60 && mouseY <= p.getY()+4);
 	}
 
-	public boolean mousePressed(int button, int x, int y) {
+	public boolean mousePressed(int button, int mx, int my) {
 		//super.mousePressed(button, x, y);
 		for(GArmy a : _joueurs)
 			for(Player p : a.getPersonnage())
-				if (Input.MOUSE_LEFT_BUTTON == button && curseurSurPerso(p, x, y)) {
+				if (Input.MOUSE_LEFT_BUTTON == button && curseurSurPerso(p, (mx+this.x)/zoom(), (my+this.y)/zoom())) {
 				//this.showhud = true;
 					this.setChanged();
 					this.notifyObservers(new Object(){
@@ -351,8 +351,16 @@ public class MapTest extends Observable {
 					//((MapGameState)InitGameState.game.getState(MapGameState.ID)).setTarget(p, (int)(MapGameState._target.DestX()-Ox)/TILESIZE, (int)(MapGameState._target.DestY()-Oy)/TILESIZE);
 				return true;
 			}
+			/*	else
+
+					System.out.println((mx+this.x)/zoom() + " " +this.x +" " +mx + " " + zoom() +" " + p.DestX());*/
 		//map.mousePressed(button, x, y);
-			return true;
+		this.setChanged();
+		this.notifyObservers(new Object(){
+			public int mx = 0;
+			public int my = 0;
+			public Player mtargetp =null;});
+			return false;
 	}
 
 	public void move(int i, int j) {
