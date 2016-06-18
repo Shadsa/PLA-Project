@@ -31,7 +31,7 @@ val errant : poids -> etat -> etat -> automate
   
 val soigneur : poids -> etat -> etat -> automate
 
-val fonceur : poids -> etat -> etat list -> automate
+val fonceur : poids -> etat list -> etat -> etat -> automate
 
-val chercheur : poids -> (cellule->condition) -> etat -> etat list -> etat list -> automate
+val chercheur : poids -> (cellule->condition) -> etat list -> etat -> etat  -> automate
 

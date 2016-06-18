@@ -1,0 +1,87 @@
+Creation d'automates : 
+
+la création d'un automate visant a etre utilise par le programme principale se fait
+par le biais de l'assemblage de plusieurs plus petits automates, décrivant chacun
+une partie du comportement de l'automate final.
+
+Afin de creer ces comportements, on pourra utiliser des fonctions decrivant des
+comportements predefinis (hostile, createur,...), ou bien utiliser la fonction
+plus generale "transition" permettant de definir une transition grace a ses 
+composantes.
+
+Ces comportements prennent tous en parametres un etat courant et l'etat suivant
+de l'automate, ce qui les rend compatibles avec la fonction appliquerSurListe
+qui permet d'appliquer une transition/un comportement sur une ou deux listes
+d'etats.
+
+Une fois la liste de ces comportements crees, il suffit d'utiliser la fonction
+creerAutomate sur cette derniere, qui renverra l'automate termine. Il suffit
+alors de rajouter dans la fonction principale un appel a ecrireXML, en donnant
+comme parametre le nom du fichier XML voulu, ainsi que l'automate a traduire.
+
+
+##Fonctions de creation de conditions##
+#ces fonctions servent a creer la condition du meme nom en prenant#
+#la direction, voire le type de la case a chercher#
+arbreProche direction : condition
+caseAmi direction : condition
+ennemi direction : condition
+ennemiProche direction : condition
+libre direction : condition
+typeCase typeCellule direction : condition
+
+##Fonctions generales de creation d'automates##
+
+#fusionne une liste d'automates en un seul automate#
+creerAutomate automate_liste : automate 
+
+#applique un comportement sur une ou deux liste d'etats#
+#on obtient le comportement allant de chaque etat courant de la#
+#premier liste vers chaque etat suivant de la deuxieme#
+appliquerSurListe : comportement etat_courant_liste etat_suivant_liste : automate 
+appliquerSurListe : comportement etat_courant_liste etat_suivant : automate 
+appliquerSurListe : comportement etat_courant etat_suivant_liste : automate 
+
+#creer une transition grace a ses composantes#
+transition poids condition action etat_courant etat_suivant : automate
+
+#un automate qui attaque chaque ennemi adjacent quand il est dans#
+#l'etat etat_courant, puis passe dans etat_suivant#
+hostile poids etat_courant etat_suivant : automate
+
+#un automate qui coupe chaque arbre adjacent quand il est dans#
+#l'etat etat_courant, puis passe dans etat_suivant#
+recolteur poids etat_courant etat_suivant : automate
+
+#cree une unite typeU s'il a assez de ressources, et qu'il y a#
+#au plus nbMin unites typeU, ou qu'il y en a un ratio inferieur a#
+#ratioMin#
+createurNbRatio poids typeU cout nbMin ratioMin etat_courant etat_suivant : automate
+
+#cree une unite typeU s'il a assez de ressources#
+createur poids typeU cout etat_courant etat_suivant : automate
+
+#comportement de zombie: se duplique quand dans etat_courant#
+#et passe dans etat_suivant. L'action peut echouer#
+createurZ poids etat_courant etat_suivant automate
+  
+#avance une fois au hasard quand dans etat_courant, puis passe#
+#dans etat_suivant#
+errant poids etat_courant etat_suivant : automate
+
+#soigne chaque allie adjacent quand il est dans#
+#l'etat etat_courant, puis passe dans etat_suivant#
+soigneur poids etat_courant etat_suivant : automate
+
+#choisi une direction au hasard, puis avance jusqu'a rencontrer#
+#un obstacle, puis passe dans l'etat_suivant. etats_disponibles#
+#doit etre une liste de 4 etats qui seront utilises pour construire#
+#le comportement#
+fonceur poids etats_disponibles etat_courant etat_suivant : automate
+
+#s'il trouve une case remplissant condition_sans_direction (utiliser#
+#les fonctions de creation de conditions), avance vers celle-ci#
+#jusqu'a rencontrer un obstacle#
+#etats_disponibles est une liste de 4 etats necessaires pour#
+#implementer ce comportement#
+chercheur poids condition_sans_direction etats_disponibles etat_courant etat_suivant : automate

@@ -51,8 +51,10 @@ let errant (p : poids) (e1 : etat) (e2 : etat) : automate =
 let soigneur (p : poids) (e1 : etat) (e2 : etat) : automate =
   [(e1,UnAmi,Soigner,e2,p)]
 
-let fonceur (p : poids) (e1 : etat) (eL : etat list) : automate =
-  creerAutomate (List.map2 (fun e d -> [(e1,Libre(d),Avancer(d),e,p); (e,Libre(d),Avancer(d),e,p); (e,Vide,Attendre,e1,0)]) eL [N;S;E;O])
+let fonceur (p : poids) (eL : etat list) (e1 : etat) (e2 : etat) : automate =
+  creerAutomate (List.map2 (fun e d -> [(e1,Libre(d),Avancer(d),e,p); (e,Libre(d),Avancer(d),e,p); (e,Vide,Attendre,e2,0)]) eL [N;S;E;O])
 
-let chercheur (p : poids) (cond : cellule -> condition) (ed : etat) (e1 : etat list) (e2 : etat list) : automate =
-  creerAutomate (List.map (fun (e1,e2,d) -> [(ed,Et(Libre(d),cond d),Avancer(d),e1,p);(e1,Et(Libre(d),cond d),Avancer(d),e1,p+1);(e1,cond d,Attendre,e2,p);(e1,Vide,Attendre,ed,0);(e2,Et(Libre(d),cond d),Avancer(d),e1,p+1);(e2,Vide,Attendre,ed,0)]) (supercombine e1 e2 [N;S;E;O]))
+let chercheur (p : poids) (cond : cellule -> condition) (eL : etat list) (e1 : etat) (e2 : etat) : automate =
+  creerAutomate (List.map2 (fun e d -> [(e1,Et(Libre(d),cond d),Avancer(d),e,p);
+					     (e,Et(Libre(d),cond d),Avancer(d),e,p+1);
+					     (e,Vide,Attendre,e2,0)]) eL [N;S;E;O])
