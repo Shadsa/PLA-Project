@@ -85,7 +85,7 @@ public class InitGameState extends BasicGameState {
 		Classe boost = woks.getDeckClasse("Default");//new Classe(10,5,5,0,"default class",Bonus.VIE);
   		World.classes.add(generique);
   		World.classes.add(boost);
-		background = new Image("src/asset/images/skeleton_army.jpg");
+		background = new Image("src/asset/images/gilead_entry_area_by_rusty001-d2y351t.jpg");
 		InitGameState.game = (StateGame) game;
 		my_button = new Button(container, "Ajouter unité",container.getWidth()/4, container.getHeight()/4);
 		_bouton_jouer = new Button(container, "Jouer", container.getWidth()*3/4, container.getHeight()*3/4);
@@ -137,8 +137,6 @@ public class InitGameState extends BasicGameState {
 				if(uInfo.choixJoueur == "Joueur1") {
 					Personnages.add(new CrossButton(container, uInfo.nom, my_button.x+15, (Personnages.size() == 0)? my_button.y+my_button.height+7 : Personnages.get(Personnages.size()-1).y + Personnages.get(Personnages.size()-1).height+7));
 					UIFs1.add(uInfo);
-					//autlist.add(uInfo.automate);
-					//classes.add(uInfo.classe);
 				}
 				if(uInfo.choixJoueur == "Joueur2") {
 					Personnages2.add(new CrossButton(container, uInfo.nom, my_button.x+300, (Personnages2.size() == 0)? my_button.y+my_button.height+7 : Personnages2.get(Personnages2.size()-1).y + Personnages2.get(Personnages2.size()-1).height+7));
@@ -222,9 +220,26 @@ public class InitGameState extends BasicGameState {
 		if (_bouton_quitter.pressed) {
 			container.exit();
 		}
+		
+		my_button.setLocation(container.getWidth() / 4, container.getHeight() / 4);
+		_bouton_jouer.setLocation(container.getWidth() * 3 / 4, container.getHeight() * 3 / 4);
+		_bouton_quitter.setLocation(my_button.x, _bouton_jouer.y);
+		_bouton_retour.setLocation(my_button.x + 70, _bouton_jouer.y);
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+		for(int i = Personnages.size()-1; i>=0; i--) {
+			Personnages.get(i).update(container);
+			for(int j = Personnages.size()-1; j>=i; j--) {
+				Personnages.get(j).setLocation(my_button.x+15, (j == 0)? my_button.y+my_button.height+7 : Personnages.get(j).y + Personnages.get(j).height+7);
+			}
+		}
+		for(int i = Personnages2.size()-1; i>=0; i--) {
+			Personnages2.get(i).update(container);
+			for(int j = Personnages2.size()-1; j>=i; j--) {
+				Personnages2.get(j).setLocation(my_button.x+300, (j == 0)? my_button.y+my_button.height+7 : Personnages2.get(j).y + Personnages2.get(j).height+7);
+			}
+		}
 	}
 
 	public void keyPressed(int key, char c) {
