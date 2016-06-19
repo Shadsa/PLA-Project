@@ -602,7 +602,7 @@ public class MapGameState extends BasicGameState implements Observer {
 			}
 
 		//Affichage compteur de tours
-		if (secondeTime == 60) {
+		if (secondeTime >= 60) {
 			secondeTime = 0;
 			minuteTime++;
 		}
