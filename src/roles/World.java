@@ -11,6 +11,7 @@ import roles.classe.Classe;
 public class World {
 	public static ArrayList<Classe> classes = new ArrayList<Classe>();
 	public static ArrayList<World> Univers = new ArrayList<World>();
+	public static ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
 
 	Carte _map;
 	private ArrayList<Army> _army = new ArrayList<Army>();
@@ -118,6 +119,16 @@ public class World {
 
 	public boolean isArena() {
 		return _isArena;
+	}
+	
+	//TODO Ajout ici, peut-etre meilleur moyen
+	public ArrayList<Joueur> getPlayers(){
+	    ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
+	    for(Army a : _army){
+		if(!joueurs.contains(a._joueur))
+		    joueurs.add(a._joueur);
+	    }
+	    return joueurs;
 	}
 
 }

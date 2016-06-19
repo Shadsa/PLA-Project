@@ -35,7 +35,7 @@ import graphique.MapGameState;
 
 class DragAndDropState extends BasicGameState {
 	public static final int ID = 3;
-	private MapTest map = new MapTest ();
+	private MapTest map ;
 	private float _offsetMapX=0;
 	private float _offsetMapY=0;
 	private float mouseAbsoluteX;
@@ -67,6 +67,8 @@ class DragAndDropState extends BasicGameState {
 	private TextField textInput;
 	private UnicodeFont ttf;
 	
+	private World _mainw ;
+	
 	//private static StateGame game;
 
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -75,6 +77,7 @@ class DragAndDropState extends BasicGameState {
 		Image normalImage = img.getSubImage(633, 23, 123, 27);
 		Image overImage = img.getSubImage(633, 53, 123, 27);
 		Image downImage = img.getSubImage(633, 83, 123, 27);
+		map = new MapTest (0, 0, container.getScreenWidth(), container.getScreenHeight());
 		_bouton_Jouer = new Button(container, "Jouer", container.getWidth()-150, container.getHeight()-50, normalImage, overImage, downImage);
 		_bouton_sauvegarder = new Button(container, "Sauvegarder", container.getWidth()-150, 10, normalImage, overImage, downImage);
 		_bouton_charger = new Button(container, "Charger", container.getWidth()-150, 50, normalImage, overImage, downImage);
@@ -88,10 +91,11 @@ class DragAndDropState extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		//Affichage de la map
-		g.translate(-_offsetMapX, -_offsetMapY);
+		/*g.translate(-_offsetMapX, -_offsetMapY);
 		g.scale(_zoom, _zoom);
-		this.map.render(g, _offsetMapX, _offsetMapY, zoom(), container.getWidth(), container.getHeight());
-		g.resetTransform();
+		this.map.render(g, _offsetMapX, _offsetMapY, zoom(), container.getWidth(), container.getHeight());*/
+	    	this.map.render(g);
+	    	g.resetTransform();
 		_bouton_Jouer.render(container, g);
 		_bouton_sauvegarder.render(container, g);
 		_bouton_charger.render(container, g);
@@ -136,7 +140,7 @@ class DragAndDropState extends BasicGameState {
 					try
 					{
 					    ObjectOutputStream oos = new ObjectOutputStream (new FileOutputStream (f));
-					    oos.writeObject (World.map());
+					    oos.writeObject (_mainw.map());
 					    oos.close();
 					}
 					catch (IOException exception)
@@ -148,7 +152,7 @@ class DragAndDropState extends BasicGameState {
 					try
 					{
 					    ObjectInputStream ois = new ObjectInputStream (new FileInputStream (f));
-					    World.setMap((Carte)ois.readObject());
+					    _mainw.setMap((Carte)ois.readObject());
 					    ois.close();
 					}
 					catch (ClassNotFoundException exception)
@@ -161,8 +165,8 @@ class DragAndDropState extends BasicGameState {
 					}
 					System.out.println("Chargement OK !");
 					map.init();
-					mapSizeX = World.map().largeur() * MapGameState.TILESIZE;
-					mapSizeY = World.map().hauteur() * MapGameState.TILESIZE;
+					mapSizeX = _mainw.map().largeur() * MapGameState.TILESIZE;
+					mapSizeY = _mainw.map().hauteur() * MapGameState.TILESIZE;
 				}
 				textInput.setText("");
 				container.setPaused(false);
@@ -203,8 +207,8 @@ class DragAndDropState extends BasicGameState {
 			//Configuration bouton placer automate
 			if (_bouton_placerAutomate.isDown()) {
 				try {
-					World.putAutomates(World.getPlayers().get(0).Automates(), 1, 1, World.getPlayers().get(0));
-					World.putAutomates(World.getPlayers().get(1).Automates(),World.map().largeur()-2, World.map().hauteur()-2, World.getPlayers().get(1));
+					_mainw.putAutomates(_mainw.getPlayers().get(0).Automates(), 1, 1, _mainw.getPlayers().get(0));
+					_mainw.putAutomates(_mainw.getPlayers().get(1).Automates(),_mainw.map().largeur()-2, _mainw.map().hauteur()-2, _mainw.getPlayers().get(1));
 					map.init();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -220,8 +224,8 @@ class DragAndDropState extends BasicGameState {
 
 			if (compt_clic %2 == 0 && container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)){
 				if (compt_clic == 2){
-					c02 = World.Case(fromX(container.getInput().getAbsoluteMouseX()),fromY(container.getInput().getAbsoluteMouseY()));
-					World.switchCase(c01, c02);
+					c02 = _mainw.Case(fromX(container.getInput().getAbsoluteMouseX()),fromY(container.getInput().getAbsoluteMouseY()));
+					_mainw.switchCase(c01, c02);
 					map.init();
 					compt_clic += 1;
 				}
@@ -230,7 +234,7 @@ class DragAndDropState extends BasicGameState {
 					int y1 = fromY(container.getInput().getAbsoluteMouseY());
 					System.out.print(x1+"\n");
 					System.out.print(y1+"\n");
-					c01 = World.Case(x1, y1);
+					c01 = _mainw.Case(x1, y1);
 					compt_clic+=1;
 				}
 			}
@@ -280,8 +284,8 @@ class DragAndDropState extends BasicGameState {
 	 * @param game Le contrôleur des différentes boucles de jeu.
 	 */
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-		mapSizeX = World.map().largeur() * MapGameState.TILESIZE;
-		mapSizeY = World.map().hauteur() * MapGameState.TILESIZE;
+		mapSizeX = World.Univers.get(0).map().largeur() * MapGameState.TILESIZE;
+		mapSizeY = World.Univers.get(0).map().hauteur() * MapGameState.TILESIZE;
 	}
 	
 	public int fromX(float x)
@@ -337,9 +341,12 @@ class DragAndDropState extends BasicGameState {
 	}
 	
 	public void setGame(ArrayList<UnitInfo> uIFs1,ArrayList<UnitInfo> uIFs2) {
-
+	    
 		this.UIFs1 = uIFs1;
 		this.UIFs2 = uIFs2;
+		
+		_mainw = World.Univers.get(0);
+		map.initialise(_mainw);
 
 		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
 		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
@@ -367,9 +374,9 @@ class DragAndDropState extends BasicGameState {
 			type_unit.get(1).add(ui.color);
 			type_clothes.get(1).add(ui.clothes);
 		}
-		if (World.getPlayers().size() == 0) {
-			World.addPlayer(new Joueur("Joueur1", autlist.get(0), classes.get(0)));
-			World.addPlayer(new Joueur("Joueur2", autlist.get(1), classes.get(1)));
+		if (World.joueurs.size() == 0) {
+			World.joueurs.add(new Joueur("Human", autlist.get(0), autlist.get(0), classes.get(0), type_unit.get(0), type_clothes.get(0)));
+			World.joueurs.add(new Joueur("Zombie", autlist.get(1), autlist.get(1), classes.get(1), type_unit.get(1), type_clothes.get(1)));
 		}
 		try {
 			this.map.init();

@@ -40,7 +40,7 @@ public class MapGameState extends BasicGameState implements Observer {
 	static final int TILESIZE = 96;
 	static float MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
 
-	private ArrayList<Joueur> jjj = new ArrayList<Joueur>();
+	//private ArrayList<Joueur> jjj = new ArrayList<Joueur>();
 	private Hud hud = new Hud();
 	public static final int ID = 2;
 	private String mouse;
@@ -59,17 +59,17 @@ public class MapGameState extends BasicGameState implements Observer {
 
 	private float _offsetMapX = 0;
 	private float _offsetMapY = 0;
-	private int _tailleMapY = 75;
-	private int _tailleMapX = 45;
+	private int _tailleMapY = 45;
+	private int _tailleMapX = 75;
 	//Test
-	private MapTest map;
+	//private MapTest map;
 	private MapTest _mainm;
 	private World _mainw;
 	private static ArrayList<MapTest> _GUnivers = new ArrayList<MapTest>();
 	private Input _input;
 	private StateGame game;
 	public static boolean debug = false;
-	private boolean enJeu = false;
+	//private boolean enJeu = false;
 
 	//Boutons
 	private Button _bouton_fullScreen;
@@ -92,6 +92,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		Image normalImage = img.getSubImage(633, 23, 123, 27);
 		Image overImage = img.getSubImage(633, 53, 123, 27);
 		Image downImage = img.getSubImage(633, 83, 123, 27);
+		//TODO GUnivers
 		_GUnivers.add(new MapTest(0, 0, container.getScreenWidth(), container.getScreenHeight()));
 		//Instanciation des boutons
 		_bouton_fullScreen = new Button(container, "Plein écran", container.getWidth()/2-62, container.getHeight()/2, normalImage, overImage, downImage);
@@ -123,7 +124,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		_mainm.render(g);
 		g.resetTransform();
 
-		//Affichage de la map (zoom + scrolling)
+/*		//Affichage de la map (zoom + scrolling)
 		g.translate(-_offsetMapX, -_offsetMapY);
 		g.scale(_zoom, _zoom);
 		this.map.render(g, _offsetMapX, _offsetMapY, zoom(), container.getWidth(), container.getHeight());
@@ -137,7 +138,7 @@ public class MapGameState extends BasicGameState implements Observer {
 						if(p.getX()-TILESIZE < (_offsetMapX + container.getWidth())/zoom())
 						if(p.getY()-TILESIZE < (_offsetMapY + container.getHeight())/zoom())
 							p.render(g);
-
+*/
 		if(_targetw != null)
 		{
 			_targetw.render(g);
@@ -168,13 +169,13 @@ public class MapGameState extends BasicGameState implements Observer {
 
 		affichageDetailJeu(g);
 		
-		//Affichage message de fin
+		/*//Affichage message de fin
 		if (World.fini) {
 			if(World.joueurs().size()==1){
 				g.drawString(World.joueurs().get(0).nom()+" a gagné! Félicitations à lui, vraiment.", container.getWidth()/2-175, container.getHeight()/2);
 				g.resetTransform();
 			}
-		}
+		}*/
 		
 		//Gestion de la pause (affichage d'un fond noir-transparent progressif)
 		if (container.isPaused()) {
@@ -202,9 +203,10 @@ public class MapGameState extends BasicGameState implements Observer {
 		if (_bouton_menuPrincipal.isPressed()) {
 			container.setPaused(false);
 			_input.clearMousePressedRecord();
+			/* TODO reset des joueurs quand on revient au menu
 			World.resetJoueurs();
 			enJeu = false;
-			_joueurs.clear();
+			_joueurs.clear();*/
 			this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
 		}
 	}
@@ -233,12 +235,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		if(_time > Tick)
 		{
 			_time -= Tick;
-			World.nextTurn();
 			secondeTime++;
-			for(TypeUnit t : TypeUnit.values()){
-				for(Animation anim : t.animations)
-					anim.restart();
-			}
 
 			if(World.Univers.size() == 0)
 				_mainw.nextTurn();
@@ -273,8 +270,9 @@ public class MapGameState extends BasicGameState implements Observer {
 		//Position de la souris
 		mouseAbsoluteX = _input.getAbsoluteMouseX();
 		mouseAbsoluteY = _input.getAbsoluteMouseY();
+		/* TODO 
 		_mouseMapY = (mouseAbsoluteY + offsetMapY()) / zoom();
-		_mouseMapX = (mouseAbsoluteX + offsetMapX()) / zoom();
+		_mouseMapX = (mouseAbsoluteX + offsetMapX()) / zoom();*/
 		mouse = "MouseAbsoluteX : " + mouseAbsoluteX + ", MouseAbsoluteY : " + mouseAbsoluteY;
 
 		gestionVitesseDeJeu(Input.KEY_B, Input.KEY_N, Input.KEY_W, Input.KEY_V);
@@ -308,7 +306,8 @@ public class MapGameState extends BasicGameState implements Observer {
 			}
 		}
 		
-		gestionZoomClavier(container, Input.KEY_NEXT, Input.KEY_PRIOR, 1.03f);
+		//TODO ici gestion zoom
+		//gestionZoomClavier(container, Input.KEY_NEXT, Input.KEY_PRIOR, 1.03f);
 
 		//Configuration de la pause
 		if (_input.isKeyPressed(Input.KEY_ESCAPE)) {
@@ -507,7 +506,7 @@ public class MapGameState extends BasicGameState implements Observer {
 			g.setColor(Color.white);
 			g.drawString(mouse, 10, 30);
 			g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 50);
-			g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 70);
+			//g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 70);
 			g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 90);
 		}
 	}
@@ -597,11 +596,12 @@ public class MapGameState extends BasicGameState implements Observer {
 		g.setColor(Color.white);
 		
 		//Affichage des détails des joueurs
-		if (World.getPlayers().size() == 2) {
-			g.drawString("Ressources : J1 " + World.getPlayers().get(0).ressources(), 10, 250);
-			g.drawString("Ressources : J2 " + World.getPlayers().get(1).ressources(), 10, 270);
-			g.drawString("Nb personnages : " + World.getPlayers().get(0).getPersonnages().size(), 10, 290);
-			g.drawString("Nb personnages : " + World.getPlayers().get(1).getPersonnages().size(), 10, 310);
+		if (_mainw.getPlayers().size() == 2) {
+			g.drawString("Ressources : J1 " + _mainw.getPlayers().get(0).ressources(), 10, 250);
+			g.drawString("Ressources : J2 " + _mainw.getPlayers().get(1).ressources(), 10, 270);
+			/* TODO trouver un moyen de faire ca
+			g.drawString("Nb personnages : " + _mainw.getPlayers().get(0).getPersonnages().size(), 10, 290);
+			g.drawString("Nb personnages : " + _mainw.getPlayers().get(1).getPersonnages().size(), 10, 310);*/
 		}
 		
 		//Affichage compteur de tours
@@ -631,7 +631,7 @@ public class MapGameState extends BasicGameState implements Observer {
 	 * @param zoom Code de la touche choisie pour le zoom.
 	 * @param vitesseZoom Vitesse du zoom/dezoom.
 	 */
-	public void gestionZoomClavier(GameContainer container, int dezoom, int zoom, float vitesseZoom) {
+	/*public void gestionZoomClavier(GameContainer container, int dezoom, int zoom, float vitesseZoom) {
 		//Gestion du zoom
 		//Zoom avant
 		if (_input.isKeyDown(zoom))
@@ -649,11 +649,17 @@ public class MapGameState extends BasicGameState implements Observer {
 				setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
 			}
 		}
-	}
+	}*/
 	
 	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2, MapTest map) {
 		
-		this.map = map;
+	    	//World.Univers.add(new World(_tailleMapY,_tailleMapX, false));
+		//_GUnivers.get(0).initialise(World.Univers.get(0));
+	    	_GUnivers.set(0, map);
+		_GUnivers.get(0).addObserver(this);
+		_mainm = _GUnivers.get(0);
+		_mainw = World.Univers.get(0);
+
 		
 		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
 		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
@@ -682,6 +688,7 @@ public class MapGameState extends BasicGameState implements Observer {
 			type_unit.get(1).add(ui.color);
 			type_clothes.get(1).add(ui.clothes);
 		}
+		/* TODO
 		if (!enJeu) {
 			World.getPlayers().get(0).createPersonnage(0, 1, 1);
 			World.getPlayers().get(1).createPersonnage(0, World.map().largeur()-2, World.map().hauteur()-2);
@@ -696,13 +703,13 @@ public class MapGameState extends BasicGameState implements Observer {
 				i++;
 				enJeu = true;
 			}
-		}
+		}*/
 
 		///EXTENSION
-		jjj.add(new Joueur("Human", autlist.get(0), autlist.get(0), classes.get(0), type_unit.get(0), type_clothes.get(0)));
-		jjj.add(new Joueur("Zombie", autlist.get(1), autlist.get(1), classes.get(1), type_unit.get(1), type_clothes.get(1)));
-		new Army(World.Univers.get(0), jjj.get(0));
-		new Army(World.Univers.get(0), jjj.get(1));
+		//jjj.add(new Joueur("Human", autlist.get(0), autlist.get(0), classes.get(0), type_unit.get(0), type_clothes.get(0)));
+		//jjj.add(new Joueur("Zombie", autlist.get(1), autlist.get(1), classes.get(1), type_unit.get(1), type_clothes.get(1)));
+		new Army(World.Univers.get(0), World.joueurs.get(0));
+		new Army(World.Univers.get(0), World.joueurs.get(1));
 
 		try {
 			//World.Univers.get(0).putAutomate(jjj.get(0).automate(0), 1, 1, jjj.get(0));
@@ -713,9 +720,9 @@ public class MapGameState extends BasicGameState implements Observer {
 			for(int j = 0; j < World.Univers.get(0).SizeX(); j++)
 			World.Univers.get(0).modifierCase(new Plaine(),  i, j);*/
 		//for(int i = 0; i < nb; i++)
-		World.Univers.get(0).army().get(0).createPersonnage(0, 1, 1, null);
+		_mainw.army().get(0).createPersonnage(0, 1, 1, null);
 	//for(int i = 0; i < nb; i++)
-		World.Univers.get(0).army().get(1).createPersonnage(0, _tailleMapX-1, _tailleMapY-1, null);
+		_mainw.army().get(1).createPersonnage(0, _tailleMapX-1, _tailleMapY-1, null);
 
 		for(Army a : World.Univers.get(0).army())
 		{
