@@ -185,19 +185,6 @@ public class MapGameState extends BasicGameState implements Observer {
 		        alpha -= 0.01f;
 		    }
 	    }
-
-		//Configuration du bouton menu principal
-		if (_bouton_menuPrincipal.isPressed()) {
-			container.setPaused(false);
-			_input.clearMousePressedRecord();
-			World.resetJoueurs();
-			enJeu = false;
-			_mainm.resetArmy();
-			World.Univers.clear();
-			_GUnivers.clear();
-			//_joueurs.clear();
-			this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
-		}
 	}
 
 	/**
@@ -308,6 +295,19 @@ public class MapGameState extends BasicGameState implements Observer {
 
 		if (container.isPaused()) {
 
+			//Configuration du bouton menu principal
+			if (_bouton_menuPrincipal.isPressed()) {
+				container.setPaused(false);
+				_input.clearMousePressedRecord();
+				World.resetJoueurs();
+				enJeu = false;
+				_mainm.resetArmy();
+				World.Univers.clear();
+				_GUnivers.clear();
+				//_joueurs.clear();
+				this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
+			}
+			
 			//Configuration du bouton pause
 			 if (_bouton_reprendre.isPressed()) {
 				 container.setPaused(!container.isPaused());
