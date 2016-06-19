@@ -22,6 +22,8 @@ val transition : poids -> condition -> action -> etat -> etat -> automate
 
 val hostile : poids -> etat -> etat -> automate
 
+val suiveur : poids -> etat -> etat -> automate
+
 val recolteur : poids -> etat -> etat -> automate
   
 val createurNbRatio : poids -> int -> int -> int -> int -> etat -> etat -> automate 

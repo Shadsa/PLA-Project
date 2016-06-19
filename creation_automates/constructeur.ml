@@ -35,6 +35,9 @@ let transition (p : poids) (c : condition) (a : action) (e1 : etat) (e2 : etat) 
 
 let hostile (p : poids) (e1 : etat) (e2 : etat) : automate =
   [(e1,UnEnnemi,Combattre,e2,p)]
+  
+let suiveur (p : poids) (e1 : etat) (e2 : etat) : automate =
+  [(e1,OrdreDonne,AvancerJoueur,e2,p)]
 
 let recolteur (p : poids) (e1 : etat) (e2 : etat) : automate =
   [(e1,UneCaseType(Arbre),CouperBois,e2,p)]
@@ -58,7 +61,7 @@ let fonceur (p : poids) (eL : etat list) (e1 : etat) (e2 : etat) : automate =
   creerAutomate (List.map2 (fun e d -> [(e1,Libre(d),Avancer(d),e,p); (e,Libre(d),Avancer(d),e,p); (e,Vide,Attendre,e2,0)]) eL [N;S;E;O])
 
 let reparateur (p : poids) (e1 : etat) (e2 : etat) : automate =
-    creerAutomate (List.map (fun d -> [(e1,CaseAmi(d),Reparer(d),e,p)]) [N;S;E;O])
+    creerAutomate (List.map (fun d -> [(e1,CaseAmi(d),Reparer(d),e2,p)]) [N;S;E;O])
 
 let chercheur (p : poids) (cond : cellule -> condition) (eL : etat list) (e1 : etat) (e2 : etat) : automate =
   creerAutomate (List.map2 (fun e d -> [(e1,Et(Libre(d),cond d),Avancer(d),e,p);

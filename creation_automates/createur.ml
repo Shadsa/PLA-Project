@@ -9,9 +9,9 @@ let zombie = creerAutomate [errant 1 0 0; chercheur 3 ennemiProche [1;2;3;4] 0 0
 
 let soldat = creerAutomate [errant 1 0 0; chercheur 3 ennemiProche [1;2;3;4] 0 0; appliquerSurListe (hostile 6) [0;1;2;3;4] 0]
 
-let batisseur = creerAutomate [errant 1 0 1; errant 1 1 0; reparateur 1 1 0; reparateur 1 0 1; constructeur mur 1 356 1 0]
+let batisseur = creerAutomate [errant 1 0 1; errant 1 1 0; reparateur 1 1 0; reparateur 1 0 1; constructeur 1 mur 356 1 0]
 
-let soigneur = creerAutomate [errant 1 0 1; errant 1 1 0; medecin 10 0 1; constructeur piege 1 354 1 0]
+let soigneur = creerAutomate [errant 1 0 1; errant 1 1 0; medecin 10 0 1; constructeur 1 piege 354 1 0]
 
 let main =
   ecrireXML "Ouvrier.xml" ouvrier;
