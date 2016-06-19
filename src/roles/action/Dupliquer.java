@@ -6,6 +6,7 @@ import roles.States;
 import roles.World;
 import roles.States.Statut;
 
+@SuppressWarnings("serial")
 public final class Dupliquer extends Action {
 
 	//Cardinaux _direction;

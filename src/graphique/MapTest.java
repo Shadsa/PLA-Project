@@ -4,21 +4,18 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Vector;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.state.StateBasedGame;
 
 import cases.*;
 import jus.util.assertion.Require;
 import roles.Army;
-import roles.Joueur;
 import roles.Personnage;
 import roles.World;
 
@@ -265,7 +262,7 @@ public class MapTest extends Observable {
 
 	public void addArmy(Army a)
 	{
-		_joueurs.add(new GArmy(a.joueur(), this));
+		_joueurs.add(new GArmy(this));
 		a.addObserver(_joueurs.get(_joueurs.size()-1));
 		for(Personnage pers : a.getPersonnages())
 			_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
@@ -346,25 +343,12 @@ public class MapTest extends Observable {
 		for(GArmy a : _joueurs)
 			for(Player p : a.getPersonnage())
 				if (Input.MOUSE_LEFT_BUTTON == button && curseurSurPerso(p, (mx+this.x)/zoom(), (my+this.y)/zoom())) {
-				//this.showhud = true;
 					this.setChanged();
-					this.notifyObservers(new Object(){
-						public int mx = fromX(p.DestX());
-						public int my = fromY(p.DestY());
-						public Player mtargetp =p;});
-					//((MapGameState)InitGameState.game.getState(MapGameState.ID)).setTarget(p, (int)(MapGameState._target.DestX()-Ox)/TILESIZE, (int)(MapGameState._target.DestY()-Oy)/TILESIZE);
-				return true;
-			}
-			/*	else
-
-					System.out.println((mx+this.x)/zoom() + " " +this.x +" " +mx + " " + zoom() +" " + p.DestX());*/
-		//map.mousePressed(button, x, y);
+					return true;
+				}
+			//else
 		this.setChanged();
-		this.notifyObservers(new Object(){
-			public int mx = 0;
-			public int my = 0;
-			public Player mtargetp =null;});
-			return false;
+		return false;
 	}
 
 	public void move(int i, int j) {

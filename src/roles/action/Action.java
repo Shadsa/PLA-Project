@@ -5,6 +5,7 @@ import java.io.Serializable;
 import roles.Personnage;
 import roles.World;
 
+@SuppressWarnings("serial")
 public abstract class Action implements Serializable{
 
 	private static int _nextId = 0;

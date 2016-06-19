@@ -4,8 +4,8 @@ import cases.CaseProperty;
 import cases.TypeCase;
 import cases.TypeCheck;
 import roles.Personnage;
-import roles.World;
 
+@SuppressWarnings("serial")
 public class UneCaseType extends Condition {
 
 	Class<? extends TypeCase> _type;

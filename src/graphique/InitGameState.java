@@ -1,32 +1,16 @@
 package graphique;
 
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-
-import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.w3c.dom.DOMException;
 
-import XML.XML_Reader;
-import roles.Automate;
-import roles.Bonus;
-import roles.Joueur;
 import roles.World;
 import roles.classe.Classe;
 import workshop.WorkshopCreator;
@@ -42,9 +26,6 @@ public class InitGameState extends BasicGameState {
 	private Image background;
 	//Le contrôleur des phases de jeu
 	public static StateGame game;
-	private String sizeScreen;
-	private Input _input;
-	
 
 	//Bouton
 	private Button _bouton_jouer;
@@ -75,7 +56,6 @@ public class InitGameState extends BasicGameState {
 
 
 		Button.init();
-		_input = container.getInput();
 		UI = new Image("src/asset/sprites/ui_big_pieces.png");
 		UIFs1 = new ArrayList<UnitInfo>();
 		UIFs2 = new ArrayList<UnitInfo>();
@@ -91,7 +71,6 @@ public class InitGameState extends BasicGameState {
 		_bouton_jouer = new Button(container, "Jouer", container.getWidth()*3/4, container.getHeight()*3/4);
 		_bouton_quitter = new Button(container, "Quitter", my_button.x, _bouton_jouer.y);
 		_bouton_retour = new Button(container, "Retour", my_button.x + 70, _bouton_jouer.y);
-		sizeScreen = "Taille de l'ecran : " + container.getScreenWidth() + "x" + container.getScreenHeight();
 		Personnages = new ArrayList<CrossButton>();
 		Personnages2 = new ArrayList<CrossButton>();
 	}

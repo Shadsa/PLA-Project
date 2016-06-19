@@ -54,6 +54,7 @@ public class MainScreenGameState extends BasicGameState {
 		music = new Music("src/asset/musics/menu_music.ogg");
 	    music.loop();
 
+
 	}
 
 	/**

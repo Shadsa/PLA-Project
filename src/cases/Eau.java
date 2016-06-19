@@ -1,11 +1,10 @@
 package cases;
 
-import java.io.Serializable;
-
 import roles.Personnage;
 import roles.action.Action;
 import roles.action.AvancerHasard;
 
+@SuppressWarnings("serial")
 public final class Eau extends TypeCase {
 
 	protected static Action _action = new AvancerHasard();

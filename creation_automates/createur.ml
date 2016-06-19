@@ -30,5 +30,5 @@ let main =
   ecrireXML "Ouvrier2.xml" ouvrier2;
   ecrireXML "Soldat2.xml" soldat2;
   ecrireXML "Batisseur2.xml" batisseur2;
-  ecrireXML "Soigneur2.xml" soigneur2 ;
+  ecrireXML "Soigneur2.xml" soigneur2;
 

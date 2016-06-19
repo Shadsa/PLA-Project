@@ -3,8 +3,8 @@ package roles.conditions;
 import cases.CaseProperty;
 import cases.LibreCheck;
 import roles.Personnage;
-import roles.World;
 
+@SuppressWarnings("serial")
 public class UneCaseLibre extends Condition {
 
 	@Override

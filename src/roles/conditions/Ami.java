@@ -4,9 +4,10 @@ import cases.AmiCheck;
 import cases.CaseProperty;
 import roles.Cardinaux;
 import roles.Personnage;
-import roles.World;
 
+@SuppressWarnings("serial")
 public class Ami extends Condition {
+	
 	Cardinaux _direction;
 
 	public Ami(Cardinaux card) {

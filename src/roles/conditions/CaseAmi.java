@@ -4,8 +4,8 @@ import cases.AutomateAmiCheck;
 import cases.CaseProperty;
 import roles.Cardinaux;
 import roles.Personnage;
-import roles.World;
 
+@SuppressWarnings("serial")
 public class CaseAmi extends Condition {
 
 	Cardinaux _direction;

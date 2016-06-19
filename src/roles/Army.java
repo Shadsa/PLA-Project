@@ -3,8 +3,6 @@ package roles;
 import java.util.ArrayList;
 import java.util.Observable;
 
-import roles.classe.Classe;
-
 public class Army extends Observable{
 
 	protected Joueur _joueur;
@@ -29,8 +27,7 @@ public class Army extends Observable{
 
 	public Personnage createPersonnage(int type, int x, int y, Personnage imageOF)
 	{
-		// WARNING faire plutot un get automate avec gestion d'erreur
-		if(type>=_joueur.Automates().size()){
+		if(type<_joueur.Automates().size()){
 			Personnage newPers = new Personnage(_joueur.automate(type), _joueur.automatec(type), x, y, imageOF, this, _joueur.classe(type));
 			_personnages.add(newPers);
 			setChanged();
@@ -74,36 +71,6 @@ public class Army extends Observable{
 					}
 				}
 		break;
-		/*case NORD:
-			for(int y = 0; y<world().SizeY(); y++)
-				for(int j = 0; j<world().SizeX()+1; j++)
-				{
-					if(world().isfree(world().SizeY()/2 + ((j%2==0)? 1 : -1) * j/2, y))
-					{
-						// WARNING faire plutot un get automate avec gestion d'erreur
-						Personnage newPers = new Personnage(_joueur.automate(type), _joueur.automatec(type), world().SizeX()/2 + ((j%2==0)? 1 : -1) * j/2, y, imageOF, this, _joueur.classe(type));
-						_personnages.add(newPers);
-						setChanged();
-						notifyObservers(newPers);
-						return newPers;
-					}
-				}
-		break;
-		case SUD:
-			for(int y = world().SizeY()-1; y<0; y--)
-				for(int j = 0; j<world().SizeX()+1; j++)
-				{
-					if(world().isfree(world().SizeY()/2 + ((j%2==0)? 1 : -1) * j/2, y))
-					{
-						// WARNING faire plutot un get automate avec gestion d'erreur
-						Personnage newPers = new Personnage(_joueur.automate(type), _joueur.automatec(type), world().SizeX()/2 + ((j%2==0)? 1 : -1) * j/2, y, imageOF, this, _joueur.classe(type));
-						_personnages.add(newPers);
-						setChanged();
-						notifyObservers(newPers);
-						return newPers;
-					}
-				}
-		break;*/
 		}
 		return null;
 	}

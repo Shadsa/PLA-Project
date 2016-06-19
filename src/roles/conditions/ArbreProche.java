@@ -5,6 +5,7 @@ import cases.TypeCheck;
 import roles.Cardinaux;
 import roles.Personnage;
 
+@SuppressWarnings("serial")
 public class ArbreProche extends Condition {
 
 	Cardinaux _direction;

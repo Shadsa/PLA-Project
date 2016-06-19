@@ -8,6 +8,7 @@ import graphique.TypeClothes;
 import graphique.TypeUnit;
 import roles.classe.Classe;
 
+@SuppressWarnings("serial")
 public class Joueur extends Observable implements Serializable {
 
 	private String _nom;

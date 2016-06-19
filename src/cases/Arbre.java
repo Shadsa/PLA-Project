@@ -1,11 +1,10 @@
 package cases;
 
-import java.io.Serializable;
-
 import roles.Personnage;
 import roles.action.Action;
 import roles.action.CouperBois;
 
+@SuppressWarnings("serial")
 public final class Arbre extends TypeCase {
 	
 	public final int _vie = 200;

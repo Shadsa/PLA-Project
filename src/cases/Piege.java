@@ -1,11 +1,11 @@
 package cases;
 
 import roles.Personnage;
-import roles.World;
 import roles.action.Action;
 import roles.action.Attendre;
 import roles.Joueur;
 
+@SuppressWarnings("serial")
 public class Piege extends TypeCase implements Construction {
 
 	protected static Action _action = new Attendre();

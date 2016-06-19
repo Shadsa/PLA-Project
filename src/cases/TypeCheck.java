@@ -1,5 +1,6 @@
 package cases;
 
+@SuppressWarnings("serial")
 public class TypeCheck implements CaseProperty {
 
 	Class<? extends TypeCase> _type;

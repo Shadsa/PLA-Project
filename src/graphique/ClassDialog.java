@@ -1,8 +1,6 @@
 package graphique;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -22,15 +20,11 @@ import javax.swing.JTextField;
 
 import roles.Bonus;
 import roles.classe.Classe;
-import workshop.WorkshopCreator;
 
 
+@SuppressWarnings("serial")
 public class ClassDialog extends JDialog {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
 	private Classe classinfo;
 
 	public ClassDialog(JFrame parent, String title, boolean modal){

@@ -1,8 +1,8 @@
 package cases;
 
 import roles.Personnage;
-import roles.World;
 
+@SuppressWarnings("serial")
 public class LibreCheck implements CaseProperty {
 
 	Personnage _pers;
