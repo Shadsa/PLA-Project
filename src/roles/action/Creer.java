@@ -1,5 +1,7 @@
 package roles.action;
 
+import cases.CaseProperty;
+import cases.LibreCheck;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;
@@ -21,26 +23,27 @@ public final class Creer extends Action {
 		int destX=pers.X();
 		int destY=pers.Y();
 		Cardinaux direction;
-		if(world.isfree(destX-1, destY)){
+		CaseProperty p = new LibreCheck(pers);
+		if(p.check(world.Case(destX-1, destY))){
 			destX--; direction = Cardinaux.OUEST;
 		}
-		else if(world.isfree(destX+1, destY)){
+		else if(p.check(world.Case(destX+1, destY))){
 			destX++; direction = Cardinaux.EST;
 		}
-		else if(world.isfree(destX, destY-1)){
+		else if(p.check(world.Case(destX, destY-1))){
 			destY--; direction = Cardinaux.NORD;
 		}
-		else if(world.isfree(destX, destY+1)){
+		else if(p.check(world.Case(destX, destY+1))){
 			destY++; direction = Cardinaux.SUD;
 		}
 		else return;
 
-		if(world.isfree(destX, destY))
-		{
+		/*if(p.check(world.Case(destX, destY)))
+		{*/
 			if(pers.owner().joueur().changerRessource(-100))
 				pers.owner().createPersonnage(_type, destX, destY, null);
 			pers.setState(new States(Statut.ATTAQUE, direction));
-		}
+		//}
 	}
 
 	@Override
