@@ -9,13 +9,13 @@ public enum TypeClothes {
 	Civil("src/asset/sprites/villager_vest.png","src/asset/sprites/villager_vest_slash.png","src/asset/sprites/villager_vest_hurt.png","src/asset/sprites/villager_vest_spell.png"),
 	Nu("src/asset/sprites/no_clothes.png","src/asset/sprites/no_clothes_slash.png","src/asset/sprites/no_clothes_hurt.png","src/asset/sprites/no_clothes_spell.png"),
 	Armure("src/asset/sprites/armor.png","src/asset/sprites/armor_slash.png","src/asset/sprites/armor_hurt.png","src/asset/sprites/armor_spell.png");
-	
+
 	String _sprite;
-	public Animation[] animations = new Animation[25];
-	
+	public Animation[] animations = new Animation[26];
+
 	TypeClothes(String walk, String slash, String hurt, String spell){
 		_sprite=walk;
-		
+
 		SpriteSheet walkSheet;
 		SpriteSheet slashSheet;
 		SpriteSheet hurtSheet;
@@ -30,7 +30,7 @@ public enum TypeClothes {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String sprite(){
 		return _sprite;
 	}

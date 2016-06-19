@@ -89,7 +89,7 @@ public class MainScreenGameState extends BasicGameState {
 
 		if(_bouton_options.isPressed())
 		{
-			ClassDialog classDialog = new ClassDialog(null, "Création d'un classe", true);
+			ClassDialog classDialog = new ClassDialog(null, "Création d'une classe", true);
 			classDialog.setVisible(true);
 		}
 		//Configuration du bouton jouer
