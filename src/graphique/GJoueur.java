@@ -9,7 +9,13 @@ import org.newdawn.slick.SlickException;
 import roles.Personnage;
 
 public class GJoueur implements Observer{
-	private ArrayList<TypeUnit> _type_unit;
+
+    @Override
+    public void update(Observable arg0, Object arg1) {
+	// TODO Auto-generated method stub
+	
+    }
+	/*private ArrayList<TypeUnit> _type_unit;
 	private ArrayList<TypeClothes> _type_clothes;
 	
 	private int _ressource;
@@ -46,5 +52,5 @@ public class GJoueur implements Observer{
 	public TypeClothes type_clothes(int i)
 	{
 		return _type_clothes.get(i);
-	}
+	}*/
 }

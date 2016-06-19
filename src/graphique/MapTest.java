@@ -88,8 +88,8 @@ public class MapTest extends Observable {
 		g.scale(zoom, zoom);
 
 
-		int xi = MapGameState.fromX(x/zoom);
-		int yi = MapGameState.fromY(y/zoom);
+		//int xi = MapGameState.fromX(x/zoom);
+		//int yi = MapGameState.fromY(y/zoom);
 		g.setClip(new Rectangle(_x, _y, _width, _height));
 
 		int xi = fromX(x/zoom);

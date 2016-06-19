@@ -29,7 +29,7 @@ public final class Duel extends Action {
 
 	@Override
 	public void Act(World world, Personnage pers) {
-		int destX = pers.X() + ((_direction == Cardinaux.OUEST) ? (-1) : ((_direction == Cardinaux.EST) ? 1 : 0));
+		/*int destX = pers.X() + ((_direction == Cardinaux.OUEST) ? (-1) : ((_direction == Cardinaux.EST) ? 1 : 0));
 		int destY = pers.Y() + ((_direction == Cardinaux.NORD) ? (-1) : ((_direction == Cardinaux.SUD) ? 1 : 0));
 		Case c = world.Case(destX, destY);
 
@@ -37,7 +37,7 @@ public final class Duel extends Action {
 			pers.setFighting(true);
 			c.Personnage().setFighting(true);
 			MapGameState.fight(pers, c.Personnage());
-		}
+		}*/
 	}
 
 	@Override

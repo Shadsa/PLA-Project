@@ -88,11 +88,11 @@ public class World {
 		return _map.size();
 	}
 
-	public static Carte map() {
+	public Carte map() {
 		return _map;
 	}
 	
-	public static void setMap(Carte map) {
+	public void setMap(Carte map) {
 		_map = map;
 	}
 
@@ -108,11 +108,11 @@ public class World {
 		return _army;
 	}
 	
-	public static void resetJoueurs() {
+	/*public void resetJoueurs() {
 		_joueurs.clear();
-	}
+	}*/
 	
-	public static void switchCase(Case c1, Case c2){
+	public void switchCase(Case c1, Case c2){
 		_map.switchCase(c1, c2);
 	}
 

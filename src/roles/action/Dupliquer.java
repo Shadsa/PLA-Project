@@ -37,8 +37,8 @@ public final class Dupliquer extends Action {
 
 		if(world.isfree(destX, destY))
 		{
-			if(pers.owner().changerRessource(-100))
-				pers.owner().createPersonnage(pers.owner().getUnite(pers), destX, destY);
+			if(pers.owner().joueur().changerRessource(-100))
+				pers.owner().createPersonnage(pers.owner().joueur().getUnite(pers), destX, destY, null);
 			pers.setState(new States(Statut.INVOQUE, direction));
 		}
 	}

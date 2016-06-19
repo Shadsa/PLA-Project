@@ -480,7 +480,7 @@ public class MapGameState extends BasicGameState implements Observer {
 	}
 
 
-	/*public float offsetMapX() {
+	public float offsetMapX() {
 		return _offsetMapX;
 	}
 
@@ -519,100 +519,74 @@ public class MapGameState extends BasicGameState implements Observer {
 	 * @param attente Code de la touche choisie pour activer/désactiver l'attente entre chaque tour le jeu.
 	 * @param reinit Code de la touche choisie pour réinitialiser la vitesse du jeu.
 	 */
-	public void gestionVitesseDeJeu(int ralentir, int accelerer, int attente, int reinit) {
-		//Activer ou non l'attente
-		if (_input.isKeyDown(attente)){
-			if (TickWait){
-				TickWait=false;
-				AnimTick = Tick;
-			}
-			else{
-				TickWait=true;
-				AnimTick = Tick*6/10;
-			}
-			MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
-		}
-	}*/
-	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2) {
-		try {
-			MapTest.init();
-		} catch (SlickException e1) {
-			e1.printStackTrace();
-		}
-		World.Univers.add(new World(_tailleMapY,_tailleMapX, false));
-		_GUnivers.get(0).initialise(World.Univers.get(0));
-		_GUnivers.get(0).addObserver(this);
-		_mainm = _GUnivers.get(0);
-		_mainw = World.Univers.get(0);
-
-		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
-		//ArrayList<Automate> autlist2 = new ArrayList<Automate>();
-		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
-		//ArrayList<Classe> classes2 = new ArrayList<Classe>();
-		ArrayList<ArrayList<TypeUnit>> type_unit = new ArrayList<ArrayList<TypeUnit>>();
-		//ArrayList<TypeUnit> type_unit2 = new ArrayList<TypeUnit>();
-		ArrayList<ArrayList<TypeClothes>> type_clothes = new ArrayList<ArrayList<TypeClothes>>();
-		//ArrayList<TypeClothes> type_clothes2 = new ArrayList<TypeClothes>();
-		for(UnitInfo ui : uIFs1)
-		//Gestion de la vitesse du jeu
-		//Acc�l�rer
-		if (_input.isKeyDown(accelerer) && Tick > 125){
-			if (Tick > 1050 ){
-				Tick=Tick-100;
-				if(TickWait)
-					AnimTick = Tick*6/10;
-				else
-					AnimTick = Tick;
-				MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
-			}
-			else{
-				if (Tick > 250 ){
-					Tick=Tick-50;
-					if(TickWait)
-						AnimTick = Tick*6/10;
-					else
-						AnimTick = Tick;
-					MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
-				}
-				else{
-					Tick=Tick-25;
-					if(TickWait)
-						AnimTick = Tick*6/10;
-					else
-						AnimTick = Tick;
-					MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
-				}
-			}
-		}
-		//Ralentir
-		if (_input.isKeyDown(ralentir) && Tick < 4000){
-			if (Tick < 950){
-				Tick = Tick+50;
-				if(TickWait)
-					AnimTick = Tick*6/10;
-				else
-					AnimTick = Tick;
-				MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
-			}
-			else{
-				Tick = Tick+100;
-				if(TickWait)
-					AnimTick = Tick*6/10;
-				else
-					AnimTick = Tick;
-				MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
-			}
-		}
-		//R�-initialiser
-		if (_input.isKeyDown(reinit)){
-			Tick = 1000;
-			if(TickWait)
-				AnimTick = Tick*6/10;
-			else
-				AnimTick = Tick;
-			MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
-		}
+    public void gestionVitesseDeJeu(int ralentir, int accelerer, int attente, int reinit) {
+	// Activer ou non l'attente
+	if (_input.isKeyDown(attente)) {
+	    if (TickWait) {
+		TickWait = false;
+		AnimTick = Tick;
+	    } else {
+		TickWait = true;
+		AnimTick = Tick * 6 / 10;
+	    }
+	    MoveSpeed = ((float) TILESIZE) / ((float) AnimTick);
 	}
+	// Gestion de la vitesse du jeu
+	// Acc�l�rer
+	if (_input.isKeyDown(accelerer) && Tick > 125) {
+	    if (Tick > 1050) {
+		Tick = Tick - 100;
+		if (TickWait)
+		    AnimTick = Tick * 6 / 10;
+		else
+		    AnimTick = Tick;
+		MoveSpeed = ((float) TILESIZE) / ((float) AnimTick);
+	    } else {
+		if (Tick > 250) {
+		    Tick = Tick - 50;
+		    if (TickWait)
+			AnimTick = Tick * 6 / 10;
+		    else
+			AnimTick = Tick;
+		    MoveSpeed = ((float) TILESIZE) / ((float) AnimTick);
+		} else {
+		    Tick = Tick - 25;
+		    if (TickWait)
+			AnimTick = Tick * 6 / 10;
+		    else
+			AnimTick = Tick;
+		    MoveSpeed = ((float) TILESIZE) / ((float) AnimTick);
+		}
+	    }
+	}
+	// Ralentir
+	if (_input.isKeyDown(ralentir) && Tick < 4000) {
+	    if (Tick < 950) {
+		Tick = Tick + 50;
+		if (TickWait)
+		    AnimTick = Tick * 6 / 10;
+		else
+		    AnimTick = Tick;
+		MoveSpeed = ((float) TILESIZE) / ((float) AnimTick);
+	    } else {
+		Tick = Tick + 100;
+		if (TickWait)
+		    AnimTick = Tick * 6 / 10;
+		else
+		    AnimTick = Tick;
+		MoveSpeed = ((float) TILESIZE) / ((float) AnimTick);
+	    }
+	}
+	// R�-initialiser
+	if (_input.isKeyDown(reinit)) {
+	    Tick = 1000;
+	    if (TickWait)
+		AnimTick = Tick * 6 / 10;
+	    else
+		AnimTick = Tick;
+	    MoveSpeed = ((float) TILESIZE) / ((float) AnimTick);
+	}
+    }
 	
 	/**
 	 * Gestion de l'affichage des détails du jeu (joueurs, temps).
@@ -662,15 +636,6 @@ public class MapGameState extends BasicGameState implements Observer {
 		//Zoom avant
 		if (_input.isKeyDown(zoom))
 		{
-			//nb++;
-			autlist.add(new ArrayList<Automate>());
-			classes.add(new ArrayList<Classe>());
-			type_unit.add(new ArrayList<TypeUnit>());
-			type_clothes.add(new ArrayList<TypeClothes>());
-			autlist.get(0).add(ui.automate);
-			classes.get(0).add(ui.classe);
-			type_unit.get(0).add(ui.color);
-			type_clothes.get(0).add(ui.clothes);
 			setZoom(zoom() * vitesseZoom);
 			setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
 			setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
@@ -683,6 +648,30 @@ public class MapGameState extends BasicGameState implements Observer {
 				setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
 				setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
 			}
+		}
+	}
+	
+	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2, MapTest map) {
+		
+		this.map = map;
+		
+		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
+		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
+		ArrayList<ArrayList<TypeUnit>> type_unit = new ArrayList<ArrayList<TypeUnit>>();
+		ArrayList<ArrayList<TypeClothes>> type_clothes = new ArrayList<ArrayList<TypeClothes>>();
+
+		for(UnitInfo ui : uIFs1)
+		{
+			autlist.add(new ArrayList<Automate>());
+			classes.add(new ArrayList<Classe>());
+			type_unit.add(new ArrayList<TypeUnit>());
+			type_clothes.add(new ArrayList<TypeClothes>());
+			autlist.get(0).add(ui.automate);
+			classes.get(0).add(ui.classe);
+			type_unit.get(0).add(ui.color);
+			type_clothes.get(0).add(ui.clothes);
+		}
+
 		for(UnitInfo ui : uIFs2) {
 			autlist.add(new ArrayList<Automate>());
 			classes.add(new ArrayList<Classe>());
@@ -692,7 +681,24 @@ public class MapGameState extends BasicGameState implements Observer {
 			classes.get(1).add(ui.classe);
 			type_unit.get(1).add(ui.color);
 			type_clothes.get(1).add(ui.clothes);
-}
+		}
+		if (!enJeu) {
+			World.getPlayers().get(0).createPersonnage(0, 1, 1);
+			World.getPlayers().get(1).createPersonnage(0, World.map().largeur()-2, World.map().hauteur()-2);
+			
+			int i=0;
+			for(Joueur j : World.getPlayers())
+			{
+				_joueurs.add(new GJoueur(type_unit.get(i),type_clothes.get(i)));
+				j.addObserver(_joueurs.get(_joueurs.size()-1));
+				for(Personnage pers : j.getPersonnages())
+					_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
+				i++;
+				enJeu = true;
+			}
+		}
+
+		///EXTENSION
 		jjj.add(new Joueur("Human", autlist.get(0), autlist.get(0), classes.get(0), type_unit.get(0), type_clothes.get(0)));
 		jjj.add(new Joueur("Zombie", autlist.get(1), autlist.get(1), classes.get(1), type_unit.get(1), type_clothes.get(1)));
 		new Army(World.Univers.get(0), jjj.get(0));
@@ -712,30 +718,9 @@ public class MapGameState extends BasicGameState implements Observer {
 		World.Univers.get(0).army().get(1).createPersonnage(0, _tailleMapX-1, _tailleMapY-1, null);
 
 		for(Army a : World.Univers.get(0).army())
-	}
-	
-	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2, MapTest map) {
-		
-		this.map = map;
-		
-		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
-		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
-		ArrayList<ArrayList<TypeUnit>> type_unit = new ArrayList<ArrayList<TypeUnit>>();
-		ArrayList<ArrayList<TypeClothes>> type_clothes = new ArrayList<ArrayList<TypeClothes>>();
-		
-		for(UnitInfo ui : uIFs1)
 		{
-			autlist.add(new ArrayList<Automate>());
-			classes.add(new ArrayList<Classe>());
-			type_unit.add(new ArrayList<TypeUnit>());
-			type_clothes.add(new ArrayList<TypeClothes>());
-			autlist.get(0).add(ui.automate);
-			classes.get(0).add(ui.classe);
-			type_unit.get(0).add(ui.color);
-			type_clothes.get(0).add(ui.clothes);
+			_GUnivers.get(0).addArmy(a);
 		}
-
-
 
 		/*Personnage pers = World.Univers.get(0).army().get(0).getPersonnages().get(0);
 		Personnage pp   = World.Univers.get(0).army().get(1).getPersonnages().get(0);
@@ -778,31 +763,8 @@ public class MapGameState extends BasicGameState implements Observer {
 			} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
 				e.printStackTrace();
 			}
-		for(UnitInfo ui : uIFs2) {
-			autlist.add(new ArrayList<Automate>());
-			classes.add(new ArrayList<Classe>());
-			type_unit.add(new ArrayList<TypeUnit>());
-			type_clothes.add(new ArrayList<TypeClothes>());
-			autlist.get(1).add(ui.automate);
-			classes.get(1).add(ui.classe);
-			type_unit.get(1).add(ui.color);
-			type_clothes.get(1).add(ui.clothes);
 		}
-		if (!enJeu) {
-			World.getPlayers().get(0).createPersonnage(0, 1, 1);
-			World.getPlayers().get(1).createPersonnage(0, World.map().largeur()-2, World.map().hauteur()-2);
-			
-			int i=0;
-			for(Joueur j : World.getPlayers())
-			{
-				_joueurs.add(new GJoueur(type_unit.get(i),type_clothes.get(i)));
-				j.addObserver(_joueurs.get(_joueurs.size()-1));
-				for(Personnage pers : j.getPersonnages())
-					_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
-				i++;
-				enJeu = true;
-			}
-		}
+		
 	}
 
 	public static void fight(Personnage pers, Personnage personnage, Cardinaux dirinc)
@@ -827,9 +789,6 @@ public class MapGameState extends BasicGameState implements Observer {
 		pers.setFighting(true, w);
 		personnage.setFighting(true, w);
 
-				for(int i = 0; i < w.SizeY(); i++)
-					for(int j = 0; j < w.SizeX(); j++)
-					w.modifierCase(new Plaine(),  i, j);
 		World.Univers.add(w);
 		MapTest mt = new MapTest(0, 0, 500, 500);
 		mt.initialise(w);

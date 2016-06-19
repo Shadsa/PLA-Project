@@ -208,12 +208,17 @@ public class InitGameState extends BasicGameState {
 
 		//Configuration du bouton jouer
 		if (_bouton_jouer.isPressed()) {
+		    //TODO CONFLIT ICI!!!
+			/*
+			///////////////////
 			//Initialisation du monde
 			World.BuildMap(_tailleMapY,_tailleMapX);
 			((DragAndDropState)InitGameState.game.getState(DragAndDropState.ID)).setGame(UIFs1,UIFs2);
 				InitGameState.game.enterState(DragAndDropState.ID, "src/asset/musics/game_music.ogg");
+			///////////////////
 			((MapGameState)InitGameState.game.getState(MapGameState.ID)).setGame(UIFs1,UIFs2);
-				InitGameState.game.enterState(MapGameState.ID, "src/asset/musics/game_music.ogg");
+				InitGameState.game.enterState(MapGameState.ID, "src/asset/musics/game_music.ogg");*/
+		    	///////////////////
 		}
 
 		//Configuration du bouton quitter
