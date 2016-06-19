@@ -9,6 +9,7 @@ import roles.States;
 import roles.World;
 import roles.States.Statut;
 
+@SuppressWarnings("serial")
 public class ConstruireMur extends Action {
 
 	Cardinaux _direction;

@@ -49,8 +49,8 @@ public class MainScreenGameState extends BasicGameState {
 		_bouton_son = new Button(container, "Désactiver son", container.getWidth()/2-62, container.getHeight()/2-40, normalImage, overImage, downImage);
 		_bouton_quitter = new Button(container, "Quitter", container.getWidth()/2-62, container.getHeight()/2+80, normalImage, overImage, downImage);
 		_bouton_options = new Button(container, "Options", container.getWidth()/2-62, container.getHeight()/2+40, normalImage, overImage, downImage);
-		//music = new Music("src/asset/musics/menu_music.ogg");
-	   // music.loop();
+		music = new Music("src/asset/musics/menu_music.ogg");
+		music.loop();
 
 	}
 

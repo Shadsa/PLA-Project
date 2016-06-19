@@ -3,8 +3,8 @@ package roles.conditions;
 import cases.CaseProperty;
 import cases.EnnemiCheck;
 import roles.Personnage;
-import roles.World;
 
+@SuppressWarnings("serial")
 public class UnEnnemi extends Condition {
 
 	@Override

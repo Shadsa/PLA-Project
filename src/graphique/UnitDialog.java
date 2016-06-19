@@ -4,14 +4,9 @@ import java.awt.BorderLayout;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.image.BufferedImage;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
 import java.io.File;
@@ -30,13 +25,10 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import XML.XML_Reader;
 import roles.Automate;
-import roles.Bonus;
-import roles.World;
 import roles.classe.Classe;
 
 public class UnitDialog extends JDialog {
@@ -271,8 +263,7 @@ public class UnitDialog extends JDialog {
 			e.printStackTrace();
 		}
 		if(aut == null ){
-			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, "Fichier automate invalide.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Fichier automate invalide.", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
   }
   
@@ -286,22 +277,8 @@ public class UnitDialog extends JDialog {
 			e.printStackTrace();
 		}
 		if(autc == null ){
-			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, "Fichier automate invalide.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Fichier automate invalide.", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
   }
 
-  /*void getClasse(String nom)
-  {
-	  cla = null;
-	  for(Classe cl : World.classes)
-		  if(nom.contentEquals(cl.toString()))
-			  cla = cl;
-	  if(aut != null && !aut.match(cla))
-		  cla = null;
-		if(cla == null){
-			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, "La classe ne correspond pas � l'automate.", "Erreur", JOptionPane.ERROR_MESSAGE);
-		}
-  }*/
 }

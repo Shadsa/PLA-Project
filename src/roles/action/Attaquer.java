@@ -4,15 +4,13 @@ import cases.Case;
 import cases.CaseProperty;
 import cases.ConstructionCheck;
 import cases.PersoCheck;
-import cases.Batiment;
-import cases.CaseAction;
-import cases.Construction;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;
 import roles.States.Statut;
 import roles.World;
 
+@SuppressWarnings("serial")
 public final class Attaquer extends Action {
 
 	Cardinaux _direction;

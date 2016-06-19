@@ -12,8 +12,6 @@ import workshop.WorkshopCreator;
 public class StateGame extends StateBasedGame {
 
 	static Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-	private static int height = (int)screenSize.getHeight();
-	private static int width = (int)screenSize.getWidth();
 	public static WorkshopCreator workshop ;
 
 	public StateGame() {

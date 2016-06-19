@@ -10,6 +10,7 @@ import roles.States;
 import roles.World;
 import roles.States.Statut;
 
+@SuppressWarnings("serial")
 public final class DupliquerZombie extends Action {
 
 	//Cardinaux _direction;

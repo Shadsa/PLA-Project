@@ -4,6 +4,7 @@ import cases.EnnemiCheck;
 import roles.Cardinaux;
 import roles.Personnage;
 
+@SuppressWarnings("serial")
 public class EnnemiProche extends Condition {
 
 	Cardinaux _direction;

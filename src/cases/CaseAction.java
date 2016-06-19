@@ -2,8 +2,8 @@ package cases;
 
 import roles.Joueur;
 import roles.Personnage;
-import roles.action.Action;
 
+@SuppressWarnings("serial")
 public class CaseAction extends Case {
 
 	Batiment _initial;

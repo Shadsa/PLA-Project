@@ -5,8 +5,8 @@ import cases.TypeCase;
 import cases.TypeCheck;
 import roles.Cardinaux;
 import roles.Personnage;
-import roles.World;
 
+@SuppressWarnings("serial")
 public class Type extends Condition {
 
 	Class<? extends TypeCase> _type;

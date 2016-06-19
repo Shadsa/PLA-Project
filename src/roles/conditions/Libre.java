@@ -1,14 +1,11 @@
 package roles.conditions;
 
-import cases.Arbre;
 import cases.CaseProperty;
-import cases.Construction;
 import cases.LibreCheck;
-import cases.Mur;
 import roles.Cardinaux;
 import roles.Personnage;
-import roles.World;
 
+@SuppressWarnings("serial")
 public class Libre extends Condition {
 
 	Cardinaux _direction;

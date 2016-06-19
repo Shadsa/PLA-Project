@@ -4,8 +4,8 @@ import cases.CaseProperty;
 import cases.EnnemiCheck;
 import roles.Cardinaux;
 import roles.Personnage;
-import roles.World;
 
+@SuppressWarnings("serial")
 public class Ennemi extends Condition {
 
 	Cardinaux _direction;

@@ -56,6 +56,8 @@ public class Classe implements Serializable {
 			case OPBUFF:
 				_HP+=30;_damage+=30;_armor+=30;
 				break;
+		default:
+			break;
 		}
 
 	}
@@ -124,11 +126,11 @@ public class Classe implements Serializable {
 		_bonus = b;
 	}
 
-	public void addAction(Class act){
+	public void addAction(Class<Action> act){
 		avaibleAction.add(act);
 	}
 
-	public void addCondition(Class cond){
+	public void addCondition(Class<Condition> cond){
 		avaibleCondition.add(cond);
 	}
 	
@@ -140,14 +142,14 @@ public class Classe implements Serializable {
 		avaibleCondition = cond;
 	}
 
-	public boolean isAction(Class act){
+	public boolean isAction(Class<?> act){
 		for(int i=0;i<avaibleAction.size();i++){
 			if(act == avaibleAction.get(i)){return true;}
 		}
 		return false;
 	}
 
-	public boolean isCondition(Class act){
+	public boolean isCondition(Class<?> act){
 		for(int i=0;i<avaibleCondition.size();i++){
 			if(act == avaibleCondition.get(i)){return true;}
 		}

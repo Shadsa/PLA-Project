@@ -2,6 +2,7 @@ package cases;
 
 import roles.Personnage;
 
+@SuppressWarnings("serial")
 public class BatimentCheck implements CaseProperty{
 
 	Personnage _comparateur;

@@ -6,6 +6,7 @@ import roles.States;
 import roles.States.Statut;
 import roles.World;
 
+@SuppressWarnings("serial")
 public final class Attendre extends Action {
 
 

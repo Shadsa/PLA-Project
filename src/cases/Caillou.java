@@ -1,12 +1,10 @@
 package cases;
 
-import java.io.Serializable;
 
 import roles.Personnage;
 import roles.action.*;
-import roles.Cardinaux;
 
-
+@SuppressWarnings("serial")
 public final class Caillou extends TypeCase{
 
 	protected static Action _action = new Combattre();

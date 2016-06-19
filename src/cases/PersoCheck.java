@@ -1,5 +1,6 @@
 package cases;
 
+@SuppressWarnings("serial")
 public class PersoCheck implements CaseProperty{
 
 	@Override

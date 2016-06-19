@@ -38,6 +38,7 @@ public class CrossButton extends AbstractComponent {
 	protected Rectangle hitbox;
 	protected Rectangle Xhitbox;
 
+	@SuppressWarnings("unchecked")
 	public CrossButton(GUIContext container, String text, int x, int y) throws SlickException
 	{
 		super(container);

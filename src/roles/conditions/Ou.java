@@ -2,6 +2,7 @@ package roles.conditions;
 
 import roles.Personnage;
 
+@SuppressWarnings("serial")
 public class Ou extends Condition {
 
 	Condition _c1;

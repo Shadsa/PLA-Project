@@ -2,6 +2,7 @@ package roles.conditions;
 
 import roles.Personnage;
 
+@SuppressWarnings("serial")
 public class NbInf extends Condition {
 
 	int _quantite;
