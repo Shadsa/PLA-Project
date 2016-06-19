@@ -374,4 +374,8 @@ public class MapTest extends Observable {
 	public boolean isOver(int mouseX, int mouseY) {
 		return mouseX >= getX() && mouseY >= getY() && mouseX<=getX()+getWidth() && mouseY<=getY()+getHeight();
 	}
+	
+	public void resetArmy(){
+		_joueurs.clear();
+	}
 }

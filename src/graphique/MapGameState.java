@@ -85,7 +85,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		Image normalImage = img.getSubImage(633, 23, 123, 27);
 		Image overImage = img.getSubImage(633, 53, 123, 27);
 		Image downImage = img.getSubImage(633, 83, 123, 27);
-		_GUnivers.add(new MapTest(0, 0, container.getScreenWidth(), container.getScreenHeight()));
+		//_GUnivers.add(new MapTest(0, 0, container.getScreenWidth(), container.getScreenHeight()));
 		//Instanciation des boutons
 		_bouton_fullScreen = new Button(container, "Plein écran", container.getWidth()/2-62, container.getHeight()/2, normalImage, overImage, downImage);
 		_bouton_son = new Button(container, "Désactiver son", container.getWidth()/2-62, container.getHeight()/2-40, normalImage, overImage, downImage);
@@ -193,13 +193,15 @@ public class MapGameState extends BasicGameState implements Observer {
 		
 		//Configuration du bouton menu principal
 		if (_bouton_menuPrincipal.isPressed()) {
-			/* TODO c'est bancal
 			container.setPaused(false);
 			_input.clearMousePressedRecord();
 			World.resetJoueurs();
 			enJeu = false;
+			_mainm.resetArmy();
+			World.Univers.clear();
+			_GUnivers.clear();
 			//_joueurs.clear();
-			this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");*/
+			this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
 		}
 	}
 
@@ -656,7 +658,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		
 	    	//World.Univers.add(new World(_tailleMapY,_tailleMapX, false));
 		//_GUnivers.get(0).initialise(World.Univers.get(0));
-	    	_GUnivers.set(0, map);
+	    _GUnivers.add(map);
 		_GUnivers.get(0).addObserver(this);
 		_mainm = _GUnivers.get(0);
 		_mainw = World.Univers.get(0);

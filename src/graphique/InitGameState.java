@@ -36,10 +36,6 @@ public class InitGameState extends BasicGameState {
 
 	static Image UI;
 
-	private int _tailleMapY = 45;
-	private int _tailleMapX = 75;
-
-
 	//Identifiant unique de la boucle de jeu
 	public static final int ID = 4;
 	//Image de fond
@@ -210,7 +206,7 @@ public class InitGameState extends BasicGameState {
 		if (_bouton_jouer.isPressed()) {	    
 		    //TODO CONFLIT ICI!!!
 
-		    World.Univers.add(new World(_tailleMapY,_tailleMapX, false));
+		    
 			///////////////////
 			//Initialisation du monde
 			//World.BuildMap(_tailleMapY,_tailleMapX);

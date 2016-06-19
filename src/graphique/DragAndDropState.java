@@ -35,6 +35,8 @@ import graphique.MapGameState;
 
 class DragAndDropState extends BasicGameState {
 	public static final int ID = 3;
+	private final int _tailleMapY = 45;
+	private final int _tailleMapX = 75;
 	private MapTest map ;
 	private float _offsetMapX=0;
 	private float _offsetMapY=0;
@@ -42,8 +44,8 @@ class DragAndDropState extends BasicGameState {
 	private float mouseAbsoluteY;
 	private float _mouseMapX;
 	private float _mouseMapY;
-	private int mapSizeX;
-	private int mapSizeY;
+	private int mapSizeX = _tailleMapX * MapGameState.TILESIZE;;
+	private int mapSizeY = _tailleMapY * MapGameState.TILESIZE;;
 	private boolean pause = false;
 	private boolean saveMode = false;
 	private ArrayList<UnitInfo> UIFs1;
@@ -291,11 +293,11 @@ class DragAndDropState extends BasicGameState {
 	 * Notification que l'on entre dans cette boucle de jeu.
 	 * @param container Le contexte dans lequels les composants sont crées et affichés.
 	 * @param game Le contrôleur des différentes boucles de jeu.
-	 */
+	 *
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-		mapSizeX = World.Univers.get(0).map().largeur() * MapGameState.TILESIZE;
-		mapSizeY = World.Univers.get(0).map().hauteur() * MapGameState.TILESIZE;
-	}
+		mapSizeX = _tailleMapX * MapGameState.TILESIZE;
+		mapSizeY 
+	}*/
 	
 	public int fromX(float x)
 	{
@@ -350,7 +352,7 @@ class DragAndDropState extends BasicGameState {
 	}
 	
 	public void setGame(ArrayList<UnitInfo> uIFs1,ArrayList<UnitInfo> uIFs2) {
-	    
+		World.Univers.add(new World(_tailleMapY,_tailleMapX, false));
 		this.UIFs1 = uIFs1;
 		this.UIFs2 = uIFs2;
 		
