@@ -121,4 +121,8 @@ public class World {
 		return _isArena;
 	}
 
+	public static ArrayList<Joueur> getPlayers() {
+		return joueurs;
+	}
+
 }

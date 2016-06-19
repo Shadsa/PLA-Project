@@ -72,7 +72,7 @@ public class UnitDialog extends JDialog {
 	Image image = temp.getImage();
 	image = createImage(new FilteredImageSource(image.getSource(),
 	            new CropImageFilter(0, 128, 64, 64)));
-	
+
 	ImageIcon tempH = new ImageIcon("src/asset/sprites/cult_clothes.png");
 	Image imageH = tempH.getImage();
 	imageH = createImage(new FilteredImageSource(imageH.getSource(),
@@ -145,7 +145,7 @@ public class UnitDialog extends JDialog {
    /* color.addItem("Noir");
     color.addItem("Vert");*/
     panSkin.add(color);
-    
+
     JPanel panClothes = new JPanel();
     panClothes.setBorder(BorderFactory.createTitledBorder("Habits"));
     JComboBox<String> clothes = new JComboBox<String>();
@@ -160,7 +160,7 @@ public class UnitDialog extends JDialog {
     joueur.addItem("Joueur1");
     joueur.addItem("Joueur2");
     panJoueur.add(joueur);
-    
+
     JPanel content = new JPanel();
     content.setLayout(new FlowLayout());
     content.add(panNom);
@@ -196,6 +196,7 @@ public class UnitDialog extends JDialog {
     		  jop.showMessageDialog(null, "Fichier automate ne convient pas � cette classe.", "Erreur", JOptionPane.ERROR_MESSAGE);
     		  return;
     	  }*/
+    	  aut.setnom(nom.getText());
         uInfo = new UnitInfo(nom.getText(), aut, autc, cla,TypeUnit.valueOf(color.getSelectedItem().toString()), TypeClothes.valueOf(clothes.getSelectedItem().toString()), choixJoueur);
         setVisible(false);
       }
@@ -204,6 +205,7 @@ public class UnitDialog extends JDialog {
     fichier.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent arg0) {
         	getAutomate((String)fichier.getSelectedItem());
+        	if(aut != null) nom.setText(((String)fichier.getSelectedItem()).replace(".xml", ""));
           }
         });
 
@@ -212,7 +214,7 @@ public class UnitDialog extends JDialog {
         	cla = (Classe)classe.getSelectedItem();//getClasse((String)classe.getSelectedItem());
           }
         });
-    
+
     joueur.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent arg0) {
         	choixJoueur = (String)joueur.getSelectedItem();//getClasse((String)classe.getSelectedItem());
@@ -222,25 +224,25 @@ public class UnitDialog extends JDialog {
     color.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent e) {
 			ImageIcon typeCorps = new ImageIcon(TypeUnit.valueOf(color.getSelectedItem().toString()).sprite());
-			
+
 			Image image = createImage(new FilteredImageSource(
 					typeCorps.getImage().getSource(),
 					new CropImageFilter(0, 128, 64, 64)));
-			
+
 			icon.setIcon(new ImageIcon(image));
-        }               
+        }
       });
-    
+
     clothes.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent e) {
 			ImageIcon typeHabit = new ImageIcon(TypeClothes.valueOf(clothes.getSelectedItem().toString()).sprite());
-			
+
 			Image imageH = createImage(new FilteredImageSource(
 					typeHabit.getImage().getSource(),
 					new CropImageFilter(0, 128, 64, 64)));
-			
+
 			iconH.setIcon(new ImageIcon(imageH));
-        }               
+        }
       });
 
 

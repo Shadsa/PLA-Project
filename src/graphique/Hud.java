@@ -1,6 +1,5 @@
 package graphique;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -9,14 +8,14 @@ public class Hud {//550 182
 
 	static public Image playerBars;
 	private static final int HUD_BAR_X = 10;
-	private static final int HUD_BAR_Y = 150;
+	private static int HUD_BAR_Y = 150;
 	private int debug = 10;
 
 	public void init() throws SlickException {
 		playerBars = new Image("src/asset/sprites/ui_big_pieces.png");
 	}
 
-	public void render (Graphics g) {
+	public void render (Graphics g, int j) { HUD_BAR_Y = j;
 		if (MapGameState._targetp != null) {
 			g.resetTransform();
 			g.drawImage(playerBars, HUD_BAR_X, MapGameState.debug ? HUD_BAR_Y : debug, HUD_BAR_X+83, MapGameState.debug ? HUD_BAR_Y+65 : debug+65, 447, 178, 530, 243);

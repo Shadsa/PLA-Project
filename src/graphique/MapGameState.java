@@ -120,9 +120,9 @@ public class MapGameState extends BasicGameState implements Observer {
 		g.translate(-_offsetMapX, -_offsetMapY);
 		g.scale(_zoom, _zoom);
 		this.map.render(g, _offsetMapX, _offsetMapY, zoom(), container.getWidth(), container.getHeight());
-		
-		
-		
+
+
+
 		//Affichage des personnages
 		for(graphique.GJoueur j : _joueurs)
 			for(Player p : j.getPersonnage())
@@ -147,22 +147,15 @@ public class MapGameState extends BasicGameState implements Observer {
 			g.drawString(_mainw.army().get(0).joueur().nom()+" a gagné! Félicitations à lui, vraiment.", container.getWidth()/2-175, container.getHeight()/2);
 			g.resetTransform();
 		}
-		//Affichage de la position de la souris sur la map
-		//g.drawString(mouse, 10, 50);
-		//g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
-		//g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 90);
-		//g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 110);
-
 		//Affichage des huds
-		this.hud.render(g);
+		//this.hud.render(g);
 		if(showhud && !_target.isDead()) {
-			this.hud.render(g);
+			this.hud.render(g, ((debug)? 110 : 0));
 		}
-		
+
 		affichageDebug(g);
 
-		affichageDetailJeu(g);
-		
+		affichageDetailJeu(g, (debug)?((_target != null)? 174 : 110) : ((_target != null)? 84 : 0));
 		/*//Affichage message de fin
 		if (World.fini) {
 			if(World.joueurs().size()==1){
@@ -192,7 +185,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		        alpha -= 0.01f;
 		    }
 	    }
-		
+
 		//Configuration du bouton menu principal
 		if (_bouton_menuPrincipal.isPressed()) {
 			container.setPaused(false);
@@ -319,7 +312,7 @@ public class MapGameState extends BasicGameState implements Observer {
 			 if (_bouton_reprendre.isPressed()) {
 				 container.setPaused(!container.isPaused());
 			}
-			 
+
 			//Configuration du bouton quitter
 			if (_bouton_quitter.isPressed()) {
 				secondeTime = 0;
@@ -354,9 +347,9 @@ public class MapGameState extends BasicGameState implements Observer {
 			}
 
 		}
-		
+
 		autoDeplacementBouton(container);
-		
+
 		//Update du debug
 		if (_input.isKeyPressed(Input.KEY_F3)) {
 			debug = !debug;
@@ -409,7 +402,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		break;
 		}
 	}
-	
+
 	/**
 	 * Notification qu'un bouton de la souris a été pressée (la méthode est appelée à ce moment là).
 	 * @param button L'identifiant du bouton.
@@ -455,6 +448,21 @@ public class MapGameState extends BasicGameState implements Observer {
 		}*/
 	}
 
+	/**
+	 * Vérification que le curseur de la souris est sur le personnage.
+	 * @param p
+	 * @param mouseX La position de la souris en abcisse X.
+	 * @param mouseY La position de la souris en ordonnée Y.
+	 * @return Un booléen qui indique si la position du curseur est sur un personnage.
+	 * @throws Exception 
+	 * @require p != null
+	 */
+	public boolean curseurSurPerso(Player p, float mouseX, float mouseY) throws Exception {
+		if (!(p!= null)) {
+			throw new Exception("p == null)");
+		}
+		return (mouseX >= p.getX()-32 && mouseX <= p.getX()+32 && mouseY >= p.getY()-60 && mouseY <= p.getY()+4);
+	}
 
 	public int getID() {
 		return ID;
@@ -493,7 +501,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		this._offsetMapY = y;
 
 	}
-	
+
 	/**
 	 * Affichage des informations pour le debug. Il n'est pas affiché de base.
 	 * @param g Le contexte graphique utilisé pour l'affichage des informations.
@@ -508,7 +516,7 @@ public class MapGameState extends BasicGameState implements Observer {
 			g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 90);
 		}
 	}
-	
+
 	/**
 	 * Gestion de la vitesse de jeu pendant la partie.
 	 * @param ralentir Code de la touche choisie pour ralentir le jeu.
@@ -589,34 +597,30 @@ public class MapGameState extends BasicGameState implements Observer {
 	 * Gestion de l'affichage des détails du jeu (joueurs, temps).
 	 * @param g Le contexte graphique utilisé pour afficher les informations.
 	 */
-	public void affichageDetailJeu(Graphics g) {
+	public void affichageDetailJeu(Graphics g, int ty) {
 		g.resetTransform();
 		g.setColor(Color.white);
-		
+
 		//Affichage des détails des joueurs
-		if (World.joueurs.size() == 2) {
-			g.drawString("Ressources : J1 " + World.joueurs.get(0).ressources(), 10, 250);
-			g.drawString("Ressources : J2 " + World.joueurs.get(1).ressources(), 10, 270);
-			//TODO tres basique pour l'instant
-			int number1=0,number2=0;
-			for(Army a : _mainw.army()){
-				if(a.joueur()==World.joueurs.get(0))
-					number1+=a.getPersonnages().size();
-				else
-					number2+=a.getPersonnages().size();
+			for(Joueur j : World.getPlayers())
+			{
+				g.drawString(j.nom(), 10, ty);ty+=20;
+				g.drawString("  " + "Ressources : " + j.ressources(), 10, ty);ty+=20;
+				for(Automate aut : j.Automates())
+				{
+					g.drawString("     " + aut.nom() + " : " + j.nbUnit(aut), 10, ty);ty+=20;
+				}
+				ty+=30;
 			}
-			g.drawString("Nb personnages j1 : " + number1, 10, 290);
-			g.drawString("Nb personnages j2 : " + number2, 10, 310);
-		}
-		
+
 		//Affichage compteur de tours
 		if (secondeTime == 60) {
 			secondeTime = 0;
 			minuteTime++;
 		}
-		g.drawString("Temps de jeu : " + minuteTime + ":" + secondeTime, 10, 330);
+		g.drawString("Temps de jeu : " + minuteTime + ":" + secondeTime, 10, ty);
 	}
-	
+
 	/**
 	 * Gestion de l'adaptation de la position des boutons en fonction de la taille de la fenêtre.
 	 * @param container Le conteneur du jeu.
@@ -628,7 +632,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		_bouton_reprendre.setLocation(container.getWidth()/2-62, container.getHeight()/2-80);
 		_bouton_menuPrincipal.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
 	}
-	
+
 	/**
 	 * Gestion du zoom au clavier. Le dezoom est limité par la taille de la carte.
 	 * @param container Le conteneur du jeu.
@@ -645,7 +649,7 @@ public class MapGameState extends BasicGameState implements Observer {
 			setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
 			setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
 		}
-		
+
 		//Zoom arrière
 		if (World.map().largeur() * TILESIZE * zoom() > container.getWidth() && World.map().hauteur() * TILESIZE * zoom() > container.getHeight()) {
 			if (_input.isKeyDown(dezoom)) {
@@ -655,7 +659,7 @@ public class MapGameState extends BasicGameState implements Observer {
 			}
 		}
 	}*/
-	
+
 	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2, MapTest map) {
 		
 	    	//World.Univers.add(new World(_tailleMapY,_tailleMapX, false));
