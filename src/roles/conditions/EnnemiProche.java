@@ -15,6 +15,6 @@ public class EnnemiProche extends Condition {
 	@Override
 	public boolean value(Personnage target) {
 		if(_direction==null) return false;
-		return target.find(new EnnemiCheck(target), _direction, 2);
+		return target.find(new EnnemiCheck(target), _direction, 3);
 	}
 }
