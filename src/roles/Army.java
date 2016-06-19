@@ -30,11 +30,14 @@ public class Army extends Observable{
 	public Personnage createPersonnage(int type, int x, int y, Personnage imageOF)
 	{
 		// WARNING faire plutot un get automate avec gestion d'erreur
-		Personnage newPers = new Personnage(_joueur.automate(type), _joueur.automatec(type), x, y, imageOF, this, _joueur.classe(type));
-		_personnages.add(newPers);
-		setChanged();
-		notifyObservers(newPers);
-		return newPers;
+		if(type>=_joueur.Automates().size()){
+			Personnage newPers = new Personnage(_joueur.automate(type), _joueur.automatec(type), x, y, imageOF, this, _joueur.classe(type));
+			_personnages.add(newPers);
+			setChanged();
+			notifyObservers(newPers);
+			return newPers;
+		}
+		return null;
 	}
 
 	public Personnage join(int type, Cardinaux from, Personnage imageOF)
