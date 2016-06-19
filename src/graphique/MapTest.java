@@ -84,7 +84,7 @@ public class MapTest extends Observable {
 		//Nettoyage de la zone d'affichage
 		g.drawImage(spriteSheet, _x, _y, _x+_width, _y+_height, 96, 0, 96*2, 96);
 		//Gestion du scrolling de la map
-		g.translate(-x, -y);
+		g.translate(-x+_x*2/zoom, -y+_y/2/zoom);
 		//Gestion du zoom
 		g.scale(zoom, zoom);
 
@@ -172,6 +172,7 @@ public class MapTest extends Observable {
 						if(p.getY()-TILESIZE < (y + _height)/zoom())
 							p.render(g);
 
+		g.clearClip();
 	}
 
 	public void render2(Graphics g) throws SlickException {
