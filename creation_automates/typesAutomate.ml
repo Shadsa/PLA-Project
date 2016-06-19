@@ -1,5 +1,4 @@
 type cellule =
-  | C
   | N | S | E | O
 
 type typeCellule =
@@ -8,6 +7,8 @@ type typeCellule =
   | Caillou
   | Eau
   | Batiment
+  | Piege
+  | Mur
 
   
 type attribut =

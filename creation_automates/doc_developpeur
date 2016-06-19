@@ -1,1 +1,38 @@
+Fichiers OCaml
+
+    Le programme OCaml permettant de créer les automates utilisés par le projet est séparé en 4 fichiers .ml différents, et 3 fichiers .mli. Chacun a une fonction particulière:
+    
+        -typesAutomate.ml/typesAutomate.mli : ces 2 fichiers regroupent les types de variables utilisés dans les    autres fichiers pour décrire un automate et ses différentes composantes
+        -constructeur.ml/constructeur.mli : définissent les fonctions utilisées par le créateur pour permettre de créer plus facilement, et plus rapidement un automate. Ils contiennent des fonctions spécifique contenant des comportements prédéfinis, ainsi que des fonctions plus générales pour manipuler les transitions
+        -output.ml/output.mli : interprète un automate fourni par l'utilisateur, et l'écrit dans le fichier XML voulu. Une seule fonction est visible par le créateur: elle prend en paramètres un nom de fichier et un automate, et écrit le second dans le fichier indiqué par le premier.
+        -createur.ml : fichier servant d'interface à l'utilisateur, il y écrit la définition de ses automates, et ordonne au programme de produire les fichiers XML correspondant.
+        
+Types utilisés
+    cellule : une direction cardinale
+    typeCellule : un type de case
+    action : une action de l'automate (sortie)
+    condition : une condition de l'automate (entrée)
+    etat : un etat de l'automate
+    poids : la priorité de la transition dans l'automate
+    transition : une transition définie par son état courant, la condition nécessaire à son activation, l'action accomplie, l'état d'arrivée, et sa priorité par rapport aux autres transitions
+    automate : une liste de transitions, servant à décrire un automate
+    attribut : nécessaire à la traduction en XML, il représente les types de paramètres d'action/condition et est associé à une chaîne de caractère grâce à une fonction de output.ml
+    
+    
+Structure en XML
+    L'automate traduit en XML est composé d'un élement "automate" possédant un attribut représentant le nombre d'états, et possédant en éléments les différentes transitions le composant.
+    Chaque transition possède son poids en attribut, puis chacune de ses composantes en éléments. Les actions/conditions ont leurs potentiels paramètres en attributs. Si c'est une condition composée d'une ou plusieurs autres conditions, elle a son nom en attribut, et ses composantes en sous-éléments.
+    
  
+ 
+ 
+ 
+ 
+ 
+Pour ajouter une action, il faut que celle-ci prenne en parametre une direction, un type d'unite (entier), ou rien, puis dans les fichiers OCaml:
+    ajouter l'action dans le type action de typesAutomate.ml et typesAutomate.ml
+    ajouter le traitement XML de l'action dans output_act de output.ml
+    
+Pour ajouter une condition, il faut que celle-ci prenne en parametre une direction, un entier, un type de cellule, un type de cellule ET une direction, 2 conditions, 1 condition, ou rien, puis dans les fichiers OCaml:
+    ajouter le condition dans le type condition de typesAutomate.ml et typesAutomate.ml
+    ajouter le traitement XML de la condition dans output_cond de output.ml
