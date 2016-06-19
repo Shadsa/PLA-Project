@@ -249,8 +249,8 @@ public class MapGameState extends BasicGameState implements Observer {
 		//Position de la souris
 		mouseAbsoluteX = _input.getAbsoluteMouseX();
 		mouseAbsoluteY = _input.getAbsoluteMouseY();
-		/*
-		_mouseMapY = (mouseAbsoluteY + offsetMapY()) / zoom();
+		
+		/*_mouseMapY = (mouseAbsoluteY + offsetMapY()) / zoom();
 		_mouseMapX = (mouseAbsoluteX + offsetMapX()) / zoom();*/
 		mouse = "MouseAbsoluteX : " + mouseAbsoluteX + ", MouseAbsoluteY : " + mouseAbsoluteY;
 

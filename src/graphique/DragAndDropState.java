@@ -392,8 +392,8 @@ class DragAndDropState extends BasicGameState {
 			type_clothes.get(1).add(ui.clothes);
 		}
 		if (World.joueurs.size() == 0) {
-			World.joueurs.add(new Joueur("Human", autlist.get(0), autclist.get(0), classes.get(0), type_unit.get(0), type_clothes.get(0)));
-			World.joueurs.add(new Joueur("Zombie", autlist.get(1), autclist.get(1), classes.get(1), type_unit.get(1), type_clothes.get(1)));
+			World.joueurs.add(new Joueur("Joueur 1", autlist.get(0), autclist.get(0), classes.get(0), type_unit.get(0), type_clothes.get(0)));
+			World.joueurs.add(new Joueur("Joueur 2", autlist.get(1), autclist.get(1), classes.get(1), type_unit.get(1), type_clothes.get(1)));
 		}
 		try {
 			this.map.init();

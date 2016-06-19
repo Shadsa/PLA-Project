@@ -344,10 +344,24 @@ public class MapTest extends Observable {
 			for(Player p : a.getPersonnage())
 				if (Input.MOUSE_LEFT_BUTTON == button && curseurSurPerso(p, (mx+this.x)/zoom(), (my+this.y)/zoom())) {
 					this.setChanged();
+					this.notifyObservers(new Object(){
+					@SuppressWarnings("unused")
+					public int mx = fromX(p.DestX());
+					@SuppressWarnings("unused")
+					public int my = fromY(p.DestY());
+					@SuppressWarnings("unused")
+					public Player mtargetp =p;});
 					return true;
 				}
 			//else
 		this.setChanged();
+		this.notifyObservers(new Object(){
+		@SuppressWarnings("unused")
+		public int mx = 0;
+		@SuppressWarnings("unused")
+		public int my = 0;
+		@SuppressWarnings("unused")
+		public Player mtargetp =null;});
 		return false;
 	}
 
