@@ -36,7 +36,7 @@ public final class CouperBois extends Action {
 
 		world.Case(destX, destY).attaquerCase(pers.damage());
 		pers.setState(new States(Statut.ATTAQUE, direction));
-		pers.owner().joueur().changerRessource(21);
+		pers.owner().joueur().changerRessource(11);
 	}
 
 	@Override

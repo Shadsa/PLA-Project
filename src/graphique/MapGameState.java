@@ -56,7 +56,7 @@ public class MapGameState extends BasicGameState implements Observer {
 	private int _tailleMapX ;
 	//Test
 	//private MapTest map;
-	private MapTest _mainm;
+	private static MapTest _mainm;
 	private World _mainw;
 	private static ArrayList<MapTest> _GUnivers = new ArrayList<MapTest>();
 	private Input _input;
@@ -135,7 +135,8 @@ public class MapGameState extends BasicGameState implements Observer {
 			_targetw = null;
 		if(_targetw != null)
 		{
-			_targetw.render(g);
+			InitGameState.renderMenu(0, _mainm._height-488, 516, 416);
+		    _targetw.render(g);
 			g.resetTransform();
 		}
 
@@ -166,6 +167,7 @@ public class MapGameState extends BasicGameState implements Observer {
 
 		//Gestion de la pause (affichage d'un fond noir-transparent progressif)
 		if (container.isPaused()) {
+			InitGameState.renderMenu(_bouton_fullScreen.x-30, _bouton_fullScreen.y-30, _bouton_reprendre.x+_bouton_reprendre.width+30, _bouton_reprendre.y + _bouton_reprendre.height+30);
 		    Rectangle rect = new Rectangle (0, 0, container.getScreenWidth(), container.getScreenHeight());
 		    g.setColor(new Color (0, 0, 0, alpha));
 		    g.fill(rect);
@@ -307,7 +309,7 @@ public class MapGameState extends BasicGameState implements Observer {
 				//_joueurs.clear();
 				this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
 			}
-			
+
 			//Configuration du bouton pause
 			 if (_bouton_reprendre.isPressed()) {
 				 container.setPaused(!container.isPaused());
@@ -413,19 +415,6 @@ public class MapGameState extends BasicGameState implements Observer {
 
 		if(x >= _mainm.getX() && y >= _mainm.getY() && x<=_mainm.getX()+_mainm.getWidth() && y<=_mainm.getY()+_mainm.getHeight())
 			_mainm.mousePressed(button, x, y);
-		/*if(_GUnivers.size()>1)
-		if(x >= _GUnivers.get(1).getX() && y >= _GUnivers.get(1).getY() && x<=_GUnivers.get(1).getX()+_GUnivers.get(1).getWidth() && y<=_GUnivers.get(1).getY()+_GUnivers.get(1).getHeight())
-			_GUnivers.get(1).mousePressed(button, x, y);*/
-		//super.mousePressed(button, x, y);
-		/*for(graphique.GJoueur j : _joueurs)
-			for(Player p : j.getPersonnage())
-				if (Input.MOUSE_LEFT_BUTTON == button && curseurSurPerso(p, mouseMapX(), mouseMapY())) {
-				_target = p;
-				_targetp = world0.Case((int)(MapGameState._target.DestX()-Ox)/TILESIZE, (int)(MapGameState._target.DestY()-Oy)/TILESIZE).Personnage();
-				this.showhud = true;
-				return;
-			}*/
-		//map.mousePressed(button, x, y);
 	}
 
 	/**
@@ -433,19 +422,18 @@ public class MapGameState extends BasicGameState implements Observer {
 	 * @param n Sens du mouvement de la roulette.
 	 */
 	public void mouseWheelMoved(int n) {
-		/*if (n < 0) {
-			if (zoom() > 0) {
-				setZoom(zoom() / 1.10f);
-			} else {
-				setZoom(0);
-			}
-			setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
-			setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
+		MapTest focus = (_targetw != null && _targetw.isOver(_input.getMouseX(), _input.getMouseY()))?_targetw : _mainm;
+		if (n < 0) {
+			focus.setZoom(1/1.03f, _input.getAbsoluteMouseX(), _input.getAbsoluteMouseY());
+
+
+
 		} else if (n > 0) {
-			setZoom(zoom() * 1.10f);
-			setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
-			setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
-		}*/
+			//Zoom arrière
+			if (_tailleMapX * TILESIZE * focus.zoom() > _mainm.getWidth() && _tailleMapX * TILESIZE * focus.zoom() > _mainm.getHeight()) {
+				focus.setZoom(1.03f, _input.getMouseX(), _input.getMouseY());
+			}
+		}
 	}
 
 	/**
@@ -634,37 +622,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		_bouton_menuPrincipal.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
 	}
 
-	/**
-	 * Gestion du zoom au clavier. Le dezoom est limité par la taille de la carte.
-	 * @param container Le conteneur du jeu.
-	 * @param dezoom Code de la touche choisie pour le dezoom.
-	 * @param zoom Code de la touche choisie pour le zoom.
-	 * @param vitesseZoom Vitesse du zoom/dezoom.
-	 */
-	/*public void gestionZoomClavier(GameContainer container, int dezoom, int zoom, float vitesseZoom) {
-		//Gestion du zoom
-		//Zoom avant
-		if (_input.isKeyDown(zoom))
-		{
-			setZoom(zoom() * vitesseZoom);
-			setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
-			setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
-		}
-
-		//Zoom arrière
-		if (World.map().largeur() * TILESIZE * zoom() > container.getWidth() && World.map().hauteur() * TILESIZE * zoom() > container.getHeight()) {
-			if (_input.isKeyDown(dezoom)) {
-				setZoom(zoom() / vitesseZoom);
-				setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
-				setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
-			}
-		}
-	}*/
-
 	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2, MapTest map) {
-
-	    	//World.Univers.add(new World(_tailleMapY,_tailleMapX, false));
-		//_GUnivers.get(0).initialise(World.Univers.get(0));
 	    _GUnivers.add(map);
 		_GUnivers.get(0).addObserver(this);
 		_mainm = _GUnivers.get(0);
@@ -672,34 +630,6 @@ public class MapGameState extends BasicGameState implements Observer {
 
 		_tailleMapX = _mainw.SizeX();
 		_tailleMapY = _mainw.SizeY();
-
-		/*ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
-		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
-		ArrayList<ArrayList<TypeUnit>> type_unit = new ArrayList<ArrayList<TypeUnit>>();
-		ArrayList<ArrayList<TypeClothes>> type_clothes = new ArrayList<ArrayList<TypeClothes>>();
-
-		for(UnitInfo ui : uIFs1)
-		{
-			autlist.add(new ArrayList<Automate>());
-			classes.add(new ArrayList<Classe>());
-			type_unit.add(new ArrayList<TypeUnit>());
-			type_clothes.add(new ArrayList<TypeClothes>());
-			autlist.get(0).add(ui.automate);
-			classes.get(0).add(ui.classe);
-			type_unit.get(0).add(ui.color);
-			type_clothes.get(0).add(ui.clothes);
-		}
-
-		for(UnitInfo ui : uIFs2) {
-			autlist.add(new ArrayList<Automate>());
-			classes.add(new ArrayList<Classe>());
-			type_unit.add(new ArrayList<TypeUnit>());
-			type_clothes.add(new ArrayList<TypeClothes>());
-			autlist.get(1).add(ui.automate);
-			classes.get(1).add(ui.classe);
-			type_unit.get(1).add(ui.color);
-			type_clothes.get(1).add(ui.clothes);
-		}*/
 
 		if (!enJeu) {
 			new Army(World.Univers.get(0), World.joueurs.get(0));
@@ -774,7 +704,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		cible.setFighting(true, w);
 
 		World.Univers.add(w);
-		MapTest mt = new MapTest(0, 0, 500, 500);
+		MapTest mt = new MapTest(8, _mainm._height-480, 500, 400);
 		mt.initialise(w);
 		_GUnivers.add(mt);
 		mt.addArmy(new Army(w, pers.owner().joueur()));
