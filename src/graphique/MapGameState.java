@@ -167,7 +167,7 @@ public class MapGameState extends BasicGameState implements Observer {
 
 		//Gestion de la pause (affichage d'un fond noir-transparent progressif)
 		if (container.isPaused()) {
-			InitGameState.renderMenu(_bouton_reprendre.x-30, _bouton_reprendre.y-30, _bouton_quitter.x+_bouton_quitter.width+30, _bouton_quitter.y + _bouton_quitter.height+30);
+			InitGameState.renderMenu(_bouton_reprendre.x-30, _bouton_reprendre.y-30, _bouton_quitter.x-_bouton_reprendre.x+_bouton_quitter.width+60, _bouton_quitter.y-_bouton_reprendre.y + _bouton_quitter.height+60);
 		    Rectangle rect = new Rectangle (0, 0, container.getScreenWidth(), container.getScreenHeight());
 		    g.setColor(new Color (0, 0, 0, alpha));
 		    g.fill(rect);
