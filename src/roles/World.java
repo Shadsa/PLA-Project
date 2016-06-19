@@ -109,9 +109,9 @@ public class World {
 		return _army;
 	}
 	
-	/*public void resetJoueurs() {
-		_joueurs.clear();
-	}*/
+	public static void resetJoueurs() {
+		joueurs.clear();
+	}
 	
 	public void switchCase(Case c1, Case c2){
 		_map.switchCase(c1, c2);

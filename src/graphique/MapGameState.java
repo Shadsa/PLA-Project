@@ -52,8 +52,8 @@ public class MapGameState extends BasicGameState implements Observer {
 
 	private float _offsetMapX = 0;
 	private float _offsetMapY = 0;
-	private int _tailleMapY = 45;
-	private int _tailleMapX = 75;
+	private int _tailleMapY ;
+	private int _tailleMapX ;
 	//Test
 	//private MapTest map;
 	private MapTest _mainm;
@@ -62,7 +62,7 @@ public class MapGameState extends BasicGameState implements Observer {
 	private Input _input;
 	private StateGame game;
 	public static boolean debug = false;
-	//private boolean enJeu = false;
+	private boolean enJeu = false;
 
 	//Boutons
 	private Button _bouton_fullScreen;
@@ -85,7 +85,6 @@ public class MapGameState extends BasicGameState implements Observer {
 		Image normalImage = img.getSubImage(633, 23, 123, 27);
 		Image overImage = img.getSubImage(633, 53, 123, 27);
 		Image downImage = img.getSubImage(633, 83, 123, 27);
-		//TODO GUnivers
 		_GUnivers.add(new MapTest(0, 0, container.getScreenWidth(), container.getScreenHeight()));
 		//Instanciation des boutons
 		_bouton_fullScreen = new Button(container, "Plein écran", container.getWidth()/2-62, container.getHeight()/2, normalImage, overImage, downImage);
@@ -132,7 +131,7 @@ public class MapGameState extends BasicGameState implements Observer {
 						if(p.getY()-TILESIZE < (_offsetMapY + container.getHeight())/zoom())
 							p.render(g);
 */
-		if(_targetw != null)
+		if(_targetw != null && !_targetp.fightworld().fini)
 		{
 			_targetw.render(g);
 			g.resetTransform();
@@ -196,10 +195,9 @@ public class MapGameState extends BasicGameState implements Observer {
 		if (_bouton_menuPrincipal.isPressed()) {
 			container.setPaused(false);
 			_input.clearMousePressedRecord();
-			/* TODO reset des joueurs quand on revient au menu
 			World.resetJoueurs();
 			enJeu = false;
-			_joueurs.clear();*/
+			//_joueurs.clear();
 			this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
 		}
 	}
@@ -238,7 +236,6 @@ public class MapGameState extends BasicGameState implements Observer {
 				{
 					if(World.Univers.get(i).fini)
 					{
-						if(World.Univers.get(i).getArmys()==null) System.out.println("SALUT");
 						for(int k=0; k<World.Univers.get(i).getArmys().size(); k++){
 						for(Personnage p : World.Univers.get(i).getArmys().get(k).getPersonnages())
 						{
@@ -266,7 +263,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		//Position de la souris
 		mouseAbsoluteX = _input.getAbsoluteMouseX();
 		mouseAbsoluteY = _input.getAbsoluteMouseY();
-		/* TODO 
+		/* 
 		_mouseMapY = (mouseAbsoluteY + offsetMapY()) / zoom();
 		_mouseMapX = (mouseAbsoluteX + offsetMapX()) / zoom();*/
 		mouse = "MouseAbsoluteX : " + mouseAbsoluteX + ", MouseAbsoluteY : " + mouseAbsoluteY;
@@ -592,12 +589,19 @@ public class MapGameState extends BasicGameState implements Observer {
 		g.setColor(Color.white);
 		
 		//Affichage des détails des joueurs
-		if (_mainw.joueurs.size() == 2) {
-			g.drawString("Ressources : J1 " + _mainw.joueurs.get(0).ressources(), 10, 250);
-			g.drawString("Ressources : J2 " + _mainw.joueurs.get(1).ressources(), 10, 270);
-			/* TODO trouver un moyen de faire ca
-			g.drawString("Nb personnages : " + _mainw.getPlayers().get(0).getPersonnages().size(), 10, 290);
-			g.drawString("Nb personnages : " + _mainw.getPlayers().get(1).getPersonnages().size(), 10, 310);*/
+		if (World.joueurs.size() == 2) {
+			g.drawString("Ressources : J1 " + World.joueurs.get(0).ressources(), 10, 250);
+			g.drawString("Ressources : J2 " + World.joueurs.get(1).ressources(), 10, 270);
+			//TODO tres basique pour l'instant
+			int number1=0,number2=0;
+			for(Army a : _mainw.army()){
+				if(a.joueur()==World.joueurs.get(0))
+					number1+=a.getPersonnages().size();
+				else
+					number2+=a.getPersonnages().size();
+			}
+			g.drawString("Nb personnages j1 : " + number1, 10, 290);
+			g.drawString("Nb personnages j2 : " + number2, 10, 310);
 		}
 		
 		//Affichage compteur de tours
@@ -656,6 +660,8 @@ public class MapGameState extends BasicGameState implements Observer {
 		_mainm = _GUnivers.get(0);
 		_mainw = World.Univers.get(0);
 
+		_tailleMapX = _mainw.SizeX();
+		_tailleMapY = _mainw.SizeY();
 		
 		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
 		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
@@ -684,54 +690,19 @@ public class MapGameState extends BasicGameState implements Observer {
 			type_unit.get(1).add(ui.color);
 			type_clothes.get(1).add(ui.clothes);
 		}
-		/* TODO
+		
 		if (!enJeu) {
-			World.getPlayers().get(0).createPersonnage(0, 1, 1);
-			World.getPlayers().get(1).createPersonnage(0, World.map().largeur()-2, World.map().hauteur()-2);
+			new Army(World.Univers.get(0), World.joueurs.get(0));
+			new Army(World.Univers.get(0), World.joueurs.get(1));
 			
-			int i=0;
-			for(Joueur j : World.getPlayers())
+			_mainw.army().get(0).createPersonnage(0, 1, 1, null);
+			_mainw.army().get(1).createPersonnage(0, _tailleMapX-1, _tailleMapY-1, null);
+			for(Army a : World.Univers.get(0).army())
 			{
-				_joueurs.add(new GJoueur(type_unit.get(i),type_clothes.get(i)));
-				j.addObserver(_joueurs.get(_joueurs.size()-1));
-				for(Personnage pers : j.getPersonnages())
-					_joueurs.get(_joueurs.size()-1).addPersonnage(pers);
-				i++;
-				enJeu = true;
+				_GUnivers.get(0).addArmy(a);
 			}
-		}*/
-
-		///EXTENSION
-		//jjj.add(new Joueur("Human", autlist.get(0), autlist.get(0), classes.get(0), type_unit.get(0), type_clothes.get(0)));
-		//jjj.add(new Joueur("Zombie", autlist.get(1), autlist.get(1), classes.get(1), type_unit.get(1), type_clothes.get(1)));
-		new Army(World.Univers.get(0), World.joueurs.get(0));
-		new Army(World.Univers.get(0), World.joueurs.get(1));
-
-		try {
-			//World.Univers.get(0).putAutomate(jjj.get(0).automate(0), 1, 1, jjj.get(0));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		/*for(int i = 0; i < World.Univers.get(0).SizeY(); i++)
-			for(int j = 0; j < World.Univers.get(0).SizeX(); j++)
-			World.Univers.get(0).modifierCase(new Plaine(),  i, j);*/
-		//for(int i = 0; i < nb; i++)
-		_mainw.army().get(0).createPersonnage(0, 1, 1, null);
-	//for(int i = 0; i < nb; i++)
-		_mainw.army().get(1).createPersonnage(0, _tailleMapX-1, _tailleMapY-1, null);
-
-		for(Army a : World.Univers.get(0).army())
-		{
-			_GUnivers.get(0).addArmy(a);
 		}
 
-		/*Personnage pers = World.Univers.get(0).army().get(0).getPersonnages().get(0);
-		Personnage pp   = World.Univers.get(0).army().get(1).getPersonnages().get(0);
-		fight(pers, pp);
-		pers.setFighting(true);
-		pers.setState(new States(Statut.ATTAQUE, Cardinaux.SUD));
-		pp.setFighting(true);
-		pp.setState(new States(Statut.ATTAQUE, Cardinaux.oppose(Cardinaux.SUD)));*/
 	}
 
 	@Override

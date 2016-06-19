@@ -74,16 +74,16 @@ public class Hud {//550 182
 			    /*else
 			    	g.drawAnimation(Player.animations[anim], HUD_BAR_X, HUD_BAR_Y);*/
 
-			    if(danim != -1 && anim != 12)
-			    	g.drawAnimation(Player.Danimations[danim], HUD_BAR_X, HUD_BAR_Y);
+			    /*if(danim != -1 && anim != 12)
+			    	g.drawAnimation(Player.Danimations[danim], HUD_BAR_X, HUD_BAR_Y);*/
 
 
 
 
 			    if(MapGameState._target._Abody != -1)
 				{
-					    g.setColor(new Color(0, 0, 0, .5f));
-					    g.fillOval(HUD_BAR_X - 16, HUD_BAR_Y - 8, 32, 16);
+					    /*g.setColor(new Color(0, 0, 0, .5f));
+					    g.fillOval(HUD_BAR_X - 16, HUD_BAR_Y - 8, 32, 16);*/
 			    		g.drawAnimation(MapGameState._target._Body[MapGameState._target._Abody], HUD_BAR_X, MapGameState.debug ? HUD_BAR_Y : debug);
 				}
 
