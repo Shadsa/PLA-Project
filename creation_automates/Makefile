@@ -24,4 +24,4 @@ output.cmi: output.mli
 	$(COMPILE) -c $<
 
 clean:
-	rm -f *.cmi *.cmo *~
+	rm -f *.cmi *.cmo *~ main

@@ -64,8 +64,8 @@ let reparateur (p : poids) (e1 : etat) (e2 : etat) : automate =
     creerAutomate (List.map (fun d -> [(e1,CaseAmi(d),Reparer(d),e2,p)]) [N;S;E;O])
 
 let chercheur (p : poids) (cond : cellule -> condition) (eL : etat list) (e1 : etat) (e2 : etat) : automate =
-  creerAutomate (List.map2 (fun e d -> [(e1,Et(Libre(d),cond d),Avancer(d),e,p);
-					     (e,Et(Libre(d),cond d),Avancer(d),e,p+1);
+  creerAutomate (List.map2 (fun e d -> [(e1,cond d,Avancer(d),e,p);
+					     (e,cond d,Avancer(d),e,p+1);
 					     (e,Vide,Attendre,e2,0)]) eL [N;S;E;O])
 
 let constructeur (p : poids) (construire : cellule -> action) (cout : int) (e1 : etat) (e2 : etat) : automate =
