@@ -365,7 +365,7 @@ public static void sinit() throws SlickException
 				    	anim = 4;
 				    break;
 				    case ATTENDS:
-				    	anim = 0;
+				    	anim = 25; dir = 0;
 				    break;
 					case ATTAQUE:
 						anim = 8;
@@ -418,6 +418,8 @@ public static void sinit() throws SlickException
 		    anim[22] = loadAnimation(spellS, 0, 6, 1);
 		    anim[23] = loadAnimation(spellS, 0, 6, 2);
 		    anim[24] = loadAnimation(spellS, 0, 6, 3);
+
+		    anim[25] = loadAnimation(spellS, 4, 6, 2);
 
 		    anim[21].setLooping(false);
 		    anim[22].setLooping(false);
