@@ -117,7 +117,6 @@ let output_act (a : action) (p : int) =
    | Combattre -> output_with_balise b Rien p "Combattre"
    | CouperBois -> output_with_balise b Rien p "CouperBois"
    | DupliquerZombie -> output_with_balise b Rien p "DupliquerZombie"
-   | Duel -> output_with_balise b Rien p "Duel"
    | Soigner -> output_with_balise b Rien p "Soigner"
    | Attaquer(cellule) -> output_with_balise b (Direction(cellule)) p "Attaquer"
    | Avancer(cellule) -> output_with_balise b (Direction(cellule)) p "Avancer"

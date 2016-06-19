@@ -57,7 +57,7 @@ public class World {
 		for(Army a : _army){
 			if(a.getPersonnages().isEmpty()){
 				vaincus.add(a);
-				System.out.print(a.joueur().nom()+" a perdu!");
+				System.out.println(a.joueur().nom()+" a perdu la bataille!");
 			}
 			else
 				for(Personnage p : a.getPersonnages() )

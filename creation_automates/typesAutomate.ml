@@ -28,7 +28,6 @@ type action =
   | AvancerHasard
   | Combattre
   | CouperBois
-  | Duel
   | DupliquerZombie
   | Soigner
   | Attaquer of cellule

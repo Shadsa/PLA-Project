@@ -378,6 +378,7 @@ public static void sinit() throws SlickException
 					case REVEAL:
 						anim = 17;
 					break;
+					case SOIGNE:
 					case INVOQUE:
 						anim = 21;
 					break;

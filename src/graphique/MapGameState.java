@@ -154,8 +154,8 @@ public class MapGameState extends BasicGameState implements Observer {
 			g.resetTransform();
 		}
 		//Affichage de la position de la souris sur la map
-		g.drawString(mouse, 10, 50);
-		g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
+		//g.drawString(mouse, 10, 50);
+		//g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
 		//g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 90);
 		//g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 110);
 
@@ -245,10 +245,13 @@ public class MapGameState extends BasicGameState implements Observer {
 				{
 					if(World.Univers.get(i).fini)
 					{
-						for(Personnage p : World.Univers.get(i).getArmys().get(0).getPersonnages())
+						if(World.Univers.get(i).getArmys()==null) System.out.println("SALUT");
+						for(int k=0; k<World.Univers.get(i).getArmys().size(); k++){
+						for(Personnage p : World.Univers.get(i).getArmys().get(k).getPersonnages())
 						{
 							if(p.imageOF() != null)
 								p.imageOF().setFighting(false, null);
+						}
 						}
 						World.Univers.remove(i);
 						_GUnivers.remove(i);

@@ -71,6 +71,7 @@ public class Hud {//550 182
 			    //System.out.println(_state.statut);
 			    //if(MapGameState._target.human() == TypeUnit.Human)
 			    	g.drawAnimation(MapGameState._target.human().animations[anim], HUD_BAR_X+1, MapGameState.debug ? HUD_BAR_Y-3 : 10-3);
+			    	g.drawAnimation(MapGameState._target.clothes().animations[anim], HUD_BAR_X+1, MapGameState.debug ? HUD_BAR_Y-3 : 10-3);
 			    /*else
 			    	g.drawAnimation(Player.animations[anim], HUD_BAR_X, HUD_BAR_Y);*/
 

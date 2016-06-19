@@ -177,7 +177,7 @@ public class Personnage extends Observable{
 			_imageOF.change_vie(delta);
 		if(delta <0){
 			delta = _armor + delta;
-			if(delta>=0){delta =1;}
+			if(delta>=0){delta =-1;}
 		}
 		_vie += delta;
 		if(_vie <= 0)
