@@ -5,7 +5,7 @@ import roles.Personnage;
 public class EnnemiCheck implements CaseProperty {
 
 	Personnage _comparateur;
-	
+
 	public EnnemiCheck(Personnage pers){
 		_comparateur = pers;
 	}

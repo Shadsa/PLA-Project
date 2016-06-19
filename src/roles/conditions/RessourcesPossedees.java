@@ -11,6 +11,6 @@ public class RessourcesPossedees extends Condition {
 	}
 	@Override
 	public boolean value(Personnage target) {
-		return target.owner().ressources()>=_quantite;
+		return target.owner().joueur().ressources()>=_quantite;
 	}
 }

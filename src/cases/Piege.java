@@ -7,9 +7,9 @@ import roles.action.Attendre;
 import roles.Joueur;
 
 public class Piege extends TypeCase implements Construction {
-	
+
 	protected static Action _action = new Attendre();
-	
+
 	protected Joueur _owner;
 	
 	public final static int _id = getId(1);
@@ -19,32 +19,32 @@ public class Piege extends TypeCase implements Construction {
 	}
 
 	public Piege(Personnage pers) {
-		setOwner(pers.owner());
+		setOwner(pers.owner().joueur());
 	}
 
 	@Override
 	public boolean franchissable() {
 		return true;
 	}
-	
+
 	public void setOwner(Joueur owner){
 		_owner = owner;
 	}
-	
+
 	public Joueur getOwner(){
 		return _owner;
 	}
 
 	@Override
 	protected void Act(Personnage pers) {
-		_action.Act(pers);
+		_action.Act(pers.world(), pers);
 	}
-	 
+
 	@Override
 	public void Evenement(Personnage pers) {
-		if(_owner != pers.owner()){
+		if(_owner != pers.owner().joueur()){
 			pers.change_vie(-1000);
-			World.modifierCase(Plaine.getInstance(), pers.X(), pers.Y());
+			pers.world().modifierCase(Plaine.getInstance(), pers.X(), pers.Y());
 		}
 	}
 

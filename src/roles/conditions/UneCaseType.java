@@ -18,6 +18,6 @@ public class UneCaseType extends Condition {
 
 	@Override
 	public boolean value(Personnage target) {
-		return _prop.check(World.Case(target.X()-1, target.Y())) || _prop.check(World.Case(target.X()+1, target.Y())) || _prop.check(World.Case(target.X(), target.Y()-1)) || _prop.check(World.Case(target.X(), target.Y()+1));	
+		return _prop.check(target.world().Case(target.X()-1, target.Y())) || _prop.check(target.world().Case(target.X()+1, target.Y())) || _prop.check(target.world().Case(target.X(), target.Y()-1)) || _prop.check(target.world().Case(target.X(), target.Y()+1));
 	}
 }

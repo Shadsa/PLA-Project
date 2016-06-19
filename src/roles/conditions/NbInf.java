@@ -11,6 +11,6 @@ public class NbInf extends Condition {
 	}
 	@Override
 	public boolean value(Personnage target) {
-		return target.owner().nbUnit(target.classe())<_quantite;
+		return target.owner().nbUnit(target.getUnite())<_quantite;
 	}
 }

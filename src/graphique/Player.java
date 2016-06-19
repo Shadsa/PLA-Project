@@ -48,6 +48,7 @@ public class Player implements Observer{
 	private SoundEffect soundEffect;
 
 	protected int _id;
+	protected GArmy _gArmy;
 
 	protected States _state;
 
@@ -61,7 +62,8 @@ public class Player implements Observer{
 		return _id;
 	}
 
-	public Player(Personnage pers, TypeUnit _type_unit, TypeClothes _type_clothes) {
+	public Player(Personnage pers, TypeUnit _type_unit, TypeClothes _type_clothes, GArmy gArmy) {
+		_gArmy = gArmy;
 		_hide = false;
 		_human = _type_unit;
 		_clothes = _type_clothes;
@@ -70,10 +72,10 @@ public class Player implements Observer{
 		AnimDuration = MapGameState.Tick;
 		AnimDead = MapGameState.Tick;
 		_state = new States(Statut.ATTENDS, Cardinaux.SUD);
-		x = MapGameState.toX(pers.X());
-		y = MapGameState.toY(pers.Y());
-		_destX = MapGameState.toX(pers.X());
-		_destY = MapGameState.toX(pers.Y());
+		x = _gArmy.map().toX(pers.X());
+		y = _gArmy.map().toY(pers.Y());
+		_destX = _gArmy.map().toX(pers.X());
+		_destY = _gArmy.map().toX(pers.Y());
 		pers.addObserver(this);
 		soundEffect = new SoundEffect();
 		try {
@@ -104,9 +106,6 @@ public static void sinit() throws SlickException
 		/*SpriteSheet Habitsprite = new SpriteSheet("src/asset/sprites/villager_vest.png", 64, 64);
 		SpriteSheet Habitsprite2 = new SpriteSheet("src/asset/sprites/villager_vest_slash.png", 64, 64);
 		SpriteSheet Habitsprite3 = new SpriteSheet("src/asset/sprites/villager_vest_hurt.png", 64, 64);
-		SpriteSheet Habitsprite = new SpriteSheet("src/asset/sprites/cult_clothes.png", 64, 64);
-		SpriteSheet Habitsprite2 = new SpriteSheet("src/asset/sprites/cult_clothes_slash.png", 64, 64);
-		SpriteSheet Habitsprite3 = new SpriteSheet("src/asset/sprites/cult_clothes_hurt.png", 64, 64);
 		initAnimation(Habits, Habitsprite, Habitsprite2, Habitsprite3);*/
 
 
@@ -300,16 +299,11 @@ public static void sinit() throws SlickException
 		public void update(Observable obs, Object obj) {
 			if(obs instanceof Personnage){
 				Personnage pers = (Personnage)obs;
-				_destX = MapGameState.toX(pers.X());
-				_destY = MapGameState.toX(pers.Y());
-				if(((States)obj).statut == Statut.INVOQUE) {
-					//soundEffect.invoquer().play(1.0f, 0.4f);
-				} else if(((States)obj).statut == Statut.MORT) {
+				_destX = _gArmy.map().toX(pers.X());
+				_destY = _gArmy.map().toX(pers.Y());
+				if(((States)obj).statut == Statut.MORT) {
 					_isDead = true;
-					if(_human == TypeUnit.Humain)
-						soundEffect.dead_human().play();
-					else
-						soundEffect.dead_skeleton().play();
+					soundEffect.dead_human().play();
 				}
 				if(_state.statut == Statut.HIDE || _state.statut == Statut.HIDING) {
 					if(((States)obj).statut != Statut.REVEAL)
@@ -342,6 +336,9 @@ public static void sinit() throws SlickException
 		}
 		public TypeUnit human() {
 			return _human;
+		}
+		public TypeClothes clothes() {
+			return _clothes;
 		}
 		public int AnimDuration() {
 			return AnimDuration;
@@ -396,8 +393,6 @@ public static void sinit() throws SlickException
 					_Awear = anim;
 
 				    _Abody = anim;
-				    /*if(_human == TypeUnit.Zombie)
-				    	_Awear = -1;*/
 				    _Aweapon = danim;
 		}
 

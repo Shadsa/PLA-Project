@@ -1,7 +1,9 @@
 package graphique;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
-
+import java.util.Observable;
+import java.util.Observer;
 import jus.util.assertion.Require;
 
 import org.newdawn.slick.AppGameContainer;
@@ -17,14 +19,19 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import roles.classe.*;
+import roles.conditions.Ennemi;
+import roles.conditions.Libre;
+import roles.Army;
 import roles.Automate;
 import roles.Cardinaux;
 import roles.Joueur;
 import roles.Personnage;
+import roles.States;
 import roles.World;
 import graphique.DragAndDropState;
+import roles.States.Statut;
 
-public class MapGameState extends BasicGameState {
+public class MapGameState extends BasicGameState implements Observer {
 
 	static int Tick = 1000;
 	static boolean TickWait = false;
@@ -32,10 +39,8 @@ public class MapGameState extends BasicGameState {
 	protected long _time = 0;
 	static final int TILESIZE = 96;
 	static float MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
-	static final float Ox = 48;
-	static final float Oy = 48;
 
-	private ArrayList<graphique.GJoueur> _joueurs = new ArrayList<graphique.GJoueur>();
+	private ArrayList<Joueur> jjj = new ArrayList<Joueur>();
 	private Hud hud = new Hud();
 	public static final int ID = 2;
 	private String mouse;
@@ -48,17 +53,20 @@ public class MapGameState extends BasicGameState {
 	private int secondeTime = 0;
 	private int minuteTime = 0;
 
+	public static MapTest _targetw = null;
 	public static Player _target = null;
 	public static Personnage _targetp = null;
 
 	private float _offsetMapX = 0;
 	private float _offsetMapY = 0;
-
+	private int _tailleMapY = 75;
+	private int _tailleMapX = 45;
 	//Test
 	private MapTest map;
+	private MapTest _mainm;
+	private World _mainw;
+	private static ArrayList<MapTest> _GUnivers = new ArrayList<MapTest>();
 	private Input _input;
-	private int _scrollingSpeed = 15;
-	private float _zoom = 1;
 	private StateGame game;
 	public static boolean debug = false;
 	private boolean enJeu = false;
@@ -70,32 +78,7 @@ public class MapGameState extends BasicGameState {
 	private Button _bouton_reprendre;
 	private Button _bouton_menuPrincipal;
 
-	public float zoom() {
-		return _zoom;
-	}
 
-	public void setZoom(float _zoom) {
-		this._zoom = _zoom;
-	}
-
-	public static float toX(int x)
-	{
-		return x * TILESIZE + Ox;
-	}
-	public static float toY(int y)
-	{
-		return y * TILESIZE + Oy;
-	}
-
-	public static int fromX(float x)
-	{
-		return (int) (x - Ox) / TILESIZE;
-	}
-	public static int fromY(float y)
-	{
-		return (int) (y - Oy) / TILESIZE;
-	}
-	
 	/**
 	 * Initialise la boucle de jeu. Cette méthode est appelée avant que la boucle démarre.
 	 * @param container Le conteneur du jeu dans lequels les composants sont crées et affichés.
@@ -109,6 +92,7 @@ public class MapGameState extends BasicGameState {
 		Image normalImage = img.getSubImage(633, 23, 123, 27);
 		Image overImage = img.getSubImage(633, 53, 123, 27);
 		Image downImage = img.getSubImage(633, 83, 123, 27);
+		_GUnivers.add(new MapTest(0, 0, container.getScreenWidth(), container.getScreenHeight()));
 		//Instanciation des boutons
 		_bouton_fullScreen = new Button(container, "Plein écran", container.getWidth()/2-62, container.getHeight()/2, normalImage, overImage, downImage);
 		_bouton_son = new Button(container, "Désactiver son", container.getWidth()/2-62, container.getHeight()/2-40, normalImage, overImage, downImage);
@@ -129,6 +113,15 @@ public class MapGameState extends BasicGameState {
 	 * @param g Le contexte graphique qui peut être utilisé pour afficher les éléments.
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+		//Affichage de la map
+		/*for(MapTest mt : _GUnivers)
+		{
+			mt.render(g);
+			//Annule la translation pour l'affichage du string en dessous
+			g.resetTransform();
+		}*/
+		_mainm.render(g);
+		g.resetTransform();
 
 		//Affichage de la map (zoom + scrolling)
 		g.translate(-_offsetMapX, -_offsetMapY);
@@ -145,8 +138,28 @@ public class MapGameState extends BasicGameState {
 						if(p.getY()-TILESIZE < (_offsetMapY + container.getHeight())/zoom())
 							p.render(g);
 
-		
+		if(_targetw != null)
+		{
+			_targetw.render(g);
+			g.resetTransform();
+		}
+
+
+		g.setColor(Color.white);
+
+		//Affichage message de fin
+		if (World.Univers.size() == 0) {
+			g.drawString(_mainw.army().get(0).joueur().nom()+" a gagné! Félicitations à lui, vraiment.", container.getWidth()/2-175, container.getHeight()/2);
+			g.resetTransform();
+		}
+		//Affichage de la position de la souris sur la map
+		g.drawString(mouse, 10, 50);
+		g.drawString("MouseX : " + mouseMapX() + ", MouseY : " + mouseMapY(), 10, 70);
+		//g.drawString("Zoom Avant : 'PRECEDENT', Zoom Arrière : 'SUIVANT', zoom : " + _zoom, 10, 90);
+		//g.drawString("offsetMapX : " + offsetMapX() + ", offsetMapY : " + offsetMapY(), 10, 110);
+
 		//Affichage des huds
+		this.hud.render(g);
 		if(showhud && !_target.isDead()) {
 			this.hud.render(g);
 		}
@@ -209,12 +222,12 @@ public class MapGameState extends BasicGameState {
 		_bouton_quitter.update(container);
 		_bouton_reprendre.update(container);
 		_bouton_menuPrincipal.update(container);
-		for(graphique.GJoueur j : _joueurs)
-			for(int i = j.getPersonnage().size()-1; i>=0; i--)
-				if(j.getPersonnage().get(i).AnimDead>0)
-					j.getPersonnage().get(i).update(delta);
-				else
-					j.getPersonnage().remove(j.getPersonnage().get(i));
+
+		if(_GUnivers.size() == 0)
+			_mainm.update(container, game, delta);
+		else
+			for(MapTest mt : _GUnivers)
+				mt.update(container, game, delta);
 
 		_time += delta;
 		if(_time > Tick)
@@ -227,6 +240,32 @@ public class MapGameState extends BasicGameState {
 					anim.restart();
 			}
 
+			if(World.Univers.size() == 0)
+				_mainw.nextTurn();
+			else
+			{
+				for(int i = 0; i<World.Univers.size(); i++)
+				{
+					if(World.Univers.get(i).fini)
+					{
+						for(Personnage p : World.Univers.get(i).getArmys().get(0).getPersonnages())
+						{
+							if(p.imageOF() != null)
+								p.imageOF().setFighting(false, null);
+						}
+						World.Univers.remove(i);
+						_GUnivers.remove(i);
+						i--;
+					}
+					else
+						World.Univers.get(i).nextTurn();
+				}
+			}
+
+			for(TypeUnit t : TypeUnit.values()){
+				for(Animation anim : t.animations)
+					anim.restart();
+}
 			for(Animation anim : Player.Danimations)
 				anim.restart();
 		}
@@ -234,24 +273,39 @@ public class MapGameState extends BasicGameState {
 		//Position de la souris
 		mouseAbsoluteX = _input.getAbsoluteMouseX();
 		mouseAbsoluteY = _input.getAbsoluteMouseY();
-		_mouseMapX = (mouseAbsoluteX + offsetMapX()) / zoom();
 		_mouseMapY = (mouseAbsoluteY + offsetMapY()) / zoom();
+		_mouseMapX = (mouseAbsoluteX + offsetMapX()) / zoom();
 		mouse = "MouseAbsoluteX : " + mouseAbsoluteX + ", MouseAbsoluteY : " + mouseAbsoluteY;
 
 		gestionVitesseDeJeu(Input.KEY_B, Input.KEY_N, Input.KEY_W, Input.KEY_V);
 
 		//Gestion du scrolling de la map avec la souris/manette/clavier
+		MapTest focus = (_targetw != null && _targetw.isOver(_input.getMouseX(), _input.getMouseY()))?_targetw : _mainm;
 		if (mouseAbsoluteY == container.getHeight() || _input.isControllerDown(0) || _input.isKeyDown(208)) {
-			setOffsetMapY(offsetMapY() + _scrollingSpeed);
+			focus.move(0, 1);
 		}
 		if (mouseAbsoluteX == 0 || _input.isControllerLeft(0) || _input.isKeyDown(203)) {
-			setOffsetMapX(offsetMapX() - _scrollingSpeed);
+			focus.move(-1, 0);
 		}
 		if (mouseAbsoluteX == container.getWidth() - 1 || _input.isControllerRight(0) || _input.isKeyDown(205)) {
-			setOffsetMapX(offsetMapX() + _scrollingSpeed);
+			focus.move(1, 0);
 		}
 		if (mouseAbsoluteY == 1 || _input.isControllerUp(0) || _input.isKeyDown(200)) {
-			setOffsetMapY(offsetMapY() - _scrollingSpeed);
+			focus.move(0, -1);
+		}
+
+		//Gestion du zoom
+		//Zoom avant
+		if (_input.isKeyDown(201))
+		{
+			focus.setZoom(1.03f, _input.getMouseX(), _input.getMouseY());
+		}
+
+		//Zoom arrière
+		if (_tailleMapX * TILESIZE * focus.zoom() > container.getWidth() && _tailleMapX * TILESIZE * focus.zoom() > container.getHeight()) {
+			if (_input.isKeyDown(209) && focus.zoom() > 0) {
+				focus.setZoom(1/1.03f, _input.getAbsoluteMouseX(), _input.getAbsoluteMouseY());
+			}
 		}
 		
 		gestionZoomClavier(container, Input.KEY_NEXT, Input.KEY_PRIOR, 1.03f);
@@ -366,14 +420,22 @@ public class MapGameState extends BasicGameState {
 	 * @param x La coordonnée y (ordonnée) lors de la pression sur le bouton.
 	 */
 	public void mousePressed(int button, int x, int y) {
-		for(graphique.GJoueur j : _joueurs)
+
+		if(x >= _mainm.getX() && y >= _mainm.getY() && x<=_mainm.getX()+_mainm.getWidth() && y<=_mainm.getY()+_mainm.getHeight())
+			_mainm.mousePressed(button, x, y);
+		/*if(_GUnivers.size()>1)
+		if(x >= _GUnivers.get(1).getX() && y >= _GUnivers.get(1).getY() && x<=_GUnivers.get(1).getX()+_GUnivers.get(1).getWidth() && y<=_GUnivers.get(1).getY()+_GUnivers.get(1).getHeight())
+			_GUnivers.get(1).mousePressed(button, x, y);*/
+		//super.mousePressed(button, x, y);
+		/*for(graphique.GJoueur j : _joueurs)
 			for(Player p : j.getPersonnage())
 				if (Input.MOUSE_LEFT_BUTTON == button && curseurSurPerso(p, mouseMapX(), mouseMapY())) {
 				_target = p;
-				_targetp = World.Case((int)(MapGameState._target.DestX()-Ox)/TILESIZE, (int)(MapGameState._target.DestY()-Oy)/TILESIZE).Personnage();
+				_targetp = world0.Case((int)(MapGameState._target.DestX()-Ox)/TILESIZE, (int)(MapGameState._target.DestY()-Oy)/TILESIZE).Personnage();
 				this.showhud = true;
 				return;
-			}
+			}*/
+		//map.mousePressed(button, x, y);
 	}
 
 	/**
@@ -381,7 +443,7 @@ public class MapGameState extends BasicGameState {
 	 * @param n Sens du mouvement de la roulette.
 	 */
 	public void mouseWheelMoved(int n) {
-		if (n < 0) {
+		/*if (n < 0) {
 			if (zoom() > 0) {
 				setZoom(zoom() / 1.10f);
 			} else {
@@ -393,23 +455,9 @@ public class MapGameState extends BasicGameState {
 			setZoom(zoom() * 1.10f);
 			setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
 			setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
-		}
+		}*/
 	}
 
-	/**
-	 * Vérification que le curseur de la souris est sur le personnage.
-	 * @param p 
-	 * @param mouseX La position de la souris en abcisse X.
-	 * @param mouseY La position de la souris en ordonnée Y.
-	 * @return Un booléen qui indique si la position du curseur est sur un personnage.
-	 * @require p != null
-	 */
-	public boolean curseurSurPerso(Player p, float mouseX, float mouseY) {
-		if (!(p!= null)) {
-			throw new Require("p == null)");
-		}
-		return (mouseX >= p.getX()-32 && mouseX <= p.getX()+32 && mouseY >= p.getY()-60 && mouseY <= p.getY()+4);
-	}
 
 	public int getID() {
 		return ID;
@@ -423,7 +471,16 @@ public class MapGameState extends BasicGameState {
 		return _mouseMapY;
 	}
 
-	public float offsetMapX() {
+	public void setMouseMapX(int x) {
+		this._mouseMapX = x;
+	}
+
+	public void setMouseMapY(int y) {
+		this._mouseMapY = y;
+	}
+
+
+	/*public float offsetMapX() {
 		return _offsetMapX;
 	}
 
@@ -475,7 +532,28 @@ public class MapGameState extends BasicGameState {
 			}
 			MoveSpeed = ((float)TILESIZE)/((float)AnimTick);
 		}
+	}*/
+	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2) {
+		try {
+			MapTest.init();
+		} catch (SlickException e1) {
+			e1.printStackTrace();
+		}
+		World.Univers.add(new World(_tailleMapY,_tailleMapX, false));
+		_GUnivers.get(0).initialise(World.Univers.get(0));
+		_GUnivers.get(0).addObserver(this);
+		_mainm = _GUnivers.get(0);
+		_mainw = World.Univers.get(0);
 
+		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
+		//ArrayList<Automate> autlist2 = new ArrayList<Automate>();
+		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
+		//ArrayList<Classe> classes2 = new ArrayList<Classe>();
+		ArrayList<ArrayList<TypeUnit>> type_unit = new ArrayList<ArrayList<TypeUnit>>();
+		//ArrayList<TypeUnit> type_unit2 = new ArrayList<TypeUnit>();
+		ArrayList<ArrayList<TypeClothes>> type_clothes = new ArrayList<ArrayList<TypeClothes>>();
+		//ArrayList<TypeClothes> type_clothes2 = new ArrayList<TypeClothes>();
+		for(UnitInfo ui : uIFs1)
 		//Gestion de la vitesse du jeu
 		//Acc�l�rer
 		if (_input.isKeyDown(accelerer) && Tick > 125){
@@ -584,6 +662,15 @@ public class MapGameState extends BasicGameState {
 		//Zoom avant
 		if (_input.isKeyDown(zoom))
 		{
+			//nb++;
+			autlist.add(new ArrayList<Automate>());
+			classes.add(new ArrayList<Classe>());
+			type_unit.add(new ArrayList<TypeUnit>());
+			type_clothes.add(new ArrayList<TypeClothes>());
+			autlist.get(0).add(ui.automate);
+			classes.get(0).add(ui.classe);
+			type_unit.get(0).add(ui.color);
+			type_clothes.get(0).add(ui.clothes);
 			setZoom(zoom() * vitesseZoom);
 			setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
 			setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
@@ -596,7 +683,35 @@ public class MapGameState extends BasicGameState {
 				setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
 				setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);
 			}
+		for(UnitInfo ui : uIFs2) {
+			autlist.add(new ArrayList<Automate>());
+			classes.add(new ArrayList<Classe>());
+			type_unit.add(new ArrayList<TypeUnit>());
+			type_clothes.add(new ArrayList<TypeClothes>());
+			autlist.get(1).add(ui.automate);
+			classes.get(1).add(ui.classe);
+			type_unit.get(1).add(ui.color);
+			type_clothes.get(1).add(ui.clothes);
+}
+		jjj.add(new Joueur("Human", autlist.get(0), autlist.get(0), classes.get(0), type_unit.get(0), type_clothes.get(0)));
+		jjj.add(new Joueur("Zombie", autlist.get(1), autlist.get(1), classes.get(1), type_unit.get(1), type_clothes.get(1)));
+		new Army(World.Univers.get(0), jjj.get(0));
+		new Army(World.Univers.get(0), jjj.get(1));
+
+		try {
+			//World.Univers.get(0).putAutomate(jjj.get(0).automate(0), 1, 1, jjj.get(0));
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		/*for(int i = 0; i < World.Univers.get(0).SizeY(); i++)
+			for(int j = 0; j < World.Univers.get(0).SizeX(); j++)
+			World.Univers.get(0).modifierCase(new Plaine(),  i, j);*/
+		//for(int i = 0; i < nb; i++)
+		World.Univers.get(0).army().get(0).createPersonnage(0, 1, 1, null);
+	//for(int i = 0; i < nb; i++)
+		World.Univers.get(0).army().get(1).createPersonnage(0, _tailleMapX-1, _tailleMapY-1, null);
+
+		for(Army a : World.Univers.get(0).army())
 	}
 	
 	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2, MapTest map) {
@@ -619,6 +734,50 @@ public class MapGameState extends BasicGameState {
 			type_unit.get(0).add(ui.color);
 			type_clothes.get(0).add(ui.clothes);
 		}
+
+
+
+		/*Personnage pers = World.Univers.get(0).army().get(0).getPersonnages().get(0);
+		Personnage pp   = World.Univers.get(0).army().get(1).getPersonnages().get(0);
+		fight(pers, pp);
+		pers.setFighting(true);
+		pers.setState(new States(Statut.ATTAQUE, Cardinaux.SUD));
+		pp.setFighting(true);
+		pp.setState(new States(Statut.ATTAQUE, Cardinaux.oppose(Cardinaux.SUD)));*/
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		if(arg0 instanceof MapTest)
+		{
+			try {
+				int x = (arg1.getClass().getDeclaredField("mx").getInt(arg1));
+				int y = (arg1.getClass().getDeclaredField("my").getInt(arg1));
+				_target = ((Player)arg1.getClass().getDeclaredField("mtargetp").get(arg1));
+				if(_target != null && _targetp != World.Univers.get(0).Case(x, y).Personnage())
+				{
+					_targetp = World.Univers.get(0).Case(x, y).Personnage();
+					// Si il y a eu une imprécision (rare)
+					if(_targetp == null)
+					{
+						_target = null;
+						_targetw = null;
+						return;
+					}
+					if(_targetp.fightworld() != null && World.Univers.indexOf(_targetp.fightworld()) != -1)
+						_targetw = _GUnivers.get(World.Univers.indexOf(_targetp.fightworld()));
+					else
+						_targetw = null;
+				}
+				else
+				{
+					_target = null;
+					_targetp = null;
+					_targetw = null;
+				}
+			} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+				e.printStackTrace();
+			}
 		for(UnitInfo ui : uIFs2) {
 			autlist.add(new ArrayList<Automate>());
 			classes.add(new ArrayList<Classe>());
@@ -644,5 +803,40 @@ public class MapGameState extends BasicGameState {
 				enJeu = true;
 			}
 		}
+	}
+
+	public static void fight(Personnage pers, Personnage personnage, Cardinaux dirinc)
+	{
+		if(personnage.isfighting())
+		{
+			World w = personnage.fightworld();
+			pers.setFighting(true, w);
+			for(Army arm : w.army())
+				if(arm.joueur() == pers.owner().joueur())
+				{
+					arm.join(pers.owner().joueur().getUnite(pers), dirinc, pers);
+					return;
+				}
+
+			// jamais éxécuté à 2 joueurs
+			_GUnivers.get(World.Univers.indexOf(w)).addArmy(new Army(w, pers.owner().joueur()));
+			w.army().get(w.army().size()-1).createPersonnage(pers.owner().joueur().getUnite(pers), 0, 0, pers);
+
+		}
+		World w = new World(7, 7, true);
+		pers.setFighting(true, w);
+		personnage.setFighting(true, w);
+
+				for(int i = 0; i < w.SizeY(); i++)
+					for(int j = 0; j < w.SizeX(); j++)
+					w.modifierCase(new Plaine(),  i, j);
+		World.Univers.add(w);
+		MapTest mt = new MapTest(0, 0, 500, 500);
+		mt.initialise(w);
+		_GUnivers.add(mt);
+		mt.addArmy(new Army(w, pers.owner().joueur()));
+		w.army().get(0).join(pers.owner().joueur().getUnite(pers), dirinc, pers);
+		mt.addArmy(new Army(w, personnage.owner().joueur()));
+		w.army().get(1).join(personnage.owner().joueur().getUnite(personnage), Cardinaux.oppose(dirinc), personnage);
 	}
 }

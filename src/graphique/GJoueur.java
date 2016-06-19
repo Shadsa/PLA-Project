@@ -14,7 +14,6 @@ public class GJoueur implements Observer{
 	
 	private int _ressource;
 
-	private ArrayList<Player> _players = new ArrayList<Player>();
 
 	public GJoueur(ArrayList<TypeUnit> type_unit, ArrayList<TypeClothes> type_clothes)
 	{
@@ -27,8 +26,6 @@ public class GJoueur implements Observer{
 	public void update(Observable o, Object arg) {
 		if(arg instanceof Integer)
 			_ressource = (Integer)arg;
-		if(arg instanceof Personnage)
-			addPersonnage((Personnage)arg);
 	}
 
 	public void addPersonnage(Personnage pers)
@@ -45,8 +42,9 @@ public class GJoueur implements Observer{
 	{
 		return _type_unit.get(i);
 	}
-
-	public ArrayList<Player> getPersonnage() {
-		return _players;
+	
+	public TypeClothes type_clothes(int i)
+	{
+		return _type_clothes.get(i);
 	}
 }

@@ -21,14 +21,14 @@ public final class Batiment extends TypeCase {
 
 	@Override
 	protected void Act(Personnage pers) {
-		_action.Act(pers);		
+		_action.Act(pers.world(), pers);
 	}
 
 	@Override
 	public boolean franchissable() {
 		return true;
 	}
-	
+
 	public Action action(){
 		return _action;
 	}

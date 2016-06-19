@@ -4,12 +4,14 @@ import java.util.Observable;
 
 import cases.Case;
 import cases.CaseProperty;
+import cases.LibreCheck;
 import roles.States.Statut;
 import roles.classe.Classe;
 
 public class Personnage extends Observable{
 
 	Automate _brain;
+	Automate _brainC;
 	protected int _paralysie = 0;
 	protected Case _location;
 	protected Classe _classe;
@@ -20,9 +22,12 @@ public class Personnage extends Observable{
 	private int _armor;
 	private Cardinaux _directionJoueur = null;
 	private Case _cible;
+	private Boolean _fighting;
+	private Personnage _imageOF;
+	private World _fightworld;
 
 	protected int _id;
-	protected Joueur _owner;
+	protected Army _owner;
 
 	private static int _nextID = 0;
 	protected static int nextID()
@@ -43,20 +48,23 @@ public class Personnage extends Observable{
 		this._directionJoueur = direction;
 	}
 
-	public Personnage(Automate brain, int x, int y, Joueur owner,Classe classe)
+	public Personnage(Automate brain, Automate brainc, int x, int y, Personnage imageOF, Army owner,Classe classe)
 	{
 		_etat = 0;
 		_vie = 10;
 		_id = nextID();
 		_brain = brain;
+		_brainC = brainc;
 		_paralysie = 0;
 		_owner = owner;
 		_classe = classe;
 		_vie = _classe.HP();
 		_damage = _classe.damage();
-		_heal = _classe.heal();		
+		_heal = _classe.heal();
 		_armor = _classe.armor();
-		World.Case(x, y).setPersonnage(this);
+		_fighting = false;
+		_imageOF = imageOF;
+		owner.world().Case(x, y).setPersonnage(this);
 	}
 
 	public int X() {
@@ -68,6 +76,7 @@ public class Personnage extends Observable{
 	}
 
 	public void agir() {
+		if(_fighting) return;
 		_brain.agir(this);
 		_location.Evenement(this);
 	}
@@ -104,17 +113,17 @@ public class Personnage extends Observable{
 	}
 	public int heal(){
 		return _heal;
-	}	
+	}
 	public int vie(){
 		return _vie;
 	}
 	public int armor(){
 		return _armor;
 	}
-	public Joueur owner() {
+	public Army owner() {
 		return _owner;
 	}
-	
+
 	public Case cible() {
 		return _cible;
 	}
@@ -122,55 +131,54 @@ public class Personnage extends Observable{
 		_cible = c;
 	}
 	/**
-	 * 
+	 *
 	 * @param c : la propriété de la case à trouver
 	 * @param maxRange : la distance à laquelle regarder
 	 * @return la direction vers laquelle se trouve la case la plus proche, ou null si aucune case n'a été trouvée
 	 */
-	public boolean find(CaseProperty c, Cardinaux direction, int maxRange){	
+	public boolean find(CaseProperty c, Cardinaux direction, int maxRange){
+		CaseProperty p = new LibreCheck(this);
 		switch(direction){
 		case EST:
+			p.check(_owner.world().Case(X()+1, Y()));
 			for(int range=1;range<=maxRange;range++)
 				for(int y=-range;y<=range;y++)
-					if(World.Case(X()+range, Y()+y)!=null && c.check(World.Case(X()+range, Y()+y))){
-						//System.out.println("Arbre à l'est :"+range+" "+y);
+					if(_owner.world().Case(X()+range, Y()+y)!=null && c.check(_owner.world().Case(X()+range, Y()+y)))
 						return true;
-					}
 			break;
 		case OUEST:
+			p.check(_owner.world().Case(X()-1, Y()));
 			for(int range=1;range<=maxRange;range++)
 				for(int y=-range;y<=range;y++)
-					if(World.Case(X()-range, Y()+y)!=null && c.check(World.Case(X()-range, Y()+y))){
-						//System.out.println("Arbre à l'ouest :"+(-range)+" "+y);
+					if(_owner.world().Case(X()-range, Y()+y)!=null && c.check(_owner.world().Case(X()-range, Y()+y)))
 						return true;
-					}
 			break;
 		case SUD:
+			p.check(_owner.world().Case(X(), Y()+1));
 			for(int range=1;range<=maxRange;range++)
 				for(int x=-range;x<=range;x++)
-					if(World.Case(X()+x, Y()+range)!=null && c.check(World.Case(X()+x, Y()+range))){
-						//System.out.println("Arbre au sud :"+x+" "+range);
+					if(_owner.world().Case(X()+x, Y()+range)!=null && c.check(_owner.world().Case(X()+x, Y()+range)))
 						return true;
-					}
 			break;
 		case NORD:
+			p.check(_owner.world().Case(X(), Y()-1));
 			for(int range=1;range<=maxRange;range++)
 				for(int x=-range;x<=range;x++)
-					if(World.Case(X()+x, Y()-range)!=null && c.check(World.Case(X()+x, Y()-range))){
-						//System.out.println("Arbre au nord :"+x+" "+(-range));
+					if(_owner.world().Case(X()+x, Y()-range)!=null && c.check(_owner.world().Case(X()+x, Y()-range)))
 						return true;
-					}
 		}
 		return false;
 	}
 
 	public void change_vie(int delta)
 	{
+
+		if(_imageOF != null)
+			_imageOF.change_vie(delta);
 		if(delta <0){
 			delta = _armor + delta;
 			if(delta>=0){delta =1;}
 		}
-
 		_vie += delta;
 		if(_vie <= 0)
 		{
@@ -178,10 +186,34 @@ public class Personnage extends Observable{
 			setChanged();
 			notifyObservers(new States(Statut.MORT));
 			_owner.getPersonnages().remove(this);
-			_location.setPersonnage(null);;
+			_location.setPersonnage(null);
 		}
 		else
 			if(_vie > _classe.HP())
 				_vie = _classe.HP();
+	}
+
+	public World world()
+	{
+		return _owner.world();
+	}
+	public void setFighting(boolean b, World fw) {
+		_fighting = b;
+		_fightworld = fw;
+	}
+
+	public int getUnite(){
+		return this.owner().joueur().getUnite(this);
+	}
+	public Personnage imageOF() {
+		return _imageOF;
+	}
+
+	public World fightworld()
+	{
+		return _fightworld;
+	}
+	public boolean isfighting() {
+		return _fighting;
 	}
 }

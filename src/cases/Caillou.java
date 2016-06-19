@@ -12,7 +12,7 @@ public final class Caillou extends TypeCase{
 	protected static Action _action = new Combattre();
 	
 	private static Caillou _instance = new Caillou();
-	
+
 	public final static int _id = getId(1);
 
 	public int value() {
@@ -21,7 +21,7 @@ public final class Caillou extends TypeCase{
 
 	@Override
 	protected void Act(Personnage pers) {
-		_action.Act(pers);		
+		_action.Act(pers.world(), pers);
 	}
 
 	public static TypeCase getInstance() {

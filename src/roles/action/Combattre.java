@@ -5,7 +5,7 @@ import cases.CaseProperty;
 import cases.ConstructionCheck;
 import cases.EnnemiCheck;
 import cases.PersoCheck;
-import cases.Piege;
+import graphique.MapGameState;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;
@@ -18,42 +18,46 @@ public final class Combattre extends Action {
 
 	private static final CaseProperty _propPers = new PersoCheck();
 	private static final CaseProperty _propCons = new ConstructionCheck();
-	
+
 	@Override
-	public void Act(Personnage pers) {
+	public void Act(World world, Personnage pers) {
 		int destX=pers.X();
 		int destY=pers.Y();
 		Cardinaux direction;
 		CaseProperty p = new EnnemiCheck(pers);
-		if(p.check(World.Case(destX-1, destY))){
+		if(p.check(world.Case(destX-1, destY))){
 			destX--; direction = Cardinaux.OUEST;
 		}
-		else if(p.check(World.Case(destX+1, destY))){
+		else if(p.check(world.Case(destX+1, destY))){
 			destX++; direction = Cardinaux.EST;
 		}
-		else if(p.check(World.Case(destX, destY-1))){
+		else if(p.check(world.Case(destX, destY-1))){
 			destY--; direction = Cardinaux.NORD;
 		}
-		else if(p.check(World.Case(destX, destY+1))){
+		else if(p.check(world.Case(destX, destY+1))){
 			destY++; direction = Cardinaux.SUD;
 		}
-		else if(_propPers.check(World.Case(destX-1, destY)) || _propCons.check(World.Case(destX-1, destY))){
+		else if(_propPers.check(world.Case(destX-1, destY)) || _propCons.check(world.Case(destX-1, destY))){
 			destX--; direction = Cardinaux.OUEST;
 		}
-		else if(_propPers.check(World.Case(destX+1, destY)) || _propCons.check(World.Case(destX+1, destY))){
+		else if(_propPers.check(world.Case(destX+1, destY)) || _propCons.check(world.Case(destX+1, destY))){
 			destX++; direction = Cardinaux.EST;
 		}
-		else if(_propPers.check(World.Case(destX, destY-1)) || _propCons.check(World.Case(destX, destY-1))){
+		else if(_propPers.check(world.Case(destX, destY-1)) || _propCons.check(world.Case(destX, destY-1))){
 			destY--; direction = Cardinaux.NORD;
 		}
-		else if(_propPers.check(World.Case(destX, destY+1)) || _propCons.check(World.Case(destX, destY+1))){
+		else if(_propPers.check(world.Case(destX, destY+1)) || _propCons.check(world.Case(destX, destY+1))){
 			destY++; direction = Cardinaux.SUD;
 		}
 		else return;
-		
-		Case c = World.Case(destX, destY);
-		
-		if (_propPers.check(c)) {
+
+		Case c = world.Case(destX, destY);
+		if (_propPers.check(c) && !world.isArena()) {
+			pers.setState(new States(Statut.ATTAQUE, direction));
+			c.Personnage().setState(new States(Statut.ATTAQUE, Cardinaux.oppose(direction)));
+			MapGameState.fight(pers, c.Personnage(), Cardinaux.oppose(direction));
+		}
+		else if (_propPers.check(c)) {
 			Personnage target = c.Personnage();
 			// System.out.print(pers.ID() + " attaque " + target.ID() + ".\n");
 			pers.setState(new States(Statut.ATTAQUE, direction));
@@ -63,6 +67,7 @@ public final class Combattre extends Action {
 			pers.setState(new States(Statut.ATTAQUE, direction));
 		}
 	}
+
 
 	@Override
 	public int toInt() {

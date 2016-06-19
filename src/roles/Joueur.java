@@ -4,59 +4,43 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import graphique.TypeClothes;
+import graphique.TypeUnit;
 import roles.classe.Classe;
 
 public class Joueur extends Observable implements Serializable {
 
 	private String _nom;
-	ArrayList<Personnage> _personnages;
-	ArrayList<Automate> _automates;
+	private ArrayList<Automate> _automates;
+	private ArrayList<Automate> _automatesc;
 	ArrayList<Classe> _classes; //indicage sur celui de Automate pour la cores'
+	ArrayList<TypeUnit> _type_unit;
+	ArrayList<TypeClothes> _type_clothes;
 	private int _ressources;
 
 
 
-	public Joueur(String nom, ArrayList<Automate> automates, ArrayList<Classe> classes)
+	public Joueur(String nom, ArrayList<Automate> automates, ArrayList<Automate> automatesc, ArrayList<Classe> classes, ArrayList<TypeUnit> type_unit, ArrayList<TypeClothes> type_clothes)
 	{
 		_nom = nom;
 		_automates = automates;
+		_automatesc = automatesc;
 		_classes = classes;
+		_type_unit = type_unit;
+		_type_clothes = type_clothes;
 		_ressources = 0;
-		_personnages = new ArrayList<Personnage>();
-	}
-
-	public ArrayList<Personnage> getPersonnages() {
-		return _personnages;
 	}
 
 	public int getUnite(Personnage pers){
 		return _automates.indexOf(pers._brain);
 	}
 
-	public Personnage createPersonnage(int type, int x, int y)
-	{
-		// WARNING faire plutot un get automate avec gestion d'erreur
-		if((type+1)<=_automates.size()){
-			Personnage newPers = new Personnage(_automates.get(type), x, y, this,_classes.get(type));
-			_personnages.add(newPers);
-			setChanged();
-			notifyObservers(newPers);
-			return newPers;
-		}
-		//TODO penser � faire planter ici
-		return null;
+	public TypeUnit getType(Personnage pers){
+		return _type_unit.get(getUnite(pers));
 	}
 
-	public int nbUnit(Classe c){
-		int count=0;
-		for(Personnage p : _personnages)
-			if(p.classe()==c)
-				count++;
-		return count;
-	}
-
-	public int ratioUnit(Classe c){
-		return 100*(nbUnit(c)/_personnages.size());
+	public TypeClothes getClothes(Personnage pers){
+		return _type_clothes.get(getUnite(pers));
 	}
 
 	public int ressources(){
@@ -64,7 +48,7 @@ public class Joueur extends Observable implements Serializable {
 	}
 
 	public Automate automate(int i){
-		return _automates.get(0);
+		return _automates.get(i);
 	}
 
 	public boolean changerRessource(int modificateur) {
@@ -77,6 +61,14 @@ public class Joueur extends Observable implements Serializable {
 
 	public String nom() {
 		return _nom;
+	}
+
+	public Classe classe(int type) {
+		return _classes.get(type);
+	}
+
+	public Automate automatec(int type) {
+		return _automatesc.get(type);
 	}
 	
 	public ArrayList<Automate> Automates(){

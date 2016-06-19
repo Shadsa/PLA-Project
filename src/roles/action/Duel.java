@@ -4,6 +4,7 @@ import cases.Case;
 import cases.CaseProperty;
 import cases.ConstructionCheck;
 import cases.PersoCheck;
+import graphique.MapGameState;
 import cases.Batiment;
 import cases.CaseAction;
 import cases.Construction;
@@ -13,15 +14,15 @@ import roles.States;
 import roles.States.Statut;
 import roles.World;
 
-public final class Attaquer extends Action {
+public final class Duel extends Action {
 
 	Cardinaux _direction;
-	private static int _Id = Action.getId(1);
+	private static int _Id = Action.getId(4);
 
 	private static final CaseProperty _propPers = new PersoCheck();
 	private static final CaseProperty _propCons = new ConstructionCheck();
 
-	public Attaquer(Cardinaux card) {
+	public Duel(Cardinaux card) {
 		super();
 		_direction = card;
 	}
@@ -33,12 +34,9 @@ public final class Attaquer extends Action {
 		Case c = world.Case(destX, destY);
 
 		if (_propPers.check(c)) {
-			Personnage target = world.Case(destX, destY).Personnage();
-			pers.setState(new States(Statut.ATTAQUE, _direction));
-			target.change_vie(-pers.damage());
-		} else if (_propCons.check(c)) {
-			world.Case(destX, destY).attaquerCase(pers.damage());
-			pers.setState(new States(Statut.ATTAQUE, _direction));
+			pers.setFighting(true);
+			c.Personnage().setFighting(true);
+			MapGameState.fight(pers, c.Personnage());
 		}
 	}
 

@@ -66,7 +66,7 @@ public class UnitDialog extends JDialog {
   private void initComponent(){
 		JLabel icon, iconH;
 		JTextField nom;
-    //Icône
+    //Ic�ne
 	ImageIcon temp = new ImageIcon("src/asset/sprites/BODY_male.png");
 	Image image = temp.getImage();
 	image = createImage(new FilteredImageSource(image.getSource(),
@@ -100,7 +100,7 @@ public class UnitDialog extends JDialog {
     JPanel panNom = new JPanel();
     nom = new JTextField();
     nom.setPreferredSize(new Dimension(100, 25));
-    panNom.setBorder(BorderFactory.createTitledBorder("Nom Unité"));
+    panNom.setBorder(BorderFactory.createTitledBorder("Nom Unit�"));
     panNom.add(nom);
 
     //L'automate
@@ -180,7 +180,7 @@ public class UnitDialog extends JDialog {
     	  /*if(!aut.match(World.classes.get(0)))
     	  {
     		  JOptionPane jop = new JOptionPane();
-    		  jop.showMessageDialog(null, "Fichier automate ne convient pas à cette classe.", "Erreur", JOptionPane.ERROR_MESSAGE);
+    		  jop.showMessageDialog(null, "Fichier automate ne convient pas � cette classe.", "Erreur", JOptionPane.ERROR_MESSAGE);
     		  return;
     	  }*/
         uInfo = new UnitInfo(nom.getText(), aut, cla,TypeUnit.valueOf(color.getSelectedItem().toString()), TypeClothes.valueOf(clothes.getSelectedItem().toString()), choixJoueur);
@@ -269,10 +269,9 @@ public class UnitDialog extends JDialog {
 			  cla = cl;
 	  if(aut != null && !aut.match(cla))
 		  cla = null;
-
 		if(cla == null){
 			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, "La classe ne correspond pas à l'automate.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			jop.showMessageDialog(null, "La classe ne correspond pas � l'automate.", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
   }*/
 }

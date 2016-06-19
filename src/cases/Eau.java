@@ -11,7 +11,7 @@ public final class Eau extends TypeCase {
 	protected static Action _action = new AvancerHasard();
 	
 	private static Eau _instance = new Eau();
-	
+
 	public final static int _id = getId(1);
 
 	public int value() {
@@ -20,7 +20,7 @@ public final class Eau extends TypeCase {
 
 	@Override
 	protected void Act(Personnage pers) {
-		_action.Act(pers);		
+		_action.Act(pers.world(), pers);
 	}
 
 	public static TypeCase getInstance() {

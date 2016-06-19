@@ -3,6 +3,7 @@ package roles.action;
 import java.io.Serializable;
 
 import roles.Personnage;
+import roles.World;
 
 public abstract class Action implements Serializable{
 
@@ -15,7 +16,7 @@ public abstract class Action implements Serializable{
 		return _nextId - range;
 	}
 
-	public abstract void Act(Personnage pers);
+	public abstract void Act(World world, Personnage pers);
 
 	public abstract int toInt() ;
 }

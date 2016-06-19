@@ -13,7 +13,7 @@ public final class Arbre extends TypeCase {
 	protected static Action _action = new CouperBois();
 	
 	private static Arbre _instance = new Arbre();
-	
+
 	public final static int _id = getId(1);
 
 	public int value() {
@@ -22,7 +22,7 @@ public final class Arbre extends TypeCase {
 
 	@Override
 	protected void Act(Personnage pers) {
-		_action.Act(pers);		
+		_action.Act(pers.world(), pers);
 	}
 
 	public static TypeCase getInstance() {
