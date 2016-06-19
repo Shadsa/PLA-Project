@@ -42,7 +42,7 @@ public final class Creer extends Action {
 		{*/
 			if(pers.owner().joueur().changerRessource(-100))
 				pers.owner().createPersonnage(_type, destX, destY, null);
-			pers.setState(new States(Statut.ATTAQUE, direction));
+			pers.setState(new States(Statut.INVOQUE, direction));
 		//}
 	}
 

@@ -131,7 +131,9 @@ public class MapGameState extends BasicGameState implements Observer {
 						if(p.getY()-TILESIZE < (_offsetMapY + container.getHeight())/zoom())
 							p.render(g);
 */
-		if(_targetw != null && !_targetp.fightworld().fini)
+		if(_targetp == null || _targetp.fightworld() == null || _targetp.fightworld().fini)
+			_targetw = null;
+		if(_targetw != null)
 		{
 			_targetw.render(g);
 			g.resetTransform();
@@ -666,7 +668,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		_tailleMapX = _mainw.SizeX();
 		_tailleMapY = _mainw.SizeY();
 		
-		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
+		/*ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
 		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
 		ArrayList<ArrayList<TypeUnit>> type_unit = new ArrayList<ArrayList<TypeUnit>>();
 		ArrayList<ArrayList<TypeClothes>> type_clothes = new ArrayList<ArrayList<TypeClothes>>();
@@ -692,7 +694,7 @@ public class MapGameState extends BasicGameState implements Observer {
 			classes.get(1).add(ui.classe);
 			type_unit.get(1).add(ui.color);
 			type_clothes.get(1).add(ui.clothes);
-		}
+		}*/
 		
 		if (!enJeu) {
 			new Army(World.Univers.get(0), World.joueurs.get(0));
@@ -744,11 +746,11 @@ public class MapGameState extends BasicGameState implements Observer {
 		
 	}
 
-	public static void fight(Personnage pers, Personnage personnage, Cardinaux dirinc)
+	public static void fight(Personnage pers, Personnage cible, Cardinaux dirinc)
 	{
-		if(personnage.isfighting())
+		if(cible.isfighting())
 		{
-			World w = personnage.fightworld();
+			World w = cible.fightworld();
 			pers.setFighting(true, w);
 			for(Army arm : w.army())
 				if(arm.joueur() == pers.owner().joueur())
@@ -764,7 +766,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		}
 		World w = new World(7, 7, true);
 		pers.setFighting(true, w);
-		personnage.setFighting(true, w);
+		cible.setFighting(true, w);
 
 		World.Univers.add(w);
 		MapTest mt = new MapTest(0, 0, 500, 500);
@@ -772,7 +774,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		_GUnivers.add(mt);
 		mt.addArmy(new Army(w, pers.owner().joueur()));
 		w.army().get(0).join(pers.owner().joueur().getUnite(pers), dirinc, pers);
-		mt.addArmy(new Army(w, personnage.owner().joueur()));
-		w.army().get(1).join(personnage.owner().joueur().getUnite(personnage), Cardinaux.oppose(dirinc), personnage);
+		mt.addArmy(new Army(w, cible.owner().joueur()));
+		w.army().get(1).join(cible.owner().joueur().getUnite(cible), Cardinaux.oppose(dirinc), cible);
 	}
 }

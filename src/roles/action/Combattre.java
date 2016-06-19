@@ -37,7 +37,7 @@ public final class Combattre extends Action {
 		else if(p.check(world.Case(destX, destY+1))){
 			destY++; direction = Cardinaux.SUD;
 		}
-		else if(_propPers.check(world.Case(destX-1, destY)) || _propCons.check(world.Case(destX-1, destY))){
+		/*else if(_propPers.check(world.Case(destX-1, destY)) || _propCons.check(world.Case(destX-1, destY))){
 			destX--; direction = Cardinaux.OUEST;
 		}
 		else if(_propPers.check(world.Case(destX+1, destY)) || _propCons.check(world.Case(destX+1, destY))){
@@ -48,7 +48,7 @@ public final class Combattre extends Action {
 		}
 		else if(_propPers.check(world.Case(destX, destY+1)) || _propCons.check(world.Case(destX, destY+1))){
 			destY++; direction = Cardinaux.SUD;
-		}
+		}*/
 		else return;
 
 		Case c = world.Case(destX, destY);

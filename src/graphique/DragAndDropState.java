@@ -360,34 +360,42 @@ class DragAndDropState extends BasicGameState {
 		map.initialise(_mainw);
 
 		ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
+		ArrayList<ArrayList<Automate>> autclist = new ArrayList<ArrayList<Automate>>();
 		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
 		ArrayList<ArrayList<TypeUnit>> type_unit = new ArrayList<ArrayList<TypeUnit>>();
 		ArrayList<ArrayList<TypeClothes>> type_clothes = new ArrayList<ArrayList<TypeClothes>>();
 
+		autlist.add(new ArrayList<Automate>());
+		autclist.add(new ArrayList<Automate>());
+		classes.add(new ArrayList<Classe>());
+		type_unit.add(new ArrayList<TypeUnit>());
+		type_clothes.add(new ArrayList<TypeClothes>());
+		
 		for(UnitInfo ui : uIFs1)
 		{
-			autlist.add(new ArrayList<Automate>());
-			classes.add(new ArrayList<Classe>());
-			type_unit.add(new ArrayList<TypeUnit>());
-			type_clothes.add(new ArrayList<TypeClothes>());
 			autlist.get(0).add(ui.automate);
+			autclist.get(0).add(ui.automatec);
 			classes.get(0).add(ui.classe);
 			type_unit.get(0).add(ui.color);
 			type_clothes.get(0).add(ui.clothes);
 		}
+
+		autlist.add(new ArrayList<Automate>());
+		autclist.add(new ArrayList<Automate>());
+		classes.add(new ArrayList<Classe>());
+		type_unit.add(new ArrayList<TypeUnit>());
+		type_clothes.add(new ArrayList<TypeClothes>());
+		
 		for(UnitInfo ui : uIFs2) {
-			autlist.add(new ArrayList<Automate>());
-			classes.add(new ArrayList<Classe>());
-			type_unit.add(new ArrayList<TypeUnit>());
-			type_clothes.add(new ArrayList<TypeClothes>());
 			autlist.get(1).add(ui.automate);
+			autclist.get(1).add(ui.automatec);
 			classes.get(1).add(ui.classe);
 			type_unit.get(1).add(ui.color);
 			type_clothes.get(1).add(ui.clothes);
 		}
 		if (World.joueurs.size() == 0) {
-			World.joueurs.add(new Joueur("Human", autlist.get(0), autlist.get(0), classes.get(0), type_unit.get(0), type_clothes.get(0)));
-			World.joueurs.add(new Joueur("Zombie", autlist.get(1), autlist.get(1), classes.get(1), type_unit.get(1), type_clothes.get(1)));
+			World.joueurs.add(new Joueur("Human", autlist.get(0), autclist.get(0), classes.get(0), type_unit.get(0), type_clothes.get(0)));
+			World.joueurs.add(new Joueur("Zombie", autlist.get(1), autclist.get(1), classes.get(1), type_unit.get(1), type_clothes.get(1)));
 		}
 		try {
 			this.map.init();

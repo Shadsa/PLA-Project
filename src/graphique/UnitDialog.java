@@ -44,12 +44,13 @@ public class UnitDialog extends JDialog {
 	private UnitInfo uInfo;
 
 	private Automate aut = null;
+	private Automate autc = null;	
 	private Classe cla = null;
 	private String choixJoueur;
 
   public UnitDialog(JFrame parent, String title, boolean modal){
     super(parent, title, modal);
-    this.setSize(850, 120);
+    this.setSize(1000, 120);
     this.setLocationRelativeTo(null);
     this.setResizable(false);
     this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -120,6 +121,13 @@ public class UnitDialog extends JDialog {
     for(String f : listeFichiers)
     	fichier.addItem(f);
     panFile.add(fichier);
+    
+    JPanel panFilec = new JPanel();
+    panFilec.setBorder(BorderFactory.createTitledBorder("Automate de combat"));
+    JComboBox<String> fichierc = new JComboBox<String>();
+    for(String f : listeFichiers)
+    	fichierc.addItem(f);
+    panFilec.add(fichierc);
 
     JPanel panClasse = new JPanel();
     panClasse.setBorder(BorderFactory.createTitledBorder("Classe"));
@@ -157,6 +165,7 @@ public class UnitDialog extends JDialog {
     content.setLayout(new FlowLayout());
     content.add(panNom);
     content.add(panFile);
+    content.add(panFilec);
     content.add(panClasse);
     content.add(panSkin);
     content.add(panClothes);
@@ -171,6 +180,10 @@ public class UnitDialog extends JDialog {
     		  getAutomate((String)fichier.getSelectedItem());
     	  if(aut == null)
     		  return;
+    	  if(autc == null)
+    		  getAutomateC((String)fichierc.getSelectedItem());
+    	  if(autc == null)
+    		  return;
     	  if(nom.getText().equals(""))
     		  return;
     	  if(cla == null)
@@ -183,7 +196,7 @@ public class UnitDialog extends JDialog {
     		  jop.showMessageDialog(null, "Fichier automate ne convient pas � cette classe.", "Erreur", JOptionPane.ERROR_MESSAGE);
     		  return;
     	  }*/
-        uInfo = new UnitInfo(nom.getText(), aut, cla,TypeUnit.valueOf(color.getSelectedItem().toString()), TypeClothes.valueOf(clothes.getSelectedItem().toString()), choixJoueur);
+        uInfo = new UnitInfo(nom.getText(), aut, autc, cla,TypeUnit.valueOf(color.getSelectedItem().toString()), TypeClothes.valueOf(clothes.getSelectedItem().toString()), choixJoueur);
         setVisible(false);
       }
     });
@@ -256,6 +269,21 @@ public class UnitDialog extends JDialog {
 			e.printStackTrace();
 		}
 		if(aut == null ){
+			JOptionPane jop = new JOptionPane();
+			jop.showMessageDialog(null, "Fichier automate invalide.", "Erreur", JOptionPane.ERROR_MESSAGE);
+		}
+  }
+  
+  void getAutomateC(String nom)
+  {
+	  File file = new File("./creation_automates/" + nom);
+      try {
+          File f = new File(file.getAbsolutePath());
+			autc = XML_Reader.readXML(f);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(autc == null ){
 			JOptionPane jop = new JOptionPane();
 			jop.showMessageDialog(null, "Fichier automate invalide.", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}

@@ -77,7 +77,11 @@ public class Personnage extends Observable{
 
 	public void agir() {
 		if(_fighting) return;
-		_brain.agir(this);
+		if(_imageOF == null)
+			_brain.agir(this);
+		else{
+			_brainC.agir(this);
+		}
 		_location.Evenement(this);
 	}
 
