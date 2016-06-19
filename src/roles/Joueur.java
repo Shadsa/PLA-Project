@@ -55,6 +55,14 @@ public class Joueur extends Observable implements Serializable {
 		return count;
 	}
 
+	public int nbUnit(Automate aut) {
+		int count=0;
+		for(Personnage p : _personnages)
+			if(p._brain==aut)
+				count++;
+		return count;
+	}
+
 	public int ratioUnit(Classe c){
 		return 100*(nbUnit(c)/_personnages.size());
 	}
@@ -78,7 +86,7 @@ public class Joueur extends Observable implements Serializable {
 	public String nom() {
 		return _nom;
 	}
-	
+
 	public ArrayList<Automate> Automates(){
 		return _automates;
 	}
