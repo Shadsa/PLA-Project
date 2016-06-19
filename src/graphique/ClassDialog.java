@@ -64,23 +64,23 @@ public class ClassDialog extends JDialog {
 	    nom.setPreferredSize(new Dimension(100, 25));
 	    panNom.setBorder(BorderFactory.createTitledBorder("Nom Classe"));
 	    panNom.add(nom);
-	    
+
 	    //AJOUT DES RESTRICTIONS
 	    JPanel panAct = new JPanel();
 	    panAct.setBorder(BorderFactory.createTitledBorder("Deck Action"));
 	    JComboBox<String> action = new JComboBox<String>();
-	    
+
 	    for(String b : StateGame.workshop.actionListName())
 	    	action.addItem(b);
 	    panAct.add(action);
-	    
+
 	    JPanel panCond = new JPanel();
 	    panCond.setBorder(BorderFactory.createTitledBorder("Deck Conditon"));
-	    JComboBox<String> condition = new JComboBox<String>();	    
+	    JComboBox<String> condition = new JComboBox<String>();
 	    for(String b : StateGame.workshop.conditionListName())
 	    	condition.addItem(b);
 	    panCond.add(condition);
-	    
+
 
 
 	    //AJOUT DES ATTRIBUTS
@@ -115,7 +115,7 @@ public class ClassDialog extends JDialog {
 	    for(Bonus b : Bonus.values())
 	    	bonus.addItem(b);
 	    panBonus.add(bonus);
-	    
+
 	    JPanel panWalker = new JPanel();
 	    panWalker.setBorder(BorderFactory.createTitledBorder("Traverse arbre"));
 	    JComboBox<String> walker = new JComboBox<String>();
@@ -128,7 +128,7 @@ public class ClassDialog extends JDialog {
 	    panCost.setBorder(BorderFactory.createTitledBorder("Coût unité"));
 	    Cost = new JTextField();
 	    Cost.setPreferredSize(new Dimension(100, 25));
-	    Cost.setEditable(false);
+	    //Cost.setEditable(false);
 	    panCost.add(Cost);
 
 	    JPanel content = new JPanel();
@@ -152,8 +152,22 @@ public class ClassDialog extends JDialog {
 
 	    okBouton.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent arg0) {
-	    	  	cost.doClick();
-
+	    	  	//cost.doClick();
+	    	  classinfo.name(nom.getText());
+	    	  classinfo.armor(Integer.parseInt(Armor.getText()));
+	    	  classinfo.heal(Integer.parseInt(Heal.getText()));
+	    	  classinfo.HP(Integer.parseInt(HP.getText()));
+	    	  classinfo.damage(Integer.parseInt(Damage.getText()));
+	    	  classinfo.bonus((Bonus) bonus.getSelectedItem());
+	    	  classinfo.loadDeckAction(StateGame.workshop.getDeckAction(action.getSelectedItem().toString()));
+	    	  classinfo.loadDeckCondition(StateGame.workshop.getDeckCondition(condition.getSelectedItem().toString()));
+	    	  classinfo.setcost(Integer.parseInt(cost.getText()));
+	    	  if(walker.getSelectedItem().toString().equalsIgnoreCase("oui")){
+	    		  classinfo.hard_walker(true);
+	    	  }else{
+	    		  classinfo.hard_walker(false);
+	    	  }
+	    	  setVisible(false);
 	      }
 	    });
 
@@ -166,7 +180,7 @@ public class ClassDialog extends JDialog {
 		    	  classinfo.damage(Integer.parseInt(Damage.getText()));
 		    	  classinfo.bonus((Bonus) bonus.getSelectedItem());
 		    	  classinfo.loadDeckAction(StateGame.workshop.getDeckAction(action.getSelectedItem().toString()));
-		    	  classinfo.loadDeckCondition(StateGame.workshop.getDeckCondition(condition.getSelectedItem().toString()));	 
+		    	  classinfo.loadDeckCondition(StateGame.workshop.getDeckCondition(condition.getSelectedItem().toString()));
 		    	  if(walker.getSelectedItem().toString().equalsIgnoreCase("oui")){
 		    		  classinfo.hard_walker(true);
 		    	  }else{
@@ -185,7 +199,7 @@ public class ClassDialog extends JDialog {
 	      }
 	    });
 
-	    control.add(cost);
+	    //control.add(cost);
 	    control.add(okBouton);
 	    control.add(cancelBouton);
 

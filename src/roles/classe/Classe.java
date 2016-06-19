@@ -131,7 +131,7 @@ public class Classe implements Serializable {
 	public void addCondition(Class cond){
 		avaibleCondition.add(cond);
 	}
-	
+
 	public void loadDeckAction(ArrayList<Class<Action>> act){
 		avaibleAction=act;
 	}
@@ -165,5 +165,9 @@ public class Classe implements Serializable {
 	public String toString()
 	{
 		return _name;
+	}
+
+	public void setcost(int parseInt) {
+		_cost = parseInt;
 	}
 }
