@@ -5,11 +5,9 @@ import java.util.Observer;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 
 import roles.Cardinaux;
@@ -25,7 +23,6 @@ public class Player implements Observer{
 	int _Awear;
 
 	private float _destX, _destY;
-	private boolean _hide;
 
 	//Position d'origine du personnage (x, y)
 	private float x, y;
@@ -64,7 +61,6 @@ public class Player implements Observer{
 
 	public Player(Personnage pers, TypeUnit _type_unit, TypeClothes _type_clothes, GArmy gArmy) {
 		_gArmy = gArmy;
-		_hide = false;
 		_human = _type_unit;
 		_clothes = _type_clothes;
 		_id = nextID();
@@ -318,15 +314,6 @@ public static void sinit() throws SlickException
 				refreshAnimation();
 			}
 		}
-		private void setDirection(Cardinaux dir) {
-			switch(dir)
-			{
-			case NORD: direction = 2; break;
-			case SUD: direction = 0; break;
-			case EST: direction = 3; break;
-			case OUEST: direction = 1; break;
-			}
-		}
 		public States states() {
 			return _state;
 		}
@@ -381,6 +368,8 @@ public static void sinit() throws SlickException
 					case INVOQUE:
 						anim = 21;
 					break;
+					default:
+						break;
 				    }
 
 				    anim += dir;

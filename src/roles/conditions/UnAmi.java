@@ -3,8 +3,8 @@ package roles.conditions;
 import cases.AmiCheck;
 import cases.CaseProperty;
 import roles.Personnage;
-import roles.World;
 
+@SuppressWarnings("serial")
 public class UnAmi extends Condition {
 
 	@Override

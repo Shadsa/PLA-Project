@@ -5,6 +5,7 @@ import java.io.Serializable;
 import roles.Personnage;
 import roles.action.Action;
 
+@SuppressWarnings("serial")
 public abstract class TypeCase implements Serializable{
 
 	final public static int firstCaseActionId = 1000;

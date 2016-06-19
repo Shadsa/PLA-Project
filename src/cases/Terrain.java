@@ -1,5 +1,6 @@
 package cases;
 
+@SuppressWarnings("serial")
 public class Terrain extends Case {
 
 	public Terrain(int x, int y, TypeCase type) {

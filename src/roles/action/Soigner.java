@@ -9,6 +9,7 @@ import roles.States;
 import roles.States.Statut;
 import roles.World;
 
+@SuppressWarnings("serial")
 public class Soigner extends Action {
 
 	private static int _Id = Action.getId(1);

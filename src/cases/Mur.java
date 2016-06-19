@@ -2,11 +2,11 @@ package cases;
 
 import roles.Personnage;
 import roles.action.Action;
-import roles.action.Attendre;
 import roles.action.ConstruireMur;
 import roles.Cardinaux;
 import roles.Joueur;
 
+@SuppressWarnings("serial")
 public class Mur extends TypeCase implements Construction {
 
 	public final int _vie = 20;

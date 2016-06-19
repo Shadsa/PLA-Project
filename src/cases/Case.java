@@ -6,6 +6,7 @@ import java.util.Observable;
 import roles.Personnage;
 import roles.action.Action;
 
+@SuppressWarnings("serial")
 public abstract class Case extends Observable implements Serializable{
 
 	Personnage _personnage;

@@ -9,6 +9,7 @@ import roles.States;
 import roles.World;
 import roles.States.Statut;
 
+@SuppressWarnings("serial")
 public class PoserPiege extends Action {
 
 		Cardinaux _direction;

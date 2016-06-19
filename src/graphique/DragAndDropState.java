@@ -25,7 +25,6 @@ import cases.Case;
 import roles.Automate;
 import roles.Carte;
 import roles.Joueur;
-import cases.TypeCase;
 import roles.World;
 import roles.classe.Classe;
 import graphique.Button;
@@ -40,10 +39,6 @@ class DragAndDropState extends BasicGameState {
 	private MapTest map ;
 	private float _offsetMapX=0;
 	private float _offsetMapY=0;
-	private float mouseAbsoluteX;
-	private float mouseAbsoluteY;
-	private float _mouseMapX;
-	private float _mouseMapY;
 	private int mapSizeX = _tailleMapX * MapGameState.TILESIZE;;
 	private int mapSizeY = _tailleMapY * MapGameState.TILESIZE;;
 	private boolean pause = false;
@@ -177,6 +172,7 @@ class DragAndDropState extends BasicGameState {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void setTrueTypeFont(String chemin, int fontSize) throws SlickException {
 	    ttf = new UnicodeFont( chemin, fontSize, false, false);
 	    ttf.addAsciiGlyphs();
@@ -184,6 +180,7 @@ class DragAndDropState extends BasicGameState {
 	    ttf.loadGlyphs();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void setFont(String nom, int fontSize) throws SlickException {     
 		ttf = new UnicodeFont(new java.awt.Font(nom, java.awt.Font.PLAIN, fontSize));
 		ttf.addAsciiGlyphs();
@@ -351,6 +348,7 @@ class DragAndDropState extends BasicGameState {
 
 	}
 	
+	@SuppressWarnings("static-access")
 	public void setGame(ArrayList<UnitInfo> uIFs1,ArrayList<UnitInfo> uIFs2) {
 		World.Univers.add(new World(_tailleMapY,_tailleMapX, false));
 		this.UIFs1 = uIFs1;
@@ -394,8 +392,8 @@ class DragAndDropState extends BasicGameState {
 			type_clothes.get(1).add(ui.clothes);
 		}
 		if (World.joueurs.size() == 0) {
-			World.joueurs.add(new Joueur("Human", autlist.get(0), autclist.get(0), classes.get(0), type_unit.get(0), type_clothes.get(0)));
-			World.joueurs.add(new Joueur("Zombie", autlist.get(1), autclist.get(1), classes.get(1), type_unit.get(1), type_clothes.get(1)));
+			World.joueurs.add(new Joueur("Joueur 1", autlist.get(0), autclist.get(0), classes.get(0), type_unit.get(0), type_clothes.get(0)));
+			World.joueurs.add(new Joueur("Joueur 2", autlist.get(1), autclist.get(1), classes.get(1), type_unit.get(1), type_clothes.get(1)));
 		}
 		try {
 			this.map.init();

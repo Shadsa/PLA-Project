@@ -8,6 +8,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -24,12 +26,12 @@ public class MainScreenGameState extends BasicGameState {
 	private Music music;
 
 	//Bouton
-	//private Bouton _bouton_jouer;
 	private Button _bouton_jouer;
 	private Button _bouton_quitter;
 	private Button _bouton_fullScreen;
 	private Button _bouton_son;
 	private Button _bouton_options;
+	private UnicodeFont ttf;
 
 	/**
 	 * Initialise la boucle de jeu. Cette méthode est appelée avant que la boucle démarre.
@@ -38,7 +40,7 @@ public class MainScreenGameState extends BasicGameState {
 	 */
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		_input = container.getInput();
-		this.background = new Image("src/asset/images/skeleton_army.jpg");
+		this.background = new Image("src/asset/images/gilead_entry_area_by_rusty001-d2y351t.jpg");
 		
 		Image img = new Image("src/asset/sprites/ui_big_pieces.png");
 		Image normalImage = img.getSubImage(633, 23, 123, 27);
@@ -49,8 +51,9 @@ public class MainScreenGameState extends BasicGameState {
 		_bouton_son = new Button(container, "Désactiver son", container.getWidth()/2-62, container.getHeight()/2-40, normalImage, overImage, downImage);
 		_bouton_quitter = new Button(container, "Quitter", container.getWidth()/2-62, container.getHeight()/2+80, normalImage, overImage, downImage);
 		_bouton_options = new Button(container, "Options", container.getWidth()/2-62, container.getHeight()/2+40, normalImage, overImage, downImage);
-		//music = new Music("src/asset/musics/menu_music.ogg");
-	   // music.loop();
+		music = new Music("src/asset/musics/menu_music.ogg");
+	    music.loop();
+
 
 	}
 
@@ -68,10 +71,11 @@ public class MainScreenGameState extends BasicGameState {
 		_bouton_son.render(container, g);
 		_bouton_options.render(container, g);
 		g.setColor(Color.white);
-		/*if (_input.getControllerCount() >= 1) {
-			g.drawString("Appuyez sur START pour commencer.", 240, 300);
-		} else {*/
-		//}
+		
+		setTrueTypeFont("./src/asset/fonts/teutonic4.ttf", 80);
+		ttf.drawString(container.getWidth()/2 - 337, container.getHeight()/8 - 2, "Chateautomate", Color.white);
+		ttf.drawString(container.getWidth()/2 - 336, container.getHeight()/8 - 1, "Chateautomate", Color.red);
+		ttf.drawString(container.getWidth()/2 - 335, container.getHeight()/8, "Chateautomate", Color.black);
 	}
 
 	/**
@@ -138,6 +142,14 @@ public class MainScreenGameState extends BasicGameState {
 		_bouton_son.setLocation(container.getWidth()/2-62, container.getHeight()/2-40);
 		_bouton_quitter.setLocation(container.getWidth()/2-62, container.getHeight()/2+80);
 		_bouton_options.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void setTrueTypeFont(String chemin, int fontSize) throws SlickException {
+	    ttf = new UnicodeFont( chemin, fontSize, false, false);
+	    ttf.addAsciiGlyphs();
+	    ttf.getEffects().add(new ColorEffect());
+	    ttf.loadGlyphs();
 	}
 	
 	/**

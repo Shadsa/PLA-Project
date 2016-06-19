@@ -2,6 +2,7 @@ package cases;
 
 import roles.Personnage;
 
+@SuppressWarnings("serial")
 public class AmiCheck implements CaseProperty{
 
 	Personnage _comparateur;

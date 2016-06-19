@@ -3,6 +3,7 @@ package cases;
 import roles.Personnage;
 import roles.action.Action;
 
+@SuppressWarnings("serial")
 public final class Batiment extends TypeCase {
 
 	public final int _vie = 20;

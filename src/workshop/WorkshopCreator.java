@@ -45,7 +45,6 @@ public class WorkshopCreator {
 	public void load() throws IOException, ClassNotFoundException{
 		ArrayList<File> files = new ArrayList<File>();
 		FileInputStream fis = null;
-	    FileOutputStream fos = null;
 		int res = 0;
 		String buf = "";
 
@@ -63,6 +62,7 @@ public class WorkshopCreator {
 			fis = new FileInputStream(files.get(i));
 			while((res = fis.read()) != -1){
 				if(res == '\n'){
+					@SuppressWarnings("unchecked")
 					Class<Action> newAction = (Class<Action>) Class.forName("roles.action." + buf);
 					newdeck.add(newAction);
 					buf="";
@@ -71,6 +71,7 @@ public class WorkshopCreator {
 				}
 			}
 			if(buf != ""){
+				@SuppressWarnings("unchecked")
 				Class<Action> newAction = (Class<Action>) Class.forName("roles.action." + buf);
 				newdeck.add(newAction);
 				buf="";
@@ -95,6 +96,7 @@ public class WorkshopCreator {
 			fis = new FileInputStream(files.get(i));
 			while((res = fis.read()) != -1){
 				if(res == '\n'){
+					@SuppressWarnings("unchecked")
 					Class<Condition> newAction = (Class<Condition>)Class.forName("roles.conditions." + buf);
 					newdeck.add(newAction);
 					buf="";
@@ -103,6 +105,7 @@ public class WorkshopCreator {
 				}
 			}
 			if(buf != ""){
+				@SuppressWarnings("unchecked")
 				Class<Condition> newAction = (Class<Condition>) Class.forName("roles.conditions." + buf);
 				newdeck.add(newAction);
 				buf="";

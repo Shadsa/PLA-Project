@@ -141,6 +141,7 @@ public class Button extends AbstractComponent {
 	 * @param fontSize
 	 * @throws SlickException
 	 */
+	@SuppressWarnings("unchecked")
 	public void setTrueTypeFont(String chemin, int fontSize) throws SlickException {
 	    ttf = new UnicodeFont( chemin, fontSize, false, false);
 	    ttf.addAsciiGlyphs();

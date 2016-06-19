@@ -7,6 +7,7 @@ import roles.States;
 import roles.World;
 import roles.States.Statut;
 
+@SuppressWarnings("serial")
 public final class AvancerJoueur extends Action {
 
 	private static int _Id = Action.getId(1);
