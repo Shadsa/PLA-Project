@@ -1,6 +1,6 @@
 Creation d'automates : 
 
-la création d'un automate visant a etre utilise par le programme principale se fait
+la création d'un automate visant a etre utilise par le programme principal se fait
 par le biais de l'assemblage de plusieurs plus petits automates, décrivant chacun
 une partie du comportement de l'automate final.
 
