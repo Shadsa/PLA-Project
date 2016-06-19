@@ -144,6 +144,7 @@ public class MainScreenGameState extends BasicGameState {
 		_bouton_options.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void setTrueTypeFont(String chemin, int fontSize) throws SlickException {
 	    ttf = new UnicodeFont( chemin, fontSize, false, false);
 	    ttf.addAsciiGlyphs();
