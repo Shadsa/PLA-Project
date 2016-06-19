@@ -28,7 +28,6 @@ let string_of_cellule (c : cellule) =
    | O -> "O"
    | S -> "S"
    | E -> "E"
-   | C -> "C"
 
 let string_of_type (t : typeCellule) =
   match t with
@@ -37,6 +36,8 @@ let string_of_type (t : typeCellule) =
    | Caillou -> "Caillou"
    | Eau -> "Eau"
    | Batiment -> "Batiment"
+   | Piege -> "Piege"
+   | Mur -> "Mur"
 
 let balise (s : String.t) (a : attribut) =
   "<"^s^(
