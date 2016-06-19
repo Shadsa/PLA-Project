@@ -91,6 +91,10 @@ public class World {
 	public void putAutomate(Automate a, int x, int y, Joueur j) throws Exception{
 		_map.putAutomate(a, x, y, j);
 	}
+	
+	public void putAutomates(ArrayList<Automate> a, int x, int y, Joueur j) throws Exception{
+		_map.putAutomates(a, x, y, j);
+	}
 
 	public ArrayList<Army> army() {
 		return _army;
