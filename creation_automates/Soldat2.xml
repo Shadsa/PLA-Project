@@ -1,0 +1,166 @@
+<?xml version = "1.0" encoding="UTF-8" standalone="no" ?>
+
+<automate nbEtats="5">
+	<transition poids="1">
+		<etat>0</etat>
+		<condition>Vide</condition>
+		<action>AvancerHasard</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="6">
+		<etat>0</etat>
+		<condition compose="Et">
+			<condition1 direction="N">Libre</condition1>
+			<condition2 direction="N">EnnemiProche</condition2>
+		</condition>
+		<action direction="N">Avancer</action>
+		<suivant>1</suivant>
+	</transition>
+	<transition poids="7">
+		<etat>1</etat>
+		<condition compose="Et">
+			<condition1 direction="N">Libre</condition1>
+			<condition2 direction="N">EnnemiProche</condition2>
+		</condition>
+		<action direction="N">Avancer</action>
+		<suivant>1</suivant>
+	</transition>
+	<transition poids="0">
+		<etat>1</etat>
+		<condition>Vide</condition>
+		<action>Attendre</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="6">
+		<etat>0</etat>
+		<condition compose="Et">
+			<condition1 direction="S">Libre</condition1>
+			<condition2 direction="S">EnnemiProche</condition2>
+		</condition>
+		<action direction="S">Avancer</action>
+		<suivant>2</suivant>
+	</transition>
+	<transition poids="7">
+		<etat>2</etat>
+		<condition compose="Et">
+			<condition1 direction="S">Libre</condition1>
+			<condition2 direction="S">EnnemiProche</condition2>
+		</condition>
+		<action direction="S">Avancer</action>
+		<suivant>2</suivant>
+	</transition>
+	<transition poids="0">
+		<etat>2</etat>
+		<condition>Vide</condition>
+		<action>Attendre</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="6">
+		<etat>0</etat>
+		<condition compose="Et">
+			<condition1 direction="E">Libre</condition1>
+			<condition2 direction="E">EnnemiProche</condition2>
+		</condition>
+		<action direction="E">Avancer</action>
+		<suivant>3</suivant>
+	</transition>
+	<transition poids="7">
+		<etat>3</etat>
+		<condition compose="Et">
+			<condition1 direction="E">Libre</condition1>
+			<condition2 direction="E">EnnemiProche</condition2>
+		</condition>
+		<action direction="E">Avancer</action>
+		<suivant>3</suivant>
+	</transition>
+	<transition poids="0">
+		<etat>3</etat>
+		<condition>Vide</condition>
+		<action>Attendre</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="6">
+		<etat>0</etat>
+		<condition compose="Et">
+			<condition1 direction="O">Libre</condition1>
+			<condition2 direction="O">EnnemiProche</condition2>
+		</condition>
+		<action direction="O">Avancer</action>
+		<suivant>4</suivant>
+	</transition>
+	<transition poids="7">
+		<etat>4</etat>
+		<condition compose="Et">
+			<condition1 direction="O">Libre</condition1>
+			<condition2 direction="O">EnnemiProche</condition2>
+		</condition>
+		<action direction="O">Avancer</action>
+		<suivant>4</suivant>
+	</transition>
+	<transition poids="0">
+		<etat>4</etat>
+		<condition>Vide</condition>
+		<action>Attendre</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="6">
+		<etat>0</etat>
+		<condition>UnEnnemi</condition>
+		<action>Combattre</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="6">
+		<etat>1</etat>
+		<condition>UnEnnemi</condition>
+		<action>Combattre</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="6">
+		<etat>2</etat>
+		<condition>UnEnnemi</condition>
+		<action>Combattre</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="6">
+		<etat>3</etat>
+		<condition>UnEnnemi</condition>
+		<action>Combattre</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="6">
+		<etat>4</etat>
+		<condition>UnEnnemi</condition>
+		<action>Combattre</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="100">
+		<etat>0</etat>
+		<condition>OrdreDonne</condition>
+		<action>AvancerJoueur</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="100">
+		<etat>1</etat>
+		<condition>OrdreDonne</condition>
+		<action>AvancerJoueur</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="100">
+		<etat>2</etat>
+		<condition>OrdreDonne</condition>
+		<action>AvancerJoueur</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="100">
+		<etat>3</etat>
+		<condition>OrdreDonne</condition>
+		<action>AvancerJoueur</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="100">
+		<etat>4</etat>
+		<condition>OrdreDonne</condition>
+		<action>AvancerJoueur</action>
+		<suivant>0</suivant>
+	</transition>
+</automate>
