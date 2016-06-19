@@ -1,11 +1,8 @@
 package graphique;
 
 import java.awt.Dimension;
-import java.io.File;
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;

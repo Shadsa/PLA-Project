@@ -1,10 +1,8 @@
 package graphique;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import jus.util.assertion.Require;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Animation;
@@ -19,17 +17,12 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import roles.classe.*;
-import roles.conditions.Ennemi;
-import roles.conditions.Libre;
 import roles.Army;
 import roles.Automate;
 import roles.Cardinaux;
 import roles.Joueur;
 import roles.Personnage;
-import roles.States;
 import roles.World;
-import graphique.DragAndDropState;
-import roles.States.Statut;
 
 public class MapGameState extends BasicGameState implements Observer {
 

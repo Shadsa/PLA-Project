@@ -10,7 +10,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.geom.Rectangle;
@@ -60,7 +59,7 @@ public class CrossButton extends AbstractComponent {
 		g.setFont(ttf);
 		/*InitGameState.UI.draw(x, y, x+31, y+height, 650, 228, 681, 251);
 		InitGameState.UI.draw(x+31, y, x+width-23, y+height, 683, 228, 714, 251);
-		InitGameState.UI.draw(x+width-23, y, x+width, y+height, 717, 228, 731, 251);*/ 
+		InitGameState.UI.draw(x+width-23, y, x+width, y+height, 717, 228, 731, 251);*/
 		if(!prerendu) {
 			//Prérendu normalImage
 			normalImage = new Image(container.getScreenWidth(),container.getScreenHeight());
@@ -68,14 +67,14 @@ public class CrossButton extends AbstractComponent {
 			chargementBouton1(g1);
 			g1.flush();
 			normalImage = normalImage.getSubImage(x, y, 200, 100);
-			
+
 			//Prérendu overImage
 			overImage = new Image(container.getScreenWidth(),container.getScreenHeight());
 			Graphics g2 = overImage.getGraphics();
 			chargementBouton1Over(g2);
 			g2.flush();
 			overImage = overImage.getSubImage(x, y, 200, 100);
-			
+
 			prerendu = true;
 		}
 		if (isOverX()) {
@@ -123,7 +122,7 @@ public class CrossButton extends AbstractComponent {
 	public boolean isOverX() {
 		return overX;
 	}
-	
+
 	public boolean isPressed() {
 	    return pressed;
 	}
@@ -163,7 +162,7 @@ public class CrossButton extends AbstractComponent {
 	    height = ttf.getHeight(_text) + 20;
 	    setLocation(x, y);
 	}
-	
+
 	private void chargementBouton1(Graphics g) {
 		//Haut gauche
 		g.drawImage(InitGameState.UI, x, y, x+33, y+10, 590, 482, 623, 492);
@@ -191,7 +190,7 @@ public class CrossButton extends AbstractComponent {
 		//Bas droite
 		g.drawImage(InitGameState.UI, x+33+width-46, y+10+(i), x+33+width-46+16, y+10+i+10, 657, 500, 673, 510);
 	}
-	
+
 	private void chargementBouton1Over(Graphics g) {
 		//Haut gauche
 		g.drawImage(InitGameState.UI, x, y, x+33, y+10, 590, 512, 623, 522);

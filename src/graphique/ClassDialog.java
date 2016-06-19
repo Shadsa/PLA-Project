@@ -6,18 +6,10 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,21 +17,20 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import XML.XML_Reader;
-import roles.Automate;
 import roles.Bonus;
-import roles.World;
 import roles.classe.Classe;
 import workshop.WorkshopCreator;
 
 
 public class ClassDialog extends JDialog {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private Classe classinfo;
 
 	public ClassDialog(JFrame parent, String title, boolean modal){
@@ -162,13 +153,7 @@ public class ClassDialog extends JDialog {
 	    okBouton.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent arg0) {
 	    	  	cost.doClick();
-	    	  	try {
-					StateGame.workshop.saveClass(classinfo);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	    	  	
+
 	      }
 	    });
 
@@ -199,7 +184,7 @@ public class ClassDialog extends JDialog {
 	        setVisible(false);
 	      }
 	    });
-	    
+
 	    control.add(cost);
 	    control.add(okBouton);
 	    control.add(cancelBouton);

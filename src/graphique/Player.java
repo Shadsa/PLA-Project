@@ -19,10 +19,10 @@ import roles.States.Statut;
 
 public class Player implements Observer{
 
-	private Animation[] _Body;
-	private int _Abody;
-	private int _Aweapon;
-	private int _Awear;
+	Animation[] _Body;
+	int _Abody;
+	int _Aweapon;
+	int _Awear;
 
 	private float _destX, _destY;
 	private boolean _hide;
@@ -43,8 +43,8 @@ public class Player implements Observer{
 	private int AnimDuration;
 	public int AnimDead;
 	private Boolean _isDead;
-	private TypeUnit _human;
-	private TypeClothes _clothes;	
+	TypeUnit _human;
+	TypeClothes _clothes;
 	private SoundEffect soundEffect;
 
 	protected int _id;
@@ -81,7 +81,6 @@ public class Player implements Observer{
 		try {
 			soundEffect.init();
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -414,7 +413,7 @@ public static void sinit() throws SlickException
 		    anim[9] = loadAnimation(slashS, 0, 5, 1);
 		    anim[10] = loadAnimation(slashS, 0, 5, 2);
 		    anim[11] = loadAnimation(slashS, 0, 5, 3);
-		    
+
 		    anim[21] = loadAnimation(spellS, 0, 6, 0);
 		    anim[22] = loadAnimation(spellS, 0, 6, 1);
 		    anim[23] = loadAnimation(spellS, 0, 6, 2);

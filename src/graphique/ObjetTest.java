@@ -3,8 +3,6 @@ package graphique;
 import java.util.Observable;
 import java.util.Observer;
 
-import cases.Case;
-
 public class ObjetTest  implements Observer {
 
 	private int num;

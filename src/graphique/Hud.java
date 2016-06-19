@@ -70,13 +70,27 @@ public class Hud {//550 182
 			    }
 			    //System.out.println(_state.statut);
 			    //if(MapGameState._target.human() == TypeUnit.Human)
-			    	g.drawAnimation(MapGameState._target.human().animations[anim], HUD_BAR_X+1, MapGameState.debug ? HUD_BAR_Y-3 : 10-3);
-			    	g.drawAnimation(MapGameState._target.clothes().animations[anim], HUD_BAR_X+1, MapGameState.debug ? HUD_BAR_Y-3 : 10-3);
+			    //	g.drawAnimation(MapGameState._target.human().animations[anim], HUD_BAR_X+1, MapGameState.debug ? HUD_BAR_Y-3 : 10-3);
 			    /*else
 			    	g.drawAnimation(Player.animations[anim], HUD_BAR_X, HUD_BAR_Y);*/
 
 			    if(danim != -1 && anim != 12)
-			    	g.drawAnimation(Player.Danimations[danim], HUD_BAR_X, MapGameState.debug ? HUD_BAR_Y : debug);
-	}
+			    	g.drawAnimation(Player.Danimations[danim], HUD_BAR_X, HUD_BAR_Y);
 
+
+
+
+			    if(MapGameState._target._Abody != -1)
+				{
+					    g.setColor(new Color(0, 0, 0, .5f));
+					    g.fillOval(HUD_BAR_X - 16, HUD_BAR_Y - 8, 32, 16);
+			    		g.drawAnimation(MapGameState._target._Body[MapGameState._target._Abody], HUD_BAR_X, MapGameState.debug ? HUD_BAR_Y : debug);
+				}
+
+				if(MapGameState._target._Awear != -1)
+					g.drawImage(MapGameState._target._clothes.animations[MapGameState._target._Abody].getImage(MapGameState._target._human.animations[MapGameState._target._Abody].getFrame()), HUD_BAR_X, MapGameState.debug ? HUD_BAR_Y : debug);
+
+			    if(MapGameState._target._Aweapon != -1)
+			    	g.drawAnimation(Player.Danimations[MapGameState._target._Aweapon], HUD_BAR_X, MapGameState.debug ? HUD_BAR_Y : debug);
+	}
 }
