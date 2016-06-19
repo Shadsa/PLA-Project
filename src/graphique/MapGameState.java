@@ -135,7 +135,8 @@ public class MapGameState extends BasicGameState implements Observer {
 			_targetw = null;
 		if(_targetw != null)
 		{
-			_targetw.render(g);
+			InitGameState.renderMenu(0, _mainm._height-488, 516, 416);
+		    _targetw.render(g);
 			g.resetTransform();
 		}
 
@@ -166,6 +167,7 @@ public class MapGameState extends BasicGameState implements Observer {
 
 		//Gestion de la pause (affichage d'un fond noir-transparent progressif)
 		if (container.isPaused()) {
+			InitGameState.renderMenu(_bouton_fullScreen.x-30, _bouton_fullScreen.y-30, _bouton_reprendre.x+_bouton_reprendre.width+30, _bouton_reprendre.y + _bouton_reprendre.height+30);
 		    Rectangle rect = new Rectangle (0, 0, container.getScreenWidth(), container.getScreenHeight());
 		    g.setColor(new Color (0, 0, 0, alpha));
 		    g.fill(rect);

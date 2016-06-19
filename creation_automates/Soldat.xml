@@ -133,4 +133,34 @@
 		<action>Combattre</action>
 		<suivant>0</suivant>
 	</transition>
+	<transition poids="100">
+		<etat>0</etat>
+		<condition>OrdreDonne</condition>
+		<action>AvancerJoueur</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="100">
+		<etat>1</etat>
+		<condition>OrdreDonne</condition>
+		<action>AvancerJoueur</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="100">
+		<etat>2</etat>
+		<condition>OrdreDonne</condition>
+		<action>AvancerJoueur</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="100">
+		<etat>3</etat>
+		<condition>OrdreDonne</condition>
+		<action>AvancerJoueur</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="100">
+		<etat>4</etat>
+		<condition>OrdreDonne</condition>
+		<action>AvancerJoueur</action>
+		<suivant>0</suivant>
+	</transition>
 </automate>
