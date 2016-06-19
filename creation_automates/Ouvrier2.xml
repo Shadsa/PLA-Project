@@ -9,19 +9,13 @@
 	</transition>
 	<transition poids="3">
 		<etat>0</etat>
-		<condition compose="Et">
-			<condition1 direction="N">Libre</condition1>
-			<condition2 direction="N">ArbreProche</condition2>
-		</condition>
+		<condition direction="N">ArbreProche</condition>
 		<action direction="N">Avancer</action>
 		<suivant>1</suivant>
 	</transition>
 	<transition poids="4">
 		<etat>1</etat>
-		<condition compose="Et">
-			<condition1 direction="N">Libre</condition1>
-			<condition2 direction="N">ArbreProche</condition2>
-		</condition>
+		<condition direction="N">ArbreProche</condition>
 		<action direction="N">Avancer</action>
 		<suivant>1</suivant>
 	</transition>
@@ -33,19 +27,13 @@
 	</transition>
 	<transition poids="3">
 		<etat>0</etat>
-		<condition compose="Et">
-			<condition1 direction="S">Libre</condition1>
-			<condition2 direction="S">ArbreProche</condition2>
-		</condition>
+		<condition direction="S">ArbreProche</condition>
 		<action direction="S">Avancer</action>
 		<suivant>2</suivant>
 	</transition>
 	<transition poids="4">
 		<etat>2</etat>
-		<condition compose="Et">
-			<condition1 direction="S">Libre</condition1>
-			<condition2 direction="S">ArbreProche</condition2>
-		</condition>
+		<condition direction="S">ArbreProche</condition>
 		<action direction="S">Avancer</action>
 		<suivant>2</suivant>
 	</transition>
@@ -57,19 +45,13 @@
 	</transition>
 	<transition poids="3">
 		<etat>0</etat>
-		<condition compose="Et">
-			<condition1 direction="E">Libre</condition1>
-			<condition2 direction="E">ArbreProche</condition2>
-		</condition>
+		<condition direction="E">ArbreProche</condition>
 		<action direction="E">Avancer</action>
 		<suivant>3</suivant>
 	</transition>
 	<transition poids="4">
 		<etat>3</etat>
-		<condition compose="Et">
-			<condition1 direction="E">Libre</condition1>
-			<condition2 direction="E">ArbreProche</condition2>
-		</condition>
+		<condition direction="E">ArbreProche</condition>
 		<action direction="E">Avancer</action>
 		<suivant>3</suivant>
 	</transition>
@@ -81,19 +63,13 @@
 	</transition>
 	<transition poids="3">
 		<etat>0</etat>
-		<condition compose="Et">
-			<condition1 direction="O">Libre</condition1>
-			<condition2 direction="O">ArbreProche</condition2>
-		</condition>
+		<condition direction="O">ArbreProche</condition>
 		<action direction="O">Avancer</action>
 		<suivant>4</suivant>
 	</transition>
 	<transition poids="4">
 		<etat>4</etat>
-		<condition compose="Et">
-			<condition1 direction="O">Libre</condition1>
-			<condition2 direction="O">ArbreProche</condition2>
-		</condition>
+		<condition direction="O">ArbreProche</condition>
 		<action direction="O">Avancer</action>
 		<suivant>4</suivant>
 	</transition>
@@ -111,8 +87,8 @@
 				<condition2 quantite="100">RessourcesPossedees</condition2>
 			</condition1>
 			<condition2 compose="Ou">
-				<condition1 quantite="10">NbInf</condition1>
-				<condition2 quantite="20">RatioInf</condition2>
+				<condition1 quantite="20">NbInf</condition1>
+				<condition2 quantite="25">RatioInf</condition2>
 			</condition2>
 		</condition>
 		<action unite="0">Creer</action>
@@ -125,6 +101,24 @@
 			<condition2 quantite="100">RessourcesPossedees</condition2>
 		</condition>
 		<action unite="1">Creer</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="8">
+		<etat>0</etat>
+		<condition compose="Et">
+			<condition1>UneCaseLibre</condition1>
+			<condition2 quantite="120">RessourcesPossedees</condition2>
+		</condition>
+		<action unite="2">Creer</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="8">
+		<etat>0</etat>
+		<condition compose="Et">
+			<condition1>UneCaseLibre</condition1>
+			<condition2 quantite="140">RessourcesPossedees</condition2>
+		</condition>
+		<action unite="3">Creer</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="5">

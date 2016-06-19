@@ -9,19 +9,13 @@
 	</transition>
 	<transition poids="3">
 		<etat>0</etat>
-		<condition compose="Et">
-			<condition1 direction="N">Libre</condition1>
-			<condition2 direction="N">EnnemiProche</condition2>
-		</condition>
+		<condition direction="N">EnnemiProche</condition>
 		<action direction="N">Avancer</action>
 		<suivant>1</suivant>
 	</transition>
 	<transition poids="4">
 		<etat>1</etat>
-		<condition compose="Et">
-			<condition1 direction="N">Libre</condition1>
-			<condition2 direction="N">EnnemiProche</condition2>
-		</condition>
+		<condition direction="N">EnnemiProche</condition>
 		<action direction="N">Avancer</action>
 		<suivant>1</suivant>
 	</transition>
@@ -33,19 +27,13 @@
 	</transition>
 	<transition poids="3">
 		<etat>0</etat>
-		<condition compose="Et">
-			<condition1 direction="S">Libre</condition1>
-			<condition2 direction="S">EnnemiProche</condition2>
-		</condition>
+		<condition direction="S">EnnemiProche</condition>
 		<action direction="S">Avancer</action>
 		<suivant>2</suivant>
 	</transition>
 	<transition poids="4">
 		<etat>2</etat>
-		<condition compose="Et">
-			<condition1 direction="S">Libre</condition1>
-			<condition2 direction="S">EnnemiProche</condition2>
-		</condition>
+		<condition direction="S">EnnemiProche</condition>
 		<action direction="S">Avancer</action>
 		<suivant>2</suivant>
 	</transition>
@@ -57,19 +45,13 @@
 	</transition>
 	<transition poids="3">
 		<etat>0</etat>
-		<condition compose="Et">
-			<condition1 direction="E">Libre</condition1>
-			<condition2 direction="E">EnnemiProche</condition2>
-		</condition>
+		<condition direction="E">EnnemiProche</condition>
 		<action direction="E">Avancer</action>
 		<suivant>3</suivant>
 	</transition>
 	<transition poids="4">
 		<etat>3</etat>
-		<condition compose="Et">
-			<condition1 direction="E">Libre</condition1>
-			<condition2 direction="E">EnnemiProche</condition2>
-		</condition>
+		<condition direction="E">EnnemiProche</condition>
 		<action direction="E">Avancer</action>
 		<suivant>3</suivant>
 	</transition>
@@ -81,19 +63,13 @@
 	</transition>
 	<transition poids="3">
 		<etat>0</etat>
-		<condition compose="Et">
-			<condition1 direction="O">Libre</condition1>
-			<condition2 direction="O">EnnemiProche</condition2>
-		</condition>
+		<condition direction="O">EnnemiProche</condition>
 		<action direction="O">Avancer</action>
 		<suivant>4</suivant>
 	</transition>
 	<transition poids="4">
 		<etat>4</etat>
-		<condition compose="Et">
-			<condition1 direction="O">Libre</condition1>
-			<condition2 direction="O">EnnemiProche</condition2>
-		</condition>
+		<condition direction="O">EnnemiProche</condition>
 		<action direction="O">Avancer</action>
 		<suivant>4</suivant>
 	</transition>
