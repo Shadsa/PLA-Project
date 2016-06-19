@@ -8,13 +8,13 @@ public enum TypeUnit {
 	Humain("src/asset/sprites/BODY_male.png","src/asset/sprites/Human_Slash.png","src/asset/sprites/Human_Die.png","src/asset/sprites/BODY_male_spell.png"),
 	Zombie("src/asset/sprites/BODY_grey.png","src/asset/sprites/BODY_grey_slash.png","src/asset/sprites/BODY_grey_hurt.png","src/asset/sprites/BODY_grey_spell.png"),
 	Squelette("src/asset/sprites/BODY_skeleton.png","src/asset/sprites/slash_skeleton.png","src/asset/sprites/Die_skeleton.png","src/asset/sprites/BODY_skeleton_spell.png");
-	
+
 	String _sprite;
-	public Animation[] animations = new Animation[25];
-	
+	public Animation[] animations = new Animation[26];
+
 	TypeUnit(String walk, String slash, String hurt, String spell){
 		_sprite=walk;
-		
+
 		SpriteSheet walkSheet, slashSheet, hurtSheet, spellSheet;
 
 		try {
@@ -27,7 +27,7 @@ public enum TypeUnit {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String sprite(){
 		return _sprite;
 	}

@@ -49,6 +49,10 @@ transition poids condition action etat_courant etat_suivant : automate
 #l'etat etat_courant, puis passe dans etat_suivant#
 hostile poids etat_courant etat_suivant : automate
 
+#un automate qui suit un ordre qui lui a ete donne si il est#
+#dans l'etat etat_courant, puis passe dans etat_suivant#
+suiveur poids etat_courant etat_suivant : automate
+
 #un automate qui coupe chaque arbre adjacent quand il est dans#
 #l'etat etat_courant, puis passe dans etat_suivant#
 recolteur poids etat_courant etat_suivant : automate
