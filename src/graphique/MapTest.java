@@ -80,6 +80,7 @@ public class MapTest extends Observable {
 
 	public void render(Graphics g) throws SlickException {
 
+		g.setClip(new Rectangle(_x, _y, _width, _height));
 		//Nettoyage de la zone d'affichage
 		g.drawImage(spriteSheet, _x, _y, _x+_width, _y+_height, 96, 0, 96*2, 96);
 		//Gestion du scrolling de la map
@@ -90,7 +91,6 @@ public class MapTest extends Observable {
 
 		//int xi = MapGameState.fromX(x/zoom);
 		//int yi = MapGameState.fromY(y/zoom);
-		g.setClip(new Rectangle(_x, _y, _width, _height));
 
 		int xi = fromX(x/zoom);
 		int yi = fromY(y/zoom);
@@ -374,7 +374,7 @@ public class MapTest extends Observable {
 	public boolean isOver(int mouseX, int mouseY) {
 		return mouseX >= getX() && mouseY >= getY() && mouseX<=getX()+getWidth() && mouseY<=getY()+getHeight();
 	}
-	
+
 	public void resetArmy(){
 		_joueurs.clear();
 	}

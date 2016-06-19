@@ -149,7 +149,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		}
 		//Affichage des huds
 		//this.hud.render(g);
-		if(showhud && !_target.isDead()) {
+		if(_target != null) {
 			this.hud.render(g, ((debug)? 110 : 0));
 		}
 
@@ -163,7 +163,7 @@ public class MapGameState extends BasicGameState implements Observer {
 				g.resetTransform();
 			}
 		}*/
-		
+
 		//Gestion de la pause (affichage d'un fond noir-transparent progressif)
 		if (container.isPaused()) {
 		    Rectangle rect = new Rectangle (0, 0, container.getScreenWidth(), container.getScreenHeight());
@@ -261,7 +261,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		//Position de la souris
 		mouseAbsoluteX = _input.getAbsoluteMouseX();
 		mouseAbsoluteY = _input.getAbsoluteMouseY();
-		/* 
+		/*
 		_mouseMapY = (mouseAbsoluteY + offsetMapY()) / zoom();
 		_mouseMapX = (mouseAbsoluteX + offsetMapX()) / zoom();*/
 		mouse = "MouseAbsoluteX : " + mouseAbsoluteX + ", MouseAbsoluteY : " + mouseAbsoluteY;
@@ -296,7 +296,7 @@ public class MapGameState extends BasicGameState implements Observer {
 				focus.setZoom(1/1.03f, _input.getAbsoluteMouseX(), _input.getAbsoluteMouseY());
 			}
 		}
-		
+
 		//TODO ici gestion zoom
 		//gestionZoomClavier(container, Input.KEY_NEXT, Input.KEY_PRIOR, 1.03f);
 
@@ -454,7 +454,7 @@ public class MapGameState extends BasicGameState implements Observer {
 	 * @param mouseX La position de la souris en abcisse X.
 	 * @param mouseY La position de la souris en ordonnée Y.
 	 * @return Un booléen qui indique si la position du curseur est sur un personnage.
-	 * @throws Exception 
+	 * @throws Exception
 	 * @require p != null
 	 */
 	public boolean curseurSurPerso(Player p, float mouseX, float mouseY) throws Exception {
@@ -592,7 +592,7 @@ public class MapGameState extends BasicGameState implements Observer {
 	    MoveSpeed = ((float) TILESIZE) / ((float) AnimTick);
 	}
     }
-	
+
 	/**
 	 * Gestion de l'affichage des détails du jeu (joueurs, temps).
 	 * @param g Le contexte graphique utilisé pour afficher les informations.
@@ -602,13 +602,14 @@ public class MapGameState extends BasicGameState implements Observer {
 		g.setColor(Color.white);
 
 		//Affichage des détails des joueurs
-			for(Joueur j : World.getPlayers())
+			for(Army arm : _mainw.army())
 			{
+				Joueur j = arm.joueur();
 				g.drawString(j.nom(), 10, ty);ty+=20;
 				g.drawString("  " + "Ressources : " + j.ressources(), 10, ty);ty+=20;
 				for(Automate aut : j.Automates())
 				{
-					g.drawString("     " + aut.nom() + " : " + j.nbUnit(aut), 10, ty);ty+=20;
+					g.drawString("     " + aut.nom() + " : " + arm.nbUnit(j.getUnite(aut)), 10, ty);ty+=20;
 				}
 				ty+=30;
 			}
@@ -661,7 +662,7 @@ public class MapGameState extends BasicGameState implements Observer {
 	}*/
 
 	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2, MapTest map) {
-		
+
 	    	//World.Univers.add(new World(_tailleMapY,_tailleMapX, false));
 		//_GUnivers.get(0).initialise(World.Univers.get(0));
 	    _GUnivers.add(map);
@@ -671,7 +672,7 @@ public class MapGameState extends BasicGameState implements Observer {
 
 		_tailleMapX = _mainw.SizeX();
 		_tailleMapY = _mainw.SizeY();
-		
+
 		/*ArrayList<ArrayList<Automate>> autlist = new ArrayList<ArrayList<Automate>>();
 		ArrayList<ArrayList<Classe>> classes = new ArrayList<ArrayList<Classe>>();
 		ArrayList<ArrayList<TypeUnit>> type_unit = new ArrayList<ArrayList<TypeUnit>>();
@@ -699,11 +700,11 @@ public class MapGameState extends BasicGameState implements Observer {
 			type_unit.get(1).add(ui.color);
 			type_clothes.get(1).add(ui.clothes);
 		}*/
-		
+
 		if (!enJeu) {
 			new Army(World.Univers.get(0), World.joueurs.get(0));
 			new Army(World.Univers.get(0), World.joueurs.get(1));
-			
+
 			_mainw.army().get(0).createPersonnage(0, 1, 1, null);
 			_mainw.army().get(1).createPersonnage(0, _tailleMapX-1, _tailleMapY-1, null);
 			for(Army a : World.Univers.get(0).army())
@@ -747,7 +748,7 @@ public class MapGameState extends BasicGameState implements Observer {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
 
 	public static void fight(Personnage pers, Personnage cible, Cardinaux dirinc)
@@ -780,5 +781,6 @@ public class MapGameState extends BasicGameState implements Observer {
 		w.army().get(0).join(pers.owner().joueur().getUnite(pers), dirinc, pers);
 		mt.addArmy(new Army(w, cible.owner().joueur()));
 		w.army().get(1).join(cible.owner().joueur().getUnite(cible), Cardinaux.oppose(dirinc), cible);
+		mt.setZoom(0.5f, 0f, 0f);
 	}
 }

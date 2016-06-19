@@ -35,6 +35,10 @@ public class Joueur extends Observable implements Serializable {
 		return _automates.indexOf(pers._brain);
 	}
 
+	public int getUnite(Automate aut) {
+		return _automates.indexOf(aut);
+	}
+
 	public TypeUnit getType(Personnage pers){
 		return _type_unit.get(getUnite(pers));
 	}
@@ -43,17 +47,13 @@ public class Joueur extends Observable implements Serializable {
 		return _type_clothes.get(getUnite(pers));
 	}
 
-	public int nbUnit(Automate aut) {
+	/*public int nbUnit(Automate aut) {
 		int count=0;
 		for(Personnage p : _personnages)
 			if(p._brain==aut)
 				count++;
 		return count;
-	}
-
-	public int ratioUnit(Classe c){
-		return 100*(nbUnit(c)/_personnages.size());
-	}
+	}*/
 
 	public int ressources(){
 		return _ressources;
@@ -82,8 +82,9 @@ public class Joueur extends Observable implements Serializable {
 	public Automate automatec(int type) {
 		return _automatesc.get(type);
 	}
-	
+
 	public ArrayList<Automate> Automates(){
 		return _automates;
 	}
+
 }
