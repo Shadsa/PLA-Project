@@ -155,7 +155,7 @@ public class ClassDialog extends JDialog {
 	    	  classinfo.bonus((Bonus) bonus.getSelectedItem());
 	    	  classinfo.loadDeckAction(StateGame.workshop.getDeckAction(action.getSelectedItem().toString()));
 	    	  classinfo.loadDeckCondition(StateGame.workshop.getDeckCondition(condition.getSelectedItem().toString()));
-	    	  classinfo.setcost(Integer.parseInt(cost.getText()));
+	    	  classinfo.setcost(Integer.parseInt(Cost.getText()));
 	    	  if(walker.getSelectedItem().toString().equalsIgnoreCase("oui")){
 	    		  classinfo.hard_walker(true);
 	    	  }else{
