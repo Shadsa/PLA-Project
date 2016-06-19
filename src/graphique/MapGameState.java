@@ -632,12 +632,12 @@ public class MapGameState extends BasicGameState implements Observer {
 		_tailleMapY = _mainw.SizeY();
 
 		if (!enJeu) {
-			new Army(World.Univers.get(0), World.joueurs.get(0));
-			new Army(World.Univers.get(0), World.joueurs.get(1));
+			new Army(_mainw, World.joueurs.get(0));
+			new Army(_mainw, World.joueurs.get(1));
 
 			_mainw.army().get(0).createPersonnage(0, 1, 1, null);
 			_mainw.army().get(1).createPersonnage(0, _tailleMapX-1, _tailleMapY-1, null);
-			for(Army a : World.Univers.get(0).army())
+			for(Army a : _mainw.army())
 			{
 				_GUnivers.get(0).addArmy(a);
 			}
@@ -653,9 +653,9 @@ public class MapGameState extends BasicGameState implements Observer {
 				int x = (arg1.getClass().getDeclaredField("mx").getInt(arg1));
 				int y = (arg1.getClass().getDeclaredField("my").getInt(arg1));
 				_target = ((Player)arg1.getClass().getDeclaredField("mtargetp").get(arg1));
-				if(_target != null && _targetp != World.Univers.get(0).Case(x, y).Personnage())
+				if(_target != null && _targetp != _mainw.Case(x, y).Personnage())
 				{
-					_targetp = World.Univers.get(0).Case(x, y).Personnage();
+					_targetp = _mainw.Case(x, y).Personnage();
 					// Si il y a eu une imprécision (rare)
 					if(_targetp == null)
 					{
