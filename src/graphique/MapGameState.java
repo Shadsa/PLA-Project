@@ -596,9 +596,9 @@ public class MapGameState extends BasicGameState implements Observer {
 		g.setColor(Color.white);
 		
 		//Affichage des détails des joueurs
-		if (_mainw.getPlayers().size() == 2) {
-			g.drawString("Ressources : J1 " + _mainw.getPlayers().get(0).ressources(), 10, 250);
-			g.drawString("Ressources : J2 " + _mainw.getPlayers().get(1).ressources(), 10, 270);
+		if (_mainw.joueurs.size() == 2) {
+			g.drawString("Ressources : J1 " + _mainw.joueurs.get(0).ressources(), 10, 250);
+			g.drawString("Ressources : J2 " + _mainw.joueurs.get(1).ressources(), 10, 270);
 			/* TODO trouver un moyen de faire ca
 			g.drawString("Nb personnages : " + _mainw.getPlayers().get(0).getPersonnages().size(), 10, 290);
 			g.drawString("Nb personnages : " + _mainw.getPlayers().get(1).getPersonnages().size(), 10, 310);*/

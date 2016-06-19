@@ -164,7 +164,7 @@ class DragAndDropState extends BasicGameState {
 					    System.out.println ("Erreur lors de l'écriture : " + exception.getMessage());
 					}
 					System.out.println("Chargement OK !");
-					map.init();
+					map.initialise(_mainw);
 					mapSizeX = _mainw.map().largeur() * MapGameState.TILESIZE;
 					mapSizeY = _mainw.map().hauteur() * MapGameState.TILESIZE;
 				}
@@ -207,13 +207,13 @@ class DragAndDropState extends BasicGameState {
 			//Configuration bouton placer automate
 			if (_bouton_placerAutomate.isDown()) {
 				try {
-					_mainw.putAutomates(_mainw.getPlayers().get(0).Automates(), 1, 1, _mainw.getPlayers().get(0));
-					_mainw.putAutomates(_mainw.getPlayers().get(1).Automates(),_mainw.map().largeur()-2, _mainw.map().hauteur()-2, _mainw.getPlayers().get(1));
-					map.init();
+					_mainw.putAutomates(World.joueurs.get(0).Automates(), 1, 1, World.joueurs.get(0));
+					_mainw.putAutomates(World.joueurs.get(1).Automates(),_mainw.map().largeur()-2, _mainw.map().hauteur()-2, World.joueurs.get(1));
+					map.initialise(_mainw);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				map.init();
+				map.initialise(_mainw);
 			}
 			
 			//Configuration du bouton Jouer
@@ -226,7 +226,7 @@ class DragAndDropState extends BasicGameState {
 				if (compt_clic == 2){
 					c02 = _mainw.Case(fromX(container.getInput().getAbsoluteMouseX()),fromY(container.getInput().getAbsoluteMouseY()));
 					_mainw.switchCase(c01, c02);
-					map.init();
+					map.initialise(_mainw);
 					compt_clic += 1;
 				}
 				else {
@@ -247,33 +247,42 @@ class DragAndDropState extends BasicGameState {
 		}
 		
 		//Gestion du scrolling de la map avec la souris/manette/clavier
-				if (mouseAbsoluteY == container.getHeight() || _input.isControllerDown(0) || _input.isKeyDown(208)) {
-					setOffsetMapY(offsetMapY() + _scrollingSpeed);
-				}
-				if (/*mouseAbsoluteX == 0 || _input.isControllerLeft(0) ||*/ _input.isKeyDown(203)) {
-					setOffsetMapX(offsetMapX() - _scrollingSpeed);
-				}
-				if (mouseAbsoluteX == container.getWidth() - 1 || _input.isControllerRight(0) || _input.isKeyDown(205)) {
-					setOffsetMapX(offsetMapX() + _scrollingSpeed);
-				}
-				if (mouseAbsoluteY == 1 || _input.isControllerUp(0) || _input.isKeyDown(200)) {
-					setOffsetMapY(offsetMapY() - _scrollingSpeed);
-				}
+		if (container.getInput().getAbsoluteMouseY() == container.getHeight() || _input.isControllerDown(0) || _input.isKeyDown(208)) {
+			map.move(0, 1);
+			setOffsetMapY(offsetMapY() + _scrollingSpeed);
+		}
+		if (container.getInput().getAbsoluteMouseX() == 0 || _input.isControllerLeft(0) || _input.isKeyDown(203)) {
+			map.move(-1, 0);
+			setOffsetMapX(offsetMapX() - _scrollingSpeed);
+		}
+		if (container.getInput().getAbsoluteMouseX() == container.getWidth() - 1 || _input.isControllerRight(0) || _input.isKeyDown(205)) {
+			map.move(1, 0);
+			setOffsetMapX(offsetMapX() + _scrollingSpeed);
+		}
+		if (container.getInput().getAbsoluteMouseY() == 1 || _input.isControllerUp(0) || _input.isKeyDown(200)) {
+			map.move(0, -1);
+			setOffsetMapY(offsetMapY() - _scrollingSpeed);
+		}
 
 				//Gestion du zoom
 				//Zoom avant
-				if (_input.isKeyDown(201)) {
+				if (_input.isKeyDown(201))
+				{
+					map.setZoom(1.03f, _input.getMouseX(), _input.getMouseY());
 					setZoom(zoom() * 1.03f);
-					/*setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
-					setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);*/
+					setOffsetMapX(offsetMapX() * 1.03f + _input.getMouseX() * 0.03f);
+					setOffsetMapY(offsetMapY() * 1.03f + _input.getMouseY() * 0.03f);
 				}
-				
+
 				//Zoom arrière
-				if (_input.isKeyDown(209) && (mapSizeX * zoom() > container.getWidth() || mapSizeY * zoom() > container.getHeight())) {
-					setZoom(zoom() / 1.03f);
-					/*setOffsetMapX(_mouseMapX*zoom() - mouseAbsoluteX);
-					setOffsetMapY(_mouseMapY*zoom() - mouseAbsoluteY);*/
+				if (mapSizeX * MapGameState.TILESIZE * map.zoom() > container.getWidth() && mapSizeY * MapGameState.TILESIZE * map.zoom() > container.getHeight()) {
+					if (_input.isKeyDown(209) && map.zoom() > 0) {
+						map.setZoom(1/1.03f, _input.getAbsoluteMouseX(), _input.getAbsoluteMouseY());
+						setZoom(zoom() / 1.03f);
+						setOffsetMapX(offsetMapX() / 1.03f + _input.getMouseX() * (-1f+1/1.03f));
+						setOffsetMapY(offsetMapY() / 1.03f + _input.getMouseY() * (-1f+1/1.03f));
 					}
+				}
 				
 				
 	}
