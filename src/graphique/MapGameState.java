@@ -193,12 +193,13 @@ public class MapGameState extends BasicGameState implements Observer {
 		
 		//Configuration du bouton menu principal
 		if (_bouton_menuPrincipal.isPressed()) {
+			/* TODO c'est bancal
 			container.setPaused(false);
 			_input.clearMousePressedRecord();
 			World.resetJoueurs();
 			enJeu = false;
 			//_joueurs.clear();
-			this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");
+			this.game.enterState(MainScreenGameState.ID, "src/asset/musics/menu_music.ogg");*/
 		}
 	}
 
