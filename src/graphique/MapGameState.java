@@ -249,7 +249,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		//Position de la souris
 		mouseAbsoluteX = _input.getAbsoluteMouseX();
 		mouseAbsoluteY = _input.getAbsoluteMouseY();
-		
+
 		/*_mouseMapY = (mouseAbsoluteY + offsetMapY()) / zoom();
 		_mouseMapX = (mouseAbsoluteX + offsetMapX()) / zoom();*/
 		mouse = "MouseAbsoluteX : " + mouseAbsoluteX + ", MouseAbsoluteY : " + mouseAbsoluteY;
@@ -423,14 +423,14 @@ public class MapGameState extends BasicGameState implements Observer {
 	public void mouseWheelMoved(int n) {
 		MapTest focus = (_targetw != null && _targetw.isOver(_input.getMouseX(), _input.getMouseY()))?_targetw : _mainm;
 		if (n < 0) {
-			focus.setZoom(1/1.03f, _input.getAbsoluteMouseX(), _input.getAbsoluteMouseY());
+			focus.setZoom(1.03f, _input.getMouseX(), _input.getMouseY());
 
 
 
 		} else if (n > 0) {
 			//Zoom arrière
 			if (_tailleMapX * TILESIZE * focus.zoom() > _mainm.getWidth() && _tailleMapX * TILESIZE * focus.zoom() > _mainm.getHeight()) {
-				focus.setZoom(1.03f, _input.getMouseX(), _input.getMouseY());
+				focus.setZoom(1/1.03f, _input.getAbsoluteMouseX(), _input.getAbsoluteMouseY());
 			}
 		}
 	}
