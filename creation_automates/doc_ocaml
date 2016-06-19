@@ -1,6 +1,6 @@
 Creation d'automates : 
 
-la création d'un automate visant a etre utilise par le programme principale se fait
+la création d'un automate visant a etre utilise par le programme principal se fait
 par le biais de l'assemblage de plusieurs plus petits automates, décrivant chacun
 une partie du comportement de l'automate final.
 
@@ -48,6 +48,10 @@ transition poids condition action etat_courant etat_suivant : automate
 #un automate qui attaque chaque ennemi adjacent quand il est dans#
 #l'etat etat_courant, puis passe dans etat_suivant#
 hostile poids etat_courant etat_suivant : automate
+
+#un automate qui suit un ordre qui lui a ete donne si il est#
+#dans l'etat etat_courant, puis passe dans etat_suivant#
+suiveur poids etat_courant etat_suivant : automate
 
 #un automate qui coupe chaque arbre adjacent quand il est dans#
 #l'etat etat_courant, puis passe dans etat_suivant#
