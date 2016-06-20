@@ -250,7 +250,7 @@ public static void sinit() throws SlickException
 	    {
 	    	if(_state.statut == Statut.HIDE || _state.statut == Statut.HIDING)
 	    		_state.statut = Statut.HIDE;
-	    	else
+	    	else if(_state.statut == Statut.AVANCE)
 	    		_state.statut = Statut.ATTENDS;
 			refreshAnimation();
 	    }
