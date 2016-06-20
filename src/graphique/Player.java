@@ -105,7 +105,7 @@ public static void sinit() throws SlickException
 
 
 
-	    SpriteSheet spriteSheetW = new SpriteSheet("src/asset/sprites/WEAPON_dagger.png", 64, 64);
+	    SpriteSheet spriteSheetW = new SpriteSheet("./src/asset/sprites/WEAPON_dagger.png", 64, 64);
 	    Danimations[0] = loadAnimation(spriteSheetW, 0, 5, 0);
 	    Danimations[1] = loadAnimation(spriteSheetW, 0, 5, 1);
 	    Danimations[2] = loadAnimation(spriteSheetW, 0, 5, 2);

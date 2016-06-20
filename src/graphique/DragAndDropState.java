@@ -71,7 +71,7 @@ class DragAndDropState extends BasicGameState {
 
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		_input = container.getInput();
-		Image img = new Image("src/asset/sprites/ui_big_pieces.png");
+		Image img = new Image("./src/asset/sprites/ui_big_pieces.png");
 		Image normalImage = img.getSubImage(633, 23, 123, 27);
 		Image overImage = img.getSubImage(633, 53, 123, 27);
 		Image downImage = img.getSubImage(633, 83, 123, 27);

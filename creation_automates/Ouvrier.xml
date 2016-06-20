@@ -87,7 +87,7 @@
 				<condition2 quantite="100">RessourcesPossedees</condition2>
 			</condition1>
 			<condition2 compose="Ou">
-				<condition1 quantite="5">NbInf</condition1>
+				<condition1 quantite="3">NbInf</condition1>
 				<condition2 quantite="25">RatioInf</condition2>
 			</condition2>
 		</condition>

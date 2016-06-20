@@ -40,9 +40,9 @@ public class MainScreenGameState extends BasicGameState {
 	 */
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		_input = container.getInput();
-		this.background = new Image("src/asset/images/gilead_entry_area_by_rusty001-d2y351t.jpg");
+		this.background = new Image("./src/asset/images/gilead_entry_area_by_rusty001-d2y351t.jpg");
 		
-		Image img = new Image("src/asset/sprites/ui_big_pieces.png");
+		Image img = new Image("./src/asset/sprites/ui_big_pieces.png");
 		Image normalImage = img.getSubImage(633, 23, 123, 27);
 		Image overImage = img.getSubImage(633, 53, 123, 27);
 		Image downImage = img.getSubImage(633, 83, 123, 27);
@@ -51,7 +51,7 @@ public class MainScreenGameState extends BasicGameState {
 		_bouton_son = new Button(container, "Désactiver son", container.getWidth()/2-62, container.getHeight()/2, normalImage, overImage, downImage);
 		_bouton_quitter = new Button(container, "Quitter", container.getWidth()/2-62, container.getHeight()/2+80, normalImage, overImage, downImage);
 		_bouton_options = new Button(container, "Options", container.getWidth()/2-62, container.getHeight()/2+40, normalImage, overImage, downImage);
-		music = new Music("src/asset/musics/menu_music.ogg");
+		music = new Music("./src/asset/musics/menu_music.ogg");
 	    music.loop();
 
 

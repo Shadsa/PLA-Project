@@ -12,7 +12,7 @@ public class Hud {//550 182
 	private int debug = 10;
 
 	public void init() throws SlickException {
-		playerBars = new Image("src/asset/sprites/ui_big_pieces.png");
+		playerBars = new Image("./src/asset/sprites/ui_big_pieces.png");
 	}
 
 	public void render (Graphics g, int j) { HUD_BAR_Y = j;

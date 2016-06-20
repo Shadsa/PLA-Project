@@ -54,7 +54,7 @@ public class InitGameState extends BasicGameState {
 		/*woks.createClasse("Ouvrier", null, "Ouvrier", "Ouvrier");
 		woks.createClasse("Default", null, "RandomNoIdea", "ClasseTest");*/
 		Button.init();
-		UI = new Image("src/asset/sprites/ui_big_pieces.png");
+		UI = new Image("./src/asset/sprites/ui_big_pieces.png");
 		UIFs1 = new ArrayList<UnitInfo>();
 		UIFs2 = new ArrayList<UnitInfo>();
 		//autlist = new ArrayList<Automate>();
@@ -63,7 +63,7 @@ public class InitGameState extends BasicGameState {
 		Classe boost = woks.getDeckClasse("Default");//new Classe(10,5,5,0,"default class",Bonus.VIE);
   		World.classes.add(generique);
   		World.classes.add(boost);*/
-		background = new Image("src/asset/images/gilead_entry_area_by_rusty001-d2y351t.jpg");
+		background = new Image("./src/asset/images/gilead_entry_area_by_rusty001-d2y351t.jpg");
 		InitGameState.game = (StateGame) game;
 		my_button = new Button(container, "Ajouter unité",container.getWidth()/4, container.getHeight()/4);
 		_bouton_jouer = new Button(container, "Jouer", container.getWidth()*3/4, container.getHeight()*3/4);
@@ -75,8 +75,8 @@ public class InitGameState extends BasicGameState {
 		setFont("Arial", 10);
 		widthInput = new TextField (container, ttf, _bouton_jouer.x - 60, _bouton_jouer.y+10, 30, 20);
 		heightInput = new TextField (container, ttf, _bouton_jouer.x - 30, _bouton_jouer.y+10, 30, 20);
-		widthInput.setText("20");
-		heightInput.setText("15");
+		widthInput.setText("75");
+		heightInput.setText("45");
 	}
 
 	/**

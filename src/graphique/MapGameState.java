@@ -80,7 +80,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		_input = container.getInput();
 		this.game = (StateGame) game;
 		//Initialisation des images boutons
-		Image img = new Image("src/asset/sprites/ui_big_pieces.png");
+		Image img = new Image("./src/asset/sprites/ui_big_pieces.png");
 		Image normalImage = img.getSubImage(633, 23, 123, 27);
 		Image overImage = img.getSubImage(633, 53, 123, 27);
 		Image downImage = img.getSubImage(633, 83, 123, 27);
