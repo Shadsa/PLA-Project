@@ -250,8 +250,8 @@ public static void sinit() throws SlickException
 	    {
 	    	if(_state.statut == Statut.HIDE || _state.statut == Statut.HIDING)
 	    		_state.statut = Statut.HIDE;
-	    	else
-	    		_state.statut = Statut.ATTENDS;
+	    	else if(_state.statut == Statut.AVANCE)
+	    		_state.statut = Statut.END;
 			refreshAnimation();
 	    }
 	}
@@ -353,6 +353,9 @@ public static void sinit() throws SlickException
 				    break;
 				    case ATTENDS:
 				    	anim = 25; dir = 0;
+				    break;
+				    case END:
+				    	anim = 0;
 				    break;
 					case ATTAQUE:
 						anim = 8;
