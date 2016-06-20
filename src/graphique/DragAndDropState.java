@@ -287,6 +287,24 @@ class DragAndDropState extends BasicGameState {
 	}
 	
 	/**
+	 * Notification que la roulette de la souris a été bougée (la méthode est appelée à ce moment là).
+	 * @param n Sens du mouvement de la roulette.
+	 */
+	public void mouseWheelMoved(int n) {
+		if (n > 0) {
+			map.setZoom(1.03f, _input.getMouseX(), _input.getMouseY());
+
+
+
+		} else if (n < 0) {
+			//Zoom arrière
+			if (_tailleMapX * MapGameState.TILESIZE * map.zoom() > map.getWidth() && _tailleMapX * MapGameState.TILESIZE * map.zoom() > map.getHeight()) {
+				map.setZoom(1/1.03f, _input.getAbsoluteMouseX(), _input.getAbsoluteMouseY());
+			}
+		}
+	}
+	
+	/**
 	 * Notification que l'on entre dans cette boucle de jeu.
 	 * @param container Le contexte dans lequels les composants sont crées et affichés.
 	 * @param game Le contrôleur des différentes boucles de jeu.

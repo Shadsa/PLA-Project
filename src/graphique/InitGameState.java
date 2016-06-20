@@ -45,14 +45,8 @@ public class InitGameState extends BasicGameState {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 
 		woks = StateGame.workshop;
-		try {
-			woks.loadClassWS();
-		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		woks.createClasse("Ouvrier", null, "Ouvrier", "Ouvrier");
-		woks.createClasse("Default", null, "RandomNoIdea", "ClasseTest");
+		/*woks.createClasse("Ouvrier", null, "Ouvrier", "Ouvrier");
+		woks.createClasse("Default", null, "RandomNoIdea", "ClasseTest");*/
 
 
 		Button.init();
@@ -61,10 +55,10 @@ public class InitGameState extends BasicGameState {
 		UIFs2 = new ArrayList<UnitInfo>();
 		//autlist = new ArrayList<Automate>();
 		//classes = new ArrayList<Classe>();
-		Classe generique = woks.getDeckClasse("Ouvrier");//= new Classe(10,5,5,0,"default class",null);
+		/*Classe generique = woks.getDeckClasse("Ouvrier");//= new Classe(10,5,5,0,"default class",null);
 		Classe boost = woks.getDeckClasse("Default");//new Classe(10,5,5,0,"default class",Bonus.VIE);
   		World.classes.add(generique);
-  		World.classes.add(boost);
+  		World.classes.add(boost);*/
 		background = new Image("src/asset/images/gilead_entry_area_by_rusty001-d2y351t.jpg");
 		InitGameState.game = (StateGame) game;
 		my_button = new Button(container, "Ajouter unité",container.getWidth()/4, container.getHeight()/4);
@@ -218,6 +212,11 @@ public class InitGameState extends BasicGameState {
 			for(int j = Personnages2.size()-1; j>=i; j--) {
 				Personnages2.get(j).setLocation(my_button.x+300, (j == 0)? my_button.y+my_button.height+7 : Personnages2.get(j).y + Personnages2.get(j).height+7);
 			}
+		}
+		try {
+			woks.loadClassWS();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
 		}
 	}
 

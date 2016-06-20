@@ -93,7 +93,7 @@ public class UnitDialog extends JDialog {
     JPanel panNom = new JPanel();
     nom = new JTextField();
     nom.setPreferredSize(new Dimension(100, 25));
-    panNom.setBorder(BorderFactory.createTitledBorder("Nom Unit�"));
+    panNom.setBorder(BorderFactory.createTitledBorder("Nom Unite"));
     panNom.add(nom);
 
     //L'automate
@@ -115,7 +115,7 @@ public class UnitDialog extends JDialog {
     panFile.add(fichier);
     
     JPanel panFilec = new JPanel();
-    panFilec.setBorder(BorderFactory.createTitledBorder("Automate de combat"));
+    panFilec.setBorder(BorderFactory.createTitledBorder("Automate combat"));
     JComboBox<String> fichierc = new JComboBox<String>();
     for(String f : listeFichiers)
     	fichierc.addItem(f);

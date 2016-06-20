@@ -422,12 +422,12 @@ public class MapGameState extends BasicGameState implements Observer {
 	 */
 	public void mouseWheelMoved(int n) {
 		MapTest focus = (_targetw != null && _targetw.isOver(_input.getMouseX(), _input.getMouseY()))?_targetw : _mainm;
-		if (n < 0) {
+		if (n > 0) {
 			focus.setZoom(1.03f, _input.getMouseX(), _input.getMouseY());
 
 
 
-		} else if (n > 0) {
+		} else if (n < 0) {
 			//Zoom arrière
 			if (_tailleMapX * TILESIZE * focus.zoom() > _mainm.getWidth() && _tailleMapX * TILESIZE * focus.zoom() > _mainm.getHeight()) {
 				focus.setZoom(1/1.03f, _input.getAbsoluteMouseX(), _input.getAbsoluteMouseY());

@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
+import java.io.IOException;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -145,23 +147,30 @@ public class ClassDialog extends JDialog {
 	    JButton cost = new JButton("Coût");
 
 	    okBouton.addActionListener(new ActionListener(){
-	      public void actionPerformed(ActionEvent arg0) {
-	    	  	//cost.doClick();
-	    	  classinfo.name(nom.getText());
-	    	  classinfo.armor(Integer.parseInt(Armor.getText()));
-	    	  classinfo.heal(Integer.parseInt(Heal.getText()));
-	    	  classinfo.HP(Integer.parseInt(HP.getText()));
-	    	  classinfo.damage(Integer.parseInt(Damage.getText()));
-	    	  classinfo.bonus((Bonus) bonus.getSelectedItem());
-	    	  classinfo.loadDeckAction(StateGame.workshop.getDeckAction(action.getSelectedItem().toString()));
-	    	  classinfo.loadDeckCondition(StateGame.workshop.getDeckCondition(condition.getSelectedItem().toString()));
-	    	  classinfo.setcost(Integer.parseInt(Cost.getText()));
-	    	  if(walker.getSelectedItem().toString().equalsIgnoreCase("oui")){
-	    		  classinfo.hard_walker(true);
-	    	  }else{
-	    		  classinfo.hard_walker(false);
-	    	  }
-	    	  setVisible(false);
+	    	public void actionPerformed(ActionEvent arg0) {
+    	  	//okBouton.doClick();
+	    	classinfo.name(nom.getText());
+	    	classinfo.armor(Integer.parseInt(Armor.getText()));
+	    	classinfo.heal(Integer.parseInt(Heal.getText()));
+	    	classinfo.HP(Integer.parseInt(HP.getText()));
+	    	classinfo.damage(Integer.parseInt(Damage.getText()));
+	    	classinfo.bonus((Bonus) bonus.getSelectedItem());
+	    	classinfo.loadDeckAction(StateGame.workshop.getDeckAction(action.getSelectedItem().toString()));
+	    	classinfo.loadDeckCondition(StateGame.workshop.getDeckCondition(condition.getSelectedItem().toString()));
+	    	classinfo.setcost(Integer.parseInt(Cost.getText()));
+	    	if(walker.getSelectedItem().toString().equalsIgnoreCase("oui")){
+	    		classinfo.hard_walker(true);
+    	    }else{
+    		    classinfo.hard_walker(false);
+    	    }
+    	    setVisible(false);
+    	  	try {
+				StateGame.workshop.saveClass(classinfo);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	  	System.out.println("OK");
 	      }
 	    });
 

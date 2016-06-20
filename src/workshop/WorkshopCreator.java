@@ -19,7 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class WorkshopCreator {
 
-	private String filepath = "WorkShop/";//"../../WorkShop/";
+	private String filepath = "./WorkShop/";//"../../WorkShop/";
 	private ArrayList<String> deckActionName;
 	private ArrayList<String> deckConditionName;
 	private ArrayList<String> deckClasseName;
@@ -119,6 +119,7 @@ public class WorkshopCreator {
 	}
 	
 	public void loadClassWS() throws FileNotFoundException, ClassNotFoundException, IOException{
+		deckClasse.clear();
 		ArrayList<File> files = new ArrayList<File>();
 		File f = new File(filepath+"classe.deck/");
 		for(File name : f.listFiles()){
@@ -135,7 +136,7 @@ public class WorkshopCreator {
 	
 	// SERIALIZATION FUNCTION
 	
-			public Classe loadClass(String name) throws FileNotFoundException, IOException, ClassNotFoundException{ //désérialisation
+			public Classe loadClass(String name) throws FileNotFoundException, IOException, ClassNotFoundException{ //dï¿½sï¿½rialisation
 				ObjectInputStream ois = new ObjectInputStream(
 			              					new BufferedInputStream(
 			              							new FileInputStream(
@@ -145,7 +146,7 @@ public class WorkshopCreator {
 			    return g;
 			}
 			
-			public void saveClass(Classe c) throws IOException{//sérialisation
+			public void saveClass(Classe c) throws IOException{//sï¿½rialisation
 			    ObjectOutputStream oos = new ObjectOutputStream(
 			    								new BufferedOutputStream(
 								            		  new FileOutputStream(
