@@ -7,13 +7,13 @@
 		<action>AvancerHasard</action>
 		<suivant>0</suivant>
 	</transition>
-	<transition poids="3">
+	<transition poids="5">
 		<etat>0</etat>
 		<condition direction="N">EnnemiProche</condition>
 		<action direction="N">Avancer</action>
 		<suivant>1</suivant>
 	</transition>
-	<transition poids="4">
+	<transition poids="6">
 		<etat>1</etat>
 		<condition direction="N">EnnemiProche</condition>
 		<action direction="N">Avancer</action>
@@ -25,13 +25,13 @@
 		<action>Attendre</action>
 		<suivant>0</suivant>
 	</transition>
-	<transition poids="3">
+	<transition poids="5">
 		<etat>0</etat>
 		<condition direction="S">EnnemiProche</condition>
 		<action direction="S">Avancer</action>
 		<suivant>2</suivant>
 	</transition>
-	<transition poids="4">
+	<transition poids="6">
 		<etat>2</etat>
 		<condition direction="S">EnnemiProche</condition>
 		<action direction="S">Avancer</action>
@@ -43,13 +43,13 @@
 		<action>Attendre</action>
 		<suivant>0</suivant>
 	</transition>
-	<transition poids="3">
+	<transition poids="5">
 		<etat>0</etat>
 		<condition direction="E">EnnemiProche</condition>
 		<action direction="E">Avancer</action>
 		<suivant>3</suivant>
 	</transition>
-	<transition poids="4">
+	<transition poids="6">
 		<etat>3</etat>
 		<condition direction="E">EnnemiProche</condition>
 		<action direction="E">Avancer</action>
@@ -61,13 +61,13 @@
 		<action>Attendre</action>
 		<suivant>0</suivant>
 	</transition>
-	<transition poids="3">
+	<transition poids="5">
 		<etat>0</etat>
 		<condition direction="O">EnnemiProche</condition>
 		<action direction="O">Avancer</action>
 		<suivant>4</suivant>
 	</transition>
-	<transition poids="4">
+	<transition poids="6">
 		<etat>4</etat>
 		<condition direction="O">EnnemiProche</condition>
 		<action direction="O">Avancer</action>
@@ -109,31 +109,31 @@
 		<action>Combattre</action>
 		<suivant>0</suivant>
 	</transition>
-	<transition poids="100">
+	<transition poids="4">
 		<etat>0</etat>
 		<condition>OrdreDonne</condition>
 		<action>AvancerJoueur</action>
 		<suivant>0</suivant>
 	</transition>
-	<transition poids="100">
+	<transition poids="4">
 		<etat>1</etat>
 		<condition>OrdreDonne</condition>
 		<action>AvancerJoueur</action>
 		<suivant>0</suivant>
 	</transition>
-	<transition poids="100">
+	<transition poids="4">
 		<etat>2</etat>
 		<condition>OrdreDonne</condition>
 		<action>AvancerJoueur</action>
 		<suivant>0</suivant>
 	</transition>
-	<transition poids="100">
+	<transition poids="4">
 		<etat>3</etat>
 		<condition>OrdreDonne</condition>
 		<action>AvancerJoueur</action>
 		<suivant>0</suivant>
 	</transition>
-	<transition poids="100">
+	<transition poids="4">
 		<etat>4</etat>
 		<condition>OrdreDonne</condition>
 		<action>AvancerJoueur</action>

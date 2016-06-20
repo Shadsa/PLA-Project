@@ -19,17 +19,11 @@
 		<action>Soigner</action>
 		<suivant>1</suivant>
 	</transition>
-	<transition poids="10">
-		<etat>1</etat>
-		<condition>UnAmi</condition>
-		<action>Soigner</action>
-		<suivant>0</suivant>
-	</transition>
 	<transition poids="1">
 		<etat>1</etat>
 		<condition compose="Et">
 			<condition1 direction="N">Libre</condition1>
-			<condition2 quantite="118">RessourcesPossedees</condition2>
+			<condition2 quantite="103">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="N">PoserPiege</action>
 		<suivant>0</suivant>
@@ -38,7 +32,7 @@
 		<etat>1</etat>
 		<condition compose="Et">
 			<condition1 direction="S">Libre</condition1>
-			<condition2 quantite="118">RessourcesPossedees</condition2>
+			<condition2 quantite="103">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="S">PoserPiege</action>
 		<suivant>0</suivant>
@@ -47,7 +41,7 @@
 		<etat>1</etat>
 		<condition compose="Et">
 			<condition1 direction="E">Libre</condition1>
-			<condition2 quantite="118">RessourcesPossedees</condition2>
+			<condition2 quantite="103">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="E">PoserPiege</action>
 		<suivant>0</suivant>
@@ -56,7 +50,70 @@
 		<etat>1</etat>
 		<condition compose="Et">
 			<condition1 direction="O">Libre</condition1>
-			<condition2 quantite="118">RessourcesPossedees</condition2>
+			<condition2 quantite="103">RessourcesPossedees</condition2>
+		</condition>
+		<action direction="O">PoserPiege</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="100">
+		<etat>0</etat>
+		<condition compose="Et">
+			<condition1 direction="N">Libre</condition1>
+			<condition2>OrdreDonne</condition2>
+		</condition>
+		<action direction="N">PoserPiege</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="100">
+		<etat>0</etat>
+		<condition compose="Et">
+			<condition1 direction="S">Libre</condition1>
+			<condition2>OrdreDonne</condition2>
+		</condition>
+		<action direction="S">PoserPiege</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="100">
+		<etat>0</etat>
+		<condition compose="Et">
+			<condition1 direction="O">Libre</condition1>
+			<condition2>OrdreDonne</condition2>
+		</condition>
+		<action direction="O">PoserPiege</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="100">
+		<etat>1</etat>
+		<condition compose="Et">
+			<condition1 direction="N">Libre</condition1>
+			<condition2>OrdreDonne</condition2>
+		</condition>
+		<action direction="N">PoserPiege</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="100">
+		<etat>1</etat>
+		<condition compose="Et">
+			<condition1 direction="E">Libre</condition1>
+			<condition2>OrdreDonne</condition2>
+		</condition>
+		<action direction="E">PoserPiege</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="100">
+		<etat>1</etat>
+		<condition compose="Et">
+			<condition1 direction="S">Libre</condition1>
+			<condition2>OrdreDonne</condition2>
+		</condition>
+		<action direction="S">PoserPiege</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="100">
+		<etat>1</etat>
+		<condition compose="Et">
+			<condition1 direction="O">Libre</condition1>
+			<condition2>OrdreDonne</condition2>
 		</condition>
 		<action direction="O">PoserPiege</action>
 		<suivant>0</suivant>

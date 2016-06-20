@@ -1,6 +1,6 @@
 <?xml version = "1.0" encoding="UTF-8" standalone="no" ?>
 
-<automate nbEtats="2">
+<automate nbEtats="5">
 	<transition poids="1">
 		<etat>0</etat>
 		<condition>Vide</condition>
@@ -65,7 +65,7 @@
 		<etat>1</etat>
 		<condition compose="Et">
 			<condition1 direction="N">Libre</condition1>
-			<condition2 quantite="128">RessourcesPossedees</condition2>
+			<condition2 quantite="112">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="N">ConstruireMur</action>
 		<suivant>0</suivant>
@@ -74,7 +74,7 @@
 		<etat>1</etat>
 		<condition compose="Et">
 			<condition1 direction="S">Libre</condition1>
-			<condition2 quantite="128">RessourcesPossedees</condition2>
+			<condition2 quantite="112">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="S">ConstruireMur</action>
 		<suivant>0</suivant>
@@ -83,7 +83,7 @@
 		<etat>1</etat>
 		<condition compose="Et">
 			<condition1 direction="E">Libre</condition1>
-			<condition2 quantite="128">RessourcesPossedees</condition2>
+			<condition2 quantite="112">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="E">ConstruireMur</action>
 		<suivant>0</suivant>
@@ -92,7 +92,7 @@
 		<etat>1</etat>
 		<condition compose="Et">
 			<condition1 direction="O">Libre</condition1>
-			<condition2 quantite="128">RessourcesPossedees</condition2>
+			<condition2 quantite="112">RessourcesPossedees</condition2>
 		</condition>
 		<action direction="O">ConstruireMur</action>
 		<suivant>0</suivant>
@@ -100,49 +100,31 @@
 	<transition poids="100">
 		<etat>0</etat>
 		<condition>OrdreDonne</condition>
-		<action direction="N">ConstruireMur</action>
-		<suivant>1</suivant>
-	</transition>
-	<transition poids="100">
-		<etat>0</etat>
-		<condition>OrdreDonne</condition>
-		<action direction="E">ConstruireMur</action>
-		<suivant>1</suivant>
-	</transition>
-	<transition poids="100">
-		<etat>0</etat>
-		<condition>OrdreDonne</condition>
-		<action direction="S">ConstruireMur</action>
-		<suivant>1</suivant>
-	</transition>
-	<transition poids="100">
-		<etat>0</etat>
-		<condition>OrdreDonne</condition>
-		<action direction="O">ConstruireMur</action>
-		<suivant>1</suivant>
-	</transition>
-	<transition poids="100">
-		<etat>1</etat>
-		<condition>OrdreDonne</condition>
-		<action direction="N">ConstruireMur</action>
+		<action>AvancerJoueur</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="100">
 		<etat>1</etat>
 		<condition>OrdreDonne</condition>
-		<action direction="E">ConstruireMur</action>
+		<action>AvancerJoueur</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="100">
-		<etat>1</etat>
+		<etat>2</etat>
 		<condition>OrdreDonne</condition>
-		<action direction="S">ConstruireMur</action>
+		<action>AvancerJoueur</action>
 		<suivant>0</suivant>
 	</transition>
 	<transition poids="100">
-		<etat>1</etat>
+		<etat>3</etat>
 		<condition>OrdreDonne</condition>
-		<action direction="O">ConstruireMur</action>
+		<action>AvancerJoueur</action>
+		<suivant>0</suivant>
+	</transition>
+	<transition poids="100">
+		<etat>4</etat>
+		<condition>OrdreDonne</condition>
+		<action>AvancerJoueur</action>
 		<suivant>0</suivant>
 	</transition>
 </automate>
