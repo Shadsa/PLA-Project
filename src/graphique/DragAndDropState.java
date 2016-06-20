@@ -59,6 +59,7 @@ class DragAndDropState extends BasicGameState {
 	private Button _bouton_sauvegarder;
 	private Button _bouton_charger;
 	private Button _bouton_placerAutomate;
+	private Button _bouton_placerAutomate2;
 	private Button _bouton_confirmer;
 	
 	private TextField textInput;
@@ -78,8 +79,9 @@ class DragAndDropState extends BasicGameState {
 		_bouton_Jouer = new Button(container, "Jouer", container.getWidth()-150, container.getHeight()-50, normalImage, overImage, downImage);
 		_bouton_sauvegarder = new Button(container, "Sauvegarder", container.getWidth()-150, 10, normalImage, overImage, downImage);
 		_bouton_charger = new Button(container, "Charger", container.getWidth()-150, 50, normalImage, overImage, downImage);
-		_bouton_placerAutomate = new Button(container, "Placer Automate", container.getWidth()-150, 90, normalImage, overImage, downImage);
-		_bouton_confirmer = new Button(container, "Confirmer", container.getWidth()-150, 130, normalImage, overImage, downImage);
+		_bouton_placerAutomate = new Button(container, "Placer Automate1", container.getWidth()-150, 90, normalImage, overImage, downImage);
+		_bouton_placerAutomate2 = new Button(container, "Placer Automate2", container.getWidth()-150, 130, normalImage, overImage, downImage);
+		_bouton_confirmer = new Button(container, "Confirmer", container.getWidth()-150, 170, normalImage, overImage, downImage);
 		setFont("Arial", 20);
 		textInput = new TextField (container, ttf, container.getWidth()/2-150, container.getHeight()/2-40, 300, 28);
 		textInput.setBorderColor(Color.white);
@@ -97,6 +99,7 @@ class DragAndDropState extends BasicGameState {
 		_bouton_sauvegarder.render(container, g);
 		_bouton_charger.render(container, g);
 		_bouton_placerAutomate.render(container, g);
+		_bouton_placerAutomate2.render(container, g);
 		if (c01 != null) {
 			g.drawImage(Hud.playerBars, -offsetMapX() + toX(c01.X()), -offsetMapY() + toY(c01.Y()),-offsetMapX() + toX(c01.X())+ MapGameState.TILESIZE*zoom(), -offsetMapY() + toY(c01.Y())+ MapGameState.TILESIZE*zoom(), 440, 419, 560, 539);
 		}
@@ -200,6 +203,7 @@ class DragAndDropState extends BasicGameState {
 			_bouton_sauvegarder.update(container);
 			_bouton_charger.update(container);
 			_bouton_placerAutomate.update(container);
+			_bouton_placerAutomate2.update(container);
 			
 			
 			
@@ -207,6 +211,15 @@ class DragAndDropState extends BasicGameState {
 			if (_bouton_placerAutomate.isDown()) {
 				try {
 					_mainw.putAutomates(World.joueurs.get(0).Automates(), 1, 1, World.joueurs.get(0));
+					map.initialise(_mainw);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				map.initialise(_mainw);
+			}
+			//Configuration bouton placer automate
+			if (_bouton_placerAutomate2.isDown()) {
+				try {
 					_mainw.putAutomates(World.joueurs.get(1).Automates(),_mainw.map().largeur()-2, _mainw.map().hauteur()-2, World.joueurs.get(1));
 					map.initialise(_mainw);
 				} catch (Exception e) {
