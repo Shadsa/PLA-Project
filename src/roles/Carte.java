@@ -288,7 +288,7 @@ public class Carte extends Vector<Vector<Case>> implements Serializable{
 	}
 	
 	public void switchCase(Case c1, Case c2){
-		if(c1 == null || c2 == null || (c1 instanceof Terrain && c2 instanceof Terrain)){
+		if(c1 == null || c2 == null){
 			return;
 		}
 		int x1 = c1.X();
