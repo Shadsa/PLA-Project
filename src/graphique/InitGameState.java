@@ -8,6 +8,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -39,16 +42,17 @@ public class InitGameState extends BasicGameState {
 	private ArrayList<UnitInfo> UIFs2;
 	//private ArrayList<Automate> autlist;
 	//private ArrayList<Classe> classes;
-
+	private TextField widthInput;
+	private TextField heightInput;
 	public WorkshopCreator woks;
+
+	private UnicodeFont ttf;
 
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 
 		woks = StateGame.workshop;
 		/*woks.createClasse("Ouvrier", null, "Ouvrier", "Ouvrier");
 		woks.createClasse("Default", null, "RandomNoIdea", "ClasseTest");*/
-
-
 		Button.init();
 		UI = new Image("src/asset/sprites/ui_big_pieces.png");
 		UIFs1 = new ArrayList<UnitInfo>();
@@ -67,6 +71,12 @@ public class InitGameState extends BasicGameState {
 		_bouton_retour = new Button(container, "Retour", my_button.x + 70, _bouton_jouer.y);
 		Personnages = new ArrayList<CrossButton>();
 		Personnages2 = new ArrayList<CrossButton>();
+		
+		setFont("Arial", 10);
+		widthInput = new TextField (container, ttf, _bouton_jouer.x - 60, _bouton_jouer.y+10, 30, 20);
+		heightInput = new TextField (container, ttf, _bouton_jouer.x - 30, _bouton_jouer.y+10, 30, 20);
+		widthInput.setText("20");
+		heightInput.setText("15");
 	}
 
 	/**
@@ -86,6 +96,8 @@ public class InitGameState extends BasicGameState {
 		_bouton_quitter.render(container, g);
 		_bouton_retour.render(container, g);
 		g.setColor(Color.white);
+		widthInput.render(container, g);
+		heightInput.render(container, g);
 	}
 
 	/**
@@ -149,13 +161,18 @@ public class InitGameState extends BasicGameState {
 		//Configuration du bouton jouer
 		if (_bouton_jouer.isPressed()) {	    
 		    //TODO CONFLIT ICI!!!
-
-		    
+			try {
+			DragAndDropState._tailleMapX = Integer.parseInt(widthInput.getText());
+			DragAndDropState._tailleMapY = Integer.parseInt(heightInput.getText());
+			((DragAndDropState)InitGameState.game.getState(DragAndDropState.ID)).setGame(UIFs1,UIFs2);
+			InitGameState.game.enterState(DragAndDropState.ID, "src/asset/musics/game_music.ogg");
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
 			///////////////////
 			//Initialisation du monde
 			//World.BuildMap(_tailleMapY,_tailleMapX);
-			((DragAndDropState)InitGameState.game.getState(DragAndDropState.ID)).setGame(UIFs1,UIFs2);
-				InitGameState.game.enterState(DragAndDropState.ID, "src/asset/musics/game_music.ogg");
+
 			///////////////////
 			/*((MapGameState)InitGameState.game.getState(MapGameState.ID)).setGame(UIFs1,UIFs2);
 				InitGameState.game.enterState(MapGameState.ID, "src/asset/musics/game_music.ogg");*/
@@ -171,6 +188,8 @@ public class InitGameState extends BasicGameState {
 		_bouton_jouer.setLocation(container.getWidth() * 3 / 4, container.getHeight() * 3 / 4);
 		_bouton_quitter.setLocation(my_button.x, _bouton_jouer.y);
 		_bouton_retour.setLocation(my_button.x + 70, _bouton_jouer.y);
+		widthInput.setLocation(_bouton_jouer.x - 60, _bouton_jouer.y+10);
+		heightInput.setLocation(_bouton_jouer.x - 30, _bouton_jouer.y+10);
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
@@ -190,6 +209,15 @@ public class InitGameState extends BasicGameState {
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void setFont(String nom, int fontSize) throws SlickException {     
+		ttf = new UnicodeFont(new java.awt.Font(nom, java.awt.Font.PLAIN, fontSize));
+		ttf.addAsciiGlyphs();
+		ttf.addGlyphs(400,600);
+		ttf.getEffects().add(new ColorEffect());
+		ttf.loadGlyphs();
 	}
 
 	public void keyPressed(int key, char c) {

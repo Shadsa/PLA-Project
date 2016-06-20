@@ -34,13 +34,13 @@ import graphique.MapGameState;
 
 class DragAndDropState extends BasicGameState {
 	public static final int ID = 3;
-	private final int _tailleMapY = 45;
-	private final int _tailleMapX = 75;
+	public static int _tailleMapY;
+	public static int _tailleMapX;
 	private MapTest map ;
 	private float _offsetMapX=0;
 	private float _offsetMapY=0;
-	private int mapSizeX = _tailleMapX * MapGameState.TILESIZE;;
-	private int mapSizeY = _tailleMapY * MapGameState.TILESIZE;;
+	private int mapSizeX = _tailleMapX * MapGameState.TILESIZE;
+	private int mapSizeY = _tailleMapY * MapGameState.TILESIZE;
 	private boolean pause = false;
 	private boolean saveMode = false;
 	private ArrayList<UnitInfo> UIFs1;
@@ -274,7 +274,7 @@ class DragAndDropState extends BasicGameState {
 				}
 
 				//Zoom arrière
-				if (mapSizeX * MapGameState.TILESIZE * map.zoom() > container.getWidth() && mapSizeY * MapGameState.TILESIZE * map.zoom() > container.getHeight()) {
+				if (mapSizeX * map.zoom() > container.getWidth() || mapSizeY * map.zoom() > container.getHeight()) {
 					if (_input.isKeyDown(209) && map.zoom() > 0) {
 						map.setZoom(1/1.03f, _input.getAbsoluteMouseX(), _input.getAbsoluteMouseY());
 						setZoom(zoom() / 1.03f);
@@ -293,13 +293,16 @@ class DragAndDropState extends BasicGameState {
 	public void mouseWheelMoved(int n) {
 		if (n > 0) {
 			map.setZoom(1.03f, _input.getMouseX(), _input.getMouseY());
-
-
-
+			setZoom(zoom() * 1.03f);
+			setOffsetMapX(offsetMapX() * 1.03f + _input.getMouseX() * 0.03f);
+			setOffsetMapY(offsetMapY() * 1.03f + _input.getMouseY() * 0.03f);
 		} else if (n < 0) {
 			//Zoom arrière
-			if (_tailleMapX * MapGameState.TILESIZE * map.zoom() > map.getWidth() && _tailleMapX * MapGameState.TILESIZE * map.zoom() > map.getHeight()) {
+			if (mapSizeX * map.zoom() > map.getWidth() || mapSizeY * map.zoom() > map.getHeight()) {
 				map.setZoom(1/1.03f, _input.getAbsoluteMouseX(), _input.getAbsoluteMouseY());
+				setZoom(zoom() / 1.03f);
+				setOffsetMapX(offsetMapX() / 1.03f + _input.getMouseX() * (-1f+1/1.03f));
+				setOffsetMapY(offsetMapY() / 1.03f + _input.getMouseY() * (-1f+1/1.03f));
 			}
 		}
 	}
@@ -308,11 +311,11 @@ class DragAndDropState extends BasicGameState {
 	 * Notification que l'on entre dans cette boucle de jeu.
 	 * @param container Le contexte dans lequels les composants sont crées et affichés.
 	 * @param game Le contrôleur des différentes boucles de jeu.
-	 *
+	 **/
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		mapSizeX = _tailleMapX * MapGameState.TILESIZE;
-		mapSizeY 
-	}*/
+		mapSizeY = _tailleMapY * MapGameState.TILESIZE;
+	}
 	
 	public int fromX(float x)
 	{

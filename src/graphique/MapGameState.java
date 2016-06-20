@@ -279,7 +279,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		}
 
 		//Zoom arrière
-		if (_tailleMapX * TILESIZE * focus.zoom() > container.getWidth() && _tailleMapX * TILESIZE * focus.zoom() > container.getHeight()) {
+		if (_tailleMapX * TILESIZE * focus.zoom() > container.getWidth() || _tailleMapX * TILESIZE * focus.zoom() > container.getHeight()) {
 			if (_input.isKeyDown(209) && focus.zoom() > 0) {
 				focus.setZoom(1/1.03f, _input.getAbsoluteMouseX(), _input.getAbsoluteMouseY());
 			}
@@ -429,7 +429,7 @@ public class MapGameState extends BasicGameState implements Observer {
 
 		} else if (n < 0) {
 			//Zoom arrière
-			if (_tailleMapX * TILESIZE * focus.zoom() > _mainm.getWidth() && _tailleMapX * TILESIZE * focus.zoom() > _mainm.getHeight()) {
+			if (_tailleMapX * TILESIZE * focus.zoom() > _mainm.getWidth() || _tailleMapY * TILESIZE * focus.zoom() > _mainm.getHeight()) {
 				focus.setZoom(1/1.03f, _input.getAbsoluteMouseX(), _input.getAbsoluteMouseY());
 			}
 		}
