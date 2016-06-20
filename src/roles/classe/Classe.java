@@ -139,9 +139,9 @@ public class Classe implements Serializable {
 		avaibleCondition = cond;
 	}
 
-	public boolean isAction(Class<?> act){
-		for(int i=0;i<avaibleAction.size();i++){
-			if(act == avaibleAction.get(i)){return true;}
+	public boolean isAction(Class<? extends Action> class1){
+		for(int i=0;i<avaibleAction.size();i++){System.out.println(class1 + " " + avaibleAction.get(i));
+			if(class1 == avaibleAction.get(i)){return true;}
 		}
 		return false;
 	}
