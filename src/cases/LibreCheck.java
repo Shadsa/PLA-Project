@@ -13,7 +13,7 @@ public class LibreCheck implements CaseProperty {
 
 	@Override
 	public boolean check(Case c) {
-		return c != null && c.isfree() && (!(c.type() instanceof Arbre) || _pers.classe().hard_walker()
+		return c != null && c.isfree() && ((!(c.type() instanceof Arbre) || _pers.classe().hard_walker())
 				&& (!(c.type() instanceof Mur) || _pers.owner().joueur() == ((Construction) c.type()).getOwner()));
 	}
 
