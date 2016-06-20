@@ -22,7 +22,7 @@ public class Carte extends Vector<Vector<Case>> implements Serializable{
 	}
 
 
-	public Carte(int hauteur,int largeur){
+	public Carte(int hauteur,int largeur, Boolean isArena){
 		super(hauteur);
 		_hauteur = hauteur;
 		_largeur = largeur;
@@ -47,8 +47,10 @@ public class Carte extends Vector<Vector<Case>> implements Serializable{
 			}
 			add(ligne);
 		}
-		this.randomLac();
-		this.randomForet();
+		if(!isArena){
+			this.randomLac();
+			this.randomForet();
+		}
 	}
 
 	public Case Case(int x, int y) {

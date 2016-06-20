@@ -20,7 +20,7 @@ public class World {
 
 	public World(int hauteur, int largeur, Boolean isArena)
 	{
-		_map = new Carte(hauteur,largeur);
+		_map = new Carte(hauteur,largeur,isArena);
 		_isArena = isArena;
 	}
 
