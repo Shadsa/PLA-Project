@@ -44,7 +44,7 @@ public final class DupliquerZombie extends Action {
 		/*if(p.check(world.Case(destX, destY)))
 		{*/
 			Random R = new Random();
-			if(R.nextInt(Integer.min(100,pers.owner().getPersonnages().size()*2))<1)
+			if(R.nextInt(Integer.min(100,pers.owner().getPersonnages().size()))<1)
 				pers.owner().createPersonnage(pers.owner().joueur().getUnite(pers), destX, destY, null);
 			pers.setState(new States(Statut.INVOQUE, direction));
 		//}

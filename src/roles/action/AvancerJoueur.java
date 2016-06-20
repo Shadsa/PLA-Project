@@ -1,6 +1,8 @@
 package roles.action;
 
 import cases.Arbre;
+import cases.CaseProperty;
+import cases.LibreCheck;
 import roles.Cardinaux;
 import roles.Personnage;
 import roles.States;
@@ -15,10 +17,11 @@ public final class AvancerJoueur extends Action {
 	@Override
 	public void Act(World world, Personnage pers) {
 		Cardinaux direction = pers.directionJoueur();
+		CaseProperty p = new LibreCheck(pers);
 		if(direction==null) return;
 		int destX = pers.X() + ((direction == Cardinaux.OUEST)? (-1) : ((direction == Cardinaux.EST)? 1 : 0));
 		int destY = pers.Y() + ((direction == Cardinaux.NORD)? (-1) : ((direction == Cardinaux.SUD)? 1 : 0));
-		if(world.isfree(destX, destY))
+		if(p.check(world.Case(destX, destY)))
 		{
 			if(world.Case(destX, destY).type() instanceof Arbre)
 			{
