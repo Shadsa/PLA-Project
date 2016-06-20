@@ -36,7 +36,7 @@ public class UnitDialog extends JDialog {
 	private UnitInfo uInfo;
 
 	private Automate aut = null;
-	private Automate autc = null;	
+	private Automate autc = null;
 	private Classe cla = null;
 	private String choixJoueur;
 
@@ -113,7 +113,7 @@ public class UnitDialog extends JDialog {
     for(String f : listeFichiers)
     	fichier.addItem(f);
     panFile.add(fichier);
-    
+
     JPanel panFilec = new JPanel();
     panFilec.setBorder(BorderFactory.createTitledBorder("Automate combat"));
     JComboBox<String> fichierc = new JComboBox<String>();
@@ -167,7 +167,8 @@ public class UnitDialog extends JDialog {
     JButton okBouton = new JButton("OK");
 
     okBouton.addActionListener(new ActionListener(){
-      public void actionPerformed(ActionEvent arg0) {
+      @SuppressWarnings("static-access")
+	public void actionPerformed(ActionEvent arg0) {
     	  if(aut == null)
     		  getAutomate((String)fichier.getSelectedItem());
     	  if(aut == null)
@@ -182,12 +183,12 @@ public class UnitDialog extends JDialog {
     		  cla = (Classe)classe.getSelectedItem();//getClasse((String)classe.getSelectedItem());
     	  if(choixJoueur == null)
     		  choixJoueur = (String)joueur.getSelectedItem();
-    	  /*if(!aut.match(World.classes.get(0)))
+    	  if(!aut.match(cla))
     	  {
     		  JOptionPane jop = new JOptionPane();
-    		  jop.showMessageDialog(null, "Fichier automate ne convient pas � cette classe.", "Erreur", JOptionPane.ERROR_MESSAGE);
+    		  jop.showMessageDialog(null, "Fichier automate ne convient pas à cette classe.", "Erreur", JOptionPane.ERROR_MESSAGE);
     		  return;
-    	  }*/
+    	  }
     	  aut.setnom(nom.getText());
         uInfo = new UnitInfo(nom.getText(), aut, autc, cla,TypeUnit.valueOf(color.getSelectedItem().toString()), TypeClothes.valueOf(clothes.getSelectedItem().toString()), choixJoueur);
         setVisible(false);
@@ -266,7 +267,7 @@ public class UnitDialog extends JDialog {
 			JOptionPane.showMessageDialog(null, "Fichier automate invalide.", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
   }
-  
+
   void getAutomateC(String nom)
   {
 	  File file = new File("./creation_automates/" + nom);

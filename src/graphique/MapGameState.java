@@ -374,7 +374,7 @@ public class MapGameState extends BasicGameState implements Observer {
 	 * @param c le caractère de la touche relâchée.
 	 */
 	public void keyReleased(int key, char c) {
-		if(showhud == false) return;
+		if(_targetp == null) return;
 		switch(key)
 		{
 		case Input.KEY_Z:
@@ -619,6 +619,11 @@ public class MapGameState extends BasicGameState implements Observer {
 		_bouton_quitter.setLocation(container.getWidth()/2-62, container.getHeight()/2+80);
 		_bouton_reprendre.setLocation(container.getWidth()/2-62, container.getHeight()/2-80);
 		_bouton_menuPrincipal.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
+	}
+	
+	public void leave (GameContainer container, StateBasedGame game) {
+		secondeTime = 0;
+		minuteTime = 0;
 	}
 
 	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2, MapTest map) {

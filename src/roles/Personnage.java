@@ -144,32 +144,32 @@ public class Personnage extends Observable{
 		CaseProperty p = new LibreCheck(this);
 		switch(direction){
 		case EST:
-			p.check(_owner.world().Case(X()+1, Y()));
-			for(int range=1;range<=maxRange;range++)
-				for(int y=-range;y<=range;y++)
-					if(_owner.world().Case(X()+range, Y()+y)!=null && c.check(_owner.world().Case(X()+range, Y()+y)))
-						return true;
+			if(p.check(_owner.world().Case(X()+1, Y())))
+				for(int range=1;range<=maxRange;range++)
+					for(int y=-range;y<=range;y++)
+						if(_owner.world().Case(X()+range, Y()+y)!=null && c.check(_owner.world().Case(X()+range, Y()+y)))
+							return true;
 			break;
 		case OUEST:
-			p.check(_owner.world().Case(X()-1, Y()));
-			for(int range=1;range<=maxRange;range++)
-				for(int y=-range;y<=range;y++)
-					if(_owner.world().Case(X()-range, Y()+y)!=null && c.check(_owner.world().Case(X()-range, Y()+y)))
-						return true;
+			if(p.check(_owner.world().Case(X()-1, Y())))
+				for(int range=1;range<=maxRange;range++)
+					for(int y=-range;y<=range;y++)
+						if(_owner.world().Case(X()-range, Y()+y)!=null && c.check(_owner.world().Case(X()-range, Y()+y)))
+							return true;
 			break;
 		case SUD:
-			p.check(_owner.world().Case(X(), Y()+1));
-			for(int range=1;range<=maxRange;range++)
-				for(int x=-range;x<=range;x++)
-					if(_owner.world().Case(X()+x, Y()+range)!=null && c.check(_owner.world().Case(X()+x, Y()+range)))
-						return true;
+			if(p.check(_owner.world().Case(X(), Y()+1)))
+				for(int range=1;range<=maxRange;range++)
+					for(int x=-range;x<=range;x++)
+						if(_owner.world().Case(X()+x, Y()+range)!=null && c.check(_owner.world().Case(X()+x, Y()+range)))
+							return true;
 			break;
 		case NORD:
-			p.check(_owner.world().Case(X(), Y()-1));
-			for(int range=1;range<=maxRange;range++)
-				for(int x=-range;x<=range;x++)
-					if(_owner.world().Case(X()+x, Y()-range)!=null && c.check(_owner.world().Case(X()+x, Y()-range)))
-						return true;
+			if(p.check(_owner.world().Case(X(), Y()-1)))
+				for(int range=1;range<=maxRange;range++)
+					for(int x=-range;x<=range;x++)
+						if(_owner.world().Case(X()+x, Y()-range)!=null && c.check(_owner.world().Case(X()+x, Y()-range)))
+							return true;
 		}
 		return false;
 	}
