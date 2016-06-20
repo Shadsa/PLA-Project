@@ -620,6 +620,11 @@ public class MapGameState extends BasicGameState implements Observer {
 		_bouton_reprendre.setLocation(container.getWidth()/2-62, container.getHeight()/2-80);
 		_bouton_menuPrincipal.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
 	}
+	
+	public void leave (GameContainer container, StateBasedGame game) {
+		secondeTime = 0;
+		minuteTime = 0;
+	}
 
 	public void setGame(ArrayList<UnitInfo> uIFs1, ArrayList<UnitInfo> uIFs2, MapTest map) {
 	    _GUnivers.add(map);
