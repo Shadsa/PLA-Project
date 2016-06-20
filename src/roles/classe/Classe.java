@@ -53,9 +53,6 @@ public class Classe implements Serializable {
 			case ARMURE:
 				_armor+=10;
 				break;
-			case OPBUFF:
-				_HP+=30;_damage+=30;_armor+=30;
-				break;
 		default:
 			break;
 		}

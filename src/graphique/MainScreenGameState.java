@@ -46,9 +46,9 @@ public class MainScreenGameState extends BasicGameState {
 		Image normalImage = img.getSubImage(633, 23, 123, 27);
 		Image overImage = img.getSubImage(633, 53, 123, 27);
 		Image downImage = img.getSubImage(633, 83, 123, 27);
-		_bouton_jouer = new Button(container, "Jouer", container.getWidth()/2-62, container.getHeight()/2-80, normalImage, overImage, downImage);
-		_bouton_fullScreen = new Button(container, "Plein écran", container.getWidth()/2-62, container.getHeight()/2, normalImage, overImage, downImage);
-		_bouton_son = new Button(container, "Désactiver son", container.getWidth()/2-62, container.getHeight()/2-40, normalImage, overImage, downImage);
+		_bouton_jouer = new Button(container, "Jouer", container.getWidth()/2-62, container.getHeight()/2-40, normalImage, overImage, downImage);
+		//_bouton_fullScreen = new Button(container, "Plein écran", container.getWidth()/2-62, container.getHeight()/2, normalImage, overImage, downImage);
+		_bouton_son = new Button(container, "Désactiver son", container.getWidth()/2-62, container.getHeight()/2, normalImage, overImage, downImage);
 		_bouton_quitter = new Button(container, "Quitter", container.getWidth()/2-62, container.getHeight()/2+80, normalImage, overImage, downImage);
 		_bouton_options = new Button(container, "Options", container.getWidth()/2-62, container.getHeight()/2+40, normalImage, overImage, downImage);
 		music = new Music("src/asset/musics/menu_music.ogg");
@@ -66,16 +66,16 @@ public class MainScreenGameState extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		background.draw(0, 0, container.getWidth(), container.getHeight());
 		_bouton_jouer.render(container, g);
-		_bouton_fullScreen.render(container, g);
+		//_bouton_fullScreen.render(container, g);
 		_bouton_quitter.render(container, g);
 		_bouton_son.render(container, g);
 		_bouton_options.render(container, g);
 		g.setColor(Color.white);
 		
 		setTrueTypeFont("./src/asset/fonts/teutonic4.ttf", 80);
-		ttf.drawString(container.getWidth()/2 - 337, container.getHeight()/8 - 2, "Chateautomate", Color.white);
-		ttf.drawString(container.getWidth()/2 - 336, container.getHeight()/8 - 1, "Chateautomate", Color.red);
-		ttf.drawString(container.getWidth()/2 - 335, container.getHeight()/8, "Chateautomate", Color.black);
+		ttf.drawString(container.getWidth()/2 - 337, container.getHeight()/7 - 2, "Chateautomate", Color.white);
+		ttf.drawString(container.getWidth()/2 - 336, container.getHeight()/7 - 1, "Chateautomate", Color.red);
+		ttf.drawString(container.getWidth()/2 - 335, container.getHeight()/7, "Chateautomate", Color.black);
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class MainScreenGameState extends BasicGameState {
 	 */
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {	
 		_bouton_jouer.update(container);
-		_bouton_fullScreen.update(container);
+		//_bouton_fullScreen.update(container);
 		_bouton_quitter.update(container);
 		_bouton_son.update(container);
 		_bouton_options.update(container);
@@ -106,7 +106,7 @@ public class MainScreenGameState extends BasicGameState {
 			container.exit();
 		}
 
-		//Configuration du bouton plein écran
+		/*//Configuration du bouton plein écran
 		if (_bouton_fullScreen.isPressed()) {
 			_input.clearMousePressedRecord();
 			if (container.isFullscreen()) {
@@ -116,7 +116,7 @@ public class MainScreenGameState extends BasicGameState {
 				_bouton_fullScreen.setText("Fenêtré");
 				((AppGameContainer) container).setDisplayMode(container.getScreenWidth(),container.getScreenHeight(), true);
 			}
-		}
+		}*/
 
 		//Configuration du bouton son
 		if (_bouton_son.isPressed()) {
@@ -137,9 +137,9 @@ public class MainScreenGameState extends BasicGameState {
 		}*/
 
 		//Gestion des boutons en plein écran
-		_bouton_jouer.setLocation(container.getWidth()/2-62, container.getHeight()/2-80);
-		_bouton_fullScreen.setLocation(container.getWidth()/2-62, container.getHeight()/2);
-		_bouton_son.setLocation(container.getWidth()/2-62, container.getHeight()/2-40);
+		_bouton_jouer.setLocation(container.getWidth()/2-62, container.getHeight()/2-40);
+		//_bouton_fullScreen.setLocation(container.getWidth()/2-62, container.getHeight()/2);
+		_bouton_son.setLocation(container.getWidth()/2-62, container.getHeight()/2);
 		_bouton_quitter.setLocation(container.getWidth()/2-62, container.getHeight()/2+80);
 		_bouton_options.setLocation(container.getWidth()/2-62, container.getHeight()/2+40);
 	}
@@ -158,8 +158,9 @@ public class MainScreenGameState extends BasicGameState {
 	 * @param game Le contrôleur des différentes boucles de jeu.
 	 */
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+		((AppGameContainer) container).setDisplayMode(1200,700, false);
 		_bouton_son.setText(container.getMusicVolume() > 0 ? "Désactiver son" : "activer son");
-		_bouton_fullScreen.setText(container.isFullscreen() ? "Fenêtré" : "Plein écran");
+		//_bouton_fullScreen.setText(container.isFullscreen() ? "Fenêtré" : "Plein écran");
 	}
 
 	/**

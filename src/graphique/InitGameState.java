@@ -124,37 +124,11 @@ public class InitGameState extends BasicGameState {
 			{
 				Personnages.remove(i);
 				UIFs1.remove(i);
-				//autlist.remove(i);
-				//classes.remove(i);
-				for(int j = Personnages.size()-1; j>=i; j--)
-				{
-					Personnages.get(j).setLocation(my_button.x+15, (j == 0)? my_button.y+my_button.height+7 : Personnages.get(j).y + Personnages.get(j).height+7);
+				int j = 0;
+				for (CrossButton p : Personnages) {
+					j += my_button.height+7;
+					p.setLocation(my_button.x+15, my_button.y + j);
 				}
-			}
-			else if(Personnages.get(i).isPressed())
-			{
-				/*JFileChooser jfc = new JFileChooser("./creation_automates");
-
-				if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-		            File file = jfc.getSelectedFile();System.out.println(file.getAbsolutePath());
-		            ArrayList<Automate> autlist2 = null;
-		            try {
-			            File f = new File(file.getAbsolutePath());
-		    			autlist2 = XML_Reader.readXML(f);
-		    		} catch (Exception e) {
-		    			e.printStackTrace();
-		    		}
-		    		if(autlist2 == null ){
-		    			//Boîte du message d'erreur
-		    			JOptionPane jop = new JOptionPane();
-		    			jop.showMessageDialog(null, "Fichier automate invalide.", "Erreur", JOptionPane.ERROR_MESSAGE);
-		    		}
-		    		else
-		    		{
-		    			Personnages.get(i).setText("Valide");
-		    			autlist.addAll(autlist2);
-		    		}
-		        }*/
 			}
 		}
 		for(int i = Personnages2.size()-1; i>=0; i--)
@@ -164,11 +138,10 @@ public class InitGameState extends BasicGameState {
 			{
 				Personnages2.remove(i);
 				UIFs2.remove(i);
-				//autlist.remove(i);
-				//classes.remove(i);
-				for(int j = Personnages2.size()-1; j>=i; j--)
-				{
-					Personnages2.get(j).setLocation(my_button.x+300, (j == 0)? my_button.y+my_button.height+7 : Personnages2.get(j).y + Personnages2.get(j).height+7);
+				int j = 0;
+				for (CrossButton p : Personnages2) {
+					j += my_button.height+7;
+					p.setLocation(my_button.x+300, my_button.y + j);
 				}
 			}
 		}
@@ -201,17 +174,16 @@ public class InitGameState extends BasicGameState {
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-		for(int i = Personnages.size()-1; i>=0; i--) {
-			Personnages.get(i).update(container);
-			for(int j = Personnages.size()-1; j>=i; j--) {
-				Personnages.get(j).setLocation(my_button.x+15, (j == 0)? my_button.y+my_button.height+7 : Personnages.get(j).y + Personnages.get(j).height+7);
-			}
+		my_button.setLocation(container.getWidth() / 4, container.getHeight() / 4);
+		int i = 0;
+		for (CrossButton p : Personnages) {
+			i += my_button.height+7;
+			p.setLocation(my_button.x+15, my_button.y + i);
 		}
-		for(int i = Personnages2.size()-1; i>=0; i--) {
-			Personnages2.get(i).update(container);
-			for(int j = Personnages2.size()-1; j>=i; j--) {
-				Personnages2.get(j).setLocation(my_button.x+300, (j == 0)? my_button.y+my_button.height+7 : Personnages2.get(j).y + Personnages2.get(j).height+7);
-			}
+		i = 0;
+		for (CrossButton p : Personnages2) {
+			i += my_button.height+7;
+			p.setLocation(my_button.x+300, my_button.y + i);
 		}
 		try {
 			woks.loadClassWS();

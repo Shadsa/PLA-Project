@@ -149,7 +149,7 @@ public class MapGameState extends BasicGameState implements Observer {
 		}
 		//Affichage des huds
 		//this.hud.render(g);
-		if(_target != null) {
+		if(_target != null && !_target.isDead()) {
 			this.hud.render(g, ((debug)? 110 : 0));
 		}
 
@@ -326,7 +326,7 @@ public class MapGameState extends BasicGameState implements Observer {
 				_input.clearMousePressedRecord();
 				if (container.isFullscreen()) {
 					_bouton_fullScreen.setText("Plein écran");
-					((AppGameContainer) container).setDisplayMode(800,600, false);
+					((AppGameContainer) container).setDisplayMode(1200,700, false);
 
 				} else {
 					_bouton_fullScreen.setText("Fenêtré");

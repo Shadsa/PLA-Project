@@ -35,7 +35,7 @@ public class ClassDialog extends JDialog {
 	    this.setLocationRelativeTo(null);
 	    this.setResizable(false);
 	    this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-	    classinfo = new Classe(0,0,0,0,"default", true,Bonus.NONE);
+	    classinfo = new Classe(0,0,0,0,"default", true,Bonus.AUCUN);
 		initComponent();
 	  }
 
@@ -73,6 +73,7 @@ public class ClassDialog extends JDialog {
 	    JPanel panCond = new JPanel();
 	    panCond.setBorder(BorderFactory.createTitledBorder("Deck Conditon"));
 	    JComboBox<String> condition = new JComboBox<String>();
+	    panCond.setPreferredSize(new Dimension(125, 56));
 	    for(String b : StateGame.workshop.conditionListName())
 	    	condition.addItem(b);
 	    panCond.add(condition);
