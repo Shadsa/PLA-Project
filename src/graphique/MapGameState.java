@@ -374,7 +374,7 @@ public class MapGameState extends BasicGameState implements Observer {
 	 * @param c le caractère de la touche relâchée.
 	 */
 	public void keyReleased(int key, char c) {
-		if(showhud == false) return;
+		if(_targetp == null) return;
 		switch(key)
 		{
 		case Input.KEY_Z:
